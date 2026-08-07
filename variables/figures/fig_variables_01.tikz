@@ -1,0 +1,50 @@
+﻿\begin{tikzpicture}[scale=1]
+
+\begin{scope}
+\coordinate (r) at (0,0);
+\coordinate (s) at (3,0);
+\coordinate (t) at (1.5,2);
+
+
+\node at (r) [circle,fill=black, scale=0.5] {};
+\node at (s) [circle,fill=black, scale=0.5] {};
+\node at (t) [circle,fill=black, scale=0.5] {};
+
+
+\node at (r) [below left]{$r$};
+\node at (s) [below right]{$s$};
+\node at (t) [above=5pt]{$t$};
+
+
+%\draw[very thick] (r) to[bend left] (s);
+\draw[thick] (r) to[bend left] (s);
+%\draw[thick] (r) to[bend right] (t);
+%\draw[thick] (s) to[bend left] (t);
+
+\node at (1.5,-1.2) {\textbf{Graphe $G_1$}};
+\end{scope}
+
+\begin{scope}[xshift=7cm]
+\coordinate (r) at (0,0);
+\coordinate (s) at (3,0);
+\coordinate (t) at (1.5,2);
+
+
+\node at (r) [circle,fill=black, scale=0.5] {};
+\node at (s) [circle,fill=black, scale=0.5] {};
+\node at (t) [circle,fill=black, scale=0.5] {};
+
+
+\node at (r) [below left]{$r$};
+\node at (s) [below right]{$s$};
+\node at (t) [above=5pt]{$t$};
+
+
+%\draw[very thick] (r) to[bend left] (s);
+\draw[thick] (r) to[bend left] (s);
+\%draw[thick] (r) to[bend right] (t);
+\draw[thick] (s) to[bend right] (t);
+
+\node at (1.5,-1.2) {\textbf{Graphe $G_2$}};
+\end{scope}
+\end{tikzpicture}

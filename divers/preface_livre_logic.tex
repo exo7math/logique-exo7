@@ -1,0 +1,220 @@
+
+\pagestyle{empty}\thispagestyle{empty}
+\vspace*{\fill}
+\vspace*{5ex}
+\begin{center}
+	\fontsize{36}{36}\selectfont
+	\textsc{LOGIQUE}
+	
+	% \vspace*{1ex}
+	% \textsc{\fontsize{24}{24}\selectfont 
+	% Logique  %\\[-1.5ex]
+	% }
+	
+	\vspace*{2ex}
+	
+	\fontsize{32}{32}\selectfont
+	\Large
+	\textsc{arnaud bodin}
+
+\end{center}
+\vfill
+% \begin{center}
+% 	\Large
+% 	\textsc{algorithmes \  et \  mathématiques}
+% \end{center}
+\begin{center}
+	\LogoExoSept{2}
+\end{center}
+
+\clearemptydoublepage
+%\clearpage
+
+\thispagestyle{empty}
+
+
+\vspace*{\fill}
+%\section*{Logique}
+
+%---------------------------
+{\large\textbf{Introduction}}
+
+\medskip
+
+\og{}Il existe des énoncés vrais mais indémontrables.\fg{} Cette phrase, qui peut sembler paradoxale, est une conséquence du célèbre théorème d'incomplétude de Gödel, démontré en 1931. Elle révèle une séparation fondamentale entre deux notions que l'on avait longtemps tendance à confondre : la vérité d'un énoncé et l'existence d'une démonstration de cet énoncé. Ce livre suit le chemin qui mène à cette découverte.
+
+Pour comprendre ce résultat, il faut d'abord apprendre le langage de la logique. Les mathématiques reposent sur des raisonnements dont les règles, souvent utilisées sans être explicitées, peuvent être décrites avec précision. La logique permet ainsi de voir plus clairement comment une démonstration est construite et sur quelles règles elle repose.
+
+Le livre est organisé en trois parties correspondant à trois niveaux de difficulté :
+
+\begin{description}
+    \item[La logique Vrai/Faux (Niveau 1).] C'est le langage logique le plus élémentaire. Nous y étudions les connecteurs \og{}non\fg{}, \og{}et\fg{}, \og{}ou\fg{}, \og{}si\dots alors\dots\fg{}, \og{}si et seulement si\fg{} et les règles qui permettent de construire des démonstrations simples. Cette première étape permet de préciser la notion de vérité logique.
+
+    \item[La logique du premier ordre (Niveau 2).] L'introduction des quantificateurs \og{}pour tout\fg{} et \og{}il existe\fg{} permet d'exprimer les raisonnements mathématiques dans leur généralité. Nous étudions alors un langage suffisamment riche pour formaliser une grande partie des mathématiques usuelles.
+
+    \item[Le théorème d'incomplétude (Niveau 3).] Cette dernière partie rassemble progressivement les outils nécessaires à la démonstration du théorème de Gödel. Le lecteur découvrira comment un raisonnement mathématique peut être appliqué à lui-même et conduire à l'existence d'énoncés vrais mais impossibles à démontrer dans un système donné.
+\end{description}
+
+Les deux premières parties s'adressent à tout étudiant en mathématiques souhaitant mieux comprendre la logique qui se cache derrière les démonstrations. Elles peuvent être lues en parallèle d'un cours de mathématiques : les notions logiques prennent leur sens à travers les exemples mathématiques, tandis que la logique apporte un cadre plus précis aux raisonnements rencontrés. La troisième partie s'adresse au lecteur motivé qui souhaite aller plus loin dans l'étude de la logique moderne et comprendre la démonstration du théorème d'incomplétude de Gödel.
+  
+
+~
+\bigskip
+\vfill
+\begin{center}
+Les deux premières parties sont accompagnées d'exercices (non corrigés).\\
+Prochainement disponibles : des vidéos et les fichiers sources.
+
+% Le cours sera disponible est aussi disponible en vidéos :\\
+% \href{https://www.youtube.com/@MathGame-Exo7}{Youtube : \og{}MathGame\fg{}}.    
+   
+% Le livre, l'intégralité des codes ainsi que tous les fichiers sources sont sur la page \emph{GitHub} d'Exo7 :\\
+% \href{https://github.com/exo7math/mathgame-exo7}{\og{}GitHub : MathGame\fg{}}.
+\end{center}
+\vfill
+
+
+%\vspace*{\fill}
+
+
+%\newpage
+\cleardoublepage
+\thispagestyle{empty}
+\addtocontents{toc}{\protect\setcounter{tocdepth}{0}}
+\tableofcontents
+
+\cleardoublepage
+\section*{Résumé des chapitres}
+
+
+\newcommand{\titrechapitre}[1]{{\textbf{#1}}\nopagebreak}
+\newcommand{\descriptionchapitre}[1]{%
+\smallskip\hfill
+\begin{minipage}{0.95\textwidth}\small#1\end{minipage}\medskip\smallskip}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\titrechapitre{Titre du chapitre}
+
+%\descriptionchapitre{Résumé.}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\titrechapitre{Logique vrai/faux}
+
+\descriptionchapitre{La logique \og{}Vrai/Faux\fg{}, aussi appelée logique propositionnelle, s'attache à étudier quelle valeur, parmi \og{}Vrai\fg{} ou \og{}Faux\fg{}, peut prendre une formule définie à partir des connecteurs logiques \tand, \tor, \tnot\ldots}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\titrechapitre{Preuves}
+
+\descriptionchapitre{Qu'est-ce qu'une preuve ? C'est une suite de déductions à partir d'hypothèses et d'un petit nombre de règles élémentaires, afin d'aboutir à une conclusion. Nous allons détailler ces règles et expliquer comment les utiliser en pratique.}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\titrechapitre{Quels connecteurs sont utiles ?}
+
+\descriptionchapitre{Les connecteurs $\lnot$ (\tnot), $\land$ (\tand), $\lor$ (\tor) suffisent pour construire toutes les formules de la logique Vrai/Faux.}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\titrechapitre{Théorème de compacité}
+
+\descriptionchapitre{Le théorème de compacité affirme que lorsqu'il y a une infinité d'hypothèses, il est suffisant d'en utiliser un nombre fini.
+
+%Ce chapitre est d'un niveau plus difficile que les précédents et peut être passé en première lecture.
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\titrechapitre{Logique du premier ordre}
+
+\descriptionchapitre{On considère un langage avec des variables et les quantificateurs \og{}pour tout\fg{} et \og{}il existe\fg{}.
+On enrichit ce langage avec des prédicats et des fonctions.}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\titrechapitre{Variables et structures}
+
+\descriptionchapitre{Notre but est d'utiliser un langage logique pour décrire des situations mathématiques concrètes. Pour cela, on introduit la notion de structure qui permet de relier les formules abstraites à des objets mathématiques réels.
+Avant de décider si, dans une structure donnée,
+une formule est vraie ou fausse, il est essentiel de distinguer
+les variables libres des variables liées.}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\titrechapitre{Satisfaction}
+
+\descriptionchapitre{Pour attribuer une valeur Vrai/Faux à une formule de la logique du premier ordre, il faut à la fois définir une structure mathématique et affecter une valeur aux variables. On pourra alors définir la conséquence logique.}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\titrechapitre{Preuves}
+
+\descriptionchapitre{Nous adaptons la construction des preuves aux quantificateurs de la logique du premier ordre.}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\titrechapitre{Théorème de validité}
+
+\descriptionchapitre{Nous faisons le lien entre \og{}preuve\fg{} et \og{}vérité\fg{} grâce au théorème de validité (\emph{Soundness Theorem}) qui affirme que toute formule prouvable est une formule vraie.}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\titrechapitre{Théorème de complétude}
+
+\descriptionchapitre{Le théorème de complétude dit que, en logique du premier ordre, tout ce qui est vrai est prouvable. Nous énonçons ce théorème, ses variantes et ses applications.}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\titrechapitre{Preuve du théorème de complétude}
+
+\descriptionchapitre{Nous prouvons le théorème de complétude.}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\titrechapitre{Un aperçu de l'incomplétude de Gödel}
+
+\descriptionchapitre{Avant de se lancer dans la construction des outils nécessaires à l'énoncé précis des théorèmes de Gödel et à leur preuve, on donne un aperçu d'ensemble des théorèmes d'incomplétude et du long chemin pour y parvenir.}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\titrechapitre{Arithmétique de Peano}
+
+\descriptionchapitre{Nous étudions les axiomes qui définissent l'arithmétique usuelle des entiers naturels.}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\titrechapitre{Codage de Gödel}
+
+\descriptionchapitre{On transforme les symboles, les formules et même les preuves en des entiers. On expliquera ensuite les grandes lignes de la preuve du premier théorème d'incomplétude.}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\titrechapitre{Fonctions récursives primitives}
+
+\descriptionchapitre{Nous définissons et étudions les fonctions qui expriment les calculs \og{}faciles\fg{} de l'arithmétique.}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\titrechapitre{Fonctions représentables}
+
+\descriptionchapitre{Il s'agit de justifier que l'arithmétique de Peano permet d'exprimer toutes les fonctions récursives primitives.}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\titrechapitre{Diagonalisation}
+
+\descriptionchapitre{Nous rassemblons tous les outils construits à présent afin de démontrer l'étape cruciale de l'incomplétude : le lemme de diagonalisation.}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\titrechapitre{Preuve du théorème d'incomplétude}
+
+\descriptionchapitre{Nous rassemblons tous les outils obtenus afin de prouver le premier théorème d'incomplétude de Gödel.}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\titrechapitre{Le second théorème d'incomplétude}
+
+\descriptionchapitre{Nous clôturons ce livre avec le second théorème d'incomplétude de Gödel.}

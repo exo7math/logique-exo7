@@ -1,0 +1,58 @@
+﻿\begin{tikzpicture}[scale=1.2]
+\tikzstyle{line} = [draw,  thick]
+
+\begin{scope}[xshift=0cm]
+% nodes
+\path node(P0) {$\lnot$ };
+\path (P0)+(0,-1) node(P1) {$P$};
+
+% Draw edges between elements
+\path[line] (P0) -- (P1.north);
+
+\end{scope}
+
+
+\begin{scope}[xshift=2cm]
+% nodes
+\path node(P0) {$\land$ };
+\path (P0)+(-0.5,-1) node(P1) {$P$};
+\path (P0)+(0.5,-1) node(P2) {$Q$};
+
+% Draw edges between elements
+\path[line] (P0) -- (P1.north);
+\path[line] (P0) -- (P2.north);
+\end{scope}
+
+\begin{scope}[xshift=4cm]
+% nodes
+\path node(P0) {$\lor$ };
+\path (P0)+(-0.5,-1) node(P1) {$P$};
+\path (P0)+(0.5,-1) node(P2) {$Q$};
+
+% Draw edges between elements
+\path[line] (P0) -- (P1.north);
+\path[line] (P0) -- (P2.north);
+\end{scope}
+
+\begin{scope}[xshift=6cm]
+% nodes
+\path node(P0) {$\limplies$ };
+\path (P0)+(-0.5,-1) node(P1) {$P$};
+\path (P0)+(0.5,-1) node(P2) {$Q$};
+
+% Draw edges between elements
+\path[line] (P0) -- (P1.north);
+\path[line] (P0) -- (P2.north);
+\end{scope}
+
+\begin{scope}[xshift=8cm]
+% nodes
+\path node(P0) {$\lequiv$ };
+\path (P0)+(-0.5,-1) node(P1) {$P$};
+\path (P0)+(0.5,-1) node(P2) {$Q$};
+
+% Draw edges between elements
+\path[line] (P0) -- (P1.north);
+\path[line] (P0) -- (P2.north);
+\end{scope}
+\end{tikzpicture}

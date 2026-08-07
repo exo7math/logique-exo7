@@ -1,0 +1,262 @@
+\documentclass[11pt,class=report,crop=false]{standalone}
+\usepackage[screen]{../logic}
+
+\begin{document}
+
+%====================================================================
+\chapitre{Diagonalisation} 
+%====================================================================
+
+\objectifs{Nous rassemblons tous les outils construits à présent afin de démontrer l'étape cruciale de l'incomplétude : le lemme de diagonalisation.}
+
+\index{diagonalisation}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Résumé des épisodes précédents}
+
+L'objectif final n'est maintenant plus très loin : démontrer le théorème d'incomplétude. Nous sommes ici dans un chapitre encore technique avec un lemme crucial qui nécessite tous les chapitres précédents. Avant de nous plonger dans les détails, revenons brièvement sur toutes les notions utiles.
+
+%--------------------------------------------------------------------
+\subsection{Arithmétique de Peano}
+
+\begin{itemize}
+    \item L'arithmétique de Peano est basée sur le langage $\mathcal{L}_0 = (0, S, +, \times)$, dans lequel on construit une théorie $\mathcal{PA}$ (les axiomes de Peano).
+    \item Les entiers naturels $\Nn$ sont un modèle de cette théorie : les axiomes de Peano sont satisfaits sur $\Nn$.
+    \item Pour $n \in \Nn$, son numéral $\overline{n} = SS\dots S0$ est son écriture dans $\mathcal{L}_0$ (il y a exactement $n$ symboles $S$).
+\end{itemize}
+
+%--------------------------------------------------------------------
+\subsection{Codage de Gödel}
+
+\begin{itemize}
+    \item À toute formule de $\mathcal{L}_0$, on associe un entier dans $\Nn$ : son nombre de Gödel. On le note aussi $n = \ulcorner \mathcal{P} \urcorner$.
+    \item Dans $\mathcal{L}_0$ son numéral est donc $\overline{n} = \overline{\ulcorner \mathcal{P} \urcorner}$, que l'on notera souvent  aussi par $\ulcorner \mathcal{P} \urcorner$ (c'est un peu abusif, mais il ne peut pas y avoir de confusion dans les formules).
+    \item On a déjà donné un aperçu de ce qu'est la diagonalisation d'une formule lors de la preuve informelle de l'incomplétude, l'idée est de considérer $\mathcal{G} = \mathcal{P}({\ulcorner \mathcal{G} \urcorner})$.
+    \item Le but du chapitre est de formaliser de façon rigoureuse cette formule $\mathcal{G}$.
+\end{itemize}
+
+%--------------------------------------------------------------------
+\subsection{Fonctions récursives primitives}
+
+\begin{itemize}
+    \item On rappelle que les fonctions récursives primitives sont des fonctions $f : \Nn^p \to \Nn$ facilement calculables. 
+    \item Le point important pour ce chapitre est que la fonction $\text{substitution}(n, v, k) : \Nn^3 \to \Nn$ est récursive primitive,
+    $n$ désigne le nombre de Gödel d'une formule $\mathcal{P}$, $v$ le code d'une variable $x$, et $k$ est la valeur que l'on souhaite appliquer à $x$. La fonction renvoie donc $\ulcorner \mathcal{P}({k}) \urcorner \in \Nn$.
+\end{itemize}
+
+%--------------------------------------------------------------------
+\subsection{Fonctions représentables}
+
+\begin{itemize}
+    \item Toute fonction récursive primitive est représentable dans $\mathcal{PA}$. On peut alors traduire tous nos concepts mathématiques dans $\mathcal{L}_0$.
+    \item Pour $f : \Nn \to \Nn$ récursive primitive, cela signifie qu'il existe une formule $\mathcal{P}(x,y)$ de $\mathcal{L}_0$ telle que pour tout $n \in \Nn$, on ait une preuve dans $\mathcal{PA}$ de l'équivalence :
+    \[ \forall y \quad  \mathcal{P}(\overline{n},y) \ \ \lequiv \ \ y=\overline{f(n)}  \]
+    \item Autrement dit, on caractérise la valeur $f(n)$ de façon unique dans $\mathcal{L}_0$ grâce à $\mathcal{P}$.
+\end{itemize}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Lemme de diagonalisation}
+
+Attaquons-nous à la clé de voûte de la preuve du théorème d'incomplétude.
+
+%--------------------------------------------------------------------
+\subsection{Énoncé}
+
+\begin{lemme}[de diagonalisation]
+    Pour toute formule $\mathcal{P}(x)$ (où $x$ est la seule variable libre), il existe une formule fermée $\mathcal{G}$ telle que :
+    \mybox{$
+    \mathcal{PA} \quad \lturn \quad \Big( \mathcal{G} \ \ \lequiv \ \ \mathcal{P}(\overline{\ulcorner \mathcal{G} \urcorner}) \Big)
+    $}
+\end{lemme}
+\index{lemme!de diagonalisation}
+
+\begin{itemize}
+    \item Ainsi $\mathcal{G}$ apparaît deux fois dans l'énoncé, une fois en tant que formule logique, l'autre via son nombre de Gödel.
+    La formule $\mathcal{G}$ vérifie donc une propriété sur elle-même.
+
+    \item On peut considérer le lemme de diagonalisation comme un théorème de point fixe : au lieu d'obtenir $f(x)=x$, on a $\mathcal{P}({\ulcorner \mathcal{G} \urcorner}) \lequiv \mathcal{G}$. 
+
+    \item L'équivalence est la façon syntaxiquement correcte de dire que $\mathcal{G}$ et $\mathcal{P}({\ulcorner \mathcal{G} \urcorner})$ sont des énoncés équivalents (mais ce ne sont pas des formules égales dans $\mathcal{L}_0$). Par contre on verra dans la preuve ci-dessous que $\mathcal{G}$ est exactement défini par $\mathcal{G} = \mathcal{H}({\ulcorner \mathcal{H} \urcorner})$.
+\end{itemize}
+
+%--------------------------------------------------------------------
+\subsection{Preuve}
+
+%----------
+\subsubsection{Diagonalisation sur les entiers}
+
+On va construire une fonction $\text{diag} : \Nn \to \Nn$ récursive primitive.
+
+\begin{itemize}
+    \item Pour $\mathcal{Q}(x)$, on sait lui associer son nombre de Gödel $n = \ulcorner \mathcal{Q} \urcorner \in \Nn$. On va s'intéresser à l'opération inverse.
+    
+    \item Pour $n \in \Nn$, on sait décider si cet entier correspond à une formule correctement formée $\mathcal{Q}(x)$ de $\mathcal{L}_0$, ayant $x$ comme seule variable libre. Si ce n'est pas le cas, on pose $\text{diag}(n)=0$.
+    
+    \item Si $n$ représente la formule $\mathcal{Q}(x)$, alors on peut évaluer $\mathcal{Q}$ en $n$, c'est-à-dire écrire la substitution $\mathcal{Q}(\overline{n})$. C'est une formule de $\mathcal{L}_0$, qui a pour nombre de Gödel $\ulcorner \mathcal{Q}(\overline{n}) \urcorner$. On définit alors l'entier :
+    \[ \text{diag}(n) = \ulcorner \mathcal{Q}(\overline{n}) \urcorner \]
+    C'est-à-dire $\text{diag}(n) = \ulcorner \mathcal{Q}({\ulcorner \mathcal{Q} \urcorner}) \urcorner$.
+
+    \item Résumons la construction par un schéma :
+    
+    %\medskip
+
+    \[ n \in \Nn \ \xrightarrow{\text{ inversion du nb de Gödel }} \ \mathcal{Q} \in \mathcal{L}_0 \ \xrightarrow{\text{ substitution }} \ \mathcal{Q}(\overline{n}) \in \mathcal{L}_0 \ \xrightarrow{\text{ nb de Gödel }} \ \text{diag}(n) = \ulcorner \mathcal{Q}(\overline{n}) \urcorner \in \Nn \]
+
+    \medskip
+
+    \item Pour une formule $\mathcal{Q}(x)$ de nombre de Gödel $n = \ulcorner \mathcal{Q} \urcorner$, le calcul de $\mathcal{Q}(k)$ se fait par la fonction $\text{substitution}(n, \ulcorner x \urcorner, k)$ qui, pour la formule $\mathcal{Q}$ de nombre de Gödel $n$, remplace les occurrences de la variable $x$ par $\overline{k}$, puis renvoie le nombre de Gödel de la formule obtenue, c'est-à-dire $\ulcorner \mathcal{Q}(\overline{k}) \urcorner$. 
+    
+    Remarque : dans toute la suite la variable à substituer sera toujours la variable $x$.
+
+    \item Décider si un entier $n$ désigne une formule $\mathcal{Q}(x)$ correctement formée ayant $x$ pour seule variable libre est une opération récursive primitive. La substitution l'est aussi (voir les chapitres \og{}Codage de Gödel\fg{} et \og{}Fonctions récursives primitives\fg{}).
+    Ainsi la fonction $\text{diag} : \Nn \to \Nn$ est aussi une fonction récursive primitive.
+\end{itemize}
+
+%----------
+\subsubsection{Diagonalisation dans le langage}
+
+\begin{itemize}
+    \item Toute fonction récursive primitive est représentable (voir le chapitre \og{}Fonctions représentables\fg{}), donc pour notre fonction $\text{diag} : \Nn \to \Nn$, il existe une formule $\mathcal{D}\text{iag}(x,y)$ de $\mathcal{L}_0$ telle que, quel que soit $n \in \Nn$ on ait :
+    \[ \mathcal{PA} \quad \lturn \quad \Big( \forall y \ \ \mathcal{D}\text{iag}(\overline{n},y) \lequiv y=\overline{\text{diag}(n)} \Big) \]
+\end{itemize}
+
+%----------
+\subsubsection{Formule $\mathcal{G}$}
+
+\begin{itemize}
+    \item On fixe la formule $\mathcal{P}(x)$ de l'énoncé et on définit une nouvelle formule $\mathcal{H}$ par :
+    \[ \mathcal{H}(x) \ : \quad \exists y \ \mathcal{D}\text{iag}(x,y) \land \mathcal{P}(y) \]
+    Notons $p$ le nombre de Gödel de cette dernière formule : $p = \ulcorner \mathcal{H} \urcorner$.
+    
+    \item On définit la formule de Gödel par :
+    \[ \mathcal{G} = \mathcal{H}(\overline{p}) \]
+    Ainsi par définition, $\mathcal{G}$ désigne \og{}$\mathcal{H}(\overline{p})$\fg{} et donc aussi \og{}$\exists y \ \mathcal{D}\text{iag}(\overline{p},y) \land \mathcal{P}(y)$\fg{}.
+
+    \item De plus, $\text{diag}(p) = \ulcorner \mathcal{G} \urcorner$. En effet, reprenons le schéma ci-dessus, cette fois pour l'entier $p$ :   
+    \[ p \in \Nn \ \xrightarrow{\text{ inversion du nb de Gödel }} \ \mathcal{H}(x) \in \mathcal{L}_0 \ \xrightarrow{\text{ substitution }} \ \mathcal{H}(\overline{p}) \in \mathcal{L}_0 \ \xrightarrow{\text{ nb de Gödel }} \ \text{diag}(p) = \ulcorner \mathcal{H}(\overline{p}) \urcorner = \ulcorner \mathcal{G} \urcorner \in \Nn \]
+\end{itemize}
+
+%----------
+\subsubsection{Fin de la preuve}
+
+
+Rappelons que le but est de montrer :
+    \[ \mathcal{PA} \quad \lturn \quad \Big( \mathcal{G} \lequiv \mathcal{P}(\overline{\ulcorner \mathcal{G} \urcorner}) \Big) \]
+    On se place donc dans la théorie $\mathcal{PA}$. On rappelle que $p = \ulcorner \mathcal{H} \urcorner$, $\mathcal{G} = \mathcal{H}(\overline{p})$ et $\text{diag}(p) = \ulcorner \mathcal{G} \urcorner$.
+
+\begin{itemize}
+    \item \textbf{Sens $\rightarrow$} 
+    \begin{align*}
+    \text{Supposons } \quad & \mathcal{G} \\
+    \text{donc } \quad      & \mathcal{H}(\overline{p}) \qquad \text{ par définition de } \mathcal{G} \\
+    \text{donc } \quad      & \exists y \quad \mathcal{D}\text{iag}(\overline{p},y) \land \mathcal{P}(y) \qquad \text{ par définition de } \mathcal{H} \\
+    \text{donc } \quad      & \exists y \quad (y=\overline{\text{diag}(p)}) \land (\mathcal{P}(y)) \qquad \text{ par la représentabilité de } \text{diag} \text{ par } \mathcal{D}\text{iag} \text{ dans } \mathcal{PA} \\
+    \text{donc } \quad      & \mathcal{P}(\overline{\text{diag}(p)}) \qquad \text{ car l'égalité force la valeur de } y \\
+    \text{donc } \quad      & \mathcal{P}(\overline{\ulcorner \mathcal{G} \urcorner})
+\end{align*}
+Ainsi $\mathcal{G} \limplies \mathcal{P}(\overline{\ulcorner \mathcal{G} \urcorner})$.
+
+
+    \item \textbf{Sens $\leftarrow$} 
+    
+    Supposons $\mathcal{P}(\overline{\ulcorner \mathcal{G} \urcorner})$. Il s'agit d'en déduire $\mathcal{G} = \mathcal{H}(\overline{p})$, c'est-à-dire :
+    \[ \exists y \quad \mathcal{D}\text{iag}(\overline{p},y) \land \mathcal{P}(y) \]
+    On va montrer que $y = \overline{\ulcorner \mathcal{G} \urcorner}$ convient. 
+
+
+    \begin{itemize}
+        \item D'une part, $y = \overline{\ulcorner \mathcal{G} \urcorner} = \overline{\text{diag}(p)}$, donc $\mathcal{D}\text{iag}(\overline{p},y)$ est vérifié par la représentabilité.
+
+        \item De plus, $\mathcal{P}(y) = \mathcal{P}(\overline{\ulcorner \mathcal{G} \urcorner})$ est notre hypothèse.
+
+        \item Donc, pour ce $y$, on a bien $\mathcal{D}\text{iag}(\overline{p},y) \land \mathcal{P}(y)$.
+
+    \end{itemize}
+
+    Par introduction de $\exists$, on a :
+    \[ \mathcal{P}(\overline{\ulcorner \mathcal{G} \urcorner}) \quad \limplies \quad \big[ \exists y \quad \mathcal{D}\text{iag}(\overline{p},y) \land \mathcal{P}(y) \big]\]
+    ce qui est exactement $\mathcal{P}(\overline{\ulcorner \mathcal{G} \urcorner}) \  \limplies \ \mathcal{G}$.
+
+    On a terminé la preuve du lemme de diagonalisation, on a montré :
+    \[ \mathcal{PA} \quad \lturn \quad \Big( \mathcal{G} \lequiv \mathcal{P}(\overline{\ulcorner \mathcal{G} \urcorner}) \Big) \]
+\end{itemize}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Théorème de Tarski}
+
+%--------------------------------------------------------------------
+\subsection{Motivation}
+
+Le reste de ce chapitre n'est pas utile pour la preuve du théorème d'incomplétude. Cependant, c'est une excellente application du lemme de diagonalisation et c'est aussi l'occasion de souligner une nouvelle fois la différence entre le vrai et le démontrable.
+Le théorème de Tarski est une version puissante du paradoxe du menteur.
+\index{paradoxe!du menteur}
+Je dis la phrase suivante : 
+\mycenterline{\og{}Je suis un menteur.\fg{}}
+\begin{itemize}    
+    \item Si je suis effectivement un menteur, alors la phrase est vraie, donc je dis la vérité, donc je ne suis pas un menteur. Contradiction.
+    
+    \item Si je ne suis pas un menteur, alors je dis la vérité, donc d'après ma phrase je suis un menteur. Contradiction à nouveau.
+\end{itemize}
+
+Une variante est : 
+\mycenterline{\og{}Cette phrase est fausse.\fg{}}
+
+%--------------------------------------------------------------------
+\subsection{La vérité n'est pas définissable}
+
+De façon informelle, le théorème de Tarski (1933) dit qu'il n'existe pas de formule $\mathcal{V}(x)$ qui détecte les formules vraies, c'est-à-dire que $\mathcal{V}(x)$ serait une formule telle que $\mathcal{V}(\overline{n})$ est vraie exactement lorsque la formule fermée $\mathcal{P}$ de nombre de Gödel $n$ est vraie.
+    
+Dans notre contexte, une formule fermée $\mathcal{P}$ est vraie si $\ldoubleturn_{\Nn} \mathcal{P}$, c'est-à-dire si elle est satisfaite dans le modèle standard des entiers naturels $\Nn$.
+    
+Voici l'énoncé précis.
+\begin{theoreme}[Tarski]
+    \label{th:tarski}
+    Il n'existe pas de formule $\mathcal{V}(x)$ de $\mathcal{L}_0$ telle que pour toute formule fermée $\mathcal{P}$ de $\mathcal{L}_0$ on ait :
+    \[ \ldoubleturn_{\Nn} \mathcal{P} \quad \text{si et seulement si} \quad \ldoubleturn_{\Nn} \mathcal{V}(\overline{\ulcorner \mathcal{P} \urcorner}) \]
+\end{theoreme}
+\index{theoreme@théorème!de Tarski}
+
+Une reformulation est \og{}la vérité n'est pas définissable\fg{}. En effet, si on note $A$ l'ensemble des entiers $n = \ulcorner \mathcal{P} \urcorner$ tels que $\ldoubleturn_{\Nn} \mathcal{P}$ (c'est-à-dire les nombres de Gödel des formules vraies), alors il n'existe pas de formule $\mathcal{V}(x)$ telle que $\ldoubleturn_{\Nn} \mathcal{V}(\overline{n})$ pour tous les $n \in A$, et uniquement ceux-là.
+On renvoie au paragraphe \og{}Ensembles définissables\fg{} du chapitre \og{}Arithmétique de Peano\fg{} pour cette notion de \og{}définissable\fg{}.
+Par contre, on verra dans le chapitre suivant que \og{}être démontrable\fg{} est définissable.
+
+%--------------------------------------------------------------------
+\subsection{Preuve}
+
+Par l'absurde, supposons qu'une telle formule $\mathcal{V}(x)$ existe.
+    On applique le lemme de diagonalisation à $\lnot \mathcal{V}(x)$ (à la place de $\mathcal{P}(x)$ dans l'énoncé du lemme).
+    Ainsi il existe une formule fermée $\mathcal{G}$ telle que :
+    \[ \mathcal{PA} \quad \lturn \quad \Big( \mathcal{G} \lequiv \lnot \mathcal{V}(\overline{\ulcorner \mathcal{G} \urcorner}) \Big) \]
+    
+Cette phrase $\mathcal{G}$ est notre version du menteur qui parle de lui-même.
+    On se place sur la structure $\Nn$ pour la théorie $\mathcal{PA}$ sur $\mathcal{L}_0$.
+    Par le théorème de validité, si $\mathcal{PA} \lturn \mathcal{Q}$ alors $\ldoubleturn_{\Nn} \mathcal{Q}$ : tout ce qui est prouvable est vrai. 
+    Ainsi l'équivalence ci-dessus est vraie :
+    \[ \mathcal{G} \lequiv \lnot \mathcal{V}(\overline{\ulcorner \mathcal{G} \urcorner}) \]
+
+Vérifions que la phrase $\mathcal{G}$ contredit l'équivalence du Théorème \ref{th:tarski} voulue par Tarski (où $\mathcal{G}$ joue le rôle de la phrase $\mathcal{P}$).
+\begin{itemize}    
+    \item Si $\mathcal{G}$ est vraie, c'est-à-dire $\ldoubleturn_{\Nn} \mathcal{G}$, alors par l'équivalence du lemme de diagonalisation on a aussi $\ldoubleturn_{\Nn} \lnot \mathcal{V}(\overline{\ulcorner \mathcal{G} \urcorner})$, c'est-à-dire que $\mathcal{V}(\overline{\ulcorner \mathcal{G} \urcorner})$ est faux, donc on n'a pas $\ldoubleturn_{\Nn} \mathcal{V}(\overline{\ulcorner \mathcal{G} \urcorner})$. Ainsi dans ce cas, $\mathcal{V}$ ne détecte pas que $\mathcal{G}$ est vraie.
+    
+    \item Si $\mathcal{G}$ est fausse (c'est-à-dire on n'a pas $\ldoubleturn_{\Nn} \mathcal{G}$), alors par l'équivalence du lemme de diagonalisation $\lnot \mathcal{V}(\overline{\ulcorner \mathcal{G} \urcorner})$ est faux, donc $\mathcal{V}(\overline{\ulcorner \mathcal{G} \urcorner})$ est vrai. Ainsi on a $\ldoubleturn_{\Nn} \mathcal{V}(\overline{\ulcorner \mathcal{G} \urcorner})$. Par conséquent dans ce cas, $\mathcal{V}$ ne détecte pas que $\mathcal{G}$ est fausse.
+    
+    \item Ainsi, sans savoir si $\mathcal{G}$ est vraie ou fausse, $\mathcal{G}$ est quand même un contre-exemple à l'équivalence recherchée.
+\end{itemize}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\section*{Exercices}
+
+\excludecomment{exercicecours} 
+%\emph{Exercices : à faire}
+
+\begin{exercicecours}
+
+\end{exercicecours}
+
+\includecomment{exercicecours} 
+
+
+\end{document}

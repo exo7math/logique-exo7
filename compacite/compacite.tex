@@ -1,0 +1,637 @@
+\documentclass[11pt,class=report,crop=false]{standalone}
+\usepackage[screen]{../logic}
+
+
+
+\begin{document}
+
+
+%====================================================================
+\chapitre{Théorème de compacité}
+%===================================================================
+
+% \insertvideo{}{partie 1.1. Titre}
+
+
+\objectifs{Le théorème de compacité affirme que lorsqu'il y a une infinité d'hypothèses, il est suffisant d'en utiliser un nombre fini.}
+
+\bigskip
+
+\objectifs{Ce chapitre est d'un niveau plus difficile que les précédents et peut être passé en première lecture.}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Formules, formules satisfaisables, conséquence logique}
+
+%--------------------------------------------------------------------
+\subsection{Formules : définition par le haut}
+
+Dans le chapitre \og{}Logique vrai/faux\fg{}, on a défini une formule comme un mot fini à partir des éléments suivants :
+	\begin{itemize}
+		\item des variables propositionnelles $\text{Var} = \{ P_i \}_{i\in I}$,
+		
+		\item des parenthèses $($ et $)$\; ,
+		
+		\item et des connecteurs logiques $\lnot$, $\land$, $\lor$, $\limplies$, $\lequiv$.
+	\end{itemize}
+
+
+Plus précisément :
+\begin{definition}
+	L'ensemble $\text{Form}$ des \defi{formules}\index{formule} est construit selon les règles suivantes :
+	\begin{enumerate}
+		\item Les variables propositionnelles sont des formules.
+		
+		\item Si $\mathcal{P}$ et $\mathcal{Q}$ sont des formules, alors 
+\[
+\lnot \mathcal{P}, \quad
+(\mathcal{P} \land \mathcal{Q}), \quad
+(\mathcal{P} \lor \mathcal{Q}) , \quad
+(\mathcal{P} \limplies \mathcal{Q}), \quad
+(\mathcal{P} \lequiv \mathcal{Q})
+\] 		
+sont aussi des formules.
+	
+		\item Rien d'autre n'est une formule.
+	\end{enumerate}
+\end{definition}	
+	
+
+Cette définition s'appelle la \og{}définition par le haut\fg{} ou \og{}définition inductive\fg{} des formules.
+On a vu au chapitre \og{}Quels connecteurs sont utiles ?\fg{} que l'on peut même se contenter des seuls connecteurs $\{ \lnot, \land \}$ pour décrire toutes les formules.
+Dans ce chapitre, on s'intéresse au cas où l'ensemble $\text{Var} = \{ P_i \}_{i\in I}$ des variables propositionnelles est infini mais dénombrable. Cela signifie que l'on peut choisir $I = \Nn$ pour l'ensemble des indices de ces variables : $P_0, P_1, P_2,\ldots$
+
+\begin{remarque*}
+	Comme le nombre de variables est infini, il faudrait une infinité d'indices $i$ pour décrire toutes les formules. Mais on souhaite qu'une formule soit un mot formé à partir d'un alphabet fini. Pour cela, on va seulement considérer deux symboles pour décrire toutes les variables $P$ et \ $'$ \  (prime). Ainsi on note $P$ pour $P_0$, $P'$ pour $P_1$, $P''$ pour $P_2$, etc. Ainsi une formule est un mot fini composé à partir de l'alphabet fini :
+	$\{ P,\ '\; , (\;, )\;, \lnot, \land, \lor, \limplies, \lequiv \}$. Bien sûr, dans la pratique on conservera notre notation $P_i$ pour plus de clarté. 
+\end{remarque*}
+
+%--------------------------------------------------------------------
+\subsection{Formules : définition par le bas}
+
+La définition précédente est en fait assez abstraite et décrit assez mal l'ensemble des formules. Voici une nouvelle définition, dite \og{}définition par le bas\fg{} ou \og{}définition récursive\fg{}. 
+
+\begin{definition}
+	On définit des ensembles de formules $\text{Form}_n$ par récurrence.
+	\begin{itemize}
+		\item $\text{Form}_0 = \{ P_i \}_{i\in I}$ est l'ensemble des variables.
+		
+		\item Pour $n\ge 0$,
+		\[
+		\text{Form}_{n+1} = \text{Form}_{n} 
+		\cup \{ \lnot \mathcal{P} \mid \mathcal{P} \in \text{Form}_n \}
+		\cup \{ (\mathcal{P} \land \mathcal{Q})  \mid \mathcal{P}, \mathcal{Q} \in \text{Form}_n \}
+		\cup \ldots 
+		\]
+		(En faisant l'union correspondante pour tous les connecteurs $\lnot$, $\land$, $\lor$, $\limplies$, $\lequiv$.)
+		
+		\item $\text{Form} = \bigcup_{n\ge0} \text{Form}_n$ est la réunion de tous les $\text{Form}_n$.
+		
+		\item La \defi{hauteur}\index{formule!hauteur} d'une formule $\mathcal{P}$ est le plus petit entier $n$ tel que $\mathcal{P} \in \text{Form}_n$.
+	\end{itemize}	
+\end{definition}
+
+
+
+\begin{proposition}
+	\label{prop:denomb}
+	Si l'ensemble $\text{Var} = \{ P_i \}_{i\in I}$ des variables propositionnelles est dénombrable (ou fini), alors l'ensemble $\text{Form}$ des formules est aussi dénombrable.
+\end{proposition}
+
+\begin{proof}
+ L'ensemble $\text{Form} = \bigcup_{n\ge0} \text{Form}_n$ est une union indexée sur un ensemble dénombrable, où chaque ensemble $\text{Form}_n$ est un ensemble dénombrable, donc $\text{Form}$ est dénombrable.
+\end{proof}
+
+Dans tout le reste de ce chapitre, on supposera que l'ensemble des variables propositionnelles est fini ou dénombrable et donc que l'ensemble de toutes les formules est dénombrable.
+
+%--------------------------------------------------------------------
+\subsection{Évaluation d'une formule}
+\label{ssec:evaluation}
+
+Nous avons déjà vu qu'évaluer une formule $\mathcal{P}$ consiste à attribuer une valeur Vrai ou Faux à chaque variable propositionnelle $P_i$, afin d'attribuer une valeur Vrai/Faux à la formule $\mathcal{P}$ ainsi évaluée.
+
+Voici la définition rigoureuse d'une évaluation à partir de la définition \og{}par le haut\fg{} des formules. On note ici $\lone$ et $\lzero$ les deux valeurs booléennes \ltrue/\lfalse.
+
+\begin{definition}
+	\sauteligne
+	\begin{itemize}
+		\item Soit $v : \{ P_i \}_{i\in I} \to \{ \lzero, \lone\}$ une fonction, appelée \defi{distribution de valeurs}\index{distribution de valeurs} ou \defi{valuation}\index{valuation} : pour chaque $i\in I$ on a $v(P_i) = \lzero$ ou $v(P_i) = \lone$.
+		
+		\item On étend cette fonction $v : \text{Form} \to \{ \lzero, \lone\}$ à l'ensemble  $\text{Form}$ des formules :
+		\begin{itemize}
+			\item $v(\lnot \mathcal{P}) = \lone$ ssi $v(\mathcal{P})=  \lzero$,
+			
+			\item $v(\mathcal{P} \land \mathcal{Q}) = \lone$ ssi $v(\mathcal{P})= \lone$ et $v(\mathcal{Q})=\lone$,
+			
+			\item et selon le même principe pour $\lor$, $\limplies$, $\lequiv$.
+		\end{itemize}
+		
+		\item La valeur $v(\mathcal{P})$ est l'\defi{évaluation}\index{evaluation@évaluation} de $\mathcal{P}$ en $v$.
+	\end{itemize}
+\end{definition}
+
+%--------------------------------------------------------------------
+\subsection{Satisfaisabilité, conséquence logique}
+
+\begin{definition}
+	\sauteligne
+	\begin{itemize}
+		\item Une formule $\mathcal{P}$ est \defi{satisfaisable}\index{formule!satisfaction}, s'il existe une valuation $v$, telle que $v(\mathcal{P})$ soit vraie. On dit alors que $v$ \defi{satisfait} $\mathcal{P}$, ou que $v$ est un \defi{modèle}\index{modele@modèle} pour $\mathcal{P}$.
+		
+		\item Un ensemble de formules $\Gamma = \{ \mathcal{P}_j \}_{j \in J}$ est \defi{satisfaisable}, s'il existe une valuation $v$, telle que, pour tout $j \in J$, $v(\mathcal{P}_j)$ soit vraie. 
+		
+		\item Une formule, ou un ensemble de formules, qui n'est pas satisfaisable, est dit \defi{insatisfaisable} ou \defi{contradictoire}.
+	\end{itemize}
+\end{definition}	
+
+\begin{definition}
+	Soit $\Gamma$ un ensemble de formules et $\mathcal{Q}$ une formule.
+	On dit que $\mathcal{Q}$ est une \defi{conséquence logique}\index{consequence logique@conséquence logique} de $\Gamma$, si toute valuation $v$ qui satisfait $\Gamma$, satisfait aussi $\mathcal{Q}$.
+	On note :
+	\mybox{$
+	\Gamma \quad \ldoubleturn \quad \mathcal{Q}
+	$}
+\end{definition}
+
+Cela signifie que $\Gamma \cup \{ \lnot \mathcal{Q} \}$ n'est pas satisfaisable, c'est-à-dire qu'aucune distribution de valeurs ne peut satisfaire à la fois $\Gamma$ et $\lnot \mathcal{Q}$.
+
+Il faut comprendre $\Gamma$ comme des hypothèses et $\mathcal{Q}$ comme une conclusion. À chaque fois que toutes les hypothèses sont vérifiées, on constate que la conclusion l'est également.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Théorème de compacité}
+
+%--------------------------------------------------------------------
+\subsection{Énoncé}
+
+Soit $\Gamma$ un ensemble fini ou infini de formules.
+
+\begin{theoreme}
+	$\Gamma$ est satisfaisable si, et seulement si, pour toute partie finie $\Gamma_0 \subset \Gamma$, $\Gamma_0$ est satisfaisable.
+\end{theoreme}
+\index{theoreme@théorème!de compacite@de compacité}
+
+Afin de faciliter l'écriture de la preuve, on dira que $\Gamma$ est \defi{finiment satisfaisable}, si pour toute partie finie $\Gamma_0 \subset \Gamma$, $\Gamma_0$ est satisfaisable. Ainsi le théorème de compacité affirme :
+\[
+\Gamma \text{ satisfaisable } \quad \text {ssi } \quad \Gamma \text{ finiment satisfaisable } 
+\]
+
+Remarques :
+\begin{enumerate}
+\item L'implication directe est évidente. Si $\Gamma$ est satisfaisable, alors n'importe quel sous-ensemble de $\Gamma$ est aussi satisfaisable, donc en particulier $\Gamma$ est finiment satisfaisable.
+
+\item Si $\Gamma$ est un ensemble fini, alors le théorème est évident, il n'y a rien à démontrer.
+
+\item Si $\Gamma$ est infini, la réciproque est loin d'être évidente. Certains résultats vrais pour des ensembles finis, ne sont plus vrais nécessairement vrais pour des ensembles infinis. Par exemple, une intersection finie d'intervalles ouverts est un intervalle ouvert (éventuellement vide). En revanche, ce n'est plus vrai pour une intersection infinie : 
+\[
+\bigcap_{n\ge1} {\left] -\tfrac{1}{n} , 1+\tfrac{1}{n} \right[} = [0,1]
+\]
+C'est un exemple frappant où une intersection infinie d'intervalles ouverts aboutit à un intervalle fermé.
+\end{enumerate}
+
+
+%--------------------------------------------------------------------
+\subsection{Corollaires}
+
+Les corollaires suivants sont également appelés \og{}théorème de compacité\fg{}.
+
+\begin{corollaire}
+	\label{cor:compacite1}	
+	$\Gamma$ est insatisfaisable si, et seulement si, il existe un ensemble fini $\Gamma_0 \subset \Gamma$ tel que $\Gamma_0$ soit insatisfaisable.
+\end{corollaire}
+
+Autrement dit, si l'on n'arrive pas à satisfaire un ensemble de formules, cela ne peut pas être dû au fait qu'on en ait un nombre infini.
+
+Voici la contrepartie positive :
+\begin{corollaire}
+	\label{cor:compacite2}
+	$\Gamma \ldoubleturn \mathcal{Q}$ si, et seulement si, il existe un ensemble fini $\Gamma_0 \subset \Gamma$ tel que $\Gamma_0 \ldoubleturn \mathcal{Q}$.
+\end{corollaire}
+
+C'est la version qui nous intéresse le plus :
+si on a une infinité de formules $\Gamma$ comme hypothèses avec comme conséquence logique la formule $\mathcal{Q}$, alors on peut en extraire un sous-ensemble fini $\Gamma_0$ qui entraîne toujours la même conséquence logique $\mathcal{Q}$.
+On passe donc d'un nombre infini d'hypothèses à un nombre fini.
+
+
+%--------------------------------------------------------------------
+\subsection{Preuve des corollaires}
+
+Sans attendre la preuve du théorème, voici la démonstration des corollaires.
+
+\begin{proof}[Preuve du Corollaire \ref{cor:compacite1}]
+	
+	Le sens réciproque $\Leftarrow$ est clair : si $\Gamma_0$ n'est pas satisfaisable, alors aucun ensemble $\Gamma$ contenant $\Gamma_0$ ne sera satisfaisable.
+	
+	
+	Le sens direct $\Rightarrow$ se prouve en utilisant le théorème de compacité qui affirme :
+	\[
+	\forall \Gamma_0 \subset \Gamma  \quad \Gamma_0 \text{ satisfaisable } 
+	\quad \limplies \quad \Gamma \text{ satisfaisable }
+	\]
+	(On ne considère que les parties finies $\Gamma_0$.)
+	La contraposition est donc :
+	\[
+	 \Gamma \text{ non satisfaisable }
+	 \quad \limplies \quad
+	\text{non} \  (\forall \Gamma_0 \subset \Gamma \quad \Gamma_0 \text{ satisfaisable}) 
+	\]
+	Ce qui s'écrit :
+\[
+\Gamma \text{ insatisfaisable }
+\quad \limplies \quad
+\exists \Gamma_0 \subset \Gamma \quad \Gamma_0 \text{ insatisfaisable } 
+\]	
+\end{proof}
+
+\begin{proof}[Preuve du Corollaire \ref{cor:compacite2}]
+On va utiliser \og{}$\Gamma \ldoubleturn \mathcal{Q}$ si et seulement si 
+$\Gamma \cup \{ \lnot \mathcal{Q} \}$ est insatisfaisable\fg{}.
+
+Le sens réciproque $\Leftarrow$ est le sens facile :
+soit $\Gamma_0$ fini tel que $\Gamma_0 \ldoubleturn \mathcal{Q}$,
+donc $\Gamma_0 \cup \{ \lnot \mathcal{Q} \}$ est insatisfaisable.
+Alors, quel que soit l'ensemble $\Gamma$ contenant $\Gamma_0$, on a à fortiori que 
+$\Gamma \cup \{ \lnot \mathcal{Q} \}$ est insatisfaisable. Ainsi $\Gamma \ldoubleturn \mathcal{Q}$.
+
+
+Prouvons le sens direct $\Rightarrow$ à l'aide du Corollaire \ref{cor:compacite1}.
+Supposons $\Gamma \ldoubleturn \mathcal{Q}$,
+donc $\Gamma \cup \{ \lnot \mathcal{Q} \}$ est insatisfaisable.
+D'après le Corollaire~\ref{cor:compacite1}, il existe un ensemble fini 
+$\Delta_0 \subset \Gamma \cup \{ \lnot \mathcal{Q} \}$ tel que $\Delta_0$ soit insatisfaisable.
+\begin{itemize}
+	\item Si $\lnot \mathcal{Q} \in \Delta_0$ alors on écrit $\Delta_0 = \Gamma_0 \cup \{ \lnot \mathcal{Q} \}$ avec $\Gamma_0 \subset \Gamma$ fini. Ainsi $\Gamma_0 \cup \{ \lnot \mathcal{Q} \}$ est insatisfaisable, ce qui équivaut à 
+	$\Gamma_0 \ldoubleturn \mathcal{Q}$.
+	
+	\item Si $\lnot \mathcal{Q} \notin \Delta_0$, alors on pose juste $\Gamma_0 = \Delta_0$ qui est insatisfaisable. À fortiori $\Gamma_0 \cup \{ \lnot \mathcal{Q} \}$ est insatisfaisable, donc 
+	$\Gamma_0 \ldoubleturn \mathcal{Q}$.
+\end{itemize}
+Dans les deux cas, on a prouvé $\Gamma_0 \ldoubleturn \mathcal{Q}$.
+\end{proof}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Preuve}
+
+Le sens direct $\Rightarrow$ du théorème de compacité est clair : en effet, si $\Gamma$ est satisfaisable, alors toute partie $\Gamma_0 \subset \Gamma$ (finie ou pas) est satisfaisable.
+On se concentre donc sur la preuve de la réciproque : si $\Gamma$ est finiment satisfaisable, alors $\Gamma$ est satisfaisable.
+
+%--------------------------------------------------------------------
+\subsection{Partie 1}
+
+Soit $\Gamma$ un ensemble de formules finiment satisfaisable. Dans un premier temps nous allons construire un ensemble $\Delta$ tel que :
+\begin{enumerate}
+	\item $\Gamma \subset \Delta$,
+	
+	\item quelle que soit la formule $\mathcal{Q}$ de l'ensemble $\text{Form}$ de toutes les formules, soit $\mathcal{Q} \in \Delta$, soit $\lnot \mathcal{Q} \in \Delta$,
+	
+	\item $\Delta$ est finiment satisfaisable.
+\end{enumerate}
+
+
+On va construire par récurrence des ensembles $\Delta_n$ finiment satisfaisables, de plus en plus gros. L'ensemble $\Delta$ sera la réunion de tous les $\Delta_n$. 
+Commençons par définir :
+\[
+\Delta_0 = \Gamma
+\]
+Par hypothèse $\Delta_0$ est finiment satisfaisable.
+
+\medskip
+
+Nous avons supposé que l'ensemble $\text{Var}$ des variables propositionnelles était un ensemble dénombrable, donc par la Proposition \ref{prop:denomb}, l'ensemble $\text{Form}$ de toutes les formules est aussi un ensemble dénombrable. On peut donc en donner une énumération, indexée par des entiers :
+\[
+\text{Form} = \{ \mathcal{Q}_1, \mathcal{Q}_2, \ldots \}
+\]
+
+\medskip
+
+Montrons d'abord comment on construit $\Delta_1$. On distingue deux cas :
+\begin{itemize}
+	\item Si $\Delta_0 \cup \{ \mathcal{Q}_1 \}$ est finiment satisfaisable, on pose simplement :
+	\[
+	\Delta_1 = \Delta_0 \cup \{ \mathcal{Q}_1 \}
+	\]
+	
+	\item Sinon, on pose :
+	\[
+	\Delta_1 = \Delta_0 \cup \{ \lnot \mathcal{Q}_1 \}
+	\]	
+	Mais alors, dans ce cas aussi, $\Delta_1$ est finiment satisfaisable, d'après le lemme ci-dessous.
+\end{itemize}
+Donc dans tous les cas, $\Delta_1$ est finiment satisfaisable.
+
+
+	\begin{lemme}
+		\label{lem:finsas}
+		Soit $\Sigma$ un ensemble finiment satisfaisable et soit $\mathcal{Q}$ une formule quelconque.
+		Alors $\Sigma \cup \{ \mathcal{Q} \}$  ou $\Sigma \cup \{ \lnot \mathcal{Q} \}$ est finiment satisfaisable.
+	\end{lemme}
+	
+	\begin{proof}
+	Supposons par l'absurde que $\Sigma \cup \{ \mathcal{Q} \}$ n'est pas finiment satisfaisable 
+	et que $\Sigma \cup \{ \lnot\mathcal{Q} \}$ n'est pas finiment satisfaisable non plus.
+	Ainsi : 
+	\begin{itemize}
+		\item il existe un ensemble fini $\Sigma_1 \cup \{ \mathcal{Q} \}$ insatisfaisable (avec $\Sigma_1 \subset \Sigma$),
+		
+		\item et il existe un ensemble fini $\Sigma_2 \cup \{ \lnot \mathcal{Q} \}$ insatisfaisable (avec $\Sigma_2 \subset \Sigma$).
+	\end{itemize}
+	 
+	Notons alors $\Sigma_0 = \Sigma_1 \cup \Sigma_2$. C'est un ensemble fini, inclus dans $\Sigma$. 
+	Par hypothèse, il est donc satisfaisable. Soit $v$ une valuation qui satisfait $\Sigma_0$.
+	Si $v$ satisfait $\mathcal{Q}$, alors $\Sigma_1 \cup \{ \mathcal{Q} \}$ est satisfait, ce qui n'est pas possible.
+	Mais si $v$ ne satisfait pas $\mathcal{Q}$, alors $v$ satisfait $\lnot \mathcal{Q}$ et donc $v$ satisfait $\Sigma_2 \cup \{ \lnot \mathcal{Q} \}$, ce n'est pas possible non plus. 
+	On a donc obtenu une contradiction.
+	\end{proof}
+
+
+\medskip
+
+Continuons notre construction par récurrence. On suppose que l'on a déjà construit $\Delta_n$ finiment satisfaisable, sous la forme :
+\[
+\Delta_n = \Gamma \cup \{ \epsilon_1 \mathcal{Q}_1, \ldots, \epsilon_n \mathcal{Q}_n \}
+\]
+où $\epsilon_i \mathcal{Q}_i$ désigne $\mathcal{Q}_i$ ou bien $\lnot \mathcal{Q}_i$.
+On définit alors :
+\[
+\Delta_{n+1} = \left\lbrace 
+	\begin{array}{l}
+	\Delta_n \cup \{ \mathcal{Q}_{n+1} \} \quad \text{ s'il est finiment satisfaisable,} \\
+	\Delta_n \cup \{ \lnot\mathcal{Q}_{n+1} \} \quad \text{ sinon.}
+	\end{array}
+\right.
+\]
+Par le Lemme \ref{lem:finsas}, $\Delta_{n+1}$ est finiment satisfaisable.
+
+
+\medskip
+
+
+Définissons alors :
+\[
+	\Delta = \bigcup_{n \ge 0} \Delta_n
+\]
+Comme on a les inclusions $\Delta_0 \subset \Delta_1 \subset \Delta_2 \subset \cdots$, il faut comprendre $\Delta$ comme la limite des $\Delta_n$, lorsque $n$ tend vers $+\infty$.
+Vérifions maintenant les points annoncés :
+\begin{enumerate}
+	\item $\Gamma = \Delta_0 \subset \Delta$,
+
+	\item pour toute formule $\mathcal{Q}_n$, on a soit $\mathcal{Q}_n \in \Delta_n \subset \Delta$, soit $\lnot \mathcal{Q}_n \in \Delta_n \subset \Delta$,
+
+	\item enfin, $\Delta$ est finiment satisfaisable. En effet, soit un ensemble fini $\Gamma_0 \subset \Delta$, alors il existe $n \ge 0$ tel que $\Gamma_0 \subset \Delta_n$.
+	Mais alors $\Gamma_0$ est satisfaisable, car $\Delta_n$ est finiment satisfaisable.
+\end{enumerate}	
+
+
+%--------------------------------------------------------------------
+\subsection{Partie 2}
+
+Nous allons maintenant démontrer que toutes les formules $\mathcal{P}$ de $\Delta$ sont satisfaisables simultanément.
+Nous allons même préciser la valuation $v$ qui les réalise.
+Comme $\Gamma \subset \Delta$, $\Gamma$ sera donc satisfaisable.
+
+Définissons cette valuation $v$.
+On note $\text{Var} = \{ P_i \}_{i \in I}$ l'ensemble des variables propositionnelles.
+Soit $v$ la valuation définie par :
+\[
+\left\lbrace 
+\begin{array}{l}
+	v(P_i) = \lone \quad \text{ si } P_i \in \Delta, \\
+	v(P_i) = \lzero \quad \text{ sinon.}
+\end{array}
+\right.
+\]
+Une fois définie sur les variables propositionnelles, $v$ s'étend à toutes les formules (voir la Section \ref{ssec:evaluation}).
+
+Soit $\mathcal{P}$ une formule quelconque, nous allons prouver :
+\begin{lemme}
+	\label{lem:Delta}
+	$\mathcal{P}$ est satisfaite par $v$ si et seulement si $\mathcal{P} \in \Delta$.
+\end{lemme}
+
+Ainsi, comme $\Gamma \subset \Delta$, toute formule $\mathcal{P} \in \Gamma$ est satisfaite par $v$, et donc $\Gamma$ est satisfaisable car satisfait par $v$.
+
+Il nous reste à prouver le lemme.
+\begin{proof}
+La preuve se fait par récurrence sur la hauteur de $\mathcal{P}$.
+Pour simplifier la preuve, on suppose que les seuls connecteurs utilisés sont $\lnot$ et $\land$. C'est possible sans perte de généralité d'après le chapitre \og{}Quels connecteurs sont utiles ?\fg{}
+
+\begin{itemize}
+	\item Si $\mathcal{P}$ est l'une des variables propositionnelles $P_i$ alors par définition de $v$, $v$ satisfait $\mathcal{P}$ si et seulement si $\mathcal{P} \in \Delta$.
+	
+	\item Supposons que l'assertion du lemme soit vraie pour la formule $\mathcal{P}$ ; prouvons qu'elle est encore vraie pour $\lnot \mathcal{P}$.
+	
+	\[
+	\begin{array}{rcl}
+		(\lnot \mathcal{P}) \text{ satisfait par } v 
+		& \iff & v(\lnot \mathcal{P}) = \lone \\
+		& \iff & v(\mathcal{P}) = \lzero \\
+		& \iff & \text{non($\mathcal{P}$ satisfait par $v$)} \\
+		& \iff & \text{non}(\mathcal{P} \in \Delta) \\
+		& \iff & \mathcal{P} \notin \Delta \\
+		& \iff & \lnot \mathcal{P} \in \Delta \\
+	\end{array}	
+	\]
+	 Pour la dernière ligne, il faut se souvenir que par la propriété (2) de $\Delta$, on sait que $\mathcal{P}$ ou $\lnot \mathcal{P}$ appartient à $\Delta$.
+	
+	\item Supposons que l'assertion du lemme soit vraie pour la formule $\mathcal{P}$ et la formule $\mathcal{Q}$ ; prouvons qu'elle est encore vraie pour $\mathcal{P} \land \mathcal{Q}$.
+	
+	\medskip
+	
+	Sens direct $\Rightarrow$.
+	Si $\mathcal{P} \land \mathcal{Q}$ est satisfait par $v$, montrons que $\mathcal{P} \land \mathcal{Q} \in \Delta$.
+	
+	Comme $v$ satisfait $\mathcal{P} \land \mathcal{Q}$, alors $v$ satisfait $\mathcal{P}$, donc $\mathcal{P} \in \Delta$ et $v$ satisfait $\mathcal{Q}$, donc $\mathcal{Q} \in \Delta$.
+	
+	Par l'absurde, supposons que $\mathcal{P} \land \mathcal{Q} \notin \Delta$.
+	Alors, par la propriété (2) de $\Delta$, on a que $\lnot (\mathcal{P} \land \mathcal{Q}) \in \Delta$.
+	On considère alors l'ensemble $\{ \mathcal{P}, \mathcal{Q}, \lnot (\mathcal{P} \land \mathcal{Q}) \}$ qui est donc un ensemble fini non satisfaisable de formules (aucune valuation ne peut satisfaire simultanément $\mathcal{P}$, $\mathcal{Q}$ et $\lnot (\mathcal{P} \land \mathcal{Q})$). Cela contredit le fait que $\Delta$ est finiment satisfaisable.
+	Conclusion : $\mathcal{P} \land \mathcal{Q} \in \Delta$.
+	
+	\medskip
+	
+	Sens réciproque $\Leftarrow$.
+	Si $\mathcal{P} \land \mathcal{Q} \in \Delta$, montrons que $\mathcal{P} \land \mathcal{Q}$ est satisfait par $v$.
+	 
+	Par l'absurde, supposons que $\mathcal{P} \notin \Delta$. Alors $\lnot \mathcal{P} \in \Delta$ (toujours par la propriété (2) de $\Delta$). Ainsi $\{ \mathcal{P} \land \mathcal{Q}, \lnot \mathcal{P} \} \subset \Delta$ est un ensemble fini, mais qui n'est bien sûr pas satisfaisable. Cela contredit de nouveau le fait que $\Delta$ est finiment satisfaisable. 
+	Bilan : on a $\mathcal{P} \in \Delta$, donc par hypothèse de récurrence $v(\mathcal{P}) = \lone$.
+	
+	On prouve de même que $\mathcal{Q} \in \Delta$ et donc $v(\mathcal{Q}) = \lone$. Mais alors, $v( \mathcal{P} \land \mathcal{Q}) = \lone$ (par la construction de la valuation) et donc $\mathcal{P} \land \mathcal{Q}$ est satisfaite par $v$.
+		
+\end{itemize}
+
+	
+\end{proof}
+
+Remarque. Si on autorise les autres connecteurs classiques $\lor$, $\limplies$, $\lequiv$, alors
+on peut prouver de la même façon que $\mathcal{P} \lor \mathcal{Q}$ est satisfaite par $v$ si et seulement si $\mathcal{P} \lor \mathcal{Q} \in \Delta$, etc. (À faire dans les exercices.)
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{$\{\lzero,\lone\}^\Nn$ est compact}
+
+Pourquoi le théorème de compacité s'appelle-t-il ainsi ?
+Nous faisons ici le lien avec la notion d'ensemble compact.
+La lecture de cette section est destinée à ceux qui ont déjà une connaissance de la topologie, dont les notions ne seront pas rappelées ici.
+
+%--------------------------------------------------------------------
+\subsection{Topologie de $\{\lzero,\lone\}^\Nn$}
+
+\begin{itemize}
+	\item Soit $\Bb = \{\lzero,\lone\}$ muni de la topologie discrète, c'est-à-dire que $\{\lzero\}$ et $\{\lone\}$ sont à la fois des ensembles ouverts et fermés.
+
+	\item $\Bb^\Nn = \{\lzero,\lone\}^\Nn$ est un espace produit. Il peut être vu comme l'ensemble $\{ v : \Nn \to \{\lzero,\lone\}\}$ des fonctions qui, à un entier $i$, associent une valeur $\lzero$ ou $\lone$. Autrement dit comme l'ensemble des valuations qui, à chaque variable propositionnelle $P_i$, associent une valeur Vrai/Faux (ici $\text{Var} = \{P_i\}_{i\in\Nn}$ est dénombrable).
+
+	\item On munit $\{\lzero,\lone\}^\Nn$ de la topologie produit, c'est-à-dire, par définition, la topologie la moins fine rendant continues les projections $\pi_i : \{\lzero,\lone\}^\Nn \to \{\lzero,\lone\}$.
+
+	\item Ainsi, pour $i$ fixé, $\pi_i^{-1}(\{\lone\}) = \{ v : \Nn \to \{\lzero,\lone\} \mid v(i) = \lone \}$ est un fermé en tant qu'image réciproque d'un ensemble fermé par une application continue. C'est aussi un ouvert en tant qu'image réciproque d'un ensemble ouvert, ce qui fait que son complément est un ensemble fermé.
+	
+	\item Soit $\mathcal{P}$ une formule. Notons $V(\mathcal{P}) = \{ v \in \{\lzero,\lone\}^\Nn \mid v(\mathcal{P}) = \lone \}$. Cet ensemble $V(\mathcal{P})$ est un fermé. La preuve se fait par récurrence sur la hauteur de $\mathcal{P}$ (un peu comme dans la seconde partie de la preuve du théorème de compacité ; voir les exercices).
+	
+	\item Une formule $\mathcal{P}$ est satisfaisable si et seulement si $V(\mathcal{P})$ est non vide.
+\end{itemize}
+
+
+%--------------------------------------------------------------------
+\subsection{Un produit de compacts est compact}
+
+\begin{theoreme}[Théorème de Tychonoff]
+	Un produit (quelconque) d'ensembles compacts est compact.
+\end{theoreme}
+\index{theoreme@théorème!de Tychonoff}
+
+Le produit peut être fini ou infini (dénombrable ou pas).
+
+\begin{corollaire}
+	$\{\lzero,\lone\}^\Nn$ est un ensemble compact.
+\end{corollaire}
+
+En effet, $\{\lzero,\lone\}$ est compact car c'est un ensemble fini.
+
+Voici une propriété importante des compacts.
+\begin{proposition}
+	\label{prop:fermes}
+	Soient $F_j$, $j\in J$, des ensembles fermés dans un ensemble compact $E$.
+	Si $\bigcap_{j\in J} F_j = \varnothing$, alors il existe un ensemble fini $J_0 \subset J$ tel que
+	$\bigcap_{j\in J_0} F_j = \varnothing$.
+\end{proposition}
+
+C'est l'équivalent de la version plus connue pour les ouverts : \og{}De tout recouvrement d'un compact par des ouverts, on peut en extraire un sous-recouvrement fini.\fg{}
+
+
+%--------------------------------------------------------------------
+\subsection{Preuve du théorème de compacité}
+
+Soit $\Gamma = \{ \mathcal{P}_0, \mathcal{P}_1,\ldots \}$ un ensemble de formules finiment satisfaisable. 
+
+On note $F_j = V(\mathcal{P}_j)$, qui est un ensemble fermé de $\{\lzero,\lone\}^\Nn$.
+Notons que $F_j$ est non vide car $\mathcal{P}_j$ est satisfaisable (puisque $\{\mathcal{P}_j\}$ est un sous-ensemble fini de $\Gamma$). Plus généralement, si $\Gamma_0 = \{ \mathcal{P}_{j} \}_{j\in J_0}$ est un ensemble fini de formules inclus dans $\Gamma$, alors il existe une valuation $v$ qui satisfait simultanément tous les $\mathcal{P}_{j}$. Donc $v \in F_{j}$ pour tout $j \in J_0$. Autrement dit :
+\[
+\bigcap_{j \in J_0} F_j \neq \varnothing
+\]
+Ainsi, chaque intersection finie de fermés est non vide.
+Par contraposition de la Proposition \ref{prop:fermes}, on a donc :
+\[
+\bigcap_{j \in \Nn} F_j \neq \varnothing
+\]
+Cela signifie qu'il existe  $v : \Nn \to \{\lzero,\lone\}$ tel que $v(\mathcal{P}_j) = \lone$, quel que soit $j \in \Nn$. Ainsi, $v$ satisfait $\Gamma$. On a bien prouvé que $\Gamma$ est satisfaisable. 
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Exercices}
+
+\subsection*{Formules, formules satisfaisables, conséquence logique}
+
+
+\begin{exercicecours}
+	On considère $\text{Var} = \{P,Q,R\}$ et $\text{Conn} = \{ \lnot, \land\}$.
+	Énumérer toutes les formules de hauteur $0$, puis $1$. 
+	Combien y a-t-il de formules de hauteur $2$ ?
+	Mêmes questions avec $\text{Var} = \{P,Q\}$ et $\text{Conn} = \{ \lnot, \land, \lor, \limplies, \lequiv \}$.
+\end{exercicecours}
+
+
+\begin{exercicecours}
+	Montrer que deux formules sont logiquement équivalentes
+	exactement lorsque chacune est conséquence logique de l'autre.
+	\[ 
+	\mathcal{P} \equiv \mathcal{Q} 
+	\quad  \text{ ssi }  \quad
+	\mathcal{P} \ldoubleturn \mathcal{Q} \text{ et } \mathcal{Q} \ldoubleturn \mathcal{P}
+	\]
+\end{exercicecours}
+
+
+\begin{exercicecours}
+	Trouver toutes les valuations définies sur $\{ P_i \}_{i \in\Nn}$ qui satisfont l'ensemble infini de formules :
+	\[
+	\Gamma = 
+	\{ P_0 \limplies P_1, P_1 \limplies P_2, P_2 \limplies P_3, \ldots \}
+	\] 
+\end{exercicecours}
+
+
+
+\subsection*{Théorème de compacité}
+
+\begin{exercicecours}
+	Pour les variables $\{ P_i \}_{i \in \Nn}$, on définit pour $n \ge 0$, la formule
+	$\mathcal{P}_n = \lnot (P_n \land P_{n+1})$.
+	Soit $\Gamma = \{ \mathcal{P}_n \mid n \ge 0\}$.
+	
+	\begin{enumerate}
+		\item Montrer que chaque partie finie de $\Gamma$ est satisfaisable.
+		
+		\item En déduire que $\Gamma$ est satisfaisable.
+		
+		\item Caractériser toutes les valuations définies sur $\{ P_i \}_{i \in\Nn}$ qui satisfont $\Gamma$.
+	\end{enumerate}	
+\end{exercicecours}
+
+
+\begin{exercicecours}
+	Pour chaque entier $n\in\Nn$, on définit la formule :
+	\[
+	\mathcal{P}_n
+	= (P_n \lor P_{n+1}) \land (\lnot P_{n+2}).
+	\]
+	On considère l'ensemble $\Gamma = \{\mathcal{P}_n \mid n \ge 0\}$.
+	
+	\begin{enumerate}
+		\item Pour $n\ge 0$ fixé, montrer que $\{ \mathcal{P}_n \}$ est satisfaisable.
+		\item Pour $n\ge 0$ fixé, montrer que $\{ \mathcal{P}_n, \mathcal{P}_{n+1} \}$ est satisfaisable.
+		\item $\Gamma$ est-il satisfaisable ?
+	\end{enumerate}
+\end{exercicecours}
+
+
+\begin{exercicecours}
+  En partant du Corollaire \ref{cor:compacite2}, supposé admis, donner une preuve du théorème de compacité.
+\end{exercicecours}
+
+
+\subsection*{Preuve}
+
+\begin{exercicecours}
+	Prolonger la preuve du Lemme \ref{lem:Delta} afin de montrer directement que :
+	\[
+	v \text{ satisfait } \mathcal{P} \lor \mathcal{Q}
+	\quad  \text{ ssi }  \quad
+	\mathcal{P} \lor \mathcal{Q} \in \Delta
+	\]
+\end{exercicecours}
+
+
+\subsection*{$\{\lzero,\lone\}^\Nn$ est compact}
+
+\begin{exercicecours}
+	Soit $\mathcal{P}$ une formule et $V(\mathcal{P}) = \{ v \in \{\lzero,\lone\}^\Nn \mid v(\mathcal{P}) = \lone \}$. Montrer que $V(\mathcal{P})$ est un ensemble fermé de $\{\lzero,\lone\}^\Nn$. On le justifiera d'abord pour les variables propositionnelles, puis on le prouvera par récurrence sur la hauteur de $\mathcal{P}$ en s'inspirant de la preuve du Lemme \ref{lem:Delta}.
+\end{exercicecours}
+
+
+\end{document}

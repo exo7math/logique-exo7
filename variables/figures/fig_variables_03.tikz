@@ -1,0 +1,25 @@
+\begin{tikzpicture}[scale=1]
+
+\coordinate (A0) at (160:3);
+\coordinate (A1) at (200:3);
+\coordinate (A2) at (-95:2.5);
+\coordinate (A3) at (-30:2.5);
+\coordinate (A4) at (10:3.1);
+\coordinate (A5) at (60:2.7);
+\coordinate (A6) at (100:2.8);
+
+\draw [thick] (A0) -- (A1) -- (A2) -- (A3)--(A4);
+\draw [thick, dashed]  (A4) --(A5) -- (A6);
+\draw [thick] (A6) -- (A0);
+
+\foreach \A in {A0, A1, A2, A2, A3, A4, A5, A6}{
+	\node at (\A) [circle,fill=black, scale=0.5] {};
+}
+
+\node at (A0) [above left]{$x_0$};
+\node at (A1) [below left]{$x_1$};
+\node at (A2) [below=3pt]{$x_2$};
+\node at (A6) [above left]{$x_{n-1}$};
+
+\node  at(0,-4) {\textbf{Cycle dans un graphe}};
+\end{tikzpicture}

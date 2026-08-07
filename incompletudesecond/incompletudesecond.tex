@@ -1,0 +1,203 @@
+\documentclass[11pt,class=report,crop=false]{standalone}
+\usepackage[screen]{../logic}
+
+
+\begin{document}
+
+
+%====================================================================
+\chapitre[Le second théorème d'incomplétude]{Le second théorème\\ d'incomplétude}
+%====================================================================
+
+% \insertvideo{partie 1.1. Titre}
+
+\objectifs{Nous clôturons ce livre avec le second théorème d'incomplétude de Gödel.}
+
+\index{theoreme incompletude (second)@théorème d'incomplétude (second)}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Le second théorème de Gödel}
+
+%--------------------------------------------------------------------
+\subsection{Énoncé}
+
+\begin{theoreme}
+Soit $\mathcal{T}$ une théorie cohérente, contenant $\mathcal{PA}$, ayant des axiomes récursifs. Alors $\mathcal{T}$ ne peut pas prouver sa propre cohérence.
+\end{theoreme}
+
+Si l'on note $\mathcal{E}\text{st-cohérente}(\mathcal{T})$ le prédicat \og{}être une théorie cohérente\fg{}, la conclusion du théorème est donc :
+\mybox{
+  $\mathcal{T} \quad \not\lturn \quad \mathcal{E}\text{st-cohérente}(\mathcal{T})$
+}
+
+Noter que les hypothèses sont les mêmes que celles du premier théorème.
+
+%--------------------------------------------------------------------
+\subsection{Cohérence}
+
+
+\index{theorie@théorie!coherente@cohérente}
+On rappelle qu'une théorie est \defi{incohérente} si elle prouve n'importe quelle formule, en particulier la formule absurde \og$0=1$\fg{}, ce qui peut s'exprimer dans le langage $\mathcal{L}_0$ par $\mathcal{E}\text{st-démontrable}(\ulcorner 0=1 \urcorner)$, où on note bien sûr $1 = S(0)$. Ainsi on définit la formule :
+\[
+  \mathcal{E}\text{st-cohérente}(\mathcal{T}) \ : \quad \lnot \mathcal{E}\text{st-démontrable}(\ulcorner 0=1 \urcorner)
+\]
+On peut ainsi exprimer la cohérence par une formule de $\mathcal{L}_0$.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Preuve}
+
+La preuve est une conséquence assez directe du premier théorème si on accepte sa version formalisée.
+
+%--------------------------------------------------------------------
+\subsection{Formalisation du premier théorème d'incomplétude}
+
+On suppose que $\mathcal{T}$ est une théorie qui contient $\mathcal{PA}$, on suppose aussi que les axiomes de $\mathcal{T}$ sont récursifs, et on s'intéresse seulement à l'hypothèse de cohérence.
+
+On rappelle que le lemme de diagonalisation fournit une formule $\mathcal{G}$ telle que :
+\[
+  \mathcal{T} \quad \lturn \quad \big(\mathcal{G} \ \ \lequiv \ \ \lnot\mathcal{E}\text{st-démontrable}(\ulcorner \mathcal{G} \urcorner) \big)
+\]
+
+Et l'énoncé du premier théorème d'incomplétude est alors :
+\begin{center}
+  $\mathcal{T}$ cohérente implique $\mathcal{G}$ non démontrable.
+\end{center}
+
+Mais par le lemme de diagonalisation, $\mathcal{G}$ signifie exactement \og{}$\mathcal{G}$ non démontrable\fg{}, donc l'énoncé du premier théorème est aussi :
+\begin{center}
+  $\mathcal{T}$ cohérente implique $\mathcal{G}$.
+\end{center}
+
+\bigskip
+
+Voici la formalisation du premier théorème d'incomplétude :
+\mybox{
+  $\displaystyle  
+  \mathcal{T} \quad \lturn \quad 
+  \big( \mathcal{E}\text{st-cohérente}(\mathcal{T}) \limplies  \mathcal{G} \big)
+  $
+}
+C'est exactement l'énoncé précédent qui a été \emph{internalisé}. L'énoncé \og{}$\mathcal{T}$ cohérente implique $\mathcal{G}$\fg{} est prouvable (ce qu'on a vu dans les chapitres précédents) mais ici on admet qu'on pourrait en écrire une preuve dans la théorie $\mathcal{T}$. On reviendra sur cette formalisation dans la dernière section.
+
+
+%--------------------------------------------------------------------
+\subsection{Preuve du second théorème d'incomplétude}
+
+On admet la version formalisée du premier théorème afin de prouver le second.
+En cela, on suit la même démarche que Gödel quand il énonce le second théorème et esquisse la preuve à la fin de son article fondateur sur ses théorèmes d'incomplétude.
+
+
+On a aussi besoin d'admettre le principe appelé \og{}nécessité de la preuve\fg{} :
+\[
+\text{ si } \quad \mathcal{T} \ \lturn \ \mathcal{Q} \quad \text{ alors } \quad  \mathcal{T} \ \lturn \ \mathcal{E}\text{st-démontrable}(\ulcorner \mathcal{Q} \urcorner)
+\] 
+
+Cela signifie que si une théorie prouve une formule, alors elle sait qu'elle peut prouver cette formule !
+
+\bigskip
+
+Prouvons maintenant qu'une théorie cohérente ne peut pas prouver sa propre cohérence.
+
+On part d'une théorie quelconque $\mathcal{T}$ et on suppose qu'elle prouve sa propre cohérence : 
+\[  \mathcal{T} \quad \lturn \quad \mathcal{E}\text{st-cohérente}(\mathcal{T}) \]
+
+Par \emph{modus ponens} appliqué à la formalisation du premier théorème d'incomplétude, on a alors :
+\begin{align*}
+    & \mathcal{T} \quad \lturn \quad \mathcal{G} \\
+    \text{donc} \quad & \mathcal{T} \quad \lturn \quad \mathcal{E}\text{st-démontrable}(\ulcorner \mathcal{G} \urcorner) \quad \text{par la nécessité de la preuve} \\
+    \text{donc} \quad & \mathcal{T} \quad \lturn \quad \lnot \mathcal{G} \quad \text{par l'équivalence de la diagonalisation}
+\end{align*}
+
+Bilan :
+\[ 
+\mathcal{T} \quad \lturn \quad \mathcal{G} \qquad \text{et} \qquad \mathcal{T} \quad \lturn \quad \lnot \mathcal{G} \]
+Donc $\mathcal{T}$ est incohérente.
+
+\medskip
+
+Ainsi, par contraposition, on a bien démontré le second théorème : 
+\mycenterline{
+Si $\mathcal{T}$ est cohérente alors $\mathcal{T} \not\lturn \mathcal{E}\text{st-cohérente}(\mathcal{T})$. 
+}
+
+%--------------------------------------------------------------------
+\subsection{Retour sur la formalisation}
+
+La preuve expliquée ci-dessus est l'esquisse originale de Gödel (1931). Il faudra attendre les travaux de Hilbert et Bernays (1934-1939), puis Löb (1955) pour obtenir une preuve détaillée. Cette preuve repose sur trois conditions, appelées \og{}conditions de Hilbert-Bernays-Löb\fg{} :
+
+\begin{itemize}
+    \item \textbf{C1} - \emph{Nécessité de la preuve.}
+    \[
+    \text{ Si } \mathcal{T} \quad \lturn \quad \mathcal{Q}, \quad \text{ alors } \mathcal{T} \quad \lturn \quad \mathcal{E}\text{st-démontrable}(\ulcorner \mathcal{Q} \urcorner)
+    \]
+
+    \item \textbf{C2} - \emph{Modus ponens des preuves.}
+    \[
+    \mathcal{T} \quad \lturn \quad \mathcal{E}\text{st-démontrable}(\ulcorner \mathcal{P} \limplies \mathcal{Q} \urcorner) \limplies \big( \mathcal{E}\text{st-démontrable}(\ulcorner \mathcal{P} \urcorner) \limplies \mathcal{E}\text{st-démontrable}(\ulcorner \mathcal{Q} \urcorner) \big) 
+    \]
+
+    \item \textbf{C3} - \emph{Introspection de la preuve.}
+    \[
+    \mathcal{T} \quad \lturn \quad \mathcal{E}\text{st-démontrable}(\ulcorner \mathcal{Q} \urcorner) \limplies \mathcal{E}\text{st-démontrable}(\ulcorner \mathcal{E}\text{st-démontrable}(\ulcorner \mathcal{Q} \urcorner) \urcorner)
+    \]
+\end{itemize}
+
+\bigskip
+
+On admet que ces conditions sont vérifiées. (Elles sont très techniques à démontrer, il faudra attendre 1955 pour en achever la formalisation.)
+On peut maintenant donner une preuve rigoureuse de la formalisation du premier théorème d'incomplétude. On part de l'équivalence que la diagonalisation fournit :
+\begin{align*}
+    & \mathcal{T} \quad \lturn \quad \mathcal{G} \lequiv \lnot \mathcal{E}\text{st-démontrable}(\ulcorner \mathcal{G} \urcorner) \\
+    \text{donc} \quad & \mathcal{T} \quad \lturn \quad \mathcal{G} \limplies \lnot \mathcal{E}\text{st-démontrable}(\ulcorner \mathcal{G} \urcorner) \quad \text{on n'a gardé que l'implication directe} \\
+    \text{donc} \quad & \mathcal{T} \quad \lturn \quad \mathcal{E}\text{st-démontrable}\big( \ulcorner \mathcal{G} \limplies \lnot \mathcal{E}\text{st-démontrable}(\ulcorner \mathcal{G} \urcorner) \urcorner \big) \quad \text{par (C1)} \\
+    \text{donc} \quad & \mathcal{T} \quad \lturn \quad \mathcal{E}\text{st-démontrable}(\ulcorner \mathcal{G} \urcorner) \limplies \mathcal{E}\text{st-démontrable}(\ulcorner \lnot \mathcal{E}\text{st-démontrable}(\ulcorner \mathcal{G} \urcorner) \urcorner) \quad \text{par (C2)}
+\end{align*}
+
+
+Mais par (C3), on a toujours :
+\[ \mathcal{T} \quad \lturn \quad \mathcal{E}\text{st-démontrable}(\ulcorner \mathcal{G} \urcorner) \limplies  \mathcal{E}\text{st-démontrable}(\ulcorner \mathcal{E}\text{st-démontrable}(\ulcorner \mathcal{G} \urcorner) \urcorner) \]
+
+
+En posant :
+\[
+\mathcal{Q} \ : \quad  \mathcal{E}\text{st-démontrable}(\ulcorner \mathcal{G} \urcorner)
+\]
+on obtient une double conclusion :
+\begin{align*}
+    & \mathcal{T} \quad \lturn \quad  
+    \mathcal{E}\text{st-démontrable}(\ulcorner \mathcal{G} \urcorner) \limplies 
+    \mathcal{E}\text{st-démontrable}(\ulcorner \mathcal{Q} \urcorner) \land \mathcal{E}\text{st-démontrable}(\ulcorner \lnot \mathcal{Q} \urcorner)\\
+    \text{donc} \quad & \mathcal{T} \quad \lturn \quad 
+    \mathcal{E}\text{st-démontrable}(\ulcorner \mathcal{G} \urcorner) \limplies 
+    \mathcal{E}\text{st-démontrable}(\ulcorner \mathcal{Q} \land \lnot \mathcal{Q} \urcorner) \\
+    \text{donc} \quad & \mathcal{T} \quad \lturn \quad 
+   \mathcal{E}\text{st-démontrable}(\ulcorner \mathcal{G} \urcorner) \limplies 
+   \mathcal{E}\text{st-démontrable}(\ulcorner 0=1 \urcorner)  \\
+    \text{ainsi} \quad & \mathcal{T} \quad \lturn \quad 
+   \mathcal{E}\text{st-démontrable}(\ulcorner \mathcal{G} \urcorner) \limplies 
+   \lnot\mathcal{E}\text{st-cohérente}(\mathcal{T})  \\
+\end{align*}
+
+
+Par contraposition :
+\[ \mathcal{T} \quad \lturn \quad \mathcal{E}\text{st-cohérente}(\mathcal{T}) \limplies \lnot \mathcal{E}\text{st-démontrable}(\ulcorner \mathcal{G} \urcorner) \]
+
+Mais par diagonalisation, la conclusion est exactement $\mathcal{G}$, donc :
+\[ \mathcal{T} \quad \lturn \quad \mathcal{E}\text{st-cohérente}(\mathcal{T}) \limplies \mathcal{G} \]
+Ce qui est la formalisation souhaitée du premier théorème d'incomplétude.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\section*{Exercices}
+
+\excludecomment{exercicecours} 
+%\emph{Exercices : à faire}
+
+\begin{exercicecours}
+
+\end{exercicecours}
+
+\includecomment{exercicecours} 
+
+
+\end{document}

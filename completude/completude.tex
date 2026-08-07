@@ -1,0 +1,618 @@
+\documentclass[11pt,class=report,crop=false]{standalone}
+\usepackage[screen]{../logic}
+
+
+\begin{document}
+
+
+%====================================================================
+\chapitre{Théorème de complétude}
+%====================================================================
+
+% \insertvideo{}{partie 1.1. Titre}
+
+
+\objectifs{Le théorème de complétude dit que, en logique du premier ordre, tout ce qui est vrai est prouvable. Nous énonçons ce théorème, ses variantes et ses applications.}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Théorème de complétude}
+
+%--------------------------------------------------------------------
+\subsection{Énoncé}
+
+Soit $\mathcal{L}$ un langage du premier ordre.
+
+\begin{theoreme}[Théorème de complétude]
+	\sauteligne
+\mybox{
+	Si \quad 
+	$\mathcal{P}_1, \ldots, \mathcal{P}_l \quad \ldoubleturn \quad \mathcal{Q}$
+	\quad \text{ alors }
+	\quad 
+	$\mathcal{P}_1, \ldots, \mathcal{P}_l \quad \lturn \quad \mathcal{Q}$
+}	
+\end{theoreme}
+\index{theoreme completude@théorème de complétude}
+
+
+Ce que l'on peut lire : si, lorsque les hypothèses $\mathcal{P}_1,\ldots,\mathcal{P}_l$ sont satisfaites, $\mathcal{Q}$ l'est aussi, alors il existe une preuve de $\mathcal{Q}$ à partir de $\mathcal{P}_1,\ldots,\mathcal{P}_l$. 
+
+Voici la variante pour un ensemble $\Gamma$ de formules, éventuellement infini dénombrable :
+\begin{theoreme}[Théorème de complétude]
+	\sauteligne
+	\[
+		\text{Si} \quad 
+		\Gamma \quad \ldoubleturn \quad \mathcal{Q}
+		\quad \text{ alors }
+		\quad 
+		\Gamma \quad \lturn \quad \mathcal{Q}.
+	\]	
+\end{theoreme}
+
+La conclusion $\Gamma \ \lturn \ \mathcal{Q}$ est un résultat d'existence : \og{}il existe une preuve de $\mathcal{Q}$ à partir des formules de $\Gamma$\fg{}. Cependant, le théorème n'est pas constructif et ne donne aucune indication concrète sur cette preuve.
+
+La démonstration du théorème de complétude est assez exigeante. Elle partage des points communs avec le théorème de compacité de la logique V/F mais avec un niveau de difficulté supplémentaire.
+Cette démonstration sera faite au prochain chapitre. On va maintenant se concentrer sur les différentes reformulations et les applications.
+
+%--------------------------------------------------------------------
+\subsection{Équivalence}
+
+On a vu au chapitre précédent le théorème de validité qui est exactement la réciproque du théorème de complétude.
+Ainsi, on obtient une équivalence qu'on appelle encore théorème de complétude :
+
+\begin{theoreme}[Théorème de complétude]
+	\sauteligne
+\mybox{$	
+	\Gamma \quad \ldoubleturn \quad \mathcal{Q}
+	\quad \text{ ssi }
+	\quad 
+	\Gamma \quad \lturn \quad \mathcal{Q}
+$}
+\end{theoreme}
+
+Ainsi, pour la logique du premier ordre, la conséquence logique et la prouvabilité sont des notions équivalentes.
+
+
+
+%--------------------------------------------------------------------
+\subsection{Et l'incomplétude ?}
+
+N'y a-t-il pas une contradiction à obtenir le théorème de complétude alors qu'à la fin du livre on obtiendra le théorème d'incomplétude, dont le nom semble suggérer le contraire ?
+En fait, le théorème de complétude s'applique à la logique du premier ordre qui est une logique assez rudimentaire mais avec l'hypothèse $\Gamma \ldoubleturn \mathcal{Q}$ qui est assez forte car 
+la conséquence logique exige que la formule soit vraie dans toutes les structures possibles.
+
+Le théorème d'incomplétude ne concerne pas l'ensemble des structures, mais concerne des théories plus spécifiques, typiquement qui contiennent les entiers naturels $\Nn$ avec les axiomes de l'arithmétique (les axiomes de Peano).
+On verra que, pour l'arithmétique des entiers, il existe des formules $\mathcal{Q}$ telles que ni $\mathcal{Q}$ ni $\lnot \mathcal{Q}$ ne sont prouvables, autrement dit, il existe des formules vraies mais non prouvables, mais tout ceci uniquement pour la structure associée à l'arithmétique des entiers.
+Ceci n'est pas en contradiction avec le théorème de complétude car l'hypothèse $\Gamma \ldoubleturn_{\mathcal{S}} \mathcal{Q}$ n'est pas vérifiée pour toutes les structures, mais seulement pour certaines structures spécifiques ; les conditions du théorème de complétude ne sont donc pas réunies. 
+
+Ainsi, les théorèmes de complétude et d'incomplétude sont tous les deux vrais, mais ne s'appliquent pas aux mêmes situations et ne se contredisent donc pas.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Applications aux théories}
+
+On va rappeler des définitions et introduire de nouvelles notions.
+Soit $\mathcal{L}$ un langage du premier ordre. 
+
+%--------------------------------------------------------------------
+\subsection{Théorie cohérente, modèle}
+
+\begin{itemize}
+	\item Une \defi{formule fermée}\index{formule!fermee@fermée} (ou \defi{formule close}, ou \defi{phrase}) est une formule sans variable libre, c'est-à-dire que toutes les occurrences de variables sont dans la portée d'un quantificateur.
+	
+	\item Une \defi{théorie}\index{theorie@théorie} $\mathcal{T}$ est un ensemble de formules fermées. (Remarque : certains appellent \og{}théorie\fg{} un ensemble quelconque de formules.)
+	
+	\item Une structure $\mathcal{S}$ est un \defi{modèle}\index{modele@modèle} pour $\mathcal{T}$ si $\mathcal{T}$ est satisfaite dans $\mathcal{S}$, noté $\ldoubleturn_{\mathcal{S}} \mathcal{T}$, c'est-à-dire que l'interprétation de chaque formule de $\mathcal{T}$ est vraie dans $\mathcal{S}$. (Comme les formules sont fermées, il n'y a pas d'affectation à considérer.)
+\end{itemize}
+
+Voici une nouvelle notion très importante.
+
+\begin{definition}
+	Une théorie $\mathcal{T}$ est \defi{non cohérente} s'il existe une formule $\mathcal{Q}$ telle que :
+	\[
+	\mathcal{T} \ \lturn \ \mathcal{Q} \quad \text{ et } \quad \mathcal{T} \ \lturn \ \lnot \mathcal{Q}.
+	\] 
+	
+	Dans le cas contraire, on dit que $\mathcal{T}$ est \defi{cohérente}\index{theorie@théorie!coherente@cohérente}. 
+\end{definition}
+Il est équivalent de dire que $\mathcal{T}$ est non cohérente si $\mathcal{T} \ \lturn \ \lantitauto$, où $\lantitauto$ désigne une contradiction.
+
+Ainsi, d'une théorie cohérente on ne pourra jamais démontrer une contradiction (ce qui est rassurant).
+
+
+
+%--------------------------------------------------------------------
+\subsection{Lemme de déduction naturelle}
+
+$\Gamma$ désigne un ensemble de formules, et $\mathcal{P}$, $\mathcal{Q}$ des formules.
+\begin{lemme}[Lemme de déduction naturelle] 
+	\sauteligne
+	\mybox{
+	$\Gamma, \ \mathcal{P} \quad \lturn \quad \mathcal{Q}$ \qquad ssi \qquad $\Gamma \quad \lturn \quad (\mathcal{P} \limplies \mathcal{Q})$
+}
+\end{lemme}
+\index{lemme!de deduction naturelle@de déduction naturelle}
+
+\begin{proof}
+Le sens réciproque $\Leftarrow$ est en fait la règle du \emph{modus ponens} $\mathcal{P}, \mathcal{P} \limplies \mathcal{Q} \ \ \lturn \ \ \mathcal{Q}$. 
+
+Le sens direct $\Rightarrow$ est immédiat quand on a une preuve en déduction naturelle (d'où le nom du lemme), il s'agit juste d'une reformulation dans l'écriture de la preuve :	
+	
+
+\begin{minipage}[t]{0.4\textwidth}
+	\qquad\textbf{Preuve de \ \ $\Gamma, \ \mathcal{P} \quad \lturn \quad \mathcal{Q}$}
+
+	\[
+	\begin{nd}
+		\hypo [~] {} {\Gamma}  \by{}{}
+		\hypo [~] {} {\mathcal{P}}  \by{\text{Hypothèses}}{}
+		\have [~] {} {\ \vdots} \by{\text{Étapes}}{}
+		\have [\lturn] {} {\mathcal{Q}} \by{\text{Conclusion}}{}
+	\end{nd}
+	\]
+\end{minipage}
+\qquad\qquad\qquad
+\begin{minipage}[t]{0.4\textwidth}
+	\qquad\textbf{Preuve de \ \ $\Gamma \quad \lturn \quad (\mathcal{P} \limplies \mathcal{Q})$}
+
+	\[	
+	\begin{nd}
+		\hypo [~] {} {\Gamma}  \by{}{}
+		\open				
+		\hypo [~] {} {\mathcal{P}} \by{\text{Sous-hypothèse}}{}
+		\have [~] {} {\ \vdots} \by{\text{Mêmes étapes}}{}
+		\have [~] {} {\mathcal{Q}} \by{\text{Sous-conclusion}}{}
+		\close 
+		\have [\lturn] {} {\mathcal{P} \limplies \mathcal{Q}} \by{\text{Conclusion}}{}
+	\end{nd}
+	\]
+\end{minipage}
+
+\medskip	
+\end{proof}
+
+
+Soit $\mathcal{T}$ une théorie et $\mathcal{Q}$ une formule fermée.
+\begin{corollaire}
+	\sauteligne
+	\mybox{$
+	\mathcal{T} \quad \lturn \quad \mathcal{Q} \qquad \text{ssi} \qquad  \mathcal{T} \cup \{\lnot \mathcal{Q}\} \ \text{ non cohérente}
+	$}
+\end{corollaire}
+
+\begin{proof}
+\begin{align*}
+					&  \mathcal{T} \cup \{\lnot \mathcal{Q}\} \ \text{ non cohérente}\\
+\text{ ssi } \quad 	& \mathcal{T} \cup \{\lnot \mathcal{Q}\} \ \ \lturn \ \ \lantitauto \qquad \text{par définition}\\
+\text{ ssi } \quad 	& \mathcal{T}  \ \ \lturn \ \ (\lnot\mathcal{Q} \limplies \lantitauto)  \qquad \text{par le lemme de déduction naturelle}\\
+\text{ ssi } \quad 	& \mathcal{T}  \ \ \lturn \ \ \lnot(\lnot \mathcal{Q}) \qquad \text{car par définition $\lnot \mathcal{P}$ signifie $\mathcal{P} \limplies \lantitauto$}\\
+\text{ ssi } \quad 	& \mathcal{T}  \ \ \lturn \ \ \mathcal{Q} \qquad \text{par double négation}
+\end{align*} 	
+\end{proof}
+
+%--------------------------------------------------------------------
+\subsection{Différentes formulations du théorème de complétude}
+
+Nous allons énoncer le théorème de complétude ainsi que quelques reformulations.
+
+Cadre : $\mathcal{T}$ est une théorie, $\mathcal{Q}$ une formule fermée.
+
+Formulation classique :
+\begin{theoreme}[Théorème A] 
+	\sauteligne
+\mybox{$	
+	\mathcal{T} \quad \ldoubleturn \quad \mathcal{Q}
+	\qquad \text{ ssi } \qquad 
+	\mathcal{T} \quad \lturn \quad \mathcal{Q}
+	$}	
+\end{theoreme}
+
+Reformulation :
+\begin{theoreme}[Théorème B] 
+	\sauteligne
+	\mybox{$\mathcal{T}$ cohérente  
+		\qquad ssi \qquad 
+		$\mathcal{T}$ admet un modèle
+	}	
+\end{theoreme}
+
+On pourrait énoncer un résultat similaire pour un ensemble quelconque de formules :
+\mycenterline{
+$\Gamma$ cohérent  
+\qquad ssi \qquad 
+$\Gamma$ satisfaisable.	
+}
+
+%--------------------------------------------------------------------
+\subsection{Démonstration du théorème B à partir du théorème A}
+
+\begin{align*}
+	&  \mathcal{T} \ \text{ non cohérente}\\
+	\text{ ssi } \quad 	& \mathcal{T} \ \ \lturn \ \ \lantitauto \qquad \text{par définition}\\
+	\text{ ssi } \quad 	&  \mathcal{T} \ \ \ldoubleturn \ \ \lantitauto  \qquad \text{par le théorème A}\\
+	\text{ ssi } \quad 	&  \mathcal{T} \ \text{n'est satisfaite par aucune structure $\mathcal{S}$}\\	
+	\text{ ssi } \quad 	&  \mathcal{T} \ \text{n'a pas de modèle}
+\end{align*} 
+
+On verra en exercice qu'on pourrait prouver le théorème A à partir du théorème B.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Application à la finitude}
+
+Nous nous intéressons au cas où l'ensemble des hypothèses est infini (mais dénombrable).
+Nous allons voir que seul un nombre fini d'hypothèses est nécessaire.
+Nous aurons deux résultats, un sur les preuves (le théorème de finitude) et un sur la satisfaction (le théorème de compacité en logique du premier ordre, analogue à celui du chapitre \og{}Théorème de compacité\fg{} de la logique V/F).
+
+
+%--------------------------------------------------------------------
+\subsection{Théorème de finitude}
+
+Soit $\Gamma$ un ensemble de formules (éventuellement infini), soit $\mathcal{Q}$ une formule d'un langage $\mathcal{L}$.
+
+\begin{theoreme}[Théorème de finitude]
+	Si $\Gamma \ \lturn \ \mathcal{Q}$ alors il existe une partie finie $\Gamma_0 \subset \Gamma$ telle que $\Gamma_0 \ \lturn \ \mathcal{Q}$.
+\end{theoreme}
+\index{theoreme@théorème!de finitude}
+
+
+Remarque : la réciproque est bien sûr vraie.
+
+\begin{proof}
+La démonstration est fondée sur la nature même de ce qu'est une preuve.
+$\Gamma \ \lturn \ \mathcal{Q}$ signifie qu'il existe une preuve de $\mathcal{Q}$ à partir des formules de $\Gamma$. Considérons une telle preuve.
+Cette preuve consiste en un nombre fini d'étapes et à chaque étape on applique une règle. Chaque règle ne fait intervenir qu'un nombre fini de formules de $\Gamma$.
+On note $\Gamma_0$ l'ensemble des formules de $\Gamma$ qui apparaissent dans cette preuve. Alors on a bien obtenu une preuve de $\mathcal{Q}$ à partir de $\Gamma_0$, donc $\Gamma_0 \ \lturn \ \mathcal{Q}$ avec $\Gamma_0$ fini.	
+\end{proof}
+
+%--------------------------------------------------------------------
+\subsection{Théorème de compacité}
+
+La version correspondante pour la satisfaction est le théorème de compacité pour la logique du premier ordre, similaire à celui rencontré pour la logique V/F dans le chapitre \og{}Théorème de compacité\fg{} de la première partie.
+
+
+\begin{theoreme}[Théorème de compacité]
+	$\Gamma$ satisfaisable ssi toute partie finie $\Gamma_0 \subset \Gamma$ est satisfaisable.
+\end{theoreme}
+\index{theoreme@théorème!de compacite@de compacité}
+
+Reformulation : $\Gamma \ \ldoubleturn \ \mathcal{Q}$ ssi pour toute partie finie $\Gamma_0 \subset \Gamma$ on a $\Gamma_0 \ \ldoubleturn \ \mathcal{Q}$. 
+
+Remarque : à chaque fois le sens direct $\Rightarrow$ est évident.
+
+Pour les théories, une reformulation du sens intéressant est :
+\begin{theoreme}
+	Si toute partie finie d'une théorie $\mathcal{T}$ admet un modèle, alors $\mathcal{T}$ elle-même admet un modèle.
+\end{theoreme}
+
+Il est intéressant de prendre le temps de réfléchir à la profondeur d'un tel théorème.
+Chaque partie finie a un modèle, mais bien sûr ce modèle peut être différent pour chaque $\Gamma_0$.
+Cependant, on trouve à la fin un modèle commun à toutes les formules.
+
+\begin{proof}[Démonstration du théorème de compacité]
+On a déjà dit que le sens direct $\Rightarrow$ est évident.
+On va démontrer le sens réciproque $\Leftarrow$ par contraposition : \og{}si $\Gamma$ non satisfaisable, alors il existe $\Gamma_0$ fini tel que $\Gamma_0$ non satisfaisable.\fg{}	
+	
+\begin{align*}
+	&  \Gamma \ \text{ non satisfaisable}\\
+	\text{ donc } \quad 	& \Gamma \ \ \ldoubleturn \ \ \lantitauto \qquad \text{car de toute façon $\Gamma$ n'est jamais satisfait}\\
+	\text{ donc } \quad 	& \Gamma \ \ \lturn \ \ \lantitauto \qquad \text{par le théorème de complétude, donc $\Gamma$ non cohérente}\\
+	\text{ donc } \quad 	& \Gamma_0 \ \ \lturn \ \ \lantitauto \qquad \text{pour un certain $\Gamma_0 \subset \Gamma$ fini, par le théorème de finitude}\\
+	\text{ donc } \quad 	& \Gamma_0 \ \ \ldoubleturn \ \ \lantitauto \qquad \text{par le théorème de validité}\\			
+	\text{ donc } \quad 	& \Gamma_0 \ \text{non satisfaisable}\\
+	\text{ donc } \quad 	& \text{il existe $\Gamma_0$ fini, non satisfaisable}\\			
+	\text{ donc } \quad 	& \text{non\;(tout $\Gamma_0$ fini est satisfaisable)}		
+\end{align*} 	
+	
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Théorème de clôture}
+
+
+Le théorème de clôture explique que l'on peut passer d'un énoncé du théorème de complétude avec des formules fermées à un énoncé pour des formules quelconques.
+
+%--------------------------------------------------------------------
+\subsection{Énoncé}
+
+
+
+\begin{theoreme}[Théorème A] 
+Soit $\mathcal{T}$ une théorie, $\mathcal{Q}$ une formule fermée.
+	\[	
+		\text{Si } \ \mathcal{T} \quad \ldoubleturn \quad \mathcal{Q}
+		\qquad \text{ alors } \qquad 
+		\mathcal{T} \quad \lturn \quad \mathcal{Q}.
+   \]	
+\end{theoreme}
+
+
+\begin{theoreme}[Théorème C] 
+Soit maintenant $\Gamma$ un ensemble de formules quelconques, et $\mathcal{Q}$ une formule quelconque.
+	\[	
+	\text{Si } \ \Gamma \quad \ldoubleturn \quad \mathcal{Q}
+	\qquad \text{ alors } \qquad 
+	\Gamma \quad \lturn \quad \mathcal{Q}.
+	\]	
+\end{theoreme}
+
+\begin{theoreme}[Théorème de clôture]
+	Le théorème A entraîne le théorème C.
+\end{theoreme}
+\index{theoreme@théorème!de cloture@de clôture}
+
+Autrement dit, pour démontrer le théorème de complétude en toute généralité, il suffit de démontrer le théorème de complétude pour les formules fermées.
+
+%--------------------------------------------------------------------
+\subsection{Clôture}
+
+Avant de donner la démonstration du théorème C, introduisons une notion de clôture par introduction de nouvelles constantes.
+
+\begin{definition}
+	Soit $\mathcal{P}$ une formule ayant des variables libres, notées $x_1, \ldots, x_n$, définie sur un langage $\mathcal{L}$.
+	On note $\mathcal{L}^c$ le langage obtenu à partir de $\mathcal{L}$ en ajoutant $n$ nouvelles constantes $c_1, \ldots, c_n$ (ces constantes ne doivent pas apparaître dans $\mathcal{L}$).
+	On note $\mathcal{P}^c$ \defi{substitution par les constantes nouvelles} de $\mathcal{P}$, la formule obtenue à partir de $\mathcal{P}$ en remplaçant chaque variable libre $x_i$ par la nouvelle constante $c_i$.
+\end{definition}
+Par construction, $\mathcal{P}^c$ est une formule fermée (du langage $\mathcal{L}^c$).
+
+Pour un ensemble de formules $\Gamma$ et une formule $\mathcal{Q}$, on note $x_1, \ldots, x_n$ l'ensemble des variables libres dans $\Gamma \cup \{ \mathcal{Q} \}$.
+On construit ainsi un langage $\mathcal{L}^c$, et des formules fermées $\Gamma^c$ (la clôture par les constantes nouvelles des formules de $\Gamma$) et $\mathcal{Q}^c$.
+
+Voici quelques propriétés utiles pour la preuve, qui sont essentiellement des jeux d'écriture.
+\begin{itemize}
+	\item Point a.
+	
+	\[
+	\Gamma \ \ldoubleturn  \ \mathcal{Q} \qquad \text{ implique } \qquad \Gamma^c \ \ldoubleturn \ \mathcal{Q}^c
+	\]
+
+
+	Justifions en détail. 
+	Considérons une structure $\mathcal{S}^c$ (pour le langage $\mathcal{L}^c$) qui satisfait $\Gamma^c$. 
+	On note $d_i = c_i^{\mathcal{S}^c}$ l'interprétation de la constante $c_i$ dans $\mathcal{S}^c$.
+	
+	On peut construire une structure $\mathcal{S}$ (pour le langage $\mathcal{L}$) en oubliant les constantes nouvelles $c_1, \ldots, c_n$ et en même temps on construit une affectation $s$ en posant $s(x_i) = d_i$ pour chaque variable libre $x_i$. Pour une formule $\mathcal{P}$ (de $\Gamma$ ou $\mathcal{Q}$), on a alors :
+	\[
+	\ldoubleturn_{\mathcal{S}^c} \mathcal{P}^c  \qquad \text{ ssi } \qquad \ldoubleturn_{\mathcal{S}, s} \mathcal{P}
+	\]
+	(Ceci découle directement de la substitution de chaque variable libre $x_i$ par la constante $c_i$.)
+	
+	Comme $\ldoubleturn_{\mathcal{S}^c} \Gamma^c$, alors on a $\ldoubleturn_{\mathcal{S}, s} \Gamma$ (par la substitution précédente). 
+	Par hypothèse, on a $\Gamma \ \ldoubleturn  \ \mathcal{Q}$, donc
+	$\ldoubleturn_{\mathcal{S}, s} \mathcal{Q}$, et donc en retour $\ldoubleturn_{\mathcal{S}^c} \mathcal{Q}^c$.
+
+	\item Point b. Le lemme des constantes nouvelles :
+	\[
+	\Gamma^c \ \lturn  \ \mathcal{Q}^c \qquad \text{ implique } \qquad \Gamma \ \lturn \ \mathcal{Q}
+	\]	
+	
+	En effet imaginons qu'on a une preuve écrite en déduction naturelle de $\mathcal{Q}^c$ à partir de $\Gamma^c$.
+	On recopie cette preuve, en remplaçant dans toutes les lignes les occurrences des constantes nouvelles $c_i$ par les variables $x_i$. On obtient une preuve de $\mathcal{Q}$ à partir de $\Gamma$.
+
+\noindent
+\begin{minipage}[t]{0.4\textwidth}
+    \centering
+    \textbf{Preuve de $\Gamma^c \ \lturn \ \mathcal{Q}^c$}
+    \[
+    \begin{nd}
+        \hypo [~] {} {\mathcal{P}_1^c} \by{\text{Hypothèses $\Gamma^c$}}{}
+      	\hypo [~] {} {\vdots}		
+        \hypo [~] {} {\mathcal{P}_l^c}
+        \have [~] {} {\vdots} \by{\text{Preuve}}{}
+		\have [~] {} {\ldots c_i \ldots} \by{\text{Les constantes nouvelles}}{}
+        \have [~] {} {\vdots}		
+        \have [\lturn] {} {\mathcal{Q}^c} \by{\text{Conclusion}}{}
+    \end{nd}
+    \]
+\end{minipage}
+\qquad\qquad
+\begin{minipage}[t]{0.4\textwidth}
+    \centering
+    \textbf{Preuve de $\Gamma \ \lturn \ \mathcal{Q}$}
+    \[
+    \begin{nd}
+        \hypo [~] {} {\mathcal{P}_1} \by{\text{Hypothèses $\Gamma$}}{}
+      	\hypo [~] {} {\vdots}
+        \hypo [~] {} {\mathcal{P}_l}
+        \have [~] {} {\vdots} \by{\text{Preuve}}{}
+		\have [~] {} {\ldots x_i \ldots} \by{\text{Retour aux variables}}{}
+        \have [~] {} {\vdots}	
+        \have [\lturn] {} {\mathcal{Q}} \by{\text{Conclusion}}{}
+    \end{nd}
+    \]
+\end{minipage}	
+	
+\end{itemize}
+
+%--------------------------------------------------------------------
+\subsection{Démonstration du théorème C à partir du théorème A}
+
+\begin{align*}
+						& \Gamma \ \ldoubleturn  \ \mathcal{Q} \\
+	\text{ donc } \quad & \Gamma^c	\ \ldoubleturn \ \mathcal{Q}^c \qquad \text{par le point a}\\
+	\text{ donc } \quad & \Gamma^c	\ \lturn \ \mathcal{Q}^c \qquad \text{par le théorème A pour les formules fermées}\\
+	\text{ donc } \quad & \Gamma \ \lturn \ \mathcal{Q} \qquad \text{par le point b}	
+\end{align*}
+
+
+%--------------------------------------------------------------------
+\subsection{Clôture universelle}
+
+\index{cloture universelle@clôture universelle}
+
+Il existe une autre notion de clôture, appelée \emph{clôture universelle}.
+
+\begin{definition}
+	Soit $\mathcal{P}$ une formule ayant des variables libres, notées $x_1, \ldots, x_n$. On note $\overline{\mathcal{P}}$ (ou aussi $\forall \mathcal{P}$) la \defi{clôture universelle} de $\mathcal{P}$ :
+	\[
+	\overline{\mathcal{P}} : \qquad 
+	\forall x_1 \ \forall x_2 \ \ldots \ \forall x_n \quad \mathcal{P}
+	\] 
+\end{definition}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Exercices}
+
+\subsection*{Théorème de complétude}
+
+\begin{exercicecours}
+On considère $\Gamma$ un ensemble de formules et $\mathcal{P}$, $\mathcal{Q}$ des formules telles que :
+\begin{equation}
+	\label{exo:completude:1}
+	\tag{$\star$}
+\Gamma \ \  \lturn \ \  \mathcal{P} 
+\qquad \text{ et } \qquad
+\mathcal{P} \ \ \lturn \ \ \mathcal{Q} 
+\end{equation}
+Le but de l'exercice est d'obtenir $\Gamma \ \lturn \ \mathcal{Q}$.
+
+\begin{enumerate}
+	\item \emph{Première méthode.}
+	À partir d'une preuve en déduction naturelle de $\Gamma \ \lturn \ \mathcal{P}$ et d'une preuve  en déduction naturelle de $\mathcal{P} \ \lturn \ \mathcal{Q}$, écrire une preuve de $\Gamma \ \lturn \ \mathcal{Q}$. 
+	
+	\item\emph{Deuxième méthode.}
+	\begin{enumerate}
+		\item Quels énoncés obtient-on à partir de nos hypothèses \eqref{exo:completude:1} en appliquant le théorème de validité ?
+		
+		\item Sous les hypothèses \eqref{exo:completude:1}, montrer qu'on a $\Gamma \ \ldoubleturn \mathcal{Q}$.
+		
+		\item Conclure.
+	\end{enumerate}	
+\end{enumerate}	
+\end{exercicecours}
+
+
+\begin{exercicecours}
+Soit $\mathcal{L}$ un langage muni d'un prédicat binaire $R(x,y)$.
+On considère les trois formule suivantes :
+\begin{enumerate}
+	\item symétrie $\mathcal{S} : \forall x \ \forall y \ \ \big( R(x,y) \limplies R(y,x) \big)$
+	
+	\item transitivité $\mathcal{T} : \forall x \ \forall y \ \forall z \ \ \big( R(x,y) \land R(y,z) \limplies R(x,z) \big)$	
+	
+	\item réflexivité $\mathcal{Q} : \forall x \  \ R(x,x)$
+\end{enumerate}
+Une relation $R$ pour laquelle ces trois formules sont vraies, s'appelle une \emph{relation d'équivalence}. On se demande si les deux seuls axiomes $\mathcal{S}$ et $\mathcal{T}$ suffisent, c'est-à-dire a-t-on $\mathcal{S}, \ \mathcal{T} \ \lturn \ \mathcal{Q}$ ?
+
+\begin{enumerate}
+	\item Un étudiant propose la preuve suivante :
+	\begin{quote}
+	\emph{Soit $x$ un élément quelconque. Prenons un élément $y$ tel que $R(x,y)$. Par l'axiome $\mathcal{S}$ (symétrie), on a aussi $R(y,x)$. En appliquant l'axiome $\mathcal{T}$ (transitivité) sur $R(x,y)$ et $R(y,x)$, on en déduit $R(x,x)$. La relation est donc réflexive	et $\mathcal{Q}$ est prouvée.}
+	\end{quote}
+	
+	Quelle est l'erreur logique fondamentale dans ce raisonnement ?
+	
+	\item Trouver une structure $\mathcal{S}$, c'est-à-dire définir un domaine $E$ et y expliciter la relation $R$, telle que les formules  $\mathcal{S}$ et $\mathcal{T}$ y soient vraies, mais telle que $\mathcal{Q}$ ne le soit pas.
+	
+	\item A-t-on $\mathcal{S}, \ \mathcal{T} \ \lturn \ \mathcal{Q}$ ?
+\end{enumerate}
+\end{exercicecours}	
+	
+\subsection*{Applications aux théories}
+
+\begin{exercicecours}
+	Montrer l'équivalence entre ces deux définitions d'une théorie $\mathcal{T}$ \emph{non cohérente} :
+	\begin{itemize}
+		\item[(i)] il existe $\mathcal{Q}$, telle que  $\mathcal{T} \ \lturn \ \mathcal{Q}$ et $\mathcal{T} \ \lturn \ \lnot \mathcal{Q}$,
+		
+		\item[(ii)] $\mathcal{T} \ \lturn \ \lantitauto$.
+	\end{itemize}
+\end{exercicecours}
+
+
+\begin{exercicecours}
+	À l'aide du théorème de complétude \og{}si $\mathcal{T} \ \ldoubleturn \ \mathcal{Q}$ alors 
+    $\mathcal{T} \ \lturn \ \mathcal{Q}$\fg{} prouver que :
+    \mycenterline{
+    \og{}si $\mathcal{T}$ est insatisfaisable alors $\mathcal{T}$ est non cohérente\fg{}. 	
+    }	
+    Démontrer ensuite la réciproque.
+\end{exercicecours}
+
+
+\begin{exercicecours}
+	On rappelle les théorèmes A et B :
+	\begin{itemize}
+		\item Théorème A. 
+		\[	
+		\mathcal{T} \quad \ldoubleturn \quad \mathcal{Q}
+		\qquad \text{ ssi } \qquad 
+		\mathcal{T} \quad \lturn \quad \mathcal{Q}.
+		\]
+		
+		\item Théorème B.
+		\[
+		\mathcal{T} \text{ cohérente }
+		\qquad \text{ ssi }\qquad 
+		\mathcal{T} \text{ admet un modèle}.
+		\]
+	\end{itemize}
+	
+	On admet le théorème B. En déduire le théorème A.	
+\end{exercicecours}
+
+
+
+\subsection*{Application à la finitude}
+
+\begin{exercicecours}
+	Soit $\mathcal{L}$ un langage (contenant le symbole d'égalité $=$). 
+	Pour tout entier $n \geq 1$, on note $\mathcal{P}_n$ la formule exprimant \og{}il existe au moins $n$ éléments distincts \fg{}.
+	
+	\begin{enumerate}
+		\item Écrire explicitement les formules $\mathcal{P}_1$, $\mathcal{P}_2$, $\mathcal{P}_3$.
+		
+		\item Soit $\mathcal{T}$ une théorie ayant des modèles finis de taille arbitrairement grande, c'est-à-dire que pour tout entier $k$, $\mathcal{T}$ admet un modèle ayant au moins $k$ éléments. 
+		
+		On pose $\Gamma = \mathcal{T} \cup \{ \mathcal{P}_n \mid n \geq 1 \}$. Montrer que tout sous-ensemble fini de $\Gamma$ admet un modèle.
+		
+		\item En utilisant le théorème de compacité, en déduire que $\mathcal{T}$ admet un modèle infini.
+		
+		\item Conclusion : existe-t-il une théorie du premier ordre $\mathcal{T}_{\text{fini}}$ dont les modèles seraient \textbf{exactement} toutes les structures finies ?
+	\end{enumerate}
+\end{exercicecours}
+
+
+\subsection*{Théorème de clôture}
+
+% \begin{exercicecours}
+% Voici une démonstration alternative du théorème de clôture.	
+% Compléter les termes manquants et donner une justification pour le passage de chaque ligne à la suivante.
+% \begin{align*}
+% 						& \Gamma \ \ldoubleturn  \ \mathcal{Q} \\
+% 	\text{ donc } \quad & \overline{\Gamma}	\ \ldoubleturn \ \overline{\mathcal{Q}} \qquad \text{d'après \ldots}\\
+% 	\text{ donc } \quad & \overline{\Gamma}	\cup \{ \lnot \overline{\mathcal{Q}} \}  \text {\  \ est \ldots } \\
+% 	\text{ donc } \quad & \overline{\Gamma}	\cup \{ \lnot \overline{\mathcal{Q}} \}  \text {\  \ est \ldots } \\
+% 	\text{ donc } \quad & \overline{\Gamma}	\cup \{ \lnot \overline{\mathcal{Q}} \} \ \lturn \ \lantitauto \qquad \text { \ldots } \\		
+% 	\text{ donc } \quad & \overline{\Gamma}	\ \lturn \ \overline{\mathcal{Q}} \qquad \text{car \ldots }\\	
+% 	\text{ donc } \quad & \overline{\Gamma}	\ \lturn \ \mathcal{Q} \qquad \text{car \ldots }\\
+% 	\text{ donc } \quad & \Gamma \ \lturn \ \mathcal{Q} \qquad \text{ car \ldots }
+% \end{align*}
+% \end{exercicecours}
+
+
+\begin{exercicecours}
+	Pour une formule $\mathcal{P}$ dont on note $x_1$, \ldots, $x_n$ les variables libres, sa \emph{clôture existentielle} est la formule $\mathcal{P}_{\exists}$ (notée aussi $\exists \mathcal{P}$) :
+		\[
+	\mathcal{P}_{\exists} : \qquad 
+	\exists x_1 \ \ldots \ \exists x_n \quad \mathcal{P}
+	\] 
+	\begin{enumerate}
+		\item Montrer que $\mathcal{P}$ est satisfiable si et seulement si $\mathcal{P}_{\exists}$ admet un modèle.
+		
+		
+		\item Montrer l'équivalence $\lnot \big( \overline{\mathcal{P}} \big) \ \equiv \ (\lnot \mathcal{P})_{\exists}$. 
+		
+		On rappelle que $\overline{\mathcal{P}}$ désigne la clôture universelle et que $\mathcal{P} \equiv \mathcal{Q}$ signifie ($\mathcal{P} \ldoubleturn \mathcal{Q}$ et $\mathcal{Q} \ldoubleturn \mathcal{P}$), voir le chapitre \og{}Satisfaction\fg{}.
+		
+		\item Montrer que si $\Gamma \ \lturn \ \mathcal{Q}$, alors $\Gamma \ \lturn \mathcal{Q}_{\exists}$.
+		La réciproque est-elle vraie ?
+	\end{enumerate}
+\end{exercicecours}	
+	
+\end{document}

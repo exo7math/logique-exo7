@@ -1,0 +1,810 @@
+\documentclass[11pt,class=report,crop=false]{standalone}
+\usepackage[screen]{../logic}
+
+
+\begin{document}
+
+
+%====================================================================
+\chapitre{Variables et structures}
+%====================================================================
+
+% \insertvideo{}{partie 1.1. Titre}
+
+
+\objectifs{Notre but est d'utiliser un langage logique pour décrire des situations mathématiques concrètes. Pour cela, on introduit la notion de structure qui permet de relier les formules abstraites à des objets mathématiques réels.
+Avant de décider si, dans une structure donnée,
+une formule est vraie ou fausse, il est essentiel de distinguer
+les variables libres des variables liées.}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Variables libres, variables liées}
+
+%--------------------------------------------------------------------
+\subsection{Idée}
+
+On considère un langage $\mathcal{L}$ avec des variables $x,y,z,x_1,x_2,\ldots$
+Pour une formule donnée, une variable peut être libre ou liée.
+Comprenons la différence par des exemples avant de donner la définition précise.
+
+Considérons une formule \og{}$\forall x \ \ P(x)$\fg{} ou \og{}$\exists x \ \ P(x)$\fg{},
+la variable \og{}$x$\fg{} est ici \emph{quantifiée}, c'est-à-dire \emph{liée} à un quantificateur.
+De même, les deux variables $x$ et $y$ de \og{}$\forall x \ \exists y \ \ Q(x,y)$\fg{} sont quantifiées.
+
+Par contre, dans la formule \og{}$\forall x \ \ Q(x,y)$\fg{} la variable $y$ n'est pas quantifiée,
+on dit que cette variable est \emph{libre} (mais la formule est quand même légitime).
+
+Voici une formule (dans une interprétation) :
+\[
+\forall x \in \Rr \quad \exists y \in \Rr \qquad y > x
+\]
+Comme il n'y a pas de variables libres, on peut attribuer une valeur \ltrue/\lfalse{} à cette formule.
+
+Par contre :
+\[
+\forall x \in \Rr  \qquad y > x
+\]
+est une formule où $y$ est une variable libre. 
+Cela n'a pas de sens de se demander si cette formule est vraie ou fausse tant qu'une valeur n'est pas attribuée à $y$.
+
+
+%--------------------------------------------------------------------
+\subsection{Définition}
+
+%---
+\subsubsection{Portée}
+
+\begin{definition}
+Dans une formule contenant \og{}$\forall x \ \ \mathcal{P}$\fg{} ou \og{}$\exists x \ \ \mathcal{P}$\fg{}, la \defi{portée}\index{variable!portee@portée} de $\forall$ (ou $\exists$) est $\mathcal{P}$.
+\end{definition}
+
+Il est bon de préciser que $\mathcal{P}$ peut être une formule arbitrairement complexe.
+
+Exemple :
+\[
+\forall x \quad \underbrace{\exists y \qquad \underbrace{P(x) \limplies Q(x,y)}_{\text{portée du $\exists$}}}_{\text{portée du $\forall$}}
+\]
+
+
+%---
+\subsubsection{Variable libre ou liée}
+
+\begin{definition}
+Dans une formule, une variable $x$ est une \defi{variable liée}\index{variable!liee@liée}	 si toute occurrence de $x$ se trouve dans la portée d'un quantificateur $\forall x$ ou $\exists x$.
+Sinon on dit que $x$ est une \defi{variable libre}\index{variable!libre}.
+\end{definition}
+
+Exemples :
+\begin{itemize}
+	\item $\forall x \quad P(x) \lor Q(x,y)$ : $x$ est liée, $y$ est libre.
+	
+	\item $P(x) \limplies Q(x,y)$ : $x$ et $y$ sont libres.
+	
+	\item $\big(\forall x  \quad P(x)\big) \lequiv \big(\exists y \quad P(y)\big)$ : $x$ et $y$ sont liées.
+	
+	\item $\big(\forall x  \quad x=y\big) \lor \big(\exists y \quad x=y\big)$ : $x$ et $y$ sont libres !
+\end{itemize}
+
+Il y a une subtilité à bien comprendre, illustrée par ce dernier exemple.
+Pour qu'une variable $x$ soit libre, il suffit qu'il existe au moins une occurrence de $x$ qui ne soit pas dans la portée d'un quantificateur. Dans notre exemple $y$ est une variable libre pour la partie gauche et $x$ libre pour la partie droite, donc pour la formule totale, $x$ et $y$ sont bien des variables libres.
+
+
+%---
+\subsubsection{Formule fermée}
+
+
+\begin{definition}
+Une formule est \defi{fermée}\index{formule!fermee@fermée} si elle ne contient aucune variable libre.	
+\end{definition}
+On dit aussi que c'est une formule \defi{close}, ou bien que c'est une \defi{phrase}.
+
+L'idée est qu'à une formule fermée on va pouvoir attribuer une valeur \ltrue/\lfalse{} alors que pour une formule non fermée il reste encore des variables libres auxquelles il faudra affecter une valeur.
+
+Exemples :
+\begin{itemize}
+	\item $\forall x \quad \big( P(x) \land (\exists y \quad P(y)) \big)$ \ est une formule fermée.
+	
+	\item $\exists x \quad \Big( \big(\exists y \quad P(x) \land P(y)\big) \limplies \big(\forall y \quad Q(x,y)\big) \Big)$ \ est aussi une formule fermée.
+	
+	\item $\exists x \quad \big( Q(x,y) \limplies (\exists z \quad P(z)) \big)$ \ n'est pas fermée car $y$ est une variable libre.
+	
+	\item $\big(\forall x \quad P(x)\big) \lor \big( \exists x \quad Q(x) \big) \lor \big( \lnot R(x) \big)$ \ n'est pas une formule fermée car $x$ est une variable libre (dans la sous-formule de droite).
+\end{itemize}
+
+
+%--------------------------------------------------------------------
+\subsection{Substitution}
+
+\index{substitution}
+
+Dans un langage $\mathcal{L}$, soit $\mathcal{P}$ une formule, $x$ une variable et $t$ un terme.
+
+\begin{definition}
+$\mathcal{P}[t/x]$ désigne la formule où toutes les occurrences libres de la variable $x$ ont été remplacées par le terme $t$.	
+\end{definition}
+
+Remarque : on rappelle qu'un terme désigne les constantes, les variables et si le langage contient un symbole de fonction $f$, $f(t_1,\ldots,t_n)$ est aussi un terme lorsque $t_1,\ldots,t_n$ sont des termes.
+
+\begin{exemple}
+Soit $\mathcal{L}$ un langage contenant les constantes $a,b$, une fonction binaire notée $+$, un prédicat unaire $P$ et un prédicat binaire $Q$.
+
+Étudions la formule :
+\[
+\mathcal{P} : \qquad 
+\forall y \quad  P(x) \limplies Q(x,y)
+\]
+\begin{itemize}
+	\item $t=a$, $\mathcal{P}[t/x]$ : $\forall y \quad  P(a) \limplies Q(a,y)$
+
+	\item $t=x+b$, $\mathcal{P}[t/x]$ : $\forall y \quad  P(x+b) \limplies Q(x+b,y)$
+	
+	\item $t=b$,  $\mathcal{P}[t/y]$ : $\forall y \quad  P(x) \limplies Q(x,y)$ : la formule ne change pas car toutes les occurrences de $y$ sont dans la portée d'un quantificateur.
+\end{itemize}
+\end{exemple}
+
+Remarque : la définition formelle de la substitution se fait par induction en commençant par les formules atomiques, puis l'introduction des connecteurs logiques.
+Pour les formules avec quantificateurs \og{}$\forall x \ \ \mathcal{P}$\fg{} ou \og{}$\exists x \ \ \mathcal{P}$\fg{} il n'y a pas de substitution de la variable $x$ à faire car la variable est quantifiée.
+
+\bigskip
+
+On peut aussi faire une \defi{substitution multiple} $\mathcal{P}[t_1/x_1, t_2/x_2,\ldots,t_n/x_n]$.
+On la note $\mathcal{P}[s]$ où $s$ désigne $(t_1/x_1, t_2/x_2,\ldots,t_n/x_n)$.
+Il faut bien comprendre que les substitutions sont simultanées : on remplace toutes les occurrences libres de $x_1$ par $t_1$ et \emph{en même temps} toutes les occurrences libres de $x_2$ par $t_2$, etc.
+
+\begin{exemple}
+Soit $\mathcal{P}$ la formule \og{}$P(x,y)$\fg{}. Alors :
+\begin{itemize}
+	% \item $\mathcal{P}[y/x]$ : $P(y,y)$
+	
+	\item $\mathcal{P}[a/x, b/y]$ : $P(a,b)$
+	
+	\item $\mathcal{P}[x+y/x,x/y]$ : $P(x+y,x)$
+	
+	\item $\mathcal{P}[y/x,x/y]$ : $P(y,x)$
+\end{itemize}
+\end{exemple}
+
+Remarque : la formule $\mathcal{P}$ : \og{}$P(x) \limplies (\forall x \ \ Q(x))$\fg{} est une formule légitime du langage (c'est comme si on avait deux $x$ différents : un rouge et un bleu).
+La substitution de $x$ par $a$ donne $\mathcal{P}[a/x]$ : \og{}$P(a) \limplies (\forall x \ \ Q(x))$\fg{} car on ne remplace que les occurrences libres de $x$. 
+On préférerait écrire comme formule initiale $\mathcal{P}'$ : \og{}$P(x) \limplies (\forall y \ \ Q(y))$\fg{} qui est plus facile à comprendre.
+
+
+\medskip
+\noindent\textbf{Capture de variable.}
+
+Lors d'une substitution $\mathcal{P}[t/x]$, on suppose toujours qu'aucune variable apparaissant dans $t$ ne tombe dans la portée d'un quantificateur de $\mathcal{P}$.
+Si le terme $t$ contient des variables qui risqueraient d'être liées par des quantificateurs présents dans $\mathcal{P}$, la substitution pourrait modifier le sens logique de la formule : on parle alors de capture de variables.
+
+Par exemple, soit :
+\[
+\mathcal{P} : \qquad 
+\forall y \quad  P(x) \limplies Q(x,y)
+\]
+La substitution de $x$ par $t=y$ n'est pas légitime, car cela donnerait la formule :
+\[
+\mathcal{P}[y/x] : \qquad 
+\forall y \quad  P(y) \limplies Q(y,y)
+\]
+qui n'a pas du tout le même sens.
+
+Afin d'éviter ce phénomène, on renomme préalablement les variables liées de $\mathcal{P}$ avant d'effectuer la substitution.
+Pour notre exemple on écrira d'abord $\mathcal{P}$ sous une nouvelle forme :
+\[
+\mathcal{P} : \qquad 
+\forall z \quad  P(x) \limplies Q(x,z)
+\]
+puis on effectue la substitution de $x$ par $y$ :
+\[
+\mathcal{P}[y/x] : \qquad 
+\forall z \quad  P(y) \limplies Q(y,z)
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Structures}
+
+Un langage reste une coquille abstraite, il sert de cadre à une grande variété d'objets mathématiques et à leurs propriétés : 
+les entiers, les groupes, les espaces vectoriels, la théorie des ensembles\ldots
+
+%--------------------------------------------------------------------
+\subsection{Définition}
+
+\begin{definition}
+On considère un langage $\mathcal{L}$.
+Une \defi{structure}\index{structure} $\mathcal{S}$ de ce langage, c'est la donnée :
+\begin{itemize}
+	\item d'un ensemble non vide $E$, appelé \defi{domaine}\index{domaine},
+	
+	\item à chaque symbole de constante $c$ de $\mathcal{L}$, on associe un élément $c^{\mathcal{S}} \in E$,
+	
+	\item à chaque symbole de prédicat $P$ à $n$ places, on associe un sous-ensemble $P^{\mathcal{S}} \subset E^n$, 
+	autrement dit on associe une fonction $\phi_P : E^n \to \{ \ltrue,\lfalse \}$ telle que $\phi_P(a_1,\ldots,a_n)$ vaut vrai si et seulement si 
+	$(a_1,\ldots,a_n) \in P^{\mathcal{S}}$, 
+	
+	\item à chaque symbole de fonction $f$ à $n$ places, on associe une fonction $f^{\mathcal{S}} : E^n \to E$.
+\end{itemize}
+\end{definition}
+
+On dit aussi que $\mathcal{S}$ est une \defi{interprétation} du langage $\mathcal{L}$.
+À un même langage, on peut associer plusieurs structures différentes.
+
+Une structure est donc la réalisation mathématique concrète d'un langage. 
+Pour définir une structure, il faut définir tous les symboles non logiques : les constantes, les prédicats et les fonctions.
+On ne touche pas aux symboles logiques : une variable $x$ reste une variable $x$, sauf que maintenant elle parcourt le domaine $E$.
+
+
+%--------------------------------------------------------------------
+\subsection{Un premier exemple}
+
+On considère un langage $\mathcal{L} = (c, P, f)$ où $c$ est une constante, $P(x,y)$ un prédicat binaire et $f(x)$ une fonction unaire.
+Comme d'habitude, on ne précise pas explicitement que les variables sont $x,y$, qu'il y a les connecteurs logiques et qu'il y a aussi le prédicat d'égalité \og{}$x=y$\fg{}.
+
+On va définir une structure qui correspond aux entiers naturels et modélise le successeur.
+On considère la structure $\mathcal{S}$ de domaine $E = \Nn$ avec l'interprétation du langage $(0, <, x \mapsto x+1)$, c'est-à-dire :
+\begin{itemize}
+	\item pour $c$ la constante de $\mathcal{L}$, on définit $c^{\mathcal{S}} = 0$, c'est l'interprétation du symbole $c$ dans $\mathcal{S}$,
+	
+	\item pour $P$ le prédicat de $\mathcal{L}$, on définit $P^{\mathcal{S}}$, par $P^{\mathcal{S}}(x,y)$ : $x < y$,
+	
+	\item pour $f$ la fonction de $\mathcal{L}$, on définit $f^{\mathcal{S}}$, par $f^{\mathcal{S}}(x)$ : l'entier successeur de $x$, que l'on note $x+1$.
+\end{itemize}
+
+Une fois définie la structure, toute formule de $\mathcal{L}$ s'interprète en un énoncé mathématique sur la structure.
+Voici des exemples :
+
+\begin{center}
+\begin{tabular}{ccp{5cm}}
+Formule de $\mathcal{L}$ & Formule interprétée dans $\mathcal{S}$ & Vrai ou faux dans $\mathcal{S}$ ? \\
+\hline
+
+$\forall x \quad \exists y \quad P(x,y)$ & $\forall x \in \Nn \quad \exists y \in \Nn \quad x < y$ & C'est vrai \\
+
+$\forall x \quad P( c, f(x))$ & $\forall x \in \Nn \quad 0 < x+1$ & C'est aussi vrai \\
+
+
+$\forall x \quad f(x) = y$ & $\forall x \in \Nn \quad x+1 = y$ & La question n'a pas de sens car $y$ est une variable libre \\
+
+\end{tabular}
+\end{center}
+
+
+Pour définir cette structure $\mathcal{S}$, on écrira souvent abusivement $c=0$, $P(x,y)$ : $x < y$, $f(x) = x+1$ (au lieu de $c^{\mathcal{S}}$, $P^{\mathcal{S}}$, $f^{\mathcal{S}}$).
+
+\bigskip
+
+Il y a évidemment beaucoup d'autres structures possibles pour ce même langage. 
+On peut changer le domaine, la constante, le prédicat, la fonction :
+\begin{itemize}
+	\item Structure $\mathcal{S}_1$ de domaine $\Rr$, avec toujours $(0, <, x \mapsto x+1)$, sauf que cette fois la formule interprétée $\forall x \in \Rr \quad 0 < x+1$ est devenue fausse.
+	
+	\item Structure $\mathcal{S}_2$ de domaine $\Rr$, avec $(0, \le, x \mapsto x^2)$,
+	la formule $\forall x \quad P( c, f(x))$ du langage devient $\forall x \in \Rr \quad 0 \le x^2$, une formule vraie dans cette interprétation.
+\end{itemize}
+
+
+%--------------------------------------------------------------------
+\subsection{Commentaires}
+
+Voici des remarques importantes.
+
+%---
+\subsubsection{Domaine non vide}
+
+Le domaine d'une structure doit être un ensemble non vide. Cela peut sembler un détail, mais c'est assez important. Il semble naturel pour tout le monde que :
+\begin{center}
+Si \ \og{}$\forall x \in E \quad P(x)$\fg{} \ est vrai,
+\ alors \ 
+\og{}$\exists x \in E \quad P(x)$\fg{} \  est aussi vrai.	
+\end{center}
+
+Mais imaginons un instant que $E$ soit l'ensemble vide, alors on aurait toujours \og{}$\forall x \in E \  \ P(x)$\fg{} qui est vrai (puisqu'il n'y a rien à vérifier, car pas de $x$ à considérer).
+Par contre, \og{}$\exists x \in E \ \  P(x)$\fg{} est toujours faux (car $E$ est vide). 
+Cette situation serait problématique.
+
+On peut aussi argumenter en disant que si $E$ était vide, alors  \og{}$\forall x \in E \ \  x \neq x$\fg{} est vrai et \og{}$\exists x \in E \ \ x = x$\fg{} est faux, ce qui serait très embêtant.
+
+Bilan : on suppose toujours le domaine $E$ non vide.
+
+%---
+\subsubsection{Fonctions}
+
+Revenons un peu sur les fonctions. Dans le langage, $f$ est juste un symbole de fonction qui doit être suivi de $n$ termes (pour une fonction à $n$ places).
+Dans la structure, il faut définir l'interprétation de cette fonction, par une bonne vieille fonction : $f^{\mathcal{S}} : E^n \to E$. C'est une fonction de $n$ variables au sens usuel du terme. Comme déjà dit, dans la pratique on la note simplement $f : E^n \to E$.
+
+Par exemple, soit $\mathcal{L}$ un langage avec une fonction unaire $f$ et une fonction binaire $g$.
+\begin{itemize}
+	\item Pour un domaine $\Nn$, on pourrait définir $f$ par $f(x) = x+1$ ou $f(x)=x^2$
+	et $g$ par $g(x,y) = x+y$ ou $g(x,y) = xy$. Par contre, on ne peut pas définir $f$ par $f(x) = x-1$ car $f(0)$ n'est pas dans le domaine $\Nn$, ni définir $g$ par $g(x,y) = x/y$ qui ne donne pas toujours des entiers.
+	
+	\item En revanche, sur le domaine $]-\infty,0[$, on pourrait définir $f(x) = x-1$ et $g(x,y)=-x/y$.
+\end{itemize}
+
+
+%---
+\subsubsection{Prédicats}
+
+L'interprétation d'un prédicat est peut-être un peu plus difficile à comprendre.
+Dans le langage un prédicat $n$-aire est juste un symbole qui doit être suivi de $n$ termes.
+Pour la structure il faut définir chaque prédicat, c'est-à-dire pour quels objets on obtient la valeur Vrai.
+
+Prenons l'exemple d'un prédicat unaire $P$ dans un langage $\mathcal{L}$.
+Pour définir une structure $\mathcal{S}$, on définit son domaine $E$ et ensuite il faut définir l'interprétation du prédicat, c'est-à-dire quelles sont toutes les valeurs de $E$ qui rendent $P(x)$ vraie. On peut le faire en définissant un sous-ensemble $P^{\mathcal{S}} \subset E$, qui est donc exactement l'ensemble des $d \in E$, tels que $P(d)$ soit vraie.
+On peut aussi le définir comme une fonction $\phi_P : E \to \{ \ltrue,\lfalse \}$ qui renvoie Vrai ou Faux. Le lien entre les deux étant que $\phi_P(d) = \ltrue$ si et seulement si $d \in P^{\mathcal{S}}$.
+
+Ainsi, si on veut définir une interprétation de \og{}être un réel plus grand que $7$\fg{}, on pose $E = \Rr$ et pour le prédicat, soit on définit $P^{\mathcal{S}} = [7,+\infty[$ l'ensemble des valeurs qui vérifient la propriété, ou bien on définit une fonction :
+\[
+\begin{array}{rcl}
+	\phi_P : E & \longrightarrow & \{\ltrue, \lfalse\} \\
+	x & \longmapsto & \begin{cases}
+						\ltrue & \text{ si } x \in [7,+\infty[ \\
+						\lfalse & \text{ sinon.}
+					\end{cases}
+\end{array}
+\]
+
+
+Remarque : on a bien insisté sur l'exigence qu'un domaine doit être non vide.
+Par contre, on n'exige pas qu'un prédicat puisse être réalisé. C'est-à-dire qu'on peut avoir $P$ qui s'évalue toujours à faux dans la structure. Ainsi sur $\Rr$ on a le droit de définir les prédicats \og{}$x^2 < 0$\fg{} ou bien \og{}$x \neq x$\fg{}, même si aucun $x \in \Rr$ ne va les réaliser.
+
+Pour définir un prédicat binaire $P(x,y)$ dans une structure de domaine $E$, il faut définir un ensemble $P^{\mathcal{S}} \subset E^2$, qui sera l'ensemble des couples $(d_1,d_2)$ tels que $P(d_1,d_2)$ soit vrai.
+
+%---
+\subsubsection{Domaine}
+
+Lorsque l'on définit une structure, on fixe un domaine $E$.
+Les variables sont alors interprétées comme des objets de ce domaine.
+Par exemple la formule du langage \og{}$\forall x \ \exists y \quad Q(x,y)$\fg{}
+peut s'interpréter dans une structure où $E = \Nn$ par 
+\og{}$\forall x \in \Nn \ \exists y \in \Nn \quad x<y$\fg{}.
+Mais alors comment écrire une formule dans laquelle $x$ et $y$ ne parcourent pas exactement le même ensemble, comme par exemple \og{}$\forall \epsilon > 0 \ \exists n \in \Nn \quad n > \frac 1 \epsilon$\fg{} ?
+Il faut ruser un peu. Soient $A$ et $B$ deux sous-ensembles d'un même ensemble $E$.
+On souhaiterait écrire la phrase mathématique :
+\[
+\forall x \in A \quad \exists y \in B \qquad Q(x,y)
+\]
+Elle ne peut pas être issue d'une formule du langage, car $x$ et $y$ doivent parcourir le même ensemble.
+Définissons un prédicat $P_A$, de sorte que $P_A(x)$ soit vrai exactement si $x \in A$. De même on définit $P_B$ avec $P_B(x)$ vrai si $x \in B$.
+Considérons la formule du langage :
+\[
+\forall x \quad \big( P_A(x) \ \  \limplies \ \  \exists y \ ( P_B(y) \land Q(x,y) ) \big)
+\]
+Elle s'interprète dans notre structure de domaine $E$ (avec $P_A$ et $P_B$ définis comme ci-dessus) par :
+\[
+\forall x \in E \quad \big( x \in A \ \  \limplies \ \ \exists y \in E \ (y \in B) \land Q(x,y) \big)
+\]
+Si $x \notin A$, alors cet énoncé est vrai (car l'implication est vraie par définition).
+Si $x \in A$, pour que cet énoncé soit vrai, il faut qu'il existe un $y \in B$ tel que $Q(x,y)$ soit vrai.
+C'est bien mathématiquement ce qu'on voulait.
+
+
+%--------------------------------------------------------------------
+\subsection{D'autres exemples}
+
+%---
+\subsubsection{Inverse}
+
+On souhaite exprimer l'existence d'un inverse (ou d'un opposé). C'est une notion très générale que l'on retrouve dans beaucoup de situations et qu'il est donc intéressant de conceptualiser.
+Soit $\mathcal{L}$ le langage muni d'une constante $e$ et d'une fonction binaire $f(x,y)$ qu'on notera $x \circ y$.
+On peut écrire une formule qui exprime l'existence d'un inverse (à droite) :
+\[
+\forall x \quad \exists y \qquad x \circ y = e
+\]
+On dit qu'un tel $y$ est un \emph{inverse (à droite)} de $x$.
+
+Concrètement, voici ce que cela recouvre :
+\begin{itemize}
+	\item \textbf{Opposé.} On définit la structure $\mathcal{S}$ de domaine $\Zz$, avec 
+	$e^{\mathcal{S}} = 0$ et $f^{\mathcal{S}}(x,y) = x + y$. La formule du langage devient :
+	\[
+	\forall x \in \Zz \quad \exists y \in \Zz  \qquad x + y = 0
+	\]
+	Autrement dit, $y=-x$ est ici l'\emph{opposé} de $x$.
+	
+	
+	\item \textbf{Inverse multiplicatif.} Cette fois on définit la structure $\mathcal{S}$ de domaine $\Rr^*$, avec 
+	$e^{\mathcal{S}} = 1$ et $f^{\mathcal{S}}(x,y) = x \times y$. La formule du langage devient :
+	\[
+	\forall x \in \Rr^* \quad \exists y \in \Rr^*  \qquad x \times y = 1
+	\]
+	Autrement dit, $y= \frac{1}{x}$ est ici l'\emph{inverse} de $x$ (au sens algébrique).
+	
+	\item \textbf{Inverse de matrice.} Soit l'ensemble des matrices inversibles de taille $n \times n$, muni de la multiplication de matrices et $e^{\mathcal{S}} = I$ est la matrice identité. Dans cette structure, la formule exprime $A \times B = I$ c'est-à-dire que $B = A^{-1}$ est l'inverse de la matrice $A$.
+	
+	\item \textbf{Etc.} On pourrait continuer les exemples avec un groupe $(G, \diamond)$ d'élément neutre $e$, pour exprimer $g \diamond h = e$ ; ou bien la notion de bijection réciproque d'une fonction pour exprimer $g \circ h = \text{id}$, etc. Tout cela avec le même langage $\mathcal{L}$.
+\end{itemize}
+
+Il y a bien sûr d'autres formules du langage intéressantes pour toutes ces structures.
+L'associativité :
+\[
+\forall x \quad \forall y \quad \forall z \qquad x \circ (y \circ z) = (x \circ y) \circ z
+\]
+L'action de l'élément neutre qui ne change rien :
+\[
+\forall x \qquad \big( (e \circ x) = x \big) \land \big( (x \circ e) = x \big)
+\]
+
+%---
+\subsubsection{Graphe}
+
+Illustrons le fait qu'une même formule peut devenir vraie ou fausse en fonction de la structure choisie.
+Considérons le langage $\mathcal{L}$ ayant le prédicat $R(x,y)$ avec pour but de modéliser des graphes non orientés.
+
+Considérons la formule de $\mathcal{L}$ :
+\[
+\forall x \quad \exists y \qquad (x \neq y) \land R(x,y)
+\]
+qu'il faut comprendre comme \og{}tout sommet est relié à au moins un autre sommet\fg{}.
+
+\begin{itemize}
+	\item On définit $\mathcal{S}_1$ de domaine $E = \{r, s, t\}$
+	où $R^{\mathcal{S}_1}$ est défini par le graphe de gauche $G_1$ ci-dessous, c'est-à-dire
+	que $R$ est vrai seulement pour les couples $(r,s)$ et $(s,r)$ (qui sont reliés entre eux).
+	
+	Dans cette structure, la formule interprétée est fausse, car $t$ n'est relié à personne.
+
+	\item Si, en revanche, on définit $\mathcal{S}_2$ de domaine $E = \{r, s, t\}$
+où cette fois le prédicat est défini par le graphe de droite $G_2$, alors la formule interprétée est vraie.
+
+\end{itemize}
+
+
+
+\myfigure{0.8}{\tikzinput{fig_variables_01}}
+
+
+
+
+%--------------------------------------------------------------------
+\subsection{Exemples avancés}
+
+%---
+\subsubsection{Anneaux}
+
+On considère un langage $\mathcal{L} = (0,1,+,-,\times)$, où $0$, $1$ sont des constantes, $+$, $-$, $\times$ sont des fonctions binaires (en toute rigueur on devrait écrire ces symboles $a$, $b$, $f$, $g$, $h$, car ici $0$ n'est qu'un symbole du langage, noté ainsi par anticipation).
+Ce langage est adapté afin de modéliser la notion d'anneau (un ensemble avec addition, soustraction, multiplication, mais pas nécessairement d'inverse).
+
+Voici des exemples de structures :
+\begin{itemize}
+	\item \textbf{Entiers.} On considère la structure $\mathcal{S}$ de domaine $\Zz$. Les constantes sont naturellement interprétées par les entiers $0$ et $1$ et les fonctions  sont interprétées par les opérations usuelles sur les entiers.
+	
+	\item \textbf{Polynômes.} Pour cette structure $\mathcal{S}$, le domaine est l'ensemble des polynômes $\Rr[X]$ ; cette fois $0$ désigne le polynôme nul, $1$ le polynôme constant égal à $1$, les opérations sont les additions, soustractions et multiplications de polynômes.
+
+	\item \textbf{Matrices.} Pour cette nouvelle structure, le domaine est l'ensemble $M_{n}(\Rr)$ des matrices de taille $n \times n$. Naturellement $0$ désigne la matrice nulle, $1$ désigne la matrice identité $I$, les opérations sont les opérations sur les matrices.
+\end{itemize}
+
+L'intérêt du langage est donc de pouvoir formaliser des propriétés qui s'appliquent à de nombreuses situations.
+
+Pour un anneau, on exige de plus que les formules suivantes soient vraies, une fois interprétées dans la structure :
+\begin{itemize}
+	\item $\forall x \quad x-x = 0$ \ : la soustraction correspond à l'opposé,
+	
+	\item $\forall x \quad 1 \times x = x$ \ : $1$ est élément neutre pour la multiplication, 
+	
+	\item $\forall x \ \ \forall y \ \  \forall z \quad x \times (y+z) = x \times y + x \times z$ \ : distributivité,
+	
+	\item etc.
+\end{itemize}
+ 
+
+%---
+\subsubsection{Théorie des ensembles}
+
+\index{theorie@théorie!des ensembles}
+
+On considère un langage $\mathcal{L} = (\in)$ où le symbole d'appartenance \og{}$\in$\fg{} désigne un prédicat binaire $P(x,y)$, ici noté $x \in y$.
+
+Avertissement : dans les structures suivantes, les objets vont être des ensembles, et pour le prédicat $x \in y$ il s'agira de savoir si l'ensemble $x$ est bien un \emph{élément} de l'ensemble $y$. Par exemple $\{1\} \in \{ \varnothing, \{1\}, \{2\}, \{ 1,2\} \}$ : c'est bien un ensemble qui est un élément d'un autre ensemble.
+Le symbole $\in$ ne désignera pas l'appartenance usuelle $1 \in \{1,2,3\}$ (puisque $1$ et $\{1,2,3\}$ sont de nature différente, l'un est un entier, l'autre un ensemble d'entiers), ni l'inclusion $\{1,2\} \subset \{1,2,3\}$ qui désigne autre chose.
+
+
+Construisons une première structure $\mathcal{S}_1$.
+Son domaine est $E = \{ \varnothing, \{ \varnothing \}, \{\{\varnothing \}\}, \{\{\{\varnothing \}\}\}, \ldots \}$, chaque élément est un singleton, sauf l'ensemble vide.
+Le prédicat est défini par les relations suivantes :
+\[
+\varnothing \in \{ \varnothing \} \qquad \{ \varnothing \} \in \{\{\varnothing \}\} \quad \ldots
+\]
+Les autres appartenances ne sont pas vérifiées.
+
+Formellement on définit $E = \bigcup_{n\ge0} E_n$ où :
+\[
+E_0 = \{\varnothing\} \quad \text{ et } \quad E_{n+1} = E_n \cup \big\{ \{ x \} \mid x \in E_n
+\big\} 
+\]
+Ainsi $E_1$ est formé à partir de $\varnothing$ et $\{ \varnothing\}$, donc $E_1 = \{ \varnothing, \{ \varnothing\} \}$, $E_2$ est formé par $E_1$ union $\{ \{\varnothing\}, \{\{ \varnothing \}\} \}$ donc $E_2 = \{ \varnothing, \{ \varnothing \}, \{\{\varnothing \}\} \}$ (on ne compte pas $\{ \varnothing \}$ deux fois).
+
+Pour définir le prédicat dans cette structure, on donne l'ensemble des $(x,y) \in E^2$ tels que $x \in y$, c'est :
+\[ 
+\in^{\mathcal{S}} \ : \qquad \big\{ (x,\{x\}) \mid x \in E \big\}
+\]
+Autrement dit, on a $x \in \{ x \}$ et rien d'autre.
+Dans cette structure, si $x \in y$ alors $y = \{ x\}$. On dit que $\{x\}$ est le \emph{successeur} de $x$.
+
+À  quoi peut bien servir une construction si compliquée ?
+Si on note $\varnothing = 0$, $\{ \varnothing \} = 1$, $\{\{ \varnothing \}\} = 2$, alors
+$1$ est le successeur de $0$, $2$ est le successeur de $1$, etc. On a construit un modèle pour l'ensemble des entiers naturels $\Nn$, ayant ici pour seule propriété que tout entier admet un successeur.
+
+
+\bigskip
+
+Quand on construit une théorie des ensembles, on ajoute des axiomes ou des notions complémentaires. Voici donc des formules que l'on exige vraies quand on les interprète dans la structure :
+\begin{itemize}
+	\item Égalité de deux ensembles.
+	Deux ensembles sont égaux si, et seulement si, ils possèdent les mêmes éléments :
+	\[
+	\forall x \quad \forall y \qquad 
+	(x=y) \lequiv \big( \forall z \quad (  z \in x \lequiv z \in y )\big)
+	\]
+	
+	\item Axiome de l'ensemble vide :
+	\[
+	\exists x \quad \forall y \qquad \lnot (y \in x)
+	\]
+	C'est-à-dire qu'il existe un ensemble ne contenant aucun élément.
+	
+	\item On définit l'inclusion par :
+	\[
+	x \subset y \quad \text{ signifie par définition } \quad \forall z \quad \big( z \in x \limplies z \in y \big)
+	\]
+	
+	\item Axiome de l'union d'ensembles :
+	\[
+	\forall x \quad \exists u \quad \forall z \qquad
+	\big( z \in u \big) \lequiv  \big( \exists y \quad (y \in x) \land (z \in y) \big)
+	\]
+	
+	Par exemple si $x = \big\{ \{1,2\}, \{3\}, \{4,5\} \big\}$, alors $u = \bigcup_x = \{1,2,3,4,5\}$ ($y$ pourrait par exemple être $\{1,2\}$ et alors $z$ serait $1$ ou $2$).
+\end{itemize}
+
+
+\bigskip
+
+On peut définir une autre structure liée à la théorie des ensembles.
+Cette fois on définit $E = \bigcup_{n\ge0} E_n$ avec :
+\[
+E_0 = \varnothing \quad \text{ et } \quad E_{n+1} = \mathcal{P}(E_n)
+\]
+où $\mathcal{P}(X)$ désigne l'ensemble des parties d'un ensemble $X$.
+Ainsi :
+\begin{itemize}
+	\item $E_0 = \varnothing$
+	
+	\item $E_1 =\big \{ \varnothing \big\}$, car le vide est la seule partie de $E_0$,
+	
+	\item $E_2 = \big\{ \varnothing, \{ \varnothing \} \big\}$, ce sont les parties de $E_1$,
+	
+	\item $E_3 = \big\{ \varnothing, \{ \varnothing \}, \{\{ \varnothing \}\}, \{ \varnothing, \{ \varnothing \}\} \big\}$ : le vide, deux singletons, une paire,
+	
+	\item \ldots{} $E_n$ contient un nombre d'éléments qui croît très rapidement.
+\end{itemize}
+
+L'appartenance est ici l'appartenance usuelle, par exemple $\{ \varnothing \} \in \{ \varnothing, \{ \varnothing \}\}$, par contre, $\varnothing \notin \{\{ \varnothing \}\}$.
+
+
+%---
+\subsubsection{Arbres binaires}
+
+On souhaite modéliser la notion d'arbre binaire (chaque sommet a $0$ ou $2$ enfants).
+Soit un langage $\mathcal{L} = (r, G, D)$ où $r$ est une constante, $G(x,y)$ et $D(x,y)$ sont des prédicats binaires.
+
+\medskip
+
+On définit une structure $\mathcal{S}$ pour ce langage :
+\begin{itemize}
+	\item $E$ est un ensemble de sommets (éventuellement infini),
+	\item $r \in E$ est un sommet distingué, appelé la \emph{racine},
+	\item $G \subset E^2$ est la relation \emph{enfant gauche}, $G(x,y)$ vaut vrai si $y$ est l'enfant gauche de $x$,
+	\item $D \subset E^2$ est la relation \emph{enfant droit}, $D(x,y)$ vaut vrai si $y$ est l'enfant droit de $x$.
+\end{itemize}
+
+
+
+\myfigure{1.3}{\tikzinput{fig_variables_02}}
+
+
+On définit une liste d'\emph{axiomes}, c'est-à-dire des formules qui devront être vraies pour toute structure définissant un arbre binaire.
+
+\begin{itemize}
+	\item Chaque sommet a au plus un enfant gauche et au plus un enfant droit :
+	\[
+	\forall x \quad \forall y \quad \forall z \qquad
+	 G(x,y) \land G(x,z) \limplies y=z 
+	\]
+	\[
+	\forall x \quad \forall y \quad \forall z \qquad
+	 D(x,y) \land D(x,z) \limplies y=z 
+	\]	
+	
+	
+
+	\item Les enfants gauche et droit sont distincts :
+	\[
+	\forall x \quad \forall y\quad \forall z\qquad
+	G(x,y)\land D(x,z) \limplies  y\neq z 
+	\]
+	
+	
+	\item Un sommet n'a qu'un seul parent :
+	\[
+	\forall x \quad \forall y\quad \forall z\qquad
+	G(x,z)\land G(y,z) \limplies  x = y 
+	\]
+	\[
+	\forall x \quad \forall y\quad \forall z\qquad
+	D(x,z)\land D(y,z) \limplies  x = y 
+	\]
+	\[
+	\forall x \quad \forall y \quad \forall z \qquad
+	G(x,z) \land D(y,z) \limplies x = y
+	\]	
+	
+	\item La racine n'est l'enfant de personne :
+	\[
+	\forall x\qquad \lnot G(x,r)
+	\]
+	\[
+	\forall x\qquad \lnot D(x,r)
+	\]	
+	
+	\item Chaque sommet a soit zéro enfant, soit deux enfants :
+	\[
+	\forall x \qquad \big( \exists y \quad  G(x,y) \big) \lequiv \big(\exists z\quad D(x,z)\big)
+	\]
+	 
+	
+	\item Axiome optionnel qui exige que l'arbre soit connexe (en un seul morceau), tout sommet autre que la racine doit avoir un parent :
+	\[
+	\forall y \qquad \big( y \neq r \big) \limplies \big( \exists x \quad G(x,y) \lor D(x,y) \big)
+	\]
+	(Cela assure la connexité dans le cas des arbres finis.)
+\end{itemize}
+
+\medskip
+
+
+Il reste un point délicat à exprimer : un arbre n'a pas de cycle (en suivant un chemin, on ne peut pas revenir sur son point de départ).
+
+
+\myfigure{0.7}{\tikzinput{fig_variables_03}}
+
+
+L'absence de cycle n'est pas exprimable par une seule formule, ni même par un nombre fini de formules.
+
+Pour tout entier $n\ge1$ et pour toute suite de relations
+$R_1,\dots,R_n\in\{G,D\}$, on impose que le chemin correspondant ne puisse pas revenir à son point de départ. Cela s'exprime par la formule :
+\[
+\forall x_0 \quad \forall x_1 \quad \cdots \quad \forall x_{n-1} 
+\qquad
+\lnot \ \Big(
+R_1(x_0,x_1) \land R_2(x_1,x_2) \land \cdots \land R_n(x_{n-1},x_0) 
+\Big)
+\]
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Exercices}
+
+\subsection*{Variables libres, variables liées}
+
+\begin{exercicecours}
+Pour chacune des formules suivantes, indiquer la portée de chaque quantificateur, lister les variables libres et les variables liées parmi $x,y,z$. La formule est-elle une formule fermée ?
+\begin{enumerate}
+	\item $\forall x \quad P(x) \limplies Q(a,x)$
+	
+	\item $\exists z \quad Q(x,y) \land Q(y,z) \land Q(z,x)$
+	
+	\item $\forall x \quad  \big( T(x,y,c) \limplies (\forall z \quad T(a,y,z)) \big)$
+	
+	\item $(\forall x \quad P(x)) \land (\exists y \quad P(y)) \land (x \neq y)$
+	
+	\item $\big( (\exists x \quad P(x)) \lor (\exists y \quad Q(x,y)) \big) \limplies (\forall z \quad P(z))$
+	
+	\item $\big(\exists x \quad \exists y \quad P(x) \land P(y) \land (x \neq y) \big) \limplies P(z)$
+	
+	\item $\forall x \quad \big( Q(x,x) \limplies (\exists x \quad P(x)) \big)$
+\end{enumerate}
+\end{exercicecours}
+
+
+\begin{exercicecours}
+Pour chacune des formules suivantes données dans une structure, déterminer les variables libres et les variables liées (parmi $x,y$). Si la formule est fermée dire si la phrase est vraie ou fausse. Si la formule n'est pas fermée dire pour quelles valeurs des variables libres la formule devient vraie.
+\begin{enumerate}
+	\item $\forall x \in \Nn \quad x^2 \ge y$
+	
+	\item $\forall x \in \Nn \quad \exists y \in \Nn \quad x \ge y + 1$
+	
+	\item $\forall y \in \Nn \quad \exists x \in \Nn \quad x \ge y + 1$
+	
+	\item $\exists y \in \Rr \quad x \neq y$
+	
+	\item $\forall y \in \Rr \quad x \neq y$
+	
+	\item $\big( \forall x \in \Rr \quad x^2 \ge 0 \big) \limplies \big( y = x^2 \limplies y \ge 0 \big)$
+\end{enumerate}
+\end{exercicecours}
+
+
+\begin{exercicecours}
+Réécrire les formules après chaque substitution indiquée.
+\begin{enumerate}
+	\item $\mathcal{P}_1$ : $\forall x \quad \big( P(x) \land Q(x,y) \big)$ ;
+	$\mathcal{P}_1[b/y]$, puis $\mathcal{P}_1[a/x]$, puis $\mathcal{P}_1[x/y]$.
+	
+	\item $\mathcal{P}_2$ : $P(x) \limplies (\exists y \quad Q(x,y))$ ;
+	$\mathcal{P}_2[x+a/x]$, puis $\mathcal{P}_2[y+b/y]$.
+	
+	\item $\mathcal{P}_3$ : $\exists z \quad \big( x \neq y \limplies T(x,y,z) \big)$ ;
+	$\mathcal{P}_3[a/x,b/y,c/z]$.
+	
+	\item $\mathcal{P}_4$ : $\big( \forall x \quad P(x) \big) \land \big( \exists y \quad Q(x,y) \big) \land \big( \forall z \quad \exists x \quad T(x,y,z) \big)$ ;
+	$\mathcal{P}_4[y/x,x/y,c/z]$.
+\end{enumerate}
+\end{exercicecours}
+
+
+
+\subsection*{Structures}
+
+\begin{exercicecours}
+	On considère le langage $\mathcal{L} = (a, f)$ avec une constante $a$ et une fonction binaire $f(x,y)$.
+	Pour chaque formule et pour chaque structure, donner l'interprétation de la formule et dire si cette formule interprétée est vraie ou fausse.	
+	
+	Formules :
+	\begin{itemize}
+		\item $\mathcal{P}_1$ : $\forall x \quad \exists y \quad f(x,y) = a$
+		
+		\item $\mathcal{P}_2$ : $\forall x \quad \exists y \quad f(x,x) = f\big( f(y,y), y\big)$
+		
+		\item $\mathcal{P}_3$ : $\forall x \quad \forall y \quad f(x,y) = a \limplies x =a$
+	\end{itemize}
+	
+	Structures :
+	\begin{enumerate}
+		\item $\mathcal{S}_i$ : $E=\Zz$, $a=0$, $f(x,y) = x+y$
+		
+		\item $\mathcal{S}_{ii}$ : $E=\Rr$, $a=0$, $f(x,y) = x-y$
+		
+		\item $\mathcal{S}_{iii}$ : $E= {}]0,+\infty[$, $a=1$, $f(x,y) = xy$
+	\end{enumerate}
+\end{exercicecours}
+
+
+\begin{exercicecours}
+	On considère le langage $\mathcal{L} = (a,b,P,Q)$ où $a,b$ sont des constantes et $P(x)$ et $Q(x,y)$ des prédicats (les variables sont $x,y$).
+	Pour chaque formule et pour chaque structure, donner l'interprétation de la formule et dire si cette formule interprétée est vraie ou fausse.
+	
+Formules :
+\begin{itemize}
+	\item $\mathcal{P}_1$ : $\forall x \quad Q(x,a)$
+	
+	\item $\mathcal{P}_2$ : $\exists x \quad \forall y \quad P(x) \land Q(x,y)$
+	
+	\item $\mathcal{P}_3$ : $\big(\forall x \quad P(x)\big) \limplies \big(\exists y \quad Q(a,y)\big)$
+\end{itemize}
+
+Structures :
+\begin{enumerate}
+	\item $\mathcal{S}_i$ : $E=\Nn$, $a=0$, $b=1$, $P(x)$ : \og{}$x \neq 1$\fg{}, $Q(x,y)$ : \og{}$x > y$\fg{}
+	
+	\item $\mathcal{S}_{ii}$ : $E=M_2$ l'ensemble des matrices $2 \times 2$ à coefficients réels, $a$ la matrice nulle, $b$ la matrice identité, $P(x)$ : \og{}$\det(x) \neq 0$\fg{} (le déterminant est non nul), $Q(x,y)$ : \og{}$xy = I$\fg{} (le produit vaut l'identité)	
+\end{enumerate}	
+\end{exercicecours}
+
+
+\begin{exercicecours}
+Soit $\mathcal{L}$ un langage avec un prédicat $R(x,y)$.
+On considère $E = \{r, s, t, u\}$.
+Pour chacune des formules suivantes, définir une interprétation du prédicat $R(x,y)$ sous la forme d'un graphe non orienté afin que la formule soit vraie dans cette structure. (Il peut y avoir plusieurs solutions possibles.)
+\begin{enumerate}
+	\item $\forall x \quad \forall y \quad (x \neq y) \limplies R(x,y)$
+	
+	\item $\big(\forall x \quad R(x,x) \big) \land \big(\forall x \quad \exists y \quad \lnot R(x,y) \big)$
+	
+	\item $\forall x \quad \forall y \quad \forall z \quad (R(x,y) \land R(x,z)) \limplies (y=z)$
+	
+	\item $\lnot \ \Big( \forall x \quad \forall y \quad \forall z \quad \big( R(x,z) \land R(z,y) \big) \limplies R(x,y) \Big)$
+\end{enumerate}
+\end{exercicecours}
+
+
+\end{document}

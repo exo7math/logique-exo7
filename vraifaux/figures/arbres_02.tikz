@@ -1,0 +1,36 @@
+\begin{tikzpicture}[scale=1.2]
+\tikzstyle{line} = [draw,  thick]
+
+
+% nodes
+\path node(P0) {$\limplies$ };
+\path (P0)+(-1.5,-1) node(P1) {$\land$};
+\path (P0)+(1.5,-1) node(P2) {$\land$};
+
+\path (P1)+(-0.75,-1) node(P11) {$P$};
+\path (P1)+(0.75,-1) node(P12) {$\lor$};
+
+\path (P12)+(-0.5,-1) node(Q1) {$Q$};
+\path (P12)+(0.5,-1) node(Q2) {$\lnot$};
+\path (Q2)+(0,-1) node(Q3) {$R$};
+
+\path (P2)+(-0.75,-1) node(P21) {$\lnot$};
+\path (P2)+(0.75,-1) node(P22) {$R$};
+\path (P21)+(0,-1) node(R) {$P$};
+
+% Draw edges between elements
+\path[line] (P0) -- (P1.north);
+\path[line] (P0) -- (P2.north);
+
+\path[line] (P1) -- (P11.north);
+\path[line] (P1) -- (P12.north);
+\path[line] (P12) -- (Q1.north);
+\path[line] (P12) -- (Q2.north);
+\path[line] (Q2) -- (Q3.north);
+
+\path[line] (P2) -- (P21.north);
+\path[line] (P2) -- (P22.north);
+\path[line] (P21) -- (R.north);
+
+
+\end{tikzpicture}

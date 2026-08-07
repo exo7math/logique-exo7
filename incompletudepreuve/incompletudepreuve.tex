@@ -1,0 +1,377 @@
+\documentclass[11pt,class=report,crop=false]{standalone}
+\usepackage[screen]{../logic}
+
+\begin{document}
+
+
+%====================================================================
+\chapitre{Preuve du théorème d'incomplétude} 
+%====================================================================
+
+\objectifs{Nous rassemblons tous les outils obtenus afin de prouver le premier théorème d'incomplétude de Gödel.}
+
+Remarque : C'est le bon moment pour relire le chapitre \og{}Un aperçu du théorème d'incomplétude\fg{} et aussi le chapitre précédent \og{}Diagonalisation\fg{}.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{L'incomplétude de l'arithmétique de Peano}
+
+%--------------------------------------------------------------------
+\subsection{Énoncé}
+
+\index{theoreme incompletude@théorème d'incomplétude}
+\begin{theoreme}
+Si $\mathcal{PA}$ est cohérente, alors $\mathcal{PA}$ est incomplète, c'est-à-dire qu'il existe une formule fermée $\mathcal{G}$ telle que :
+\[
+  \mathcal{PA} \quad \not\lturn \quad \mathcal{G} \qquad \text{ et } \qquad
+  \mathcal{PA} \quad \not\lturn \quad \lnot \mathcal{G}
+\]
+\end{theoreme}
+
+Ainsi il existe des propositions vraies (dans le modèle standard $\Nn$) mais non démontrables.
+
+\begin{itemize}
+    \item On rappelle que $\mathcal{PA}$ désigne la théorie de l'arithmétique de Peano, c'est-à-dire les axiomes usuels associés aux entiers naturels.
+    
+    \item L'incomplétude signifie qu'il existe une formule fermée $\mathcal{G}$ qui n'est pas démontrable à partir des axiomes de Peano, et telle que $\lnot\mathcal{G}$ n'est pas non plus démontrable.
+
+    \item Comme $\mathcal{G}$ est une formule fermée, alors dans toute interprétation, par exemple le modèle $\Nn$ ou un autre modèle, exactement l'une des deux possibilités est vérifiée : soit $\mathcal{G}$ est vraie, soit $\lnot\mathcal{G}$ est vraie. L'une des deux est vraie et les deux sont indémontrables.
+    
+    \item Pour le modèle standard $\Nn$, et pour tout autre modèle, il existe donc des propositions vraies (dans ce modèle) et non démontrables (dans $\mathcal{PA}$).
+\end{itemize}
+
+
+%--------------------------------------------------------------------
+\subsection{Cohérence, incomplétude}
+
+\textbf{Rappels sur la cohérence.}
+
+\begin{itemize}
+    
+    \item Une théorie $T$ est \defi{incohérente} s'il existe une formule $\mathcal{Q}$ telle que :
+\[
+T \lturn \mathcal{Q} \qquad \text{ et } \qquad T \lturn \lnot \mathcal{Q}.
+\]
+Elle est dite \defi{cohérente} sinon.\index{theorie@théorie!coherente@cohérente}
+
+    \item De façon équivalente, $T$ est incohérente si $T \lturn \bot$ et alors $T$ prouve n'importe quelle formule (et sa négation), par la règle d'explosion.
+Une théorie incohérente n'a donc aucun intérêt.
+
+    \item Si $T$ admet un modèle (c'est-à-dire $\ldoubleturn_\mathcal{S} T$ pour une certaine structure $\mathcal{S}$), alors $T$ est cohérente via le théorème de validité.
+\end{itemize}
+
+\bigskip
+
+\textbf{Rappels sur la complétude.}
+
+\begin{itemize}
+    \item Une théorie $T$ est \defi{incomplète} s'il existe une formule fermée $\mathcal{Q}$ telle que :
+\[
+T \not\lturn \mathcal{Q} \qquad \text{ et } \qquad T \not\lturn \lnot \mathcal{Q}.
+\]
+
+    \item Elle est dite \defi{complète}\index{theorie@théorie!complete@complète} sinon, c'est-à-dire que pour toute formule fermée $\mathcal{Q}$ on a :
+\[
+T \lturn \mathcal{Q} \qquad \text{ ou } \qquad T \lturn \lnot \mathcal{Q}.
+\]
+
+\end{itemize}
+
+Dans l'énoncé du théorème de Gödel, on part d'une théorie cohérente et on prouve qu'elle est incomplète.
+
+
+%--------------------------------------------------------------------
+\subsection{Hypothèse de cohérence}
+
+Quand on avait énoncé le théorème d'incomplétude dans le chapitre \og{}Un aperçu du théorème d'incomplétude\fg{}, on n'avait pas énoncé l'hypothèse \og{}$\mathcal{PA}$ est cohérente\fg{}. Pourquoi ? Il s'agit d'une des subtilités de l'énoncé.
+
+Si on se place dans un monde où les entiers naturels $\Nn$ existent (par exemple dans $\mathcal{ZFC}$), alors $\Nn$ est un modèle de $\mathcal{PA}$ (tout est fait pour : les axiomes de $\mathcal{PA}$ correspondent aux propriétés des entiers), donc $\mathcal{PA}$ est cohérente, ce qui rend l'hypothèse inutile.
+
+Mais si on souhaite rester dans le cadre strict du langage $\mathcal{L}_0$ et de la théorie $\mathcal{PA}$, alors l'existence de $\Nn$ n'est pas acquise, et par conséquent, la cohérence de $\mathcal{PA}$ non plus.
+
+Ce point est d'ailleurs irrésoluble : le second théorème d'incomplétude affirmera qu'une théorie  (suffisamment riche) ne peut pas prouver sa propre cohérence.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{$\omega$-cohérence, être une preuve, être démontrable}
+
+%--------------------------------------------------------------------
+\subsection{$\omega$-cohérence}
+
+On va prouver le théorème de Gödel avec une hypothèse un peu plus forte : l'$\omega$-cohérence (c'est celle de l'article original de Gödel). On discutera un peu plus tard de la façon de s'en passer.
+
+\begin{definition}
+    \index{theorie@théorie!omega-coherente@$\omega$-cohérente}
+    Une théorie $\mathcal{T}$ est \defi{$\omega$-incohérente} s'il existe une formule $\mathcal{Q}(x)$ (ayant $x$ pour seule variable libre) telle que :
+    \[
+    \mathcal{T}\quad \lturn \quad \exists x \ \mathcal{Q}(x) 
+    \]
+    \[
+    \text{et pour chaque } n \in \Nn, \qquad \mathcal{T} \quad \lturn \quad \lnot\mathcal{Q}(\overline{n})
+    \]
+    Sinon elle est dite \defi{$\omega$-cohérente}.
+\end{definition}
+
+\begin{itemize}
+    \item C'est donc une situation d'incohérence spécifique aux entiers naturels : on a $\lnot\mathcal{Q}(0)$, $\lnot\mathcal{Q}(1)$, $\lnot\mathcal{Q}(2)$, etc., et pourtant, il existe $x$ tel que $\mathcal{Q}(x)$.
+
+    \item Dans une théorie $\omega$-cohérente, une telle formule n'existe pas.
+    % Ce qui se reformule aussi ainsi : si $\mathcal{T}$ est $\omega$-cohérente et \og{}$\mathcal{T} \lturn \exists x \ \mathcal{Q}(x)$\fg{}, alors il n'est pas vrai que pour tout $n \in \Nn$ on ait $\mathcal{T} \lturn \mathcal{Q}(n)$.
+    
+    \item Cette définition sort du langage $\mathcal{L}_0$ car elle fait intervenir les entiers naturels $n=0$, $n=1$, \ldots
+
+    \item Si $\mathcal{T}$ admet $\Nn$ comme modèle, alors $\mathcal{T}$ est $\omega$-cohérente. Et donc, si on considère que $\Nn$ est un modèle de $\mathcal{PA}$, alors $\mathcal{PA}$ est $\omega$-cohérente.
+\end{itemize}
+
+
+Voici le lien avec la cohérence classique :
+\begin{itemize}
+    \item $\mathcal{T}$ $\omega$-cohérente implique $\mathcal{T}$ cohérente.
+    \item $\mathcal{T}$ incohérente implique $\mathcal{T}$ $\omega$-incohérente.
+\end{itemize}
+
+Justification : si $\mathcal{T}$ est incohérente, alors $\mathcal{T}$ prouve n'importe quoi, donc prouve les formules de la définition de la $\omega$-incohérence. L'autre sens s'obtient par contraposition.
+
+Ces deux notions ne sont pas équivalentes, mais on verra un peu plus loin l'astuce de Rosser qui permet de remplacer l'hypothèse \og{}$\omega$-cohérente\fg{} de Gödel par l'hypothèse plus faible de \og{}cohérente\fg{}.
+
+
+
+%--------------------------------------------------------------------
+\subsection{Être une preuve, être démontrable}
+
+Nous revenons sur la distinction fondamentale entre vérifier qu'on a une preuve et décider si une formule est démontrable.
+
+\begin{itemize}
+    \item On rappelle que $\text{est\_preuve}(N, n)$, qui décide si la suite des formules de super-nombre de Gödel $N$ constitue une preuve de la formule dont le nombre de Gödel est $n$, est un prédicat récursif primitif.
+    
+    \item Donc par la représentabilité, il existe une formule correspondante dans $\mathcal{L}_0$ : 
+    \[
+    \mathcal{E}\text{st-preuve}(y, x)
+    \]
+    
+    \item Par contre, $\text{est\_démontrable}(n)$ n'est pas un prédicat récursif primitif, car la recherche d'une preuve doit se faire sur un ensemble d'entiers $N$ non borné.
+
+    \item Mais ce n'est pas grave car dans $\mathcal{L}_0$ il est tout à fait légitime de définir la formule :
+\[ \mathcal{E}\text{st-démontrable}(x) \ : \quad \exists y \ \ \mathcal{E}\text{st-preuve}(y,x) \]
+
+Noter que pour obtenir cette formule de $\mathcal{L}_0$, on est passé par l'intermédiaire de la représentabilité de la relation \og{}être une preuve\fg{}.
+\end{itemize}
+
+
+\begin{corollaire}
+    L'ensemble des formules démontrables est définissable.
+\end{corollaire}
+
+En effet, par définition, une formule $\mathcal{P}$ est démontrable (dans $\mathcal{PA}$) si et seulement si $\mathcal{E}\text{st-démontrable}(\ulcorner \mathcal{P} \urcorner)$ est vraie (sur $\Nn$).
+
+C'est à mettre en opposition avec la propriété \og{}être vraie\fg{} qui n'est pas définissable (voir le théorème de Tarski du chapitre \og{}Diagonalisation\fg{}).
+
+Retenez donc ces deux différences cruciales :
+\begin{itemize}
+    \item \og{}être une preuve\fg{} et \og{}être démontrable\fg{} sont des prédicats fondamentalement différents, l'un est facilement calculable, l'autre non.
+    \item \og{}être démontrable\fg{} et \og{}être vraie\fg{} sont aussi deux concepts fondamentalement différents, l'un est définissable, l'autre pas.
+\end{itemize}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Preuve du théorème d'incomplétude pour $\mathcal{PA}$}
+
+Voici l'énoncé que l'on va prouver :
+
+\begin{theoreme}
+    Si $\mathcal{PA}$ est $\omega$-cohérente, alors $\mathcal{PA}$ est incomplète.
+\end{theoreme}
+
+%--------------------------------------------------------------------
+\subsection{La formule à diagonaliser}
+
+On note $\mathcal{P}(x)$ la formule suivante :
+\[ \mathcal{P}(x) \ : \quad \lnot \mathcal{E}\text{st-démontrable}(x) \]
+
+C'est bien une formule de $\mathcal{L}_0$ d'après ce que l'on a dit précédemment.
+
+On a donc :
+\[ \mathcal{E}\text{st-démontrable}(x) \ : \quad  \exists y \ \ \mathcal{E}\text{st-preuve}(y, x) \]
+donc
+\[ \lnot \mathcal{E}\text{st-démontrable}(x) \ : \quad \forall y \ \ \lnot\mathcal{E}\text{st-preuve}(y, x) \]
+
+Par le lemme de diagonalisation, il existe une formule fermée $\mathcal{G}$, dite \defi{formule de Gödel}, telle que :
+\[ \mathcal{PA} \quad \lturn \quad \big( \mathcal{G} \ \lequiv \  \mathcal{P}(\ulcorner \mathcal{G} \urcorner) \big) \]
+\index{formule!de Godel@de Gödel}
+(On note $\ulcorner \mathcal{G} \urcorner$ à la fois pour le nombre de Gödel de $\mathcal{G}$, mais aussi pour son numéral.)
+
+Ainsi le lemme de diagonalisation fournit dans $\mathcal{PA}$ l'équivalence :
+\[ \mathcal{G} \ \lequiv \ \lnot \exists y \ \ \mathcal{E}\text{st-preuve}(y, \ulcorner \mathcal{G} \urcorner) \]
+c'est-à-dire :
+\[ \lnot\mathcal{G} \ \lequiv \ \exists y \ \ \mathcal{E}\text{st-preuve}(y, \ulcorner \mathcal{G} \urcorner) \]
+Autrement dit :
+\[ \mathcal{G} \ \lequiv \ \lnot\mathcal{E}\text{st-démontrable}(\ulcorner \mathcal{G} \urcorner) \]
+
+Ainsi $\mathcal{G}$ signifie \og{}Je ne suis pas démontrable\fg{}.
+
+On va maintenant montrer que cette formule $\mathcal{G}$ n'est pas démontrable, et que $\lnot \mathcal{G}$ ne l'est pas non plus.
+
+
+%--------------------------------------------------------------------
+\subsection{Preuve de $\mathcal{PA} \not\lturn \mathcal{G}$}
+
+Par l'absurde, si $\mathcal{PA} \lturn \mathcal{G}$, alors il existe une preuve de $\mathcal{G}$ à partir des axiomes de $\mathcal{PA}$. On note $N$ le super-nombre de Gödel associé aux formules qui constituent cette preuve.
+
+On a donc $\text{est\_preuve}(N, \ulcorner \mathcal{G} \urcorner)$ (en tant que prédicat récursif primitif) donc :
+\begin{align*}
+    & \mathcal{PA} \quad \lturn \quad \mathcal{E}\text{st-preuve}(\overline{N}, \ulcorner \mathcal{G} \urcorner) \\
+    \text{donc} \quad & \mathcal{PA} \quad \lturn \quad \exists y \ \ \mathcal{E}\text{st-preuve}(y, \ulcorner \mathcal{G} \urcorner) \\
+    \text{donc} \quad & \mathcal{PA} \quad \lturn \quad \mathcal{E}\text{st-démontrable}(\ulcorner \mathcal{G} \urcorner) \\
+    \text{donc} \quad & \mathcal{PA} \quad \lturn \quad \lnot \mathcal{G} \quad \text{par l'équivalence de la diagonalisation.}
+\end{align*}
+
+Conclusion : si $\mathcal{PA} \lturn \mathcal{G}$ alors $\mathcal{PA} \lturn \lnot \mathcal{G}$, ce qui implique que $\mathcal{PA}$ est incohérente. Or on a supposé $\mathcal{PA}$ $\omega$-cohérente, donc cohérente (cette hypothèse simple suffit pour cette première étape). On obtient une contradiction.
+
+
+%--------------------------------------------------------------------
+\subsection{Preuve de $\mathcal{PA} \not\lturn \lnot\mathcal{G}$}
+
+Supposons par l'absurde que $\mathcal{PA} \lturn \lnot\mathcal{G}$, alors par l'équivalence de la diagonalisation on a :
+\[
+  \mathcal{PA} \quad \lturn \quad \exists y \ \ \mathcal{E}\text{st-preuve}(y, \ulcorner \mathcal{G} \urcorner)
+\]
+
+Si on définit $\mathcal{Q}(y)$ par $\mathcal{E}\text{st-preuve}(y, \ulcorner \mathcal{G} \urcorner)$ cela s'écrit :
+\[
+\mathcal{PA} \quad \lturn \quad \exists y \ \ \mathcal{Q}(y)
+\]
+
+\medskip
+
+D'un autre côté, comme on suppose $\mathcal{PA} \lturn \lnot\mathcal{G}$ et 
+$\mathcal{PA}$ est cohérente (car $\omega$-cohérente), alors $\mathcal{PA} \not\lturn \mathcal{G}$ (ce qu'on a en fait déjà prouvé dans la section précédente).
+
+Cela signifie que pour chaque entier $N=0,1,2,\dots$, il est faux que $N$ soit une preuve de $\ulcorner \mathcal{G} \urcorner$, autrement dit, il est vrai que 
+$\lnot \text{est\_preuve}(N, \ulcorner\mathcal{G}\urcorner)$. Par la (forte) représentabilité des prédicats récursifs primitifs, on a :
+\[
+  \mathcal{PA} \quad \lturn \quad \lnot\mathcal{E}\text{st-preuve}(\overline{N}, \ulcorner \mathcal{G} \urcorner)
+\]
+Cela signifie que pour $N=0,1,2,\dots$, on a 
+\[
+  \mathcal{PA} \quad \lturn \quad  \lnot\mathcal{Q}(\overline{N})
+\]
+Cela implique que $\mathcal{PA}$ est $\omega$-incohérente, en contradiction avec notre hypothèse.
+
+
+%--------------------------------------------------------------------
+\subsection{$\mathcal{G}$ est-elle vraie ?}
+
+Nous avons prouvé $\mathcal{PA} \not\lturn \mathcal{G}$ et $\mathcal{PA} \not\lturn \lnot \mathcal{G}$. On se place dans un modèle de $\mathcal{PA}$, alors :
+\begin{itemize}
+    \item soit la phrase $\mathcal{G}$ est vraie et elle n'est pas démontrable,
+    \item soit la phrase $\lnot \mathcal{G}$ est vraie et elle n'est pas non plus démontrable.
+\end{itemize}
+Dans tous les cas, il existe des vérités non démontrables !
+
+\medskip
+
+Plaçons-nous dans la situation classique où $\Nn$ est considéré comme modèle de $\mathcal{PA}$ (par exemple on se place dans $\mathcal{ZFC}$). D'une part $\mathcal{PA}$ est $\omega$-cohérente (donc cohérente). D'autre part $\mathcal{G}$ est vraie !
+En effet $\mathcal{G}$ n'est pas démontrable, ce qui signifie que la formule $\lnot \mathcal{E}\text{st-démontrable}(\ulcorner \mathcal{G} \urcorner)$ est vraie (dans $\Nn$). Donc, par l'équivalence de la diagonalisation, $\mathcal{G}$ est vraie.
+
+Encore une fois, cela suppose l'hypothèse que $\Nn$ est un modèle de $\mathcal{PA}$ (qui sort du cadre de l'arithmétique de Peano). C'est pourquoi Gödel énonce son théorème avec une hypothèse de cohérence et sans notion de vérité afin de rester dans le cadre strict de $\mathcal{PA}$.
+
+
+
+%--------------------------------------------------------------------
+\subsection{L'astuce de Rosser}
+
+Rosser (1936) remplace l'hypothèse d'$\omega$-cohérence de Gödel en la simple hypothèse \og{}$\mathcal{PA}$ est cohérente\fg{}. Au lieu d'utiliser la phrase \og{}Je ne suis pas démontrable\fg{} dans la preuve, il utilise la phrase : \og{}Si je suis démontrable alors il existe une preuve plus courte de ma négation\fg{}. 
+
+Formellement la phrase $\mathcal{P}(x)$ à laquelle il applique le lemme de diagonalisation est :
+\[
+\mathcal{P}(x) : \qquad  \forall y \ \ \mathcal{E}\text{st-preuve}(y, x) \ \limplies \  \exists z \le y \ \mathcal{E}\text{st-preuve}(z, \text{neg}(x))
+\]
+Si $x = \ulcorner \mathcal{Q} \urcorner$, on a noté $\text{neg}(x) = \ulcorner \lnot \mathcal{Q} \urcorner$.
+
+Remarquer la quantification bornée \og{}$\exists z \le y$\fg{}, qui évite d'avoir à introduire la $\omega$-cohérence et d'énumérer $N=0,1,2,\dots$ jusqu'à l'infini.
+
+
+%====================================================================
+\section{Le théorème d'incomplétude général}
+
+%--------------------------------------------------------------------
+\subsection{Énoncé}
+
+\index{theoreme incompletude@théorème d'incomplétude}
+\begin{theoreme}
+Soit $\mathcal{T}$ une théorie cohérente, ayant des axiomes récursifs et qui contient $\mathcal{PA}$. Alors $\mathcal{T}$ est incomplète.
+\end{theoreme}
+
+Autrement dit, dans n'importe quelle théorie suffisamment riche, il existe des formules vraies mais non démontrables.
+
+Comme l'arithmétique de Peano est incomplète, on pourrait croire qu'il suffit d'ajouter 
+une formule indémontrable (comme $\mathcal{G}$) à ses axiomes afin de la rendre immédiatement démontrable dans cette nouvelle théorie. Mais le théorème de Gödel prouve que cette nouvelle théorie sera aussi incomplète : il existe une nouvelle formule indémontrable. Il n'y a donc aucun moyen de s'en sortir : il existe toujours des formules vraies et non démontrables.
+
+Revenons sur les hypothèses. On a déjà rappelé ce que signifie \og{}$\mathcal{T}$ cohérente\fg{}. L'hypothèse \og{}$\mathcal{T}$ contient $\mathcal{PA}$\fg{} signifie exactement \og{}$\mathcal{PA} \subset \mathcal{T}$\fg{}, c'est-à-dire que les axiomes de Peano font partie des axiomes de $\mathcal{T}$. On dit de façon informelle que $\mathcal{T}$ est \og{}suffisamment riche\fg{}. 
+C'est cependant une exigence assez faible en mathématiques que de pouvoir faire des calculs sur les entiers.
+
+Il reste l'hypothèse \og{}les axiomes de $\mathcal{T}$ sont récursifs\fg{} que l'on va expliquer ci-dessous.
+
+%--------------------------------------------------------------------
+\subsection{Fonctions récursives : la thèse de Church}
+
+Nous allons expliquer, sans la définir complètement, la notion de \og{}récursive\fg{} qui est une version plus large de \og{}récursive primitive\fg{}.
+
+\textbf{Définition informelle.}\index{fonction!recursive@récursive}
+Une fonction $f : \Nn^p \to \Nn$ est une fonction \defi{récursive} si elle est calculable.
+
+C'est donc un ensemble plus grand de fonctions que les fonctions récursives primitives, qui étaient les fonctions \og{}facilement calculables\fg{}.
+
+Il existe bien sûr une définition précise de ce qu'est une fonction récursive. C'est une variante plus technique de la notion de fonction récursive primitive avec, en plus, des opérations non bornées. Par exemple, la fonction d'Ackermann (voir le chapitre \og{}Fonctions récursives primitives\fg{}) est une fonction récursive, mais pas récursive primitive. 
+
+La \og{}thèse de Church\fg{}\index{theses de Church@thèse de Church} est l'affirmation heuristique selon laquelle toutes les fonctions calculables sont récursives (et réciproquement).
+
+Le résultat qui nous intéresse est que toute fonction récursive est représentable (comme pour les fonctions récursives primitives).
+
+Terminons nos définitions :
+
+\begin{itemize}
+    \item Un ensemble $A \subset \Nn$ est un \defi{ensemble récursif} (resp. récursif primitif) si sa fonction caractéristique $\chi_A : \Nn \to \Nn$ est une fonction récursive (resp. fonction récursive primitive). 
+    
+    \item Une théorie $\mathcal{T}$ a des \defi{axiomes récursifs}\index{axiomes!recursifs@récursifs} (resp. récursifs primitifs) si $A = \{ \ulcorner P \urcorner \mid P \text{ est un axiome de } \mathcal{T} \}$, l'ensemble des nombres de Gödel des axiomes de $\mathcal{T}$, est un ensemble récursif (resp. récursif primitif).
+\end{itemize}
+
+
+Exiger que l'ensemble des axiomes d'une théorie soit récursif signifie juste qu'on sait calculer si une formule donnée est un axiome ou pas. C'est une exigence extrêmement raisonnable : on doit pouvoir reconnaître les axiomes de notre théorie !
+
+
+%--------------------------------------------------------------------
+\subsection{Preuve du théorème d'incomplétude}
+
+
+Comme on n'a pas donné la définition exacte d'une fonction récursive, on remplace cette hypothèse par l'hypothèse un peu plus forte : \og{}les axiomes de $\mathcal{T}$ sont récursifs primitifs\fg{}, ce qui fait que l'on sait calculer (facilement) si une formule donnée est un axiome ou pas.
+
+Cela permet donc de construire la fonction prédicat $\text{est\_preuve}(N, n)$ : $\Nn^2 \to \Nn$ récursive primitive, puis de la représenter par une formule de $\mathcal{L}_0$, $\mathcal{E}\text{st-preuve}(y, x)$.
+On remplace aussi l'hypothèse de cohérence par celle de $\omega$-cohérence.
+
+La démonstration est alors exactement la même que pour la théorie $\mathcal{PA}$ : on construit une formule $\mathcal{G}$ par diagonalisation et on prouve que ni $\mathcal{G}$, ni $\lnot\mathcal{G}$ ne sont démontrables.
+
+Si $\Nn$ est un modèle de la théorie $\mathcal{T}$, alors $\mathcal{G}$ est vraie, bien que non démontrable.
+
+\bigskip
+
+\textbf{Retour sur la complétude.}
+
+On sait par le théorème de complétude que si une formule est vraie dans tous les modèles, alors elle est démontrable. Ce n'est pas du tout une contradiction avec le théorème d'incomplétude, cela signifie juste ici qu'il existe des modèles dans lesquels $\mathcal{G}$ est fausse. Ces modèles sont appelés \emph{modèles non standards} de $\mathcal{PA}$ : ils respectent les axiomes de Peano mais ne sont pas égaux à $\Nn$ (par exemple, ils possèdent des entiers infiniment grands).
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\section*{Exercices}
+
+\excludecomment{exercicecours} 
+%\emph{Exercices : à faire}
+
+\begin{exercicecours}
+
+\end{exercicecours}
+
+\includecomment{exercicecours} 
+
+\end{document}
+

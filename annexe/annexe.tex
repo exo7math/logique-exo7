@@ -1,0 +1,581 @@
+\documentclass[11pt,class=report,crop=false]{standalone}
+\usepackage[screen]{../logic}
+
+\begin{document}
+
+\setcounter{section}{0}
+
+%====================================================================
+\chapter*{Annexe}
+%====================================================================
+\addcontentsline{toc}{chapter}{Annexe}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{La vie de Gödel}
+
+Kurt Gödel est né à Brno en 1906 (Autriche-Hongrie, aujourd'hui en Tchéquie) et est mort à Princeton (États-Unis) en 1978. Il commence ses études à Vienne en 1923, où il s'intéresse à la physique, aux mathématiques, mais aussi à la philosophie. Il termine sa thèse en 1929 sous la direction de Hans Hahn, sur des problèmes posés par David Hilbert concernant les fondements des mathématiques.
+\medskip
+
+Le programme de Hilbert consistait à prouver la cohérence et la complétude des mathématiques. Gödel y répond d'abord par son théorème de complétude : \og Ce qui est vrai dans absolument tous les mondes mathématiques possibles est démontrable (et réciproquement).\fg
+\medskip
+
+Cependant, en 1930, il obtient son résultat majeur qui fixe les limites des théories mathématiques : les théorèmes d'incomplétude. \og Pour toute théorie assez riche pour décrire le monde des entiers naturels, il existe des formules vraies pour ces entiers, mais non démontrables.\fg\ Le paradoxe avec le résultat précédent n'est qu'apparent, car ici on ne s'intéresse qu'au monde spécifique des entiers naturels. Ces résultats sont publiés dans l'article \og Sur les propositions formellement indécidables \fg\ en 1931. 
+\medskip
+
+Ces travaux ont tout de suite eu un retentissement international et surprennent et déstabilisent la communauté mathématique, à commencer par Hilbert, dont le credo était : \og Nous devons savoir, nous saurons \fg. Hilbert est d'abord incrédule, puis reconnaît la validité de la preuve de Gödel et s'attelle ensuite à en diffuser les résultats. En effet, la communauté mathématique avait toujours pensé que tout ce qui est vrai devait pouvoir être démontré. Avec les théorèmes de Gödel, cela devient impossible ! C'est le résultat le plus important en logique du siècle.
+\medskip
+
+Gödel a eu l'occasion d'aller présenter ses travaux dans le monde entier, en particulier aux États-Unis, où il a rencontré Albert Einstein dès 1933. Dans les années 1930, l'Autriche devient fasciste jusqu'à célébrer son rattachement au régime nazi (l'Anschluss, mars 1938). Gödel n'est pas juif, mais il a travaillé avec de nombreux professeurs juifs et possède un esprit indépendant. Cela suffit pour qu'il se retrouve mis à l'écart de l'université.
+\medskip
+
+Aussi, en décembre 1939, il quitte Vienne avec sa femme Adèle pour les États-Unis. Il ne part pas vers l'Ouest pour traverser l'Atlantique, mais vers l'Est : à l'aide du Transsibérien il traverse la Russie, puis passe par le Japon, traverse le Pacifique pour arriver à San Francisco, et arrive en mars 1940 à Princeton (sur la côte Est des États-Unis) où Einstein l'attend. Tout cela à travers des pays en guerre !
+\medskip
+
+Voici une autre anecdote célèbre : pour se faire naturaliser américain, Gödel passe devant un juge avec Einstein comme témoin. À cette occasion, Gödel avait étudié la constitution américaine et, avant d'entrer dans la salle d'audience, il dit à Einstein qu'il y a trouvé une faille logique. Heureusement, Einstein empêche Gödel d'en parler devant le juge !
+\medskip
+
+Gödel et Einstein restent amis jusqu'à la mort de ce dernier en 1955. Tous les jours, ils marchent et discutent ensemble sur leur chemin vers Princeton. Gödel continue ses travaux et se tourne vers la philosophie et la théorie de la relativité.
+\medskip
+
+Toute sa vie, Gödel a été obsédé par sa santé. De plus en plus hypocondriaque, il craint un empoisonnement accidentel puis intentionnel, et s'enferme dans sa paranoïa. Il ne côtoie plus qu'Einstein et son épouse Adèle (qui devait d'ailleurs goûter tous ses plats). Lorsque sa femme est hospitalisée, il ne s'alimente plus et meurt en 1978 à l'âge de 71 ans.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Lectures}
+
+Voici quelques références commentées pour varier les points de vue et approfondir le sujet. 
+
+\begin{itemize}
+    \item \emph{forall x: An Introduction to Formal Logic} de P.~D.~Magnus, T.~Button, R.~Trueman, R.~Zach.
+    \mycenterline{
+    \href{https://forallx.openlogicproject.org/}{forallx.openlogicproject.org}
+    }
+
+    Une bonne introduction à la logique formelle qui couvre à la fois la logique Vrai/Faux, la logique de premier ordre et les preuves dans ces deux systèmes.
+
+    Les chapitres sont courts, bien motivés et adaptés aux étudiants de première ou de deuxième année, n'ayant jamais eu de cours de logique (voire même de mathématiques). 
+    
+    Le livre est écrit en anglais, avec quand même beaucoup de texte et des exemples issus du langage courant. Cela fait une ressource accessible aux étudiants des filières non mathématiques.
+
+    \item \emph{Introduction à la logique -- Théorie de la démonstration et des modèles}, R.~David, K.~Nour, C.~Raffalli, édition Dunod. 
+    
+    Livre qui met l'accent sur les démonstrations formelles en logique propositionnelle et en logique du premier ordre. Les premiers chapitres sont accessibles aux étudiants de licences.
+
+    \item \emph{Logique mathématique}, tomes 1 et 2, de R.~Cori et D.~Lascar, édition Dunod, traduit en anglais sous le titre \emph{Mathematical Logic}.
+
+    Il s'agit d'ouvrages de référence plutôt destinés aux étudiants de master. Le premier tome couvre la logique propositionnelle et la logique du premier ordre (et bien plus), le second tome couvre les théorèmes d'incomplétude (et bien plus).
+    Le livre est complet et très bien écrit, adapté à ceux qui ont déjà suivi un cours de logique et ont un bagage mathématique sérieux.
+
+    \item \emph{A Mathematical Introduction to Logic}, de H.~Enderton, édition Academic Press.
+    C'est un ouvrage de référence pour les étudiants de fin de licence et de master. Il couvre la logique propositionnelle, la logique du premier ordre, les théorèmes d'incomplétude et la logique de second ordre.
+
+    \item \emph{Gödel Without (Too Many) Tears}, de P.~Smith :
+    \mycenterline{
+    \href{https://logicmatters.net/igt/}{logicmatters.net/igt}
+    }
+    C'est un livre consacré uniquement aux théorèmes d'incomplétude de Gödel.
+    L'auteur est professeur de logique et de philosophie et adopte un style plus littéraire, destiné à un public non mathématicien, avec de nombreuses explications conceptuelles. Dans cette version courte il n'y a pas de preuves, elles sont reportées dans la version étendue : \emph{An Introduction to Gödel's Theorems}.
+
+    \item \emph{Aux frontières des mathématiques - Kurt Gödel et l'incomplétude}, de Jean-Paul Delahaye (édition Dunod) raconte à la fois la vie de Gôdel et ses décourvertes. \emph{Les démons de Gödel : Logique et folie}, de Pierre Cassou-Noguès (édition du Seuil) explore les tourments de Gödel.
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Tables}
+
+%--------------------------------------------------------------------
+\subsubsection{Connecteurs}
+
+
+\begin{center}
+\begin{tabular}{| c | c | c |}
+    \hline 
+	\textbf{Symbole}		& \textbf{Nom} 		& \textbf{Définition} \\
+	\hline
+	&&	\\[-2ex]
+	$\lnot$ 	& \tnot			& $\lnot P$ est vrai ssi $P$ est faux \\
+	$\land$ 	& \tand			& $P \land Q$ est vrai ssi $P$ et $Q$ sont vrais \\	
+	$\lor$ 		& \tor			& $P \lor Q$ est vrai ssi $P$ ou $Q$ est vrai \\	
+	$\limplies$ 	& implication	& $(\lnot P) \lor Q$ \\	
+	$\lequiv$ 	& équivalence	& $(P \limplies Q) \land (Q \limplies P)$ \\
+    \hline				
+\end{tabular}
+\end{center}
+
+
+%--------------------------------------------------------------------
+\subsubsection{Équivalences logiques usuelles de la logique Vrai/Faux}
+
+\[
+\begin{array}{| c | c c|}
+    \hline
+    \textbf{Nom} & \textbf{Règle} & \\
+    \hline
+	\textbf{Idempotence} 
+	& \mathcal{P}\land\mathcal{P} \equiv \mathcal{P}
+	& \mathcal{P}\lor\mathcal{P} \equiv \mathcal{P}
+	\\[0.6ex]
+	
+	\textbf{Commutativité}
+	& \mathcal{P}\land\mathcal{Q} \equiv \mathcal{Q}\land\mathcal{P}
+	& \mathcal{P}\lor\mathcal{Q} \equiv \mathcal{Q}\lor\mathcal{P}
+	\\[0.6ex]
+	
+	\textbf{Associativité}
+	& (\mathcal{P}\land\mathcal{Q})\land\mathcal{R} \equiv \mathcal{P}\land(\mathcal{Q}\land\mathcal{R})
+	& (\mathcal{P}\lor\mathcal{Q})\lor\mathcal{R} \equiv \mathcal{P}\lor(\mathcal{Q}\lor\mathcal{R})
+	\\[0.6ex]
+	
+	\textbf{Distributivité}
+	& \mathcal{P}\land(\mathcal{Q}\lor\mathcal{R}) \equiv (\mathcal{P}\land\mathcal{Q}) \lor (\mathcal{P}\land\mathcal{R})
+	& \mathcal{P}\lor(\mathcal{Q}\land\mathcal{R}) \equiv (\mathcal{P}\lor\mathcal{Q}) \land (\mathcal{P}\lor\mathcal{R})
+	\\[0.6ex]
+	
+	\textbf{Absorption}
+	& \mathcal{P}\land(\mathcal{P}\lor\mathcal{Q}) \equiv \mathcal{P}
+	& \mathcal{P}\lor(\mathcal{P}\land\mathcal{Q}) \equiv \mathcal{P}
+	\\[0.6ex]
+	
+	\textbf{Lois de De Morgan}
+	& \lnot(\mathcal{P}\land\mathcal{Q}) \equiv (\lnot\mathcal{P})\lor(\lnot\mathcal{Q})
+	& \lnot(\mathcal{P}\lor\mathcal{Q}) \equiv (\lnot\mathcal{P})\land(\lnot\mathcal{Q})
+	\\[0.6ex]
+	
+	\textbf{Contraposée}
+	& \mathcal{P}\limplies\mathcal{Q} \equiv (\lnot\mathcal{Q})\limplies(\lnot\mathcal{P})
+	& \\
+    \hline
+\end{array}
+\]
+
+%--------------------------------------------------------------------
+\subsubsection{Règles d'inférence de la logique Vrai/Faux}
+
+\begin{center}
+	\setlength{\tabcolsep}{20pt}
+	\renewcommand{\arraystretch}{1.4}
+	\begin{tabular}{|c|c|}
+		\hline
+		\textbf{Nom} & \textbf{Règle} \\
+		\hline
+		\textbf{Réutilisation} 
+		& $\mathcal{P} \quad \lturn \quad \mathcal{P}$ \\ \hline
+		
+		\textbf{Élimination de $\land$} 
+		& $\begin{array}{l}
+			\mathcal{P}\land\mathcal{Q} \quad \lturn \quad \mathcal{P} \\
+			\mathcal{P}\land\mathcal{Q} \quad \lturn \quad \mathcal{Q}
+		\end{array}$ \\ \hline
+		
+		\textbf{Introduction de $\land$} 
+		& $\mathcal{P},\ \mathcal{Q} \quad \lturn \quad \mathcal{P}\land\mathcal{Q}$ \\ \hline
+		
+		\textbf{Élimination de la double négation} 
+		& $\lnot\lnot\mathcal{P} \quad \lturn \quad \mathcal{P}$ \\ \hline
+		
+		\textbf{Introduction de $\lor$} 
+		& $\begin{array}{l}
+			\mathcal{P} \quad \lturn \quad \mathcal{P}\lor\mathcal{Q} \\
+			\mathcal{Q} \quad \lturn \quad \mathcal{P}\lor\mathcal{Q}
+		\end{array}$ \\ \hline
+		
+		\textbf{Élimination de $\lor$} 
+		& $\mathcal{P}\lor\mathcal{Q},\ 
+		\mathcal{P}\limplies\mathcal{R},\ 
+		\mathcal{Q}\limplies\mathcal{R} \quad \lturn \quad \mathcal{R}$ \\ \hline
+		
+		\textbf{Implication (modus ponens)} 
+		& $\mathcal{P},\ \mathcal{P}\limplies\mathcal{Q} \quad \lturn \quad \mathcal{Q}$ \\ \hline
+		
+		\textbf{Introduction de $\limplies$} 
+		& \text{Si } $\mathcal{P} \lturn \mathcal{Q}$ \text{ alors } $\lturn \mathcal{P}\limplies\mathcal{Q}$ \\ \hline
+		
+		\textbf{Explosion (ex falso)} 
+		& $\lantitauto \quad \lturn \quad \mathcal{P}$ \\ \hline
+		
+		\emph{Équivalence} 
+		& $\begin{array}{c}
+			\mathcal{P}\lequiv\mathcal{Q} \quad \lturn \quad \mathcal{P}\limplies\mathcal{Q} \\
+			\mathcal{P}\lequiv\mathcal{Q} \quad \lturn \quad \mathcal{Q}\limplies\mathcal{P} \\
+			\mathcal{P}\limplies\mathcal{Q},\ \mathcal{Q}\limplies\mathcal{P} \quad \lturn \quad \mathcal{P}\lequiv\mathcal{Q}
+		\end{array}$ \\ \hline
+		
+		\emph{Définition de la négation} 
+		& $\lnot\mathcal{P}$ \ est définie par \ $\mathcal{P}\limplies\lantitauto$ \\ \hline
+		
+		\emph{Introduction de la double négation}
+		& $\mathcal{P} \quad \lturn \quad \lnot\lnot\mathcal{P}$ \\ \hline
+		
+		\emph{Tiers exclu} 
+		& $\lturn \quad \mathcal{P}\lor\lnot\mathcal{P}$ \\ \hline
+		
+		\emph{Modus tollens} 
+		& $\mathcal{P}\limplies\mathcal{Q},\ \lnot\mathcal{Q} \quad \lturn \quad \lnot\mathcal{P}$ \\ \hline
+		
+		\emph{Lois de De Morgan} 
+		& $\begin{array}{c}
+			\lnot(\mathcal{P}\land\mathcal{Q}) \quad \lturn \quad \lnot\mathcal{P}\lor\lnot\mathcal{Q} \\
+			\ldots		
+		\end{array}$\\ \hline
+		
+		\emph{Raisonnement par l'absurde} 
+		& $\lnot\mathcal{P}\limplies\lantitauto \quad \lturn \quad \mathcal{P}$ \\ \hline
+		
+		\emph{Contraposée} 
+		& $\begin{array}{c}		
+			\mathcal{P}\limplies\mathcal{Q} \quad \lturn \quad \lnot\mathcal{Q}\limplies\lnot\mathcal{P} \\ 
+			\lnot\mathcal{Q}\limplies\lnot\mathcal{P} \quad \lturn \quad \mathcal{P}\limplies\mathcal{Q} \\ 		
+		\end{array}$\\\hline
+	\end{tabular}
+\end{center}
+
+%--------------------------------------------------------------------
+\subsubsection{Connecteurs binaires}
+
+\[
+\begin{tabular}{| c | c | c | c |}
+	\hline
+	\textbf{Symbole} & \textbf{Réalisation} & \textbf{Nom} & \textbf{Valeurs} \\
+	\hline
+	&&& \\[-2ex]
+		
+	$\lantitauto$  & $ P \land \lnot P$ & toujours faux / contradiction & \lzero\lzero\lzero\lzero \\  % 0000
+	
+	$\land$ & $P \land Q$ & \tand / conjonction & \lzero\lzero\lzero\lone \\         % 0001
+	
+	& $P \land \lnot Q$ & $P$ et (non $Q$) & \lzero\lzero\lone\lzero \\ % 0010
+	
+	& $P$ & projection gauche & \lzero\lzero\lone\lone \\             % 0011
+	
+	& $\lnot P \land Q$ & (non $P$) et $Q$ & \lzero\lone\lzero\lzero \\ % 0100
+	
+	& $Q$ & projection droite & \lzero\lone\lzero\lone \\              % 0101
+	
+	$\oplus$ & $(P \lor Q) \land \lnot(P\land Q)$ & \tconnector{xor} / ou exclusif & \lzero\lone\lone\lzero \\ % 0110
+	
+	$\lor$ & $P \lor Q$ & \tor / disjonction & \lzero\lone\lone\lone \\           % 0111
+	
+	$\downarrow$ & $\lnot(P \lor Q)$ & \tconnector{nor} & \lone\lzero\lzero\lzero \\ % 1000
+	
+	$\lequiv$ & $P \lequiv Q$ & équivalence & \lone\lzero\lzero\lone \\ % 1001
+	
+	& $\lnot Q$ & négation de $Q$ & \lone\lzero\lone\lzero \\          % 1010
+	
+	& $Q \limplies P$ & $Q$ implique $P$ & \lone\lzero\lone\lone \\ % 1011
+	
+	& $\lnot P$ & négation de $P$ & \lone\lone\lzero\lzero \\          % 1100
+	
+	$\limplies$      & $ P \limplies Q$ & $P$ implique $Q$ & \lone\lone\lzero\lone \\ % 1101
+	
+	$\uparrow$ & $\lnot(P \land Q)$ & \tconnector{nand} / Sheffer & \lone\lone\lone\lzero \\ % 1110
+	
+	$\ltauto$ & $P \lor \lnot P$ & toujours vrai / tautologie & \lone\lone\lone\lone \\ % 1111
+	\hline
+\end{tabular}
+\]
+
+\smallskip
+
+La dernière colonne indique les $4$ valeurs de la fonction prises lorsque $(P,Q)$ vaut successivement $(\lzero,\lzero)$, $(\lzero,\lone)$, $(\lone,\lzero)$, $(\lone,\lone)$.
+
+%--------------------------------------------------------------------
+\subsubsection{Équivalences logiques usuelles de la logique de premier ordre}
+
+
+\begin{center}
+    \setlength{\tabcolsep}{18pt}
+    \renewcommand{\arraystretch}{1.5}
+    \begin{tabular}{|c|c|}
+        \hline
+        \textbf{Nom} & \textbf{Règle} \\
+        \hline
+
+        \textbf{Négation de $\forall$}
+        &
+        $\lnot(\forall x\ \mathcal P(x))
+        \quad \equiv \quad
+        \exists x\ \lnot\mathcal P(x)$
+        \\ \hline
+
+        \textbf{Négation de $\exists$}
+        &
+        $\lnot(\exists x\ \mathcal P(x))
+        \quad \equiv \quad
+        \forall x\ \lnot\mathcal P(x)$
+        \\ \hline
+
+        \textbf{Permutation de $\forall$}
+        &
+        $\forall x\,\forall y\ \mathcal P(x,y)
+        \quad \equiv \quad
+        \forall y\,\forall x\ \mathcal P(x,y)$
+        \\ \hline
+
+        \textbf{Permutation de $\exists$}
+        &
+        $\exists x\,\exists y\ \mathcal P(x,y)
+        \quad \equiv \quad
+        \exists y\,\exists x\ \mathcal P(x,y)$
+        \\ \hline
+
+        \textbf{Distribution de $\forall$ sur $\land$}
+        &
+        $\forall x\,(\mathcal P(x)\land\mathcal Q(x))
+        \quad \equiv \quad
+        (\forall x\,\mathcal P(x))
+        \land
+        (\forall x\,\mathcal Q(x))$
+        \\ \hline
+
+        \textbf{Distribution de $\exists$ sur $\lor$}
+        &
+        $\exists x\,(\mathcal P(x)\lor\mathcal Q(x))
+        \quad \equiv \quad
+        (\exists x\,\mathcal P(x))
+        \lor
+        (\exists x\,\mathcal Q(x))$
+        \\ \hline
+
+        \textbf{Sortie de $\forall$}
+        &
+        $\forall x\,(\mathcal P(x)\limplies\mathcal Q)
+        \quad \equiv \quad
+        (\exists x\,\mathcal P(x))
+        \limplies
+        \mathcal Q$
+        \\[-0.7em]
+        &
+        {\small (si $x$ n'apparaît pas dans $\mathcal Q$)}
+        \\ \hline
+
+        \textbf{Renommage d'une variable liée}
+        &
+        $\forall x\,\mathcal P(x)
+        \quad \equiv \quad
+        \forall y\,\mathcal P[y/x]$
+        \\[-0.7em]
+        &
+        {\small (si $y$ est une variable nouvelle)}
+        \\ \hline
+
+    \end{tabular}
+\end{center}
+
+
+%--------------------------------------------------------------------
+\subsubsection{Règles d'inférence de la logique de premier ordre}
+
+
+\begin{center}
+    \setlength{\tabcolsep}{16pt}
+    \renewcommand{\arraystretch}{1.6}
+    \begin{tabular}{|c|c|}
+        \hline
+        \textbf{Nom} & \textbf{Règle} \\
+        \hline
+
+        \textbf{Élimination de $\forall$}
+        &
+        $\forall x\,\mathcal P(x)
+        \quad \lturn \quad
+        \mathcal P(c)$
+        \\[-0.7em]
+        &
+        {\small ($c$ constante ou terme clos quelconque)}
+        \\ \hline
+
+        \textbf{Introduction de $\forall$}
+        &
+        $\mathcal P(c)
+        \quad \lturn \quad
+        \forall x\,\mathcal P(x)$
+        \\[-0.7em]
+        &
+        {\small ($c$ arbitraire : n'apparaît dans aucune hypothèse ouverte)}
+        \\ \hline
+
+        \textbf{Introduction de $\exists$}
+        &
+        $\mathcal P(c)
+        \quad \lturn \quad
+        \exists x\,\mathcal P(x)$
+        \\[-0.7em]
+        &
+        {\small ($c$ constante ou terme clos quelconque)}
+        \\ \hline
+
+        \textbf{Élimination de $\exists$}
+        &
+        $\begin{array}{c}
+            \exists x\,\mathcal P(x),\
+            [\,\mathcal P(c)\lturn\mathcal Q\,]
+            \quad \lturn \quad
+            \mathcal Q
+        \end{array}$
+        \\[-0.7em]
+        &
+        {\small ($c$ est une constante nouvelle, n'apparaissant nulle part ailleurs)}
+        \\ \hline
+
+        \emph{Négation de $\forall$}
+        &
+        $\lnot(\forall x\,\mathcal P(x))
+        \quad \lturn \quad
+        \exists x\,\lnot\mathcal P(x)$
+        \\ \hline
+
+        \emph{Négation de $\exists$}
+        &
+        $\lnot(\exists x\,\mathcal P(x))
+        \quad \lturn \quad
+        \forall x\,\lnot\mathcal P(x)$
+        \\ \hline
+
+        \emph{Renommage}
+        &
+        $\begin{array}{c}
+            \forall x\,\mathcal P(x)
+            \quad \lturn \quad
+            \forall y\,\mathcal P(y)\\[-0.3em]
+            \exists x\,\mathcal P(x)
+            \quad \lturn \quad
+            \exists y\,\mathcal P(y)
+        \end{array}$
+        \\ \hline
+
+        \emph{Permutation de deux $\forall$}
+        &
+        $\forall x\,\forall y\,\mathcal P(x,y)
+        \quad \lturn \quad
+        \forall y\,\forall x\,\mathcal P(x,y)$
+        \\ \hline
+
+        \emph{Permutation de deux $\exists$}
+        &
+        $\exists x\,\exists y\,\mathcal P(x,y)
+        \quad \lturn \quad
+        \exists y\,\exists x\,\mathcal P(x,y)$
+        \\ \hline
+
+        \emph{Interversion de $\exists$ et $\forall$}
+        &
+        $\exists x\,\forall y\,\mathcal P(x,y)
+        \quad \lturn \quad
+        \forall y\,\exists x\,\mathcal P(x,y)$
+        \\ \hline
+
+        \emph{Commutation de $\forall$ et $\land$}
+        &
+        $\begin{array}{c}
+        \forall x(\mathcal P(x)\land\mathcal Q(x))
+        \quad \lturn \quad
+        (\forall x\,\mathcal P(x))
+        \land
+        (\forall x\,\mathcal Q(x))
+        \\[-0.3em]
+        (\forall x\,\mathcal P(x))
+        \land
+        (\forall x\,\mathcal Q(x))
+        \quad \lturn \quad
+        \forall x(\mathcal P(x)\land\mathcal Q(x))
+        \end{array}$
+        \\ \hline
+
+        \emph{Commutation de $\exists$ et $\lor$}
+        &
+        $\begin{array}{c}
+        \exists x(\mathcal P(x)\lor\mathcal Q(x))
+        \quad \lturn \quad
+        (\exists x\,\mathcal P(x))
+        \lor
+        (\exists x\,\mathcal Q(x))
+        \\[-0.3em]
+        (\exists x\,\mathcal P(x))
+        \lor
+        (\exists x\,\mathcal Q(x))
+        \quad \lturn \quad
+        \exists x(\mathcal P(x)\lor\mathcal Q(x))
+        \end{array}$
+        \\ \hline
+
+    \end{tabular}
+\end{center}
+
+
+%--------------------------------------------------------------------
+\subsubsection{Axiomes de Peano}
+
+\mybox{
+\begin{itemize}
+	\item $\mathcal{A}_1$ : \quad $\forall x \quad S(x) \neq 0$
+	\item $\mathcal{A}_2$ : \quad $\forall x \quad (x=0) \lor (\exists y \quad x = S(y))$
+	\item $\mathcal{A}_3$ : \quad $\forall x \ \ \forall y \quad (S(x) = S(y)) \limplies (x=y)$
+	\item $\mathcal{A}_4$ : \quad $\forall x \quad x+0=x$
+	\item $\mathcal{A}_5$ : \quad $\forall x \ \ \forall y \quad x+S(y) = S(x+y)$
+	\item $\mathcal{A}_6$ : \quad $\forall x \quad x \times 0 = 0$
+	\item $\mathcal{A}_7$ : \quad $\forall x \ \ \forall y \quad x \times S(y) = (x \times y) + x$
+\end{itemize}
+}
+
+Et pour chaque formule $\mathcal{P}$ ayant $x$ comme variable libre :
+\mybox{
+$
+\mathcal{R}ec_{\mathcal{P}(x)} : \quad \mathcal{P}(0) \ \land \ \big[\forall x \quad \mathcal{P}(x) \limplies \mathcal{P}(S(x))\big] \quad \limplies \quad \forall x \ \ \mathcal{P}(x) 
+$
+}
+
+%----------------------------------------------------
+\subsubsection{Lexique français-anglais}
+
+Ce lexique répertorie les termes techniques fondamentaux avec leurs équivalents en anglais.
+
+\begin{itemize}
+
+\item affectation : \emph{assignment}, \emph{variable assignment}
+
+\item codage de Gödel : \emph{Gödel coding}, \emph{Gödel numbering}
+\item conséquence logique : \emph{logical consequence}, \emph{semantic consequence}
+\item constante fraîche : \emph{fresh constant}, \emph{new constant}
+
+\item déduction naturelle : \emph{natural deduction}
+\item domaine : \emph{domain}, \emph{domain of discourse}, \emph{universe}
+
+\item ensemble définissable : \emph{definable set}
+\item équivalence logique : \emph{logical equivalence}
+\item explosion : \emph{explosion}, \emph{ex falso quodlibet}
+
+\item fonction récursive primitive : \emph{primitive recursive function}
+\item formule : \emph{formula}, \emph{well-formed formula (wff)}
+\item formule atomique : \emph{atomic formula}
+\item formule fermée, formule close, phrase : \emph{closed formula}, \emph{sentence}
+
+\item hypothèse : \emph{assumption}, \emph{hypothesis}
+
+\item logique propositionnelle : \emph{propositional logic}
+\item logique du premier ordre : \emph{first-order logic}
+
+\item modèle : \emph{model}
+
+\item portée (d'un quantificateur) : \emph{scope}
+
+\item règle d'inférence : \emph{rule of inference}
+\item table de vérité : \emph{truth table}
+\item tautologie : \emph{tautology}
+\item témoin de Henkin : \emph{Henkin witness}
+\item terme clos : \emph{closed term}
+\item théorie cohérente/incohérente : \emph{consistent/inconsistent theory}
+\item théorie complète : \emph{complete theory}
+\item théorème de compacité : \emph{Compactness Theorem}
+\item théorème de complétude : \emph{Completeness Theorem}
+\item théorème d'incomplétude : \emph{Incompleteness Theorem}
+\item théorème de validité : \emph{Soundness Theorem}
+\item tiers exclu : \emph{law of excluded middle}
+
+\item variable libre : \emph{free variable}
+\item variable liée : \emph{bound variable}
+
+\end{itemize}
+
+
+
+\end{document}

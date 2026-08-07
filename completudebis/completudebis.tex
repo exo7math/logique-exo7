@@ -1,0 +1,705 @@
+\documentclass[11pt,class=report,crop=false]{standalone}
+\usepackage[screen]{../logic}
+
+
+\begin{document}
+
+
+%====================================================================
+\chapitre[Preuve du théorème de complétude]{Preuve du théorème\\ de complétude}
+%====================================================================
+
+% \insertvideo{}{partie 1.1. Titre}
+
+
+\objectifs{Nous prouvons le théorème de complétude.}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Le théorème de complétude}
+
+%--------------------------------------------------------------------
+\subsection{Énoncé}
+
+On rappelle l'énoncé qu'on a déjà bien étudié dans le chapitre \og{}Théorème de complétude\fg{} mais que l'on n'a pas encore prouvé.
+\begin{theoreme}[Théorème de complétude]
+	Si $\Gamma \ldoubleturn \mathcal{Q}$ alors $\Gamma \lturn \mathcal{Q}$.
+\end{theoreme}
+\index{theoreme completude@théorème de complétude}
+
+Autrement dit, tout ce qui est vrai est prouvable.
+
+
+%--------------------------------------------------------------------
+\subsection{À prouver : \og{}Si $\mathcal{T}$ est cohérente, alors $\mathcal{T}$ admet un modèle.\fg{}}
+
+Grâce au théorème de clôture du chapitre précédent, on ramène la preuve du théorème de complétude dans le cadre général au cadre des formules fermées.
+Soit $\mathcal{T}$ une théorie, $\mathcal{Q}$ une formule fermée.
+
+\begin{theoreme}[Théorème A]
+	Si $\mathcal{T} \ldoubleturn \mathcal{Q}$, alors $\mathcal{T} \lturn \mathcal{Q}$.
+\end{theoreme}
+
+On va donc étudier le cas des théories. Ce théorème A sera obtenu à partir du théorème B suivant qui lui est équivalent :
+
+\begin{theoreme}[Théorème B]
+	Si $\mathcal{T}$ est cohérente alors $\mathcal{T}$ admet un modèle.
+\end{theoreme}
+
+Ainsi on aura l'enchaînement :
+
+\mycenterline{Théorème B $\implies$ Théorème A $\implies$ Théorème de complétude}
+
+C'est donc ce théorème B que l'on va démontrer dans ce chapitre, après avoir justifié comment en déduire le théorème A.
+
+%--------------------------------------------------------------------
+\subsection{Rappel du vocabulaire}
+
+\begin{itemize}
+	\item \defi{Théorie}\index{theorie@théorie} : un ensemble $\mathcal{T}$ de formules fermées.
+	
+	\item $\mathcal{T}$ est \defi{non cohérente} si $\mathcal{T} \lturn \lantitauto$ ; sinon $\mathcal{T}$ est \defi{cohérente}\index{theorie@théorie!coherente@cohérente}.
+	
+	\item $\mathcal{T}$ admet un \defi{modèle}\index{modele@modèle} s'il existe une structure $\mathcal{S}$ telle que $\ldoubleturn_{\mathcal{S}} \mathcal{T}$, c'est-à-dire une structure dans laquelle toutes les formules de $\mathcal{T}$ deviennent vraies.
+\end{itemize}
+
+On a vu au chapitre précédent la proposition suivante :
+\begin{proposition}
+	\label{prop:noncoherente}
+	$\mathcal{T} \lturn \mathcal{Q} \quad \text{ssi} \quad \mathcal{T} \cup \{ \lnot \mathcal{Q} \} \text{ non cohérente}$.
+\end{proposition}
+
+Voici comment prouver le théorème A à partir du théorème B (on a vu la réciproque dans le chapitre précédent).
+
+
+
+\begin{proof}
+	On va donc prouver le théorème A sous sa forme contraposée :
+	si $\mathcal{T} \not\lturn \mathcal{Q}$, alors $\mathcal{T} \not\ldoubleturn \mathcal{Q}$.
+	
+	On utilisera avec modération les négations d'opérateurs : 
+	$\mathcal{T} \not\lturn \mathcal{Q}$ signifie $\text{non}(\mathcal{T} \lturn \mathcal{Q})$
+	et $\mathcal{T} \not\ldoubleturn \mathcal{Q}$ signifie $\text{non}(\mathcal{T} \ldoubleturn \mathcal{Q})$.	
+	
+	
+	Hypothèse : $\text{non}(\mathcal{T} \lturn \mathcal{Q})$. 
+	But : $\text{non}(\mathcal{T} \ldoubleturn \mathcal{Q})$.
+	
+\begin{align*}
+	& \text{non}(\mathcal{T} \lturn \mathcal{Q}) \\
+	\text{donc} \quad & \mathcal{T} \cup \{ \lnot \mathcal{Q} \} \text{ est cohérente} \qquad \text{par la proposition \ref{prop:noncoherente} ci-dessus} \\
+	\text{donc} \quad & \mathcal{T} \cup \{ \lnot \mathcal{Q} \} \text{ admet un modèle} \qquad \text{par le théorème B} \\
+	\text{donc} \quad & \ldoubleturn_{\mathcal{S}} \mathcal{T} \cup \{ \lnot \mathcal{Q} \} \qquad \text{pour une certaine structure $\mathcal{S}$} \\
+	\text{donc} \quad & \ldoubleturn_{\mathcal{S}} \mathcal{T} \ \text{ et } \ \ldoubleturn_{\mathcal{S}} \lnot\mathcal{Q} \qquad \text{car dans $\mathcal{S}$, $\mathcal{T}$ est vraie et $\lnot \mathcal{Q}$ aussi} \\
+	\text{donc} \quad & \text{non}(\mathcal{T} \ldoubleturn \mathcal{Q}) \qquad \text{car pour $\mathcal{S}$, $\mathcal{T}$ est vraie et $\mathcal{Q}$ fausse}
+\end{align*}
+	
+\end{proof}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Théorie complète}
+
+%--------------------------------------------------------------------
+\subsection{Définition}
+
+\begin{definition}
+	Une théorie $\mathcal{T}$ est dite \defi{complète}\index{theorie@théorie!complete@complète} si :
+	\begin{itemize}
+		\item $\mathcal{T}$ est cohérente,
+		\item et pour toute formule fermée $\mathcal{Q}$, on a : $\mathcal{T} \lturn \mathcal{Q}$ ou $\mathcal{T} \lturn \lnot \mathcal{Q}$.
+	\end{itemize}
+\end{definition}
+
+Ainsi dans une théorie complète, quelle que soit la formule fermée $\mathcal{Q}$, on peut la prouver ou bien prouver son contraire, mais pas les deux en même temps. La dénomination \og{}complète\fg{} est donc bien choisie. 
+
+%--------------------------------------------------------------------
+\subsection{Satisfaction}
+
+Voici une conséquence importante quand on se place dans le cadre d'une théorie complète : les formules sont vraies ou fausses indépendamment de la structure.
+
+\begin{theoreme}
+	Soient $\mathcal{T}$ une théorie complète, $\mathcal{Q}$ une formule fermée. 
+	Soient $\mathcal{S}_1$ et $\mathcal{S}_2$ deux modèles de $\mathcal{T}$. 
+	Alors :
+	\mycenterline{$\ldoubleturn_{\mathcal{S}_1} \mathcal{Q}$ \quad ssi \quad  $\ldoubleturn_{\mathcal{S}_2} \mathcal{Q}$.}
+\end{theoreme}
+
+\begin{proof}
+	Comme $\mathcal{T}$ est complète, on considère les deux cas : soit $\mathcal{T} \lturn \mathcal{Q}$, soit $\mathcal{T} \lturn \lnot \mathcal{Q}$.
+	\begin{itemize}
+		\item Si $\mathcal{T} \lturn \mathcal{Q}$, alors $\mathcal{T} \ldoubleturn \mathcal{Q}$ par le théorème de validité, donc $\ldoubleturn_{\mathcal{S}_1} \mathcal{Q}$ et $\ldoubleturn_{\mathcal{S}_2} \mathcal{Q}$ car $\mathcal{S}_1$ et $\mathcal{S}_2$ sont des modèles de $\mathcal{T}$, c'est-à-dire que $\mathcal{Q}$ est vraie pour $\mathcal{S}_1$ et $\mathcal{S}_2$.
+		
+		\item Si $\mathcal{T} \lturn \lnot \mathcal{Q}$, le même raisonnement donne $\ldoubleturn_{\mathcal{S}_1} \lnot \mathcal{Q}$ et $\ldoubleturn_{\mathcal{S}_2} \lnot \mathcal{Q}$, c'est-à-dire que $\mathcal{Q}$ est fausse dans $\mathcal{S}_1$ et $\mathcal{S}_2$.
+	\end{itemize}
+\end{proof}
+
+
+%--------------------------------------------------------------------
+\subsection{Un lemme}
+
+Dans une théorie complète, il n'y a pas de piège. On va prouver les énoncés suivants qui pourraient sembler évidents mais nécessitent cette notion.
+
+\begin{lemme}
+	\label{lem:compbis}
+	Soit $\mathcal{T}$ une théorie complète. 
+	\begin{enumerate}
+		\item $\mathcal{T} \lturn \lnot \mathcal{P} \quad \text{ssi} \quad \text{non}(\mathcal{T} \lturn \mathcal{P})$
+		\item $\mathcal{T} \lturn \mathcal{P} \land \mathcal{Q} \quad \text{ssi} \quad (\mathcal{T} \lturn \mathcal{P} \ \text{ et } \ \mathcal{T} \lturn \mathcal{Q})$
+		\item $\mathcal{T} \lturn \mathcal{P} \lor \mathcal{Q} \quad \text{ssi} \quad (\mathcal{T} \lturn \mathcal{P} \ \text{ ou } \ \mathcal{T} \lturn \mathcal{Q})$
+	\end{enumerate}
+\end{lemme}
+
+\begin{proof}
+	~
+	\begin{enumerate}
+		\item 
+		\begin{itemize}
+			\item Supposons $\mathcal{T} \lturn \lnot \mathcal{P}$.
+			Par l'absurde, si $\mathcal{T} \lturn \mathcal{P}$, alors $\mathcal{T} \lturn (\mathcal{P} \land \lnot \mathcal{P})$, donc $\mathcal{T} \lturn \lantitauto$. Contradiction avec $\mathcal{T}$ cohérente (car $\mathcal{T}$ complète).
+			Donc $\text{non}(\mathcal{T} \lturn \mathcal{P})$.
+			
+			\item Supposons $\text{non}(\mathcal{T} \lturn \mathcal{P})$.
+			Comme $\mathcal{T}$ est complète ($\mathcal{T} \lturn \mathcal{P}$ ou $\mathcal{T} \lturn \lnot \mathcal{P}$), on a donc $\mathcal{T} \lturn \lnot \mathcal{P}$.
+		\end{itemize}
+		
+		\item 
+		\begin{itemize}
+			\item Si $\mathcal{T} \lturn \mathcal{P} \land \mathcal{Q}$, alors $\mathcal{T} \lturn \mathcal{P}$ et $\mathcal{T} \lturn \mathcal{Q}$ car $\mathcal{P} \land \mathcal{Q} \lturn \mathcal{P}$ et $\mathcal{P} \land \mathcal{Q} \lturn \mathcal{Q}$.
+			\item Si $\mathcal{T} \lturn \mathcal{P}$ et $\mathcal{T} \lturn \mathcal{Q}$, alors $\mathcal{T} \lturn \mathcal{P} \land \mathcal{Q}$, car $\mathcal{P}, \mathcal{Q} \lturn \mathcal{P} \land \mathcal{Q}$.
+		\end{itemize}
+		Remarque : ce point n'utilise pas l'hypothèse que $\mathcal{T}$ est complète.
+		
+		\item 
+		\begin{itemize}
+			\item Si ($\mathcal{T} \lturn \mathcal{P}$ ou $\mathcal{T} \lturn \mathcal{Q}$), alors $\mathcal{T} \lturn \mathcal{P} \lor \mathcal{Q}$ car $\mathcal{P} \lturn \mathcal{P} \lor \mathcal{Q}$ et $\mathcal{Q} \lturn \mathcal{P} \lor \mathcal{Q}$. (Pas besoin de $\mathcal{T}$ complète).
+			
+			\item Supposons $\mathcal{T} \lturn \mathcal{P} \lor \mathcal{Q}$. Supposons par l'absurde que $\mathcal{T} \not\lturn \mathcal{P}$ et $\mathcal{T} \not\lturn \mathcal{Q}$.
+			Comme $\mathcal{T} \not\lturn \mathcal{P}$, on a $\mathcal{T} \lturn \lnot \mathcal{P}$ car $\mathcal{T}$ est complète (par le point 1), et de même comme $\mathcal{T} \not\lturn \mathcal{Q}$, alors $\mathcal{T} \lturn \lnot \mathcal{Q}$.
+			Ainsi par le point 2, $\mathcal{T} \lturn \lnot \mathcal{P} \land \lnot \mathcal{Q}$, donc $\mathcal{T} \lturn \lnot(\mathcal{P} \lor \mathcal{Q})$.
+			Mais alors, on a à la fois $\mathcal{T} \lturn \mathcal{P} \lor \mathcal{Q}$ (par l'hypothèse) et $\mathcal{T} \lturn \lnot(\mathcal{P} \lor \mathcal{Q})$, donc $\mathcal{T}$ est non cohérente. C'est une contradiction car $\mathcal{T}$ complète, donc cohérente.
+		\end{itemize}
+	\end{enumerate}
+\end{proof}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Construction d'un modèle à partir d'une théorie complète}
+\label{sec:modele}
+
+On commence la preuve du théorème de complétude dans sa forme du théorème B : \og{}si $\mathcal{T}$ est complète, alors $\mathcal{T}$ admet un modèle\fg{}. On débute cette démonstration un peu par la fin.
+On va partir d'une théorie complète, avec des hypothèses supplémentaires, et on va construire un modèle. On expliquera plus tard comment obtenir ces hypothèses supplémentaires.
+Il existe plusieurs preuves du théorème de complétude, nous adoptons ici celle basée sur les témoins de Henkin.
+
+%--------------------------------------------------------------------
+\subsection{Hypothèses renforcées}
+
+Soit $\mathcal{L}$ un langage et $\mathcal{T}$ une théorie. On va supposer les propriétés suivantes pour $\mathcal{T}$ :
+\begin{itemize}
+	\item[(i)] $\mathcal{T}$ est cohérente.
+	\item[(ii)] $\mathcal{T}$ est complète.
+	\item[(iii)] $\mathcal{T}$ admet des témoins de Henkin.
+\end{itemize}
+
+Remarque : (ii) $\implies$ (i) mais on insiste sur le fait qu'à la fin on aimerait avoir la seule hypothèse (i).
+
+\begin{definition}
+	$\mathcal{T}$ admet des \defi{témoins de Henkin}\index{temoin de Henkin@témoin de Henkin} si pour toute formule $\mathcal{P}$ de $\mathcal{L}$ ayant une unique variable libre $x$, il existe une constante $c_{\mathcal{P}}$ de $\mathcal{L}$ telle que la formule suivante :
+	\[ \exists x \ \mathcal{P}(x) \quad \limplies \quad \mathcal{P}(c_{\mathcal{P}}) \]
+	soit une formule de $\mathcal{T}$.
+\end{definition}
+
+Remarques.
+\begin{itemize}
+	% \item On trouve parfois une définition un peu plus faible où on exige seulement :
+	% \[
+	% \mathcal{T} \quad \lturn \quad  
+	% \big[ (\exists x\ \mathcal{P}(x)) \ \limplies \  \mathcal{P}(c_{\mathcal{P}})\big].
+	% \]
+	
+	\item On pourrait aussi écrire : il existe $c \in \mathcal{L}$ tel que :
+	 \[
+	 \text{\og}(\exists x\ \mathcal{P}(x)) \ \limplies \  \mathcal{P}(c)\text{\fg} \ \in \ \mathcal{T},
+	 \]
+	 si on ne souhaite pas insister sur la dépendance de $c$ vis-à-vis de $\mathcal{P}$.
+	
+	\item Avec des témoins de Henkin, une formule \og{}$\exists x \ \mathcal{P}(x)$\fg{} n'est plus une formule abstraite car on peut en obtenir une réalisation concrète \og{}$\mathcal{P}(c_{\mathcal{P}})$ \fg{}, d'où le nom de \og{}témoin\fg{}.
+\end{itemize}
+
+
+\bigskip
+
+Voici encore deux hypothèses supplémentaires, cette fois concernant le langage $\mathcal{L}$ :
+\begin{itemize}
+	\item[(iv)] $\mathcal{L}$ est un langage dénombrable (l'ensemble des symboles de $\mathcal{L}$ est dénombrable). Cela entraîne que l'ensemble des formules de $\mathcal{L}$ est aussi dénombrable (voir le chapitre \og{}Théorème de compacité\fg{}).
+	\item[(v)] $\mathcal{L}$ ne contient pas le prédicat d'égalité \og{}$=$ \fg{}. Sans cette hypothèse, on augmenterait la technicité de la preuve car on devrait travailler avec des classes d'équivalence de la relation définie par $t_1 \sim t_2$ lorsque $t_1 = t_2$ est vérifié.
+\end{itemize}
+
+Malgré ces hypothèses simplificatrices, la preuve reste ardue.
+
+%--------------------------------------------------------------------
+\subsection{Construction du modèle}
+\label{ssec:modele}
+
+Pour une théorie $\mathcal{T}$ qui vérifie les hypothèses (i), (ii), (iii)
+dans un langage $\mathcal{L}$ qui vérifie les hypothèses (iv), (v), nous allons construire un modèle $\mathcal{S}$ pour $\mathcal{T}$, c'est-à-dire une structure $\mathcal{S}$ telle que $\ldoubleturn_{\mathcal{S}} \mathcal{T}$.
+
+Construire la structure $\mathcal{S}$, c'est donner :
+\begin{itemize}
+	\item un domaine $E$,
+	\item une interprétation $c^{\mathcal{S}}$ de chaque constante $c$ de $\mathcal{L}$,
+	\item une interprétation $f^{\mathcal{S}}$ de chaque fonction $f$ de $\mathcal{L}$,
+	\item une interprétation $P^{\mathcal{S}}$ de chaque prédicat $P$ de $\mathcal{L}$.
+\end{itemize}
+
+Ensuite, il faudra démontrer que toute formule $\mathcal{P}$ de $\mathcal{T}$ est vraie lorsqu'elle est interprétée dans $\mathcal{S}$.
+
+\bigskip
+
+C'est parti ! La construction est plus ou moins automatique. On définit les objets afin d'avoir les propriétés voulues.
+Voici la structure $\mathcal{S}$ :
+\begin{itemize}
+	\item Le domaine $E$ est l'ensemble des termes fermés de $\mathcal{L}$.
+	On rappelle que les termes sont formés à partir des constantes et des variables, auxquelles on peut appliquer des fonctions de manière récursive. Ici, les termes fermés sont donc uniquement les constantes et les itérations de fonctions appliquées à des constantes.
+	Exemples de termes fermés : $c_1$, $c_2$, $f(c_1)$, $g(c_1, c_2)$, $f(f(c_1))$, $g(c_1,f(c_2))$, etc.
+	
+	Remarque : si on avait l'égalité comme élément du langage, il faudrait prendre pour $E$ l'ensemble des classes d'équivalence des termes fermés modulo la relation d'équivalence $t_1 \sim t_2$ ssi $\mathcal{T} \lturn (t_1 = t_2)$.
+	
+	\item Si $c$ est un symbole de constante de $\mathcal{L}$, alors $c$ est un terme fermé donc un élément de $E$. On définit simplement $c^{\mathcal{S}} = c$.
+	
+	\item Soit $f$ un symbole de fonction $n$-aire de $\mathcal{L}$. Définir $f^{\mathcal{S}}$, c'est définir une \og{}vraie\fg{} fonction $f^{\mathcal{S}} : E^n \to E$.
+	Soient $t_1, \ldots, t_n$ des éléments de $E$. Ce sont des termes fermés de $\mathcal{L}$, donc $f(t_1, \ldots, t_n)$ est aussi un terme fermé, donc un élément de $E$. On pose $f^{\mathcal{S}}(t_1, \ldots, t_n) = f(t_1, \ldots, t_n)$.
+	
+	\item Soit $P$ un prédicat $n$-aire de $\mathcal{L}$. Définir l'interprétation $P^{\mathcal{S}}$, c'est définir une fonction $P^{\mathcal{S}} : E^n \to \{V, F\}$. Voici comment attribuer une valeur vrai/faux à chaque élément $(t_1, \ldots, t_n) \in E^n$ : 
+	on pose $P^{\mathcal{S}}(t_1, \ldots, t_n) = V$ si $\mathcal{T} \lturn P(t_1, \ldots, t_n)$ et on pose $P^{\mathcal{S}}(t_1, \ldots, t_n) = F$ sinon.
+	
+	On a ainsi par construction : $\ldoubleturn_{\mathcal{S}} P(t_1, \ldots, t_n)$ ssi $\mathcal{T} \lturn P(t_1, \ldots, t_n)$. C'est une assertion que l'on généralisera plus tard à une formule quelconque.
+\end{itemize}
+
+
+
+%--------------------------------------------------------------------
+\subsection{Satisfaction}
+
+Il reste à montrer que notre structure $\mathcal{S}$ est bien un modèle pour $\mathcal{T}$, c'est-à-dire $\ldoubleturn_{\mathcal{S}} \mathcal{T}$.
+La preuve repose sur le résultat suivant :
+
+\begin{lemme}
+	\label{lem:satisfaction}
+	Soit $\mathcal{Q}$ une formule fermée.
+	\[ \mathcal{T} \lturn \mathcal{Q} \quad \text{ssi} \quad \ldoubleturn_{\mathcal{S}} \mathcal{Q} \]
+\end{lemme}
+
+Admettons un instant ce lemme et justifions que $\mathcal{S}$ est un modèle de $\mathcal{T}$. En effet soit $\mathcal{P}$ une formule de $\mathcal{T}$, alors bien sûr $\mathcal{T} \lturn \mathcal{P}$ donc par le lemme $\ldoubleturn_{\mathcal{S}} \mathcal{P}$. Ceci étant vrai pour toute formule de $\mathcal{T}$, on a bien $\ldoubleturn_{\mathcal{S}} \mathcal{T}$.
+
+\begin{proof}[Démonstration du lemme]
+	Pour simplifier, et sans perte de généralité, on suppose que la formule $\mathcal{Q}$ ne contient que les connecteurs $\lnot$ et $\land$ ainsi que le quantificateur $\exists$. 
+	Pour les connecteurs, on renvoie au chapitre \og{}Quels connecteurs sont utiles ?\fg{} afin de se ramener à ces deux connecteurs. Si on a une formule \og{}$\forall x\ \mathcal{P}(x)$\fg{}, alors elle équivaut à \og{}$\lnot(\exists x\ \lnot\mathcal{P}(x))$ \fg{} ce qui permet de transformer tous les quantificateurs $\forall$ en des quantifications $\exists$ (avec des négations en plus).
+	
+	Démontrons le résultat par induction sur la construction de la formule $\mathcal{Q}$.
+	
+	\begin{itemize}
+		\item Cas $\mathcal{Q}$ est une formule atomique. 
+		
+		Alors $\mathcal{Q} = P(t_1, \ldots, t_n)$ où $P$ est un prédicat et $t_1,\ldots,t_n$ des termes fermés. Par construction de $\mathcal{S}$, 
+		\[
+		\mathcal{T} \lturn P(t_1, \ldots, t_n) \quad \text{ ssi } \quad \ldoubleturn_{\mathcal{S}} P(t_1, \ldots, t_n),
+		\]
+		donc le lemme est vrai dans ce cas.
+		
+		\item Cas $\mathcal{Q} = \lnot \mathcal{P}$. 
+		
+		Par récurrence on suppose le lemme vrai pour $\mathcal{P}$ et on veut le prouver pour $\mathcal{Q} = \lnot \mathcal{P}$.
+		\begin{align*}
+			& \mathcal{T} \lturn \mathcal{Q} \\
+			\text{ ssi } \quad & \mathcal{T} \lturn \lnot \mathcal{P} \\
+			\text{ ssi } \quad & \text{non}(\mathcal{T} \lturn \mathcal{P}) \qquad \text{par le Lemme \ref{lem:compbis}, car $\mathcal{T}$ est complète}\\
+			\text{ ssi } \quad & \text{non}(\ldoubleturn_{\mathcal{S}} \mathcal{P}) \qquad \text{par l'hypothèse de récurrence}\\
+			\text{ssi } \quad & \ldoubleturn_{\mathcal{S}} \lnot \mathcal{P}\\
+			\text{ssi } \quad & \ldoubleturn_{\mathcal{S}} \mathcal{Q}			
+		\end{align*}
+		
+		Le point clé est le passage de la deuxième à la troisième ligne qui utilise l'hypothèse (ii) $\mathcal{T}$ complète via le Lemme \ref{lem:compbis}.
+		
+		\item Cas $\mathcal{Q} = \mathcal{P}_1 \land \mathcal{P}_2$.
+		
+		Par récurrence on suppose le lemme valide pour $\mathcal{P}_1$ et $\mathcal{P}_2$.
+		\begin{align*}
+			& \mathcal{T} \lturn \mathcal{Q} \\
+			\text{ssi } \quad & \mathcal{T} \lturn \mathcal{P}_1 \land \mathcal{P}_2 \\
+			\text{ssi } \quad & (\mathcal{T} \lturn \mathcal{P}_1 \ \text{ et } \  \mathcal{T} \lturn \mathcal{P}_2) \qquad \text{par le Lemme \ref{lem:compbis}}\\
+			\text{ssi } \quad & (\ldoubleturn_{\mathcal{S}} \mathcal{P}_1 \ \text{ et } \ \ldoubleturn_{\mathcal{S}} \mathcal{P}_2) \qquad \text{par l'hypothèse de récurrence}\\
+			\text{ssi } \quad & \ldoubleturn_{\mathcal{S}} \mathcal{P}_1 \land \mathcal{P}_2 \\
+			\text{ssi } \quad & \ldoubleturn_{\mathcal{S}} \mathcal{Q}
+		\end{align*}
+		
+
+		\item Cas $\mathcal{Q} = \exists x\ \mathcal{P}(x)$.
+		
+		On suppose le lemme vrai pour $\mathcal{P}$.
+		\begin{itemize}
+			\item Si $\mathcal{T} \lturn \mathcal{Q}$, c'est-à-dire $\mathcal{T} \lturn \exists x\ \mathcal{P}(x)$. Par l'hypothèse (iii) sur les témoins de Henkin, on sait qu'il existe $c_{\mathcal{P}} \in \mathcal{L}$ tel que \og{}$(\exists x\ \mathcal{P}(x)) \limplies \mathcal{P}(c_{\mathcal{P}})$\fg{} soit une formule de $\mathcal{T}$.
+			Comme $\mathcal{T} \lturn \exists x\ \mathcal{P}(x)$ et $\mathcal{T} \lturn \big[ (\exists x\ \mathcal{P}(x)) \limplies \mathcal{P}(c_{\mathcal{P}}) \big]$, alors $\mathcal{T} \lturn \mathcal{P}(c_{\mathcal{P}})$.
+			Donc par hypothèse de récurrence on a $\ldoubleturn_{\mathcal{S}} \mathcal{P}(c_{\mathcal{P}})$,  et par définition de la satisfaction pour $\exists$, on en déduit $\ldoubleturn_{\mathcal{S}} \exists x\ \mathcal{P}(x)$, c'est-à-dire $\ldoubleturn_{\mathcal{S}} \mathcal{Q}$.
+			
+			
+			\item Si $\ldoubleturn_{\mathcal{S}} \mathcal{Q}$, alors $\ldoubleturn_{\mathcal{S}} \exists x\ \mathcal{P}(x)$, donc 
+			il existe un terme fermé $t$, dont l'interprétation est $t^{\mathcal{S}} \in E$, tel que $\ldoubleturn_{\mathcal{S}} \mathcal{P}(t)$.			
+			Par hypothèse de récurrence on a $\mathcal{T} \lturn \mathcal{P}(t)$. Ainsi par la règle d'introduction de $\exists$ on a bien $\mathcal{T} \lturn \exists x\ \mathcal{P}(x)$ donc $\mathcal{T} \lturn \mathcal{Q}$.			
+		\end{itemize}
+		
+	\end{itemize}
+\end{proof}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Construction d'une théorie complète}
+\label{sec:complete}
+
+Expliquons comment rendre une théorie complète en ajoutant des formules.
+
+%--------------------------------------------------------------------
+\subsection{Construction}
+
+Soit $\mathcal{T}$ une théorie cohérente sur un langage $\mathcal{L}$. Nous allons construire une théorie $\mathcal{T}'$, sur le même langage $\mathcal{L}$, telle que $\mathcal{T} \subset \mathcal{T}'$ et $\mathcal{T}'$ est complète.
+On va supposer que le langage $\mathcal{L}$ est dénombrable, donc l'ensemble des formules l'est aussi. Considérons une énumération $\mathcal{P}_0, \mathcal{P}_1, \ldots$ de toutes les formules fermées de $\mathcal{L}$.
+On construit $\mathcal{T}'$ comme la limite de $(\mathcal{T}_n)_{n\ge0}$ définie par récurrence :
+\begin{itemize}
+	\item $\mathcal{T}_0 = \mathcal{T}$
+	\item 
+	\begin{itemize}
+		\item $\mathcal{T}_{n+1} = \mathcal{T}_n \cup \{\mathcal{P}_n\}$ si cette union est cohérente,
+		\item $\mathcal{T}_{n+1} = \mathcal{T}_n \cup \{\lnot \mathcal{P}_n\}$ sinon.
+	\end{itemize}
+\end{itemize}
+Enfin on pose $\mathcal{T}' = \bigcup_{n \ge 0} \mathcal{T}_n$.
+
+\begin{proposition}
+	Chaque $\mathcal{T}_n$ est cohérente et $\mathcal{T}'$ est complète.
+\end{proposition}
+
+%--------------------------------------------------------------------
+\subsection{Démonstration}
+
+\begin{proof}
+	~
+	\begin{itemize}
+		
+		\item Montrons par récurrence que les $\mathcal{T}_n$ sont cohérentes.
+		C'est vrai pour $\mathcal{T}_0 = \mathcal{T}$ par hypothèse.
+		Supposons que ce soit vrai pour $\mathcal{T}_n$.
+		Dans le premier cas, $\mathcal{T}_{n+1} = \mathcal{T}_n \cup \{\mathcal{P}_n\}$ est cohérente par construction.
+		Dans le second cas, $\mathcal{T}_n \cup \{\mathcal{P}_n\}$ n'est pas cohérente, donc $\mathcal{T}_n \lturn \lnot \mathcal{P}_n$ (Proposition \ref{prop:noncoherente}). Si $\mathcal{T}_{n+1} = \mathcal{T}_n \cup \{\lnot \mathcal{P}_n\}$ n'était pas cohérente non plus, alors $\mathcal{T}_n \lturn \lnot(\lnot \mathcal{P}_n)$ donc $\mathcal{T}_n \lturn \mathcal{P}_n$.
+		On aurait alors $\mathcal{T}_n \lturn \lnot \mathcal{P}_n$ et $\mathcal{T}_n \lturn \mathcal{P}_n$, ce qui contredit l'hypothèse de récurrence que $\mathcal{T}_n$ est cohérente.
+		Ainsi, dans tous les cas, $\mathcal{T}_{n+1}$ est cohérente.
+		
+		
+		\item $\mathcal{T}'$ est cohérente. En effet, sinon on aurait $\mathcal{T}' \lturn \lantitauto$. Comme une preuve est constituée d'un nombre fini d'étapes, donc d'un nombre fini de formules, ces formules sont incluses dans un certain $\mathcal{T}_n$, pour $n$ assez grand. On aurait alors $\mathcal{T}_n \lturn \lantitauto$, ce qui contredit la cohérence de $\mathcal{T}_n$.
+		
+		\item $\mathcal{T}'$ est complète. En effet, soit $\mathcal{Q}$ une formule fermée de $\mathcal{L}$. C'est l'une des $\mathcal{P}_n$. Donc, $\mathcal{P}_n \in \mathcal{T}_{n+1}$ ou $\lnot \mathcal{P}_n \in \mathcal{T}_{n+1}$. Ainsi $\mathcal{Q}$ ou $\lnot \mathcal{Q}$ est un élément de $\mathcal{T}'$. Par conséquent, $\mathcal{T}' \lturn \mathcal{Q}$ ou $\mathcal{T}' \lturn \lnot \mathcal{Q}$.
+	\end{itemize}
+\end{proof}
+
+Remarque utile pour la suite : si $\mathcal{T}$ admet des témoins de Henkin, alors $\mathcal{T}'$ aussi. En effet \og{}$(\exists x\ \mathcal{P}(x)) \limplies \mathcal{P}(c_{\mathcal{P}})$\fg{} est dans $\mathcal{T}$ donc dans $\mathcal{T}'$.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Construction des témoins}
+\label{sec:temoins}
+
+Partons d'une théorie $\mathcal{T}$ d'un langage $\mathcal{L}$. Nous allons étendre le langage afin d'obtenir une nouvelle théorie $\mathcal{T}'$ sur un langage $\mathcal{L}'$ qui admet des témoins de Henkin, c'est-à-dire :
+\mycenterline{\og{}$\exists x\ \mathcal{P}(x) \ \ \limplies \ \ \mathcal{P}(c_{\mathcal{P}})$\fg{} \quad est une formule de $\mathcal{T}'$.}
+ En plus $\mathcal{T}'$ doit être cohérente, comme $\mathcal{T}$.
+
+%--------------------------------------------------------------------
+\subsection{Extension du langage et de la théorie}
+
+$\mathcal{L}'$ sera construit à partir de $\mathcal{L}$ en ajoutant de nouveaux symboles de constantes $c_0$, $c_1$, \ldots{}
+Avant de donner la preuve entière, voici à quoi correspond l'étape fondamentale.
+
+
+Soit $\mathcal{T}$ une théorie cohérente d'un langage $\mathcal{L}$. Soit $\mathcal{P}$ une formule de $\mathcal{L}$ ayant $x$ pour seule variable libre. Soit $c_{\mathcal{P}}$ un nouveau symbole de constante (qui n'est pas dans $\mathcal{L}$). On note $\mathcal{L}' = \mathcal{L} \cup \{c_{\mathcal{P}}\}$.
+
+\medskip
+
+\textbf{Affirmation.} $\mathcal{T}' = \mathcal{T} \cup \{\exists x\ \mathcal{P}(x) \limplies \mathcal{P}(c_{\mathcal{P}})\}$ est encore cohérente.
+
+On a par construction un témoin de Henkin (juste pour la formule $\mathcal{P}$) et on a conservé la cohérence.
+
+\begin{proof}
+	Par l'absurde, si $\mathcal{T}'$ n'est pas cohérente :
+	\begin{align*}
+		& \mathcal{T} \cup \{\exists x\ \mathcal{P}(x) \limplies \mathcal{P}(c_{\mathcal{P}})\} \lturn \lantitauto \\
+		\text{donc } \quad & \mathcal{T} \lturn \lnot (\exists x\ \mathcal{P}(x) \limplies \mathcal{P}(c_{\mathcal{P}})) \\
+		\text{donc } \quad & \mathcal{T} \lturn \exists x\ \mathcal{P}(x) \ \land \ \lnot \mathcal{P}(c_{\mathcal{P}}) \qquad \text{car } \lnot(\mathcal{A} \limplies \mathcal{B}) \equiv \mathcal{A} \land \lnot \mathcal{B} \\
+		\text{donc } \quad & \mathcal{T} \lturn \exists x\ \mathcal{P}(x)
+		\ \text{ et  } \ \mathcal{T} \lturn \lnot \mathcal{P}(c_{\mathcal{P}}) \\		
+		\text{donc } \quad & \mathcal{T} \lturn \exists x\ \mathcal{P}(x)
+\ \text{ et  } \ \mathcal{T} \lturn \forall x \ \lnot \mathcal{P}(x) \qquad \text{par la règle d'introduction de $\forall$}\\
+		\text{donc } \quad & \mathcal{T} \lturn \exists x\ \mathcal{P}(x)
+\ \text{ et  } \ \mathcal{T} \lturn \lnot\big(\exists x \ \mathcal{P}(x)\big) \qquad \text{par la négation de $\forall$}\\
+		\text{donc } \quad & \mathcal{T} \lturn \mathcal{Q}
+\ \text{ et  } \ \mathcal{T} \lturn \lnot \mathcal{Q} \qquad \text{pour $\mathcal{Q} = \exists x \ \mathcal{P}(x)$}
+	\end{align*}
+	Ce qui contredit $\mathcal{T}$ cohérente. Conclusion : $\mathcal{T}'$ est cohérente.
+	Noter l'introduction de $\forall$, afin de passer de \og{}$\lnot \mathcal{P}(c_{\mathcal{P}})$\fg{} à \og{}$\forall x \lnot \mathcal{P}(x)$\fg{} qui est légitime car la constante $c_{\mathcal{P}}$ n'apparaît pas dans $\mathcal{T}$. En effet, $\mathcal{T}$ sont des formules de $\mathcal{L}$, qui ne contient pas la constante $c_{\mathcal{P}}$.
+\end{proof}
+
+On pourrait penser faire ceci à chaque formule $\mathcal{P}_0$, $\mathcal{P}_1$,\ldots{} de $\mathcal{L}$, mais ce sera un peu plus délicat que cela. En effet à chaque étape on augmente le langage, donc il y a de plus en plus de formules ce qui complique la récurrence.
+
+%--------------------------------------------------------------------
+\subsection{Construction}
+
+Soit $\mathcal{T}$ une théorie cohérente d'un langage $\mathcal{L}$.
+On va construire par récurrence une suite de théories $(\mathcal{T}_n)_{n \ge 0}$ et une suite de langages $(\mathcal{L}_n)_{n \ge 0}$ de la façon suivante :
+\begin{itemize}
+	\item $\mathcal{L}_0 = \mathcal{L}$ et $\mathcal{T}_0 = \mathcal{T}$,
+	\item puis pour $n \ge 0$ :
+	\begin{itemize}
+		\item $\mathcal{L}_{n+1} = \mathcal{L}_n \cup \big\{c_{\mathcal{P}}\big\}_{\mathcal{P}}$ où l'union porte sur toutes les formules $\mathcal{P}$ de $\mathcal{L}_n$ ayant une seule variable libre,
+		\item $\mathcal{T}_{n+1} = \mathcal{T}_n \cup \big\{\exists x\ \mathcal{P}(x) \limplies \mathcal{P}(c_{\mathcal{P}})\big\}_{\mathcal{P}}$.
+	\end{itemize}
+\end{itemize}
+Enfin, on pose $\mathcal{L}' = \bigcup_{n \ge 0} \mathcal{L}_n$ et $\mathcal{T}' = \bigcup_{n \ge 0} \mathcal{T}_n$.
+
+\medskip
+
+\textbf{Affirmation.} $\mathcal{T}'$ admet des témoins de Henkin.
+
+\begin{proof}
+	Soit $\mathcal{P}$ une formule de $\mathcal{L}'$ ayant une seule variable libre $x$. Elle contient un nombre fini de symboles de $\mathcal{L}'$, donc pour un $n$ suffisamment grand, $\mathcal{P}$ est une formule de $\mathcal{L}_n$. Donc $\exists x\ \mathcal{P}(x) \limplies \mathcal{P}(c_{\mathcal{P}})$ est une formule de $\mathcal{T}_{n+1}$ donc de $\mathcal{T}'$.
+\end{proof}
+
+\medskip
+
+\textbf{Affirmation.} $\mathcal{T}'$ est cohérente.
+
+\begin{proof}
+	On va montrer que chaque $\mathcal{T}_n$ est cohérente. Cela prouvera que $\mathcal{T}'$ est cohérente. En effet si on avait $\mathcal{T}' \lturn \lantitauto$, alors une preuve de ceci ne fait intervenir qu'un nombre fini de formules de $\mathcal{T}'$, qui sont donc toutes incluses dans un $\mathcal{T}_n$ pour un $n$ assez grand. Pour ce $n$, on a $\mathcal{T}_n \lturn \lantitauto$ ce qui contredit $\mathcal{T}_n$ cohérente.
+	
+	La preuve que les $\mathcal{T}_n$ sont cohérentes se fait par récurrence, sur le même principe que l'étape fondamentale expliquée pour une seule formule au début de cette section.
+	
+	\medskip
+	
+	Montrons par récurrence que $\mathcal{T}_n$ (pour $n \ge 0$) est cohérente.
+	Pour $n=0$, $\mathcal{T}_0 = \mathcal{T}$, alors $\mathcal{T}_0$ est cohérente par hypothèse.
+	
+	Supposons $\mathcal{T}_n$ cohérente et par l'absurde que $\mathcal{T}_{n+1}$ ne l'est pas :
+	\begin{align*}
+		& \mathcal{T}_n \cup \bigcup_{i=1}^k \{\exists x\ \mathcal{P}_i(x) \limplies \mathcal{P}_i(c_{\mathcal{P}_i})\} \lturn \lantitauto \qquad \text{(avec un nombre fini de $\mathcal{P}_i$ impliquées dans la preuve)} \\
+		\text{donc } \quad & \mathcal{T}_n \cup  \big\{\bigwedge_{i=1}^k \big(\exists x\ \mathcal{P}_i(x) \limplies \mathcal{P}_i(c_{\mathcal{P}_i})\big)\big\} \lturn \lantitauto \\
+		\text{donc } \quad & \mathcal{T}_n \lturn \lnot \bigwedge_{i=1}^k \big(\exists x\ \mathcal{P}_i(x) \limplies \mathcal{P}_i(c_{\mathcal{P}_i})\big) \\
+		\text{donc } \quad & \mathcal{T}_n \lturn \bigvee_{i=1}^k \lnot \big(\exists x\ \mathcal{P}_i(x) \limplies \mathcal{P}_i(c_{\mathcal{P}_i})\big) \\
+		\text{donc } \quad & \mathcal{T}_n \lturn \lnot \big(\exists x\ \mathcal{P}_j(x) \limplies \mathcal{P}_j(c_{\mathcal{P}_j})\big) \qquad \text{pour un certain } j \text{ (par le Lemme \ref{lem:compbis})} \\
+		\text{donc } \quad & \mathcal{T}_n \lturn \exists x\ \mathcal{P}_j(x) \ \text{ et } \ \mathcal{T}_n \lturn \lnot \mathcal{P}_j(c_{\mathcal{P}_j}) \\
+		\text{donc } \quad & \mathcal{T}_n \lturn \exists x\ \mathcal{P}_j(x) \ \text{ et } \ \mathcal{T}_n \lturn \forall x\ \lnot \mathcal{P}_j(x) \qquad \text{par la règle d'introduction de $\forall$} \\
+		\text{donc } \quad & \mathcal{T}_n \lturn \exists x\ \mathcal{P}_j(x) \ \text{ et } \ \mathcal{T}_n \lturn \lnot \big(\exists x\ \mathcal{P}_j(x)\big)
+	\end{align*}
+	Donc $\mathcal{T}_n$ est non cohérente. C'est contradictoire avec l'hypothèse de récurrence.
+	Conclusion : $\mathcal{T}_{n+1}$ est cohérente.
+	
+	Noter encore une fois l'introduction de $\forall$, afin de passer de \og{}$\lnot \mathcal{P}_j(c_{\mathcal{P}_j})$\fg{} à \og{}$\forall x \ \lnot \mathcal{P}_j(x)$\fg{} qui est légitime car la constante $c_{\mathcal{P}_j}$ n'apparaît pas dans $\mathcal{T}_n$.
+\end{proof}
+
+%--------------------------------------------------------------------
+\subsection{Preuve complète du théorème}
+
+Nous avons donné les détails de la preuve du théorème de complétude mais un peu dans le désordre. Voici le plan de la preuve remis dans le bon sens.
+
+\begin{itemize}
+	\item \textbf{Hypothèses.} $\mathcal{T}$ théorie cohérente, $\mathcal{L}$ langage dénombrable.
+	
+	\item \textbf{Étape 1 : Ajouter les témoins de Henkin.} 
+	On renvoie au début de cette section \ref{sec:temoins}.
+	On obtient une théorie $\mathcal{T}'$ sur un nouveau langage $\mathcal{L}'$ avec $\mathcal{T} \subset \mathcal{T}'$ et $\mathcal{L} \subset \mathcal{L}'$.
+	$\mathcal{T}'$ admet des témoins de Henkin et reste cohérente.
+	$\mathcal{L}'$ est obtenu à partir de $\mathcal{L}$ en ajoutant un nombre dénombrable de constantes $c_{\mathcal{P}}$, ainsi $\mathcal{L}'$ reste dénombrable.
+	
+	\item \textbf{Étape 2 : Rendre la théorie complète.} 
+	Voir la section \ref{sec:complete}.
+	À partir de $\mathcal{T}'$ et $\mathcal{L}'$, on obtient une théorie $\mathcal{T}''$ complète avec $\mathcal{T}' \subset \mathcal{T}''$.	
+	De plus on préserve les témoins de Henkin (remarque à la fin de la section \ref{sec:complete}). Le langage est inchangé, on note $\mathcal{L}'' = \mathcal{L}'$.
+	
+	\item \textbf{Étape 3 : Construction du modèle.}
+	C'est la section \ref{sec:modele} appliquée à $\mathcal{T}''$ et $\mathcal{L}''$.
+	On obtient un modèle $\mathcal{S}''$ de $\mathcal{T}''$ sur $\mathcal{L}''$.
+	Ce modèle se restreint naturellement en un modèle $\mathcal{S}$ de $\mathcal{T}$ sur $\mathcal{L}$.
+	En effet, $\mathcal{L}''$ est obtenu à partir de $\mathcal{L}$ en ajoutant des constantes $c_{\mathcal{P}}$.
+	On considère la structure $\mathcal{S}$ identique à $\mathcal{S}''$ sauf que l'on ne donne pas d'interprétation de ces constantes (qui n'existent pas dans $\mathcal{L}$).
+	Soit $\mathcal{P}$ une formule de $\mathcal{T}$ sur $\mathcal{L}$. 
+    C'est donc aussi une formule de $\mathcal{T}''$ sur $\mathcal{L}''$.
+    Comme $\mathcal{S}''$ est un modèle de $\mathcal{T}''$, alors on a $\ldoubleturn_{\mathcal{S}''} \mathcal{P}$.
+	Mais comme $\mathcal{P}$ est une formule de $\mathcal{L}$, elle ne contient pas de symboles de ces constantes supplémentaires, donc on a aussi $\ldoubleturn_{\mathcal{S}} \mathcal{P}$.
+	Ainsi, $\mathcal{S}$ est un modèle pour $\mathcal{T}$.
+
+\end{itemize}
+
+
+\bigskip 
+\bigskip
+
+
+Ainsi se termine la preuve du théorème de complétude de Gödel.
+Ce théorème était le sujet de sa thèse, terminée en 1929 à l'âge de 23 ans et publiée l'année d'après.
+Ainsi se termine aussi cette partie sur la logique du premier ordre.
+On continue dans la partie suivante avec ce qui a rendu Gödel célèbre dans le monde entier bien au-delà des mathématiques : le théorème d'incomplétude.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Exercices}
+
+\subsection*{Le théorème de complétude}
+
+\begin{exercicecours}
+	On rappelle les théorèmes A et B :
+	\begin{itemize}
+		\item Théorème A. Si $\mathcal{T} \ldoubleturn \mathcal{Q}$, alors $\mathcal{T} \lturn \mathcal{Q}$.
+		
+		\item Théorème B. Si $\mathcal{T}$ est cohérente, alors $\mathcal{T}$ admet un modèle.		
+	\end{itemize}
+	
+	On admet le théorème A. En déduire le théorème B.	
+\end{exercicecours}
+
+
+\begin{exercicecours}
+	Une théorie $\mathcal{T}$ (qui peut contenir une infinité de formules) est dite \emph{finiment cohérente} si pour tout sous-ensemble fini $\Gamma \subset \mathcal{T}$, $\Gamma$ est cohérente.
+	
+	Montrer qu'une théorie $\mathcal{T}$ est cohérente si et seulement si elle est finiment cohérente.
+\end{exercicecours}
+
+
+
+\subsection*{Théorie complète}
+
+\begin{exercicecours}
+	Soit $\mathcal{L}$ un langage du premier ordre et soit $\mathcal{S}$ une structure pour ce langage. 
+	On définit la \emph{théorie} de $\mathcal{S}$, notée $\mathcal{T}(\mathcal{S})$, comme l'ensemble de toutes les formules fermées $\mathcal{P}$ sur $\mathcal{L}$ qui sont vraies dans $\mathcal{S}$ :
+	\[ \mathcal{T}(\mathcal{S}) = \big\{ \mathcal{P} \text{ formule fermée} \mid \ \  \ldoubleturn_{\mathcal{S}} \mathcal{P} \big\} \]
+
+	Montrer que $\mathcal{T}(\mathcal{S})$ est une théorie complète.
+\end{exercicecours}
+
+
+\begin{exercicecours}
+	Soit $\mathcal{T}$ une théorie cohérente. Montrer l'équivalence entre :
+	\begin{itemize}
+		\item[(i)] $\mathcal{T}$ est complète,
+		
+		\item[(ii)] pour toute formule fermée $\mathcal{Q}$, si $\mathcal{T} \cup \{\mathcal{Q}\}$ est cohérente, alors $\mathcal{T} \lturn \mathcal{Q}$.
+	\end{itemize}
+\end{exercicecours}
+
+
+\subsection*{Construction d'un modèle à partir d'une théorie complète}
+
+\begin{exercicecours}
+	On considère un langage $\mathcal{L}$ sans symbole d'égalité, contenant une constante $0$, un symbole de fonction unaire $s$, et un prédicat unaire $P$.
+	Soit $\mathcal{T}$ une théorie complète sur $\mathcal{L}$ qui contient notamment les deux axiomes (fomules) suivants :
+	\begin{itemize}
+		\item $\mathcal{A}_1 : P(0)$
+		\item $\mathcal{A}_2 : \forall x \ \  \big( P(x) \  \lequiv \ \lnot P(s(x)) \big)$
+	\end{itemize}
+	
+	\begin{enumerate}
+		\item Construire le modèle $\mathcal{S}$ canonique associé à $\mathcal{T}$ (comme dans la Section \ref{ssec:modele}).
+		
+		\item Construire un modèle $\mathcal{S}'$ avec la structure de domaine $\Nn$, 
+		où $s(x)$ correspond à $x+1$ (le successeur) et expliquer à quoi correspond $P(x)$.	
+	\end{enumerate}
+
+\end{exercicecours}
+
+
+\begin{exercicecours}
+Compléter la preuve du Lemme \ref{lem:satisfaction} pour les connecteurs manquants, ainsi que pour le quantificateur $\exists$, c'est-à-dire pour les formules :
+$\mathcal{Q} = \mathcal{P}_1 \lor \mathcal{P}_2$, 
+$\mathcal{Q} = \mathcal{P}_1 \limplies \mathcal{P}_2$, 
+$\mathcal{Q} = \mathcal{P}_1 \lequiv \mathcal{P}_2$, 
+$\mathcal{Q} = \exists x \ \mathcal{P}(x)$. 
+\end{exercicecours}
+
+
+\subsection*{Construction d'une théorie complète}
+
+
+\begin{exercicecours}
+	On se place dans le cadre plus simple de la logique propositionnelle.
+	Soit un langage $\mathcal{L}$ contenant seulement les deux variables propositionnelles $A$ et $B$.
+	
+	\begin{enumerate}
+	\item Justifier que toute formule est une formule fermée. Donner des exemples de formules.
+	
+	\item Justifier que construire un modèle d'une théorie $\mathcal{T}$, c'est attribuer une valeur V/F à $A$ et une valeur V/F à $B$ qui rendent toutes les formules de $\mathcal{T}$ vraies.
+	
+	\item Justifier que si $\mathcal{T}$ admet un modèle, alors $\mathcal{T}$ est cohérente.
+	\end{enumerate}
+	
+	
+	On veut maintenant construire (le début d') une théorie complète à partir
+	de $\mathcal{T}_0 = \{ A \}$.
+	On considère le choix suivant pour l'énumération $(\mathcal{P}_n)_{n\ge0}$ des formules de $\mathcal{L}$ :
+	\[
+	B, \quad A \lor B, \quad \lnot A, \quad A \limplies B, \quad \ldots
+	\]
+	Pour $n \ge 0$ on définit :
+	\begin{itemize}
+		\item $\mathcal{T}_{n+1} = \mathcal{T}_n \cup \{\mathcal{P}_n\}$ si cette union est cohérente,
+		\item $\mathcal{T}_{n+1} = \mathcal{T}_n \cup \{\lnot \mathcal{P}_n\}$ sinon.
+	\end{itemize}
+	
+	\begin{enumerate}
+	\setcounter{enumi}{3}
+	\item Justifier que $\mathcal{T}_0$ est cohérente.
+	
+	\item Construire $\mathcal{T}_1$, \ldots, $\mathcal{T}_4$.
+	
+	\item La théorie complète $\mathcal{T} = \bigcup_{n\ge0} \mathcal{T}_n$  prouvera-t-elle $A \land B$ ?
+	
+	\item On repart de $\mathcal{T}'_0 = \{ A \}$, mais cette fois on considère l'énumération :
+	\[
+	\lnot B, \quad A \lor B, \quad \lnot A, \quad A \limplies B, \quad \ldots
+	\]	
+	Construire $\mathcal{T}'_1$, \ldots, $\mathcal{T}'_4$.
+	
+	\item La théorie complète $\mathcal{T}' = \bigcup_{n\ge0} \mathcal{T}'_n$
+	sera-t-elle identique à $\mathcal{T}$ ?
+	\end{enumerate}
+\end{exercicecours}
+
+
+\subsection*{Construction des témoins}
+
+\begin{exercicecours}
+	On considère un langage initial $\mathcal{L}_0$ contenant un unique prédicat unaire $P(x)$, sans constante ni fonction. 
+	Soit la théorie $\mathcal{T}_0$ composée des deux axiomes suivants :
+	\[ 
+	\mathcal{A}_1 : \exists x\ P(x) \qquad \text{et} \qquad \mathcal{A}_2 : \exists x\ \lnot P(x) 
+	\]
+	
+	\begin{enumerate}
+		\item Justifier que $\mathcal{T}_0$ est cohérente (par exemple en construire un modèle).
+		
+		\item Le langage $\mathcal{L}_0$ possède-t-il des termes clos ? La théorie $\mathcal{T}_0$ admet-elle des témoins de Henkin sur $\mathcal{L}_0$ ?
+		
+		\item On applique la méthode de Henkin pour les deux formules $P(x)$ et $\lnot P(x)$. On note alors $\mathcal{L}_1 = \mathcal{L}_0 \cup \{c_1, c_2\}$ le langage étendu par deux constantes $c_1$ et $c_2$.
+		Quels axiomes de Henkin a-t-on ajouté ? Que vaut alors la théorie $\mathcal{T}_1$ ?
+		
+		\item Montrer que $\mathcal{T}_1$ prouve $P(c_1) \land (\lnot P(c_2))$.
+		En déduire que dans tout modèle de $\mathcal{T}_1$, l'interprétation de $c_1$ et l'interprétation de $c_2$ sont nécessairement deux éléments distincts du domaine. 
+	\end{enumerate}
+\end{exercicecours}
+
+
+\begin{exercicecours}
+	Soit $\mathcal{L}'$ une extension d'un langage $\mathcal{L}$.
+	Soit $\mathcal{T}$ une théorie sur le langage $\mathcal{L}'$, qui est complète et qui admet des témoins de Henkin.
+	Soit $\mathcal{P}(x)$ une formule du langage initial $\mathcal{L}$ (ayant $x$ pour seule variable libre).
+	
+	Montrer que si $\mathcal{T}$ ne prouve pas $\forall x\ \mathcal{P}(x)$, alors il existe une constante de Henkin $c$ du langage $\mathcal{L}'$ telle que :
+	\[ \mathcal{T} \quad \lturn \quad \lnot \mathcal{P}(c). \]
+	
+	Comment appelle-t-on $c$ en langage courant ?
+\end{exercicecours}
+
+
+\end{document}

@@ -1,0 +1,26 @@
+﻿\begin{tikzpicture}[scale=1]
+
+\coordinate (r) at (0,0);
+\coordinate (s) at (3,-1);
+\coordinate (t) at (-1,-2);
+\coordinate (u) at (4,1);
+
+\node at (r) [circle,fill=black, scale=0.5] {};
+\node at (s) [circle,fill=black, scale=0.5] {};
+\node at (t) [circle,fill=black, scale=0.5] {};
+\node at (u) [circle,fill=black, scale=0.5] {};
+
+\node at (r) [below right]{$r$};
+\node at (s) [below right]{$s$};
+\node at (t) [below left]{$t$};
+\node at (u) [right]{$u$};
+
+%\draw[very thick] (r) to[bend left] (s);
+\draw[thick] (r) to[bend left] (s);
+\draw[thick] (r) to[bend right] (t);
+\draw[thick] (s) to[bend left] (t);
+\draw[thick] (s) to[bend right] (u);
+
+\draw[thick] (r)  .. controls +(180:3) and +(60:3) ..  (r);
+
+\end{tikzpicture}

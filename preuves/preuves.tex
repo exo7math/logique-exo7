@@ -1,0 +1,1361 @@
+\documentclass[11pt,class=report,crop=false]{standalone}
+\usepackage[screen]{../logic}
+
+
+
+\begin{document}
+
+
+%====================================================================
+\chapitre{Preuves}
+%====================================================================
+
+
+% \insertvideo{}{partie 1.1. Titre}
+
+
+
+\objectifs{Qu'est-ce qu'une preuve ? C'est une suite de déductions à partir d'hypothèses et d'un petit nombre de règles élémentaires, afin d'aboutir à une conclusion. Nous allons détailler ces règles et expliquer comment les utiliser en pratique.}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Preuve par table de vérité}
+
+%--------------------------------------------------------------------
+\subsection{Hypothèses \& conclusion}
+
+On dispose de formules $\mathcal{P}_1$, \ldots, $\mathcal{P}_l$ qui vont être nos \defi{hypothèses}\index{hypothese@hypothèse} (ou \defi{prémisses}\index{premisse@prémisse})
+et d'une formule $\mathcal{Q}$ qui va être notre \defi{conclusion}.
+Notre but est bien sûr de passer d'hypothèses vraies à une conclusion vraie.
+Il va y avoir deux façons de faire et c'est vraiment le cœur de la théorie de Gödel.
+
+\medskip
+
+\emph{Remarque.} S'il y a un nombre fini d'hypothèses $\mathcal{P}_1$, \ldots, $\mathcal{P}_l$, on pourrait toujours se ramener à la seule hypothèse $\mathcal{P}_1 \land \mathcal{P}_2 \land \cdots \land \mathcal{P}_l$ ; dans la pratique on ne le fera pas. On pourrait aussi vouloir plusieurs formules comme conclusion, mais on ne le fera pas non plus car cela reviendrait à les étudier une par une.
+
+%--------------------------------------------------------------------
+\subsection{Conséquence logique $\ldoubleturn$}
+
+Commençons par la notion de \emph{conséquence logique}\index{consequence logique@conséquence logique}, aussi nommée \emph{conséquence sémantique}.
+\index{020@$\ldoubleturn$}
+
+\begin{definition}
+	On dit que $\mathcal{Q}$ est une \defi{conséquence logique} de $\mathcal{P}_1$, \ldots, $\mathcal{P}_l$
+	si chaque évaluation rendant les formules $\mathcal{P}_1$, \ldots, $\mathcal{P}_l$ vraies, rend également la formule $\mathcal{Q}$ vraie.
+	On note :
+	\mybox{$
+	\mathcal{P}_1, \ldots, \mathcal{P}_l \quad \ldoubleturn \quad \mathcal{Q}
+	$}
+\end{definition}
+
+Le symbole $\ldoubleturn$ est le \emph{double turnstile}, il se lit \emph{entraîne}. 
+Autrement dit, si les hypothèses sont vérifiées, alors la conclusion est vraie.
+(Si l'une des hypothèses $\mathcal{P}_i$ est fausse, alors on n'exige rien sur $\mathcal{Q}$ qui peut être vraie ou fausse.)
+
+%--------------------------------------------------------------------
+\subsection{Preuve par table de vérité}
+\index{table de verite@table de vérité}
+
+Obtenir une conséquence logique 
+\[
+\mathcal{P}_1, \ldots, \mathcal{P}_l \quad \ldoubleturn \quad \mathcal{Q}
+\]
+relève de la constatation. On dresse la table de vérité associée à toutes les variables propositionnelles $P_1,\ldots,P_n$ intervenant dans
+les formules $\mathcal{P}_1, \ldots, \mathcal{P}_l$ et $\mathcal{Q}$. 
+Pour chaque ligne où toutes les formules $\mathcal{P}_1, \ldots, \mathcal{P}_l$ s'évaluent à Vrai,
+alors $\mathcal{Q}$ doit aussi s'évaluer à Vrai.
+
+%--------------------------------------------------------------------
+\subsection{Exemples}
+
+\begin{exemple}
+	\[
+	P \lor Q , \ \lnot Q \quad \ldoubleturn \quad P
+	\]
+
+On a ici :
+\begin{itemize}
+	\item deux variables propositionnelles $P$ et $Q$,
+	
+	\item deux hypothèses : $\mathcal{P}_1$ : \og{}$P\lor Q$\fg{} et $\mathcal{P}_2$ : \og{}$\lnot Q$\fg{}, 
+	
+	\item une conclusion : \og{}$P$\fg{}.
+\end{itemize}
+
+Voici la table de vérité :
+
+\[
+\begin{array}{c c | c c | c}
+	P		& Q 		& P \lor Q 		& \lnot Q 	&  P \\
+	\hline
+	&&&&	\\[-2ex]
+	\ltrue 	& \ltrue 	& \ltrue		& \lfalse 	& - \\
+	\ltrue 	& \lfalse 	& \ltrue		& \ltrue	& \ltrue \\
+	\lfalse & \ltrue 	& \ltrue		& \lfalse	& - \\	
+	\lfalse & \lfalse 	& \lfalse 		& \ltrue	& - \\		
+\end{array}
+\]
+
+Seule la seconde ligne donne les deux hypothèses vraies et on contrôle alors que la conclusion est aussi vraie.
+On n'a pas besoin de savoir si la conclusion est vraie ou fausse dans les autres cas.
+Ainsi on a bien la conséquence logique : $P \lor Q ,  \lnot Q \ldoubleturn P$.
+\end{exemple}
+
+
+Insistons sur le fait que lorsque l'on écrit :
+\[
+	\mathcal{P}_1, \ldots, \mathcal{P}_l \quad \ldoubleturn \quad  \mathcal{Q}
+\]
+on n'exige pas que les formules $\mathcal{P}_1, \ldots, \mathcal{P}_l$ s'évaluent toujours à Vrai.
+Ce que l'on veut c'est que \emph{lorsque} elles s'évaluent à Vrai, alors $\mathcal{Q}$ aussi.
+La situation ultime est par exemple :
+\[
+P, \ \lnot P \quad \ldoubleturn \quad \text{n'importe quoi}
+\]
+Cette conséquence logique est valide, quelle que soit la conclusion, car $P$ et $\lnot P$ ne s'évaluent jamais à vrai en même temps.
+
+\begin{exemple}
+	\[
+	P \limplies Q , \ Q \limplies R \quad \ldoubleturn \quad P \limplies R
+	\]
+	
+	On a ici trois variables propositionnelles $P, Q, R$, deux hypothèses et une conclusion.
+	\[
+	\begin{array}{c c c | c c | c}
+		P		& Q 		& R 		& P \limplies Q &  Q \limplies R &  P \limplies R \\
+		\hline
+		&&&&&	\\[-2ex]
+		\ltrue 	& \ltrue 	& \ltrue 	& \ltrue		& \ltrue		& \ltrue \\
+		\ltrue 	& \ltrue 	& \lfalse 	& \ltrue		& \lfalse		& - \\
+		\ltrue 	& \lfalse 	& \ltrue 	& \lfalse		& \ltrue		& - \\	
+		\ltrue 	& \lfalse 	& \lfalse 	& \lfalse 		& \ltrue		& - \\	
+		\lfalse & \ltrue 	& \ltrue 	& \ltrue		& \ltrue 		& \ltrue \\
+		\lfalse & \ltrue 	& \lfalse 	& \ltrue		& \lfalse		& - \\
+		\lfalse & \lfalse 	& \ltrue 	& \ltrue		& \ltrue		& \ltrue \\	
+		\lfalse & \lfalse 	& \lfalse 	& \ltrue 		& \ltrue		& \ltrue \\			
+			
+	\end{array}
+	\]
+	
+	On regarde seulement les lignes où les deux hypothèses sont vérifiées et on contrôle alors que la conclusion est aussi vraie.
+	On n'a pas besoin de savoir si la conclusion est vraie ou fausse dans les autres cas.
+	Ainsi on a bien la conséquence logique voulue.
+\end{exemple}
+
+Dans l'exemple suivant on n'a pas une conséquence logique !
+
+\begin{exemple}
+	Soient les hypothèses :
+	\[ \lnot P, \  P \lor Q \]
+	Est-ce que cela entraîne :
+	\[
+	P \land Q \ ?
+	\]
+	
+
+	On dresse la table de vérité :
+	
+	\[
+	\begin{array}{c c | c c | c}
+		P		& Q 		& \lnot P 		& P \lor Q 	&  P \land Q \\
+		\hline
+		&&&&	\\[-2ex]
+		\vdots 	& \vdots 	& 				&  			&  \\
+		\lfalse & \ltrue 	& \ltrue		& \ltrue	& \lfalse \\
+		\vdots 	& \vdots 	& 				&  			&  \\	
+	\end{array}
+	\]
+	On s'aperçoit qu'une ligne est problématique : en effet si $P$ est faux et $Q$ est vrai, alors les deux hypothèses sont vraies et pourtant la conclusion souhaitée est fausse.
+	Ainsi $P \land Q$ n'est pas une conséquence logique des hypothèses $\lnot P$ et $P \lor Q$.
+
+\end{exemple}
+
+
+%--------------------------------------------------------------------
+\subsection{Limitations}
+
+On vient de voir que si on a $n$ variables $P_1,\ldots,P_n$ dans nos hypothèses $\mathcal{P}_1,\ldots,\mathcal{P}_l$ et la conclusion $\mathcal{Q}$, alors il faut dresser une table de vérité avec $2^n$ lignes afin de vérifier la conséquence logique.
+
+Lorsque $n$ croît, alors $2^n$ croît de façon exponentielle (car $2^n = e^{n\ln 2}$) et il devient impraticable de calculer à la main une telle table.
+Mais surtout nous sommes encore dans le cadre assez limité de la logique Vrai/Faux. Cette technique de table de vérité ne sera plus possible lorsque l'on introduira les paramètres de la logique du premier ordre.
+Considérons le problème suivant où $n \in \Nn$ est un entier. Nous serons tous d'accord pour dire que l'on a la conséquence logique suivante :
+\[
+n >0 , \  n \text{ pair } \quad \ldoubleturn \quad n^2-1 \text{ entier naturel impair}
+\]
+Mais si on souhaite le justifier avec une table de vérité, celle-ci a une infinité de lignes dépendant du paramètre $n$, et cela ne peut pas être accepté comme une preuve.
+	\[
+\begin{array}{c | c c | c}
+	n		& n>0 		& n \text{ pair} & n^2-1 \text{ entier naturel impair} \\
+	\hline
+	&&&	\\[-2ex]
+	0 		& \lfalse 	& \ltrue 		& - \\
+	1 		& \ltrue 	& \lfalse 		& - \\	
+	2 		& \ltrue 	& \ltrue 		& \ltrue \\
+	3 		& \ltrue 	& \lfalse 		& - \\	
+	4 		& \ltrue 	& \ltrue 		& \ltrue \\	
+	\vdots	& \vdots	&  \vdots		& \vdots \\			
+\end{array}
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Preuve formelle}
+
+%--------------------------------------------------------------------
+\subsection{Qu'est-ce qu'une preuve ?}
+
+Une preuve a pour but de convaincre les autres qu'un énoncé est vrai.
+Une preuve doit impérativement comporter un nombre fini d'étapes.
+Chacun doit pouvoir vérifier chacune de ces étapes et le passage d'une étape à une autre doit être facile à comprendre et ne doit pas nécessiter une réflexion approfondie.
+Il y a une similarité naturelle entre la notion d'algorithme (une suite d'instructions élémentaires, destinées à être lues par une machine) et celle de preuve (destinée à un humain). Avec l'arrivée des assistants de preuve, cette différence s'amenuise.
+
+%--------------------------------------------------------------------
+\subsection{Preuve formelle $\lturn$}
+
+
+
+Soient $\mathcal{P}_1,\ldots,\mathcal{P}_l$ des formules, qui seront nos hypothèses, et une formule $\mathcal{Q}$ (la conclusion).
+On note :\index{021@$\lturn$}
+\mybox{$
+\mathcal{P}_1, \ldots, \mathcal{P}_l \quad \lturn \quad \mathcal{Q}
+$}
+s'il existe une \emph{preuve} de $\mathcal{Q}$ à partir de $\mathcal{P}_1, \ldots, \mathcal{P}_l$.
+Cette écriture s'appelle alors un \defi{théorème}\index{theoreme@théorème}.
+Le symbole $\lturn$ est le \emph{turnstile} et se lit \og{}prouve\fg{} ou \og{}permet de démontrer\fg{}.
+
+Mais comment construire une preuve ? C'est une suite finie de formules, qui part des hypothèses et conduit à la conclusion.
+Chaque ligne de la preuve est obtenue à partir d'un petit nombre de règles logiques autorisées, appliquées aux lignes précédentes.
+
+Plus précisément :
+\begin{definition}
+	Une \defi{preuve}\index{preuve} est une suite finie de formules $\mathcal{A}_1$, $\mathcal{A}_2$, \ldots, $\mathcal{A}_N$
+	où chaque $\mathcal{A}_i$ est :
+	\begin{itemize}
+		\item soit l'une des hypothèses $\mathcal{P}_1, \ldots, \mathcal{P}_l$ de l'énoncé,
+		
+		\item soit une conséquence obtenue à partir des \emph{règles d'inférence} appliquées aux lignes précédentes $\mathcal{A}_1$,\ldots, $\mathcal{A}_{i-1}$,
+		
+		\item et $\mathcal{A}_N$ est la conclusion $\mathcal{Q}$.
+	\end{itemize}	
+\end{definition}
+
+Les règles d'inférence seront détaillées un peu plus loin. Par exemple cela peut être une règle issue des formules logiques élémentaires telles que :
+\begin{itemize}
+	\item si $\mathcal{P} \land \mathcal{Q}$ alors $\mathcal{P}$,
+	\item si $\mathcal{P}$ et $\mathcal{Q}$ alors $\mathcal{P} \land \mathcal{Q}$,
+	\item \ldots
+\end{itemize}
+
+
+\bigskip
+
+Résumons le travail d'un mathématicien. Il énonce un théorème :
+
+\textbf{Théorème.}
+\[
+	\mathcal{P}_1, \ldots, \mathcal{P}_l \quad \lturn \quad \mathcal{Q}
+\]	
+\medskip
+
+Puis il en donne la preuve.
+
+\begin{itemize}
+\item  Remarque. \og{}Théorème\fg{} signifie ici un énoncé prouvé. On ne fait pas de distinction qualitative entre Lemme/Proposition/Théorème/Corollaire selon leur importance ou leur intérêt.
+
+\item Avertissement. À priori, aucune notion de vrai ou de faux n'intervient explicitement dans cette section consacrée aux preuves. Le lien avec la logique Vrai/Faux est en réalité implicite : il réside dans le choix des règles d'inférence, qui ont été conçues pour respecter cette logique.
+\end{itemize}
+
+
+
+%--------------------------------------------------------------------
+\subsection{Un premier exemple}
+
+Une \defi{preuve en déduction naturelle}\index{preuve!deduction naturelle@déduction naturelle} se présente comme un tableau contenant une succession de lignes : d'abord les hypothèses, les raisonnements et la conclusion.
+
+
+\myfigure{1}{\tikzinput{fig_preuves_01}}
+
+
+
+Avant de dresser la liste des règles d'inférence, voici un exemple pratique d'un énoncé et de sa preuve.
+
+\textbf{Théorème.}
+\[
+\mathcal{P} \land (\mathcal{Q} \lor \mathcal{R}) \quad \lturn \quad (\mathcal{P} \land \mathcal{Q}) \lor (\mathcal{P} \land \mathcal{R})
+\]
+
+
+\medskip
+
+Preuve du théorème.
+
+\medskip
+\qquad\qquad
+$
+\begin{nd}
+	\hypo [~] {1} {\mathcal{P} \land (\mathcal{Q} \lor \mathcal{R})}  \by{\text{Hypothèse}}{}
+	\have [~] {2} {\mathcal{P}} \by{\text{Terme de gauche de l'hypothèse}}{}
+	\have [~] {3} {\mathcal{Q} \lor \mathcal{R}} \by{\text{Terme de droite de l'hypothèse}}{}
+	\open
+		\hypo [~] {4} {\mathcal{Q}}  \by{\text{Sous-hypothèse. Premier cas du \tor}}{}
+		\have [~] {5} {\mathcal{P} \land \mathcal{Q}} \by{\text{Car on a déjà $\mathcal{P}$ et ici on a $\mathcal{Q}$}}{}
+		\have [~] {6} {(\mathcal{P} \land \mathcal{Q}) \lor (\mathcal{P} \land \mathcal{R})} \by{\text{Car le terme de gauche est vrai}}{}		
+	\close
+	\open
+		\hypo [~] {7} {\mathcal{R}}  \by{\text{Sous-hypothèse. Second cas du \tor}}{}
+		\have [~] {8} {\mathcal{P} \land \mathcal{R}} \by{\text{Car on a déjà $\mathcal{P}$ et ici on a $\mathcal{R}$}}{}
+		\have [~] {9} {(\mathcal{P} \land \mathcal{Q}) \lor (\mathcal{P} \land \mathcal{R})} \by{\text{Car le terme de droite est vrai}}{}	
+	\close		
+	\have [\lturn] {10} {(\mathcal{P} \land \mathcal{Q}) \lor (\mathcal{P} \land \mathcal{R})} \by{\text{Conclusion. Les deux cas mènent au même résultat.}}{}
+\end{nd}
+$
+
+\medskip
+
+Les règles qu'on a utilisées sont celles d'introduction et d'élimination du \tand{} et du \tor{} :
+\[
+\mathcal{P} \land \mathcal{Q} \quad \text{ signifie } \quad \mathcal{P} \text{ et } \mathcal{Q}
+\]
+\[
+\mathcal{P} \lor \mathcal{Q} \quad \text{ signifie } \quad \mathcal{P} \text{ ou } \mathcal{Q}
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Règles d'inférence}
+\index{regles d'inference@règles d'inférence}
+
+Nous donnons ici la liste des règles autorisées dans une preuve.
+Certaines sont naturelles, d'autres un peu moins évidentes.
+On commence par une série de six \emph{règles de base} qui constituent le fondement
+des preuves en logique classique. On présentera ensuite des \emph{règles dérivées},
+qui découlent des règles de base et facilitent l'écriture des preuves.
+
+
+%--------------------------------------------------------------------
+\subsection{Les règles de base}
+
+
+\textbf{Règle 1. Réutilisation.} 
+\mybox{$
+	\mathcal{P} \ \lturn \  \mathcal{P}
+	$}
+La réutilisation est tout simplement le fait de pouvoir réutiliser une formule déjà obtenue précédemment.
+
+
+\bigskip
+\textbf{Règle 2. Conjonction.} 
+\mybox{$
+	\mathcal{P} \land \mathcal{Q} \quad\lturn\quad \mathcal{P}
+	\qquad \text{ et } \qquad
+	\mathcal{P} \land \mathcal{Q} \quad\lturn\quad \mathcal{Q}
+	$}
+\mybox{$
+	\mathcal{P}, \ \mathcal{Q} \quad \lturn \quad \mathcal{P} \land \mathcal{Q} 
+	$}	
+
+Les règles pour le \tand{} sont naturelles, par exemple si on a déjà obtenu la formule $\mathcal{P}$ et aussi la formule $\mathcal{Q}$ alors on a prouvé la formule $\mathcal{P} \land \mathcal{Q}$.	
+
+\bigskip
+\textbf{Règle 3. Double négation.}
+\mybox{$
+	\lnot\lnot\mathcal{P} \quad \lturn \quad \mathcal{P}  
+	$}
+	
+Cette règle sera discutée dans une remarque plus bas.
+ 
+Voici comment on écrit ces règles dans une preuve en déduction naturelle :
+
+\[
+\begin{nd}
+\have [~] {} {\vdots}		
+\have [~] {} {\mathcal{P}}	
+\have [~] {} {\vdots}	
+\have [~] {} {\mathcal{P}}	
+\have [~] {} {\vdots}
+\end{nd}
+\qquad\qquad
+\begin{nd}
+	\have [~] {} {\vdots}		
+	\have [~] {} {\mathcal{P} \land \mathcal{Q}}	
+	\have [~] {} {\vdots}	
+	\have [\lturn] {} {\mathcal{P}}	
+\end{nd}
+\qquad\qquad
+\begin{nd}
+	\have [~] {} {\vdots}		
+	\have [~] {} {\mathcal{P}}	
+	\have [~] {} {\vdots}	
+	\have [~] {} {\mathcal{Q}}	
+	\have [~] {} {\vdots}
+	\have [\lturn] {} {\mathcal{P} \land \mathcal{Q}}		
+\end{nd}
+\qquad\qquad
+\begin{nd}
+	\have [~] {} {\vdots}		
+	\have [~] {} {\lnot\lnot\mathcal{P}}	
+	\have [~] {} {\vdots}	
+	\have [\lturn] {} {\mathcal{P}}	
+\end{nd}
+\]
+
+Dans l'écriture d'une preuve, on peut utiliser toutes les formules obtenues auparavant. On peut bien sûr appliquer plusieurs règles successivement avant d'obtenir la conclusion finale souhaitée, mais une ligne correspond à l'application d'une seule règle.
+
+
+\bigskip
+\textbf{Règle 4. Disjonction.} 
+\mybox{$
+	\mathcal{P} \quad\lturn\quad \mathcal{P} \lor \mathcal{Q}
+	\qquad \text{ et } \qquad
+	\mathcal{Q} \quad\lturn\quad \mathcal{P} \lor \mathcal{Q}
+	$}
+Il est plus difficile d'écrire formellement l'autre sens : \og{}$\mathcal{P} \lor \mathcal{Q}$ prouve $\mathcal{P}$ ou $\mathcal{Q}$\fg{}. Pour l'exprimer correctement, on fait intervenir une formule annexe $\mathcal{R}$ comme conclusion d'implications :
+ \mybox{$
+ 	\mathcal{P} \lor \mathcal{Q}, \
+ 	\mathcal{P} \limplies \mathcal{R}, \
+ 	\mathcal{Q} \limplies \mathcal{R}
+ 	\quad\lturn\quad 
+ 	\mathcal{R}
+ 	$}
+
+Dans la pratique, c'est assez facile (tableau de droite ci-dessous) : si on a $\mathcal{P} \lor \mathcal{Q}$ alors on considère deux cas. Un premier cas, avec comme hypothèse $\mathcal{P}$, puis un second cas, avec comme hypothèse $\mathcal{Q}$. Si on prouve la même conclusion $\mathcal{R}$ dans ces deux cas, alors $\mathcal{R}$ est prouvé.
+
+
+
+\[
+\begin{nd}
+	\have [~] {} {\vdots}		
+	\have [~] {} {\mathcal{P}}	
+	\have [~] {} {\vdots}	
+	\have [\lturn] {} {\mathcal{P} \lor \mathcal{Q}}	
+\end{nd}
+\qquad\qquad
+\begin{nd}
+	\have [~] {} {\mathcal{P} \lor \mathcal{Q}}	
+	\open	
+	\hypo [~] {} {\mathcal{P}}	\by{\text{Premier cas du \tor. Sous-hypothèse $\mathcal{P}$}}{}
+	\have [~] {} {\mathcal{R}}
+	\close
+	\open	
+	\hypo [~] {} {\mathcal{Q}}	\by{\text{Second cas du \tor. Sous-hypothèse $\mathcal{Q}$}}{}
+	\have [~] {} {\mathcal{R}}
+	\close		
+	\have [\lturn] {} {\mathcal{R}}		
+\end{nd}
+\]
+
+
+\bigskip
+\textbf{Règle 5. Implication.}
+\index{implication}\index{modus ponens@\emph{modus ponens}} 
+
+ \mybox{$
+	\mathcal{P}, \
+	\mathcal{P} \limplies \mathcal{Q}
+	\quad\lturn\quad 
+	\mathcal{Q}
+	$}
+Cette règle s'appelle le \emph{modus ponens}. C'est une sorte de mini-preuve de base : si on a une hypothèse $\mathcal{P}$ et que l'on sait que $\mathcal{P}$ implique $\mathcal{Q}$, alors on a prouvé $\mathcal{Q}$ !
+
+Obtenir une réciproque, c'est-à-dire l'introduction de l'implication, est plus difficile à exprimer :
+\mybox{$
+\text{Si } \quad  \mathcal{P} \  \lturn \ \mathcal{Q} \quad \text{ alors } \quad \lturn \ \mathcal{P} \limplies \mathcal{Q}.
+$}
+Si l'on peut prouver $\mathcal{Q}$ sous l'hypothèse $\mathcal{P}$,
+alors on a une preuve de $\mathcal{P} \limplies \mathcal{Q}$.
+
+% \mybox{$
+%	(\mathcal{P} \ \lturn\ \mathcal{Q})
+%	\quad\lturn\quad 
+%	\mathcal{P} \limplies \mathcal{Q}
+%	$}
+
+Heureusement, cette seconde règle est de nouveau facile à comprendre et à utiliser avec un tableau de preuve (figure de droite ci-dessous).
+
+\[
+\begin{nd}
+	\have [~] {} {\vdots}		
+	\have [~] {} {\mathcal{P}}	
+	\have [~] {} {\vdots}	
+	\have [~] {} {\mathcal{P} \limplies \mathcal{Q}}	
+	\have [~] {} {\vdots}
+	\have [\lturn] {} {\mathcal{Q}}		
+\end{nd}
+\qquad\qquad
+\begin{nd}
+	\open	
+	\hypo [~] {} {\mathcal{P}}	\by{\text{Hypothèse secondaire}}{}
+	\have [~] {} {\mathcal{Q}}  \by{\text{Conclusion sous cette hypothèse}}{}
+	\close	
+	\have [\lturn] {} {\mathcal{P} \limplies \mathcal{Q}}		
+\end{nd}
+\]	
+		
+
+\bigskip
+\textbf{Règle 6. Explosion.}\index{explosion}\index{ex falso@\emph{ex falso}}
+ \mybox{$
+	\lantitauto 
+	\quad\lturn\quad 
+	\mathcal{P}
+	$}
+
+La règle d'explosion (\emph{ex falso}) dit que : \og{}Faux implique n'importe quoi.\fg{}
+Cela peut sembler un peu étrange, mais ce sera utile par exemple dans les raisonnements par l'absurde.
+
+
+\bigskip
+
+\begin{remarque*}
+	\sauteligne
+\begin{itemize}
+	\item On énoncera d'autres règles un peu plus loin, mais ces règles pourront se déduire des règles de base.
+	
+	\item Pour chacun des connecteurs $\land$, $\lor$, $\limplies$, il y a deux règles associées : une règle d'\defi{élimination} qui fait disparaître le symbole (par exemple
+	$\mathcal{P} \land \mathcal{Q} \  \lturn \ \mathcal{P}$) et une règle d'\defi{introduction}
+	qui fait apparaître le symbole (par exemple $\mathcal{P}, \mathcal{Q} \ \lturn \  \mathcal{P} \land \mathcal{Q}$).
+	
+	\item Les règles de base que l'on vient d'énoncer correspondent à ce qu'on nomme la \defi{logique classique}\index{logique!classique}. Il s'agit de choix qui correspondent à notre expérience mathématique, ce sont des choix conventionnels, mais d'autres approches sont possibles.
+	
+	\item La \defi{logique minimaliste}\index{logique!minimaliste} refuse les règles $\lnot\lnot \mathcal{P} \ \lturn \  \mathcal{P}$ et $\lantitauto \ \lturn \ \mathcal{P}$.
+	La \defi{logique intuitionniste}\index{logique!intuitionniste} ne rejette que $\lnot\lnot \mathcal{P} \ \lturn \ \mathcal{P}$.
+	
+	\item Quelles sont les raisons de rejeter l'élimination de la double négation ? Cette règle est en fait équivalente à la règle du tiers exclu qui dit qu'on a toujours $\mathcal{P} \lor \lnot \mathcal{P}$. Lorsque l'on intègre la règle $\lnot\lnot \mathcal{P} \ \lturn \ \mathcal{P}$, on autorise le type de preuve suivant : \og{}Si $\lnot \mathcal{P}$ ne peut pas se produire, alors on a une preuve de $\mathcal{P}$.\fg{} Les intuitionnistes contestent ce type de raisonnement car cela ne fournit pas une preuve constructive.
+	
+	\item La règle d'explosion $\lantitauto \ \lturn \ \mathcal{P}$ est exclue dans certains types de logique, car d'une part cette règle ne donne pas une preuve constructive de $\mathcal{P}$ et d'autre part, dès que l'on trouve une contradiction (même locale), alors la règle permet de prouver n'importe quelle formule, ce qui fait que tout raisonnement devient trivial, donc inutilisable.	
+\end{itemize}
+\end{remarque*}
+
+
+%--------------------------------------------------------------------
+\subsection{Exemples}
+
+\begin{exemple}
+\[
+(\mathcal{P} \land \mathcal{Q}) \lor \mathcal{R} 
+\quad \lturn \quad
+\mathcal{Q} \lor \mathcal{R}
+\]
+
+\medskip
+
+\qquad\qquad
+$
+\begin{nd}
+	\hypo [~] {1} {(\mathcal{P} \land \mathcal{Q}) \lor \mathcal{R}}  \by{\text{Hypothèse}}{}
+	\open
+	\hypo [~] {2} {\mathcal{P} \land \mathcal{Q}}  \by{\text{Premier cas du \tor}}{}
+	\have [~] {3} {\mathcal{Q}} \by{\text{Par élimination dans $\mathcal{P} \land \mathcal{Q}$}}{}
+	\have [~] {4} {\mathcal{Q} \lor \mathcal{R}} 	\by{\text{Puisqu'on a $\mathcal{Q}$}}{}
+	\close
+	\open
+	\hypo [~] {5} {\mathcal{R}}  \by{\text{Second cas du \tor}}{}
+	\have [~] {6} {\mathcal{Q} \lor \mathcal{R}} 	\by{\text{Puisqu'on a $\mathcal{R}$}}{}
+	\close			
+	\have [\lturn] {7} {\mathcal{Q} \lor \mathcal{R}} \by{\text{Les deux cas donnent $\mathcal{Q} \lor \mathcal{R}$}}{}
+\end{nd}
+$
+\end{exemple}
+
+
+\begin{exemple}
+	\[
+	\mathcal{P} \lor \mathcal{Q}, \ \mathcal{P} \limplies \mathcal{R}, \ \mathcal{Q} \limplies \mathcal{S}
+	\quad \lturn  \quad 
+	\mathcal{R} \lor \mathcal{S}
+	\]
+	
+	\medskip
+	
+	\qquad\qquad
+	$
+	\begin{nd}
+		\hypo [~] {1} {\mathcal{P} \lor \mathcal{Q}}  \by{\text{Hypothèses}}{}
+		\hypo [~] {2} {\mathcal{P} \limplies \mathcal{R}} 
+		\hypo [~] {3} {\mathcal{Q} \limplies \mathcal{S}} 		
+		\open
+		\hypo [~] {4} {\mathcal{P}}  \by{\text{Premier cas du \tor}}{}
+		\have [~] {5} {\mathcal{R}}  \by{\text{On applique $\mathcal{P} \limplies \mathcal{R}$}}{}
+		\have [~] {6} {\mathcal{R} \lor \mathcal{S}} 	
+		\close
+		\open
+		\hypo [~] {7} {\mathcal{Q}}  \by{\text{Second cas du \tor}}{}
+		\have [~] {8} {\mathcal{S}}  		
+		\have [~] {9} {\mathcal{R} \lor \mathcal{S}} 	
+		\close			
+		\have [\lturn] {10} {\mathcal{R} \lor \mathcal{S}} \by{\text{Les deux cas conduisent à la même conclusion}}{}
+	\end{nd}
+	$
+\end{exemple}
+
+
+\begin{exemple}
+	\[
+	\mathcal{P} \limplies \mathcal{Q}, \ \mathcal{P} \limplies \mathcal{R}
+	\quad \lturn  \quad 
+	\mathcal{P} \limplies (\mathcal{Q} \land \mathcal{R})
+	\]
+	
+\medskip
+	
+	\qquad\qquad
+	$
+	\begin{nd}
+		\hypo [~] {1} {\mathcal{P} \limplies \mathcal{Q}}  \by{\text{Hypothèses}}{}
+		\hypo [~] {2} {\mathcal{P} \limplies \mathcal{R}} 		
+		\open
+		\hypo [~] {3} {\mathcal{P}}  \by{\text{Sous-hypothèse}}{}
+		\have [~] {4} {\mathcal{Q}} \by{\text{Puisqu'on a $\mathcal{P}$ et $\mathcal{P} \limplies \mathcal{Q}$}}{}
+		\have [~] {5} {\mathcal{R}} \by{\text{Puisqu'on a $\mathcal{P}$ et $\mathcal{P} \limplies \mathcal{R}$}}{}
+		\have [~] {6} {\mathcal{Q} \land \mathcal{R}} 			
+		\close
+		\have [\lturn] {7} {\mathcal{P} \limplies (\mathcal{Q} \land \mathcal{R})} \by{\text{Car chaque fois qu'on a $\mathcal{P}$ on a aussi $\mathcal{Q} \land \mathcal{R}$}}{}
+	\end{nd}
+	$
+\end{exemple}
+
+
+\begin{exemple}
+	\[
+	\mathcal{P} \lor \mathcal{Q}, \ \lnot\mathcal{P}
+	\quad \lturn  \quad 
+	\mathcal{Q}
+	\]
+	
+\medskip
+	
+	C'est un exemple d'utilisation de l'explosion : une fois qu'on a prouvé $\lantitauto$, on prouve n'importe quoi.
+	
+	\qquad\qquad
+	$
+	\begin{nd}
+		\hypo [~] {1} {\mathcal{P} \lor \mathcal{Q}}  
+		\hypo [~] {2} {\lnot\mathcal{P}} 		
+		\open
+		\hypo [~] {3} {\mathcal{P}}  \by{\text{Premier cas du \tor}}{}
+		\have [~] {4} {\lantitauto} \by{\text{Contradiction car on a $\mathcal{P}$ et $\lnot \mathcal{P}$}}{}
+		\have [~] {5} {\mathcal{Q}} \by{\text{Tout est vrai par explosion}}{}	
+		\close
+		\open
+		\hypo [~] {6} {\mathcal{Q}}  \by{\text{Second cas du \tor}}{}
+		\have [~] {7} {\mathcal{Q}} 		
+		\close		
+		\have [\lturn] {8} {\mathcal{Q}} \by{\text{Conclusion issue des deux cas}}{}
+	\end{nd}
+	$	
+\end{exemple}
+
+
+%--------------------------------------------------------------------
+\subsection{Règles dérivées}
+\index{regles d'inference@règles d'inférence}
+
+À partir des règles d'inférence de base, on en déduit un nombre limité d'autres règles. Ces nouvelles règles permettent de simplifier l'écriture des preuves. 
+
+
+\bigskip
+\textbf{Règles dérivées. Équivalence.} 
+
+Comme on s'y attend, on prouve une équivalence par double implication et réciproquement.
+\mybox{$
+	\mathcal{P} \lequiv \mathcal{Q}
+	\quad \lturn \quad 
+	\mathcal{P} \limplies \mathcal{Q}
+	\qquad \text{ et } \qquad
+	\mathcal{P} \lequiv \mathcal{Q}
+	\quad \lturn \quad 
+	\mathcal{Q} \limplies \mathcal{P}	
+	$}
+	
+\mybox{$
+	\mathcal{P} \limplies \mathcal{Q}, \
+	\mathcal{Q} \limplies \mathcal{P}
+	\quad \lturn \quad 
+	\mathcal{P} \lequiv \mathcal{Q}		
+	$}	
+
+	
+
+
+\bigskip
+\textbf{Règles dérivées. Négation.}
+
+Tout d'abord, voici la définition de la négation à partir de l'implication et la formule toujours fausse $\lantitauto$.
+\[
+\lnot \mathcal{P} \ \text{ est défini par } \  \mathcal{P} \limplies \lantitauto
+\]
+
+
+On a donc, par définition les deux règles :
+\mybox{$\lnot \mathcal{P}
+	\quad \lturn \quad 
+	\mathcal{P} \limplies \lantitauto
+	\qquad \text{ et } \qquad
+	\mathcal{P} \limplies \lantitauto
+	\quad \lturn \quad
+	\lnot \mathcal{P}
+	$}
+
+Ainsi, si on a $\mathcal{P}$ et $\lnot \mathcal{P}$ alors, à l'aide de l'implication, on obtient une contradiction  :
+\mybox{$\mathcal{P}, \ \lnot \mathcal{P}
+	\quad \lturn \quad 
+	\lantitauto
+$}	
+Bien sûr $\lnot \ltauto$ est $\lantitauto$,  et réciproquement $\lnot \lantitauto$ est $\ltauto$.
+
+On dispose également de l'autre sens de la règle de double négation :
+\mybox{$\mathcal{P}
+	\quad \lturn \quad 
+	\lnot \lnot \mathcal{P}
+	$}	
+
+On a aussi le principe du tiers exclu :\index{tiers exclu}
+\mybox{$\lturn \quad 
+	\mathcal{P} \lor \lnot \mathcal{P}
+	$}	
+C'est-à-dire que, sans aucune hypothèse, on a toujours une preuve de $\mathcal{P} \lor \lnot \mathcal{P}$.
+
+\bigskip
+\textbf{Règles dérivées. Conjonction/disjonction.}
+
+Par exemple :
+\mybox{$\mathcal{P} \lor \mathcal{Q}, \ \lnot\mathcal{Q}
+	\quad \lturn \quad 
+	\mathcal{P}
+	$}	
+	
+On peut aussi considérer toutes les preuves liées aux lois de De Morgan, par exemple :\index{lois de De Morgan}
+\mybox{$
+	\lnot (\mathcal{P} \land \mathcal{Q})
+\quad \lturn  \quad 
+\lnot \mathcal{P} \lor \lnot \mathcal{Q}
+$}
+On verra comment dériver cette règle à partir des règles de base dans les exemples ci-dessous.
+
+\bigskip
+\textbf{Règles dérivées. Implications.}
+
+Voici d'abord la règle nommée \emph{modus tollens}\index{modus tollens@\emph{modus tollens}} :
+\mybox{$
+\mathcal{P} \limplies \mathcal{Q}, \ \lnot \mathcal{Q}
+\quad \lturn  \quad 
+\lnot \mathcal{P}
+$}
+Si $\mathcal{P}$ implique $\mathcal{Q}$, mais que l'on n'a pas $\mathcal{Q}$, alors on a une preuve de $\lnot \mathcal{P}$.
+Dans les exemples ci-dessous, on explique comment dériver cette règle à partir des règles de base.
+
+Le principe des tiers exclu permet une preuve par disjonction des cas :
+\mybox{$
+	\mathcal{P} \limplies \mathcal{Q}, \ \lnot \mathcal{P}\limplies \mathcal{Q}
+	\quad \lturn  \quad 
+	\mathcal{Q}
+	$}
+
+Cela permet de faire des raisonnements selon les deux cas de  $\mathcal{P} \lor \lnot \mathcal{P}$ (quelle que soit la formule $\mathcal{P}$).
+
+
+\[
+\begin{nd}
+	\open	
+	\hypo [~] {1} {\mathcal{P}}	\by{\text{Premier cas}}{}
+	\have [~] {2} {\mathcal{Q}}
+	\close
+	\open	
+	\hypo [~] {3} {\lnot\mathcal{P}}	\by{\text{Second cas}}{}
+	\have [~] {4} {\mathcal{Q}}
+	\close		
+	\have [\lturn] {5} {\mathcal{Q}}		
+\end{nd}
+\]
+
+\bigskip
+\textbf{Règles dérivées. Absurde et contraposée.}\index{absurde}\index{contraposition}
+
+Raisonnement par l'absurde :
+\mybox{$\lnot\mathcal{P} \limplies \lantitauto
+	\quad \lturn \quad 
+	\mathcal{P}
+	$}	
+Si $\lnot \mathcal{P}$ entraîne une contradiction, alors on a prouvé $\mathcal{P}$.
+
+Contraposition :	
+\mybox{$\mathcal{P} \limplies \mathcal{Q}
+	\quad \lturn \quad 
+	\lnot \mathcal{Q} \limplies \lnot \mathcal{P}
+	$}
+Ou encore :	
+\mybox{$
+	\lnot \mathcal{Q} \limplies \lnot \mathcal{P}
+	\quad \lturn \quad 
+	\mathcal{P} \limplies \mathcal{Q}
+	$}	
+	
+
+		
+%--------------------------------------------------------------------
+\subsection{Exemples}
+
+
+\begin{exemple}
+	\[
+	\mathcal{P} \lor \mathcal{Q} \limplies \mathcal{P} \land \mathcal{Q}
+	\quad \lturn  \quad 
+	\mathcal{P} \lequiv \mathcal{Q}
+	\]
+	
+
+	\qquad\qquad
+	$
+	\begin{nd}
+		\hypo [~] {1} {\mathcal{P} \lor \mathcal{Q} \limplies \mathcal{P} \land \mathcal{Q}}  
+		\open
+		\hypo [~] {2} {\mathcal{P}}  \by{\text{On suppose $\mathcal{P}$}}{}
+		\have [~] {3} {\mathcal{P} \lor \mathcal{Q}} 
+		\have [~] {4} {\mathcal{P} \land \mathcal{Q}} \by{\text{Par l'hypothèse de départ}}{}
+		\have [~] {5} {\mathcal{Q}} 	
+		\close
+		\have [~] {6} {\mathcal{P} \limplies \mathcal{Q}} 	\by{\text{Premier sens de l'équivalence}}{}	
+		\open
+		\hypo [~] {7} {\mathcal{Q}}  \by{\text{On suppose $\mathcal{Q}$}}{}
+		\have [~] {8} {\mathcal{P} \lor \mathcal{Q}} 
+		\have [~] {9} {\mathcal{P} \land \mathcal{Q}}   \by{\text{Par l'implication dans l'hypothèse de départ}}{}
+		\have [~] {10} {\mathcal{P}} 	
+		\close
+		\have [~] {11} {\mathcal{Q} \limplies \mathcal{P}} 	\by{\text{Second sens de l'équivalence}}{}			
+		\have [\lturn] {12} {\mathcal{P} \lequiv \mathcal{Q}} 
+	\end{nd}
+	$
+	
+\end{exemple}
+
+
+\begin{exemple}
+	Prouvons directement le \emph{modus tollens} par un raisonnement par l'absurde :
+	\[
+	\mathcal{P} \limplies \mathcal{Q}, \ \lnot \mathcal{Q}
+	\quad \lturn  \quad 
+	\lnot \mathcal{P}
+	\]
+	
+	
+	\qquad\qquad
+	$
+	\begin{nd}
+		\hypo [~] {1} {\mathcal{P} \limplies \mathcal{Q}}  
+		\hypo [~] {2} {\lnot \mathcal{Q}}  		
+		\open
+		\hypo [~] {3} {\mathcal{P}}  \by{\text{Par l'absurde, on suppose $\mathcal{P}$}}{}
+		\have [~] {4} {\mathcal{Q}} \by{\text{On obtient $\mathcal{Q}$ par l'hypothèse de départ}}{}
+		\have [~] {5} {\lantitauto} \by{\text{Contradiction car on a $\mathcal{Q}$ et $\lnot \mathcal{Q}$}}{}	
+		\close
+		\have [\lturn] {6} {\lnot \mathcal{P}} 
+	\end{nd}
+	$
+	
+\end{exemple}
+
+
+
+\begin{exemple}
+	Prouvons directement la règle de De Morgan suivante :
+	\[
+	\lnot (\mathcal{P} \land \mathcal{Q})
+	\quad \lturn  \quad 
+	\lnot \mathcal{P} \lor \lnot \mathcal{Q}
+	\]
+	
+	
+	\qquad\qquad
+	$
+	\begin{nd}
+		\hypo [~] {1} {\lnot (\mathcal{P} \land \mathcal{Q})}  
+		\open
+		\hypo [~] {2} {\mathcal{P}}  \by{\text{Premier cas : on suppose $\mathcal{P}$}}{}
+			\open
+			\hypo [~] {3} {\mathcal{Q}}  \by{\text{Par l'absurde, on suppose $\mathcal{Q}$}}{}
+			\have [~] {4} {\mathcal{P} \land \mathcal{Q}}
+			\have [~] {5} {\lantitauto}  \by{\text{Contradiction, obtenue grâce à l'hypothèse de départ}}{}
+			\close
+		\have [~] {6} {\lnot \mathcal{Q}}	
+		\have [~] {7} {\lnot \mathcal{P} \lor \lnot \mathcal{Q}}			
+		\close	
+		\open
+		\hypo [~] {8} {\lnot\mathcal{P}}  \by{\text{Second cas : on suppose $\lnot\mathcal{P}$}}{}
+		\have [~] {9} {\lnot \mathcal{P} \lor \lnot \mathcal{Q}}			
+		\close		
+		\have [\lturn] {10} {\lnot \mathcal{P} \lor \lnot \mathcal{Q}} \by{\text{Conclusion obtenue dans les deux cas du tiers exclu}}{}
+	\end{nd}
+	$
+	
+\end{exemple}
+
+%--------------------------------------------------------------------
+\subsection{Absurde et contraposée}
+
+Dans la logique classique, on peut toujours remplacer un raisonnement par l'absurde par un raisonnement par contraposition.
+
+\textbf{Absurde.} $\lnot \mathcal{P} \limplies \lantitauto \quad \lturn \quad \mathcal{P}$.
+
+\textbf{Contraposée.} $\lnot \mathcal{Q} \limplies \lnot \mathcal{P} \quad \lturn \quad \mathcal{P} \limplies \mathcal{Q}$
+\quad 
+(ou encore $\mathcal{P} \limplies \mathcal{Q} \quad \lturn \quad \lnot \mathcal{Q} \limplies \lnot \mathcal{P}$ par double négation).
+
+
+Contraposée vers absurde :
+
+	\qquad\qquad
+$
+\begin{nd}
+	\hypo [~] {1} {\lnot \mathcal{P} \limplies \lantitauto}  
+	\have [~] {2} {\lnot \lantitauto \limplies \lnot \lnot \mathcal{P}}  \by{\text{Par contraposition}}{}
+	\have [~] {3} {\ltauto \limplies \lnot \lnot \mathcal{P}} \by{\text{Car $\lnot \lantitauto = \ltauto$}}{}	
+	\have [~] {4} {\ltauto \limplies \mathcal{P}} \by{\text{Car $\lnot \lnot \mathcal{P}$ donne $\mathcal{P}$}}{}	
+	\have [~] {5} {\ltauto}  \by{\text{Or $\ltauto$ toujours vrai}}{}
+	\have [\lturn] {6} {\mathcal{P}} \by{\text{Car $\ltauto \limplies \mathcal{P}$}}{}
+\end{nd}
+$
+
+\bigskip
+
+Absurde vers contraposée :
+
+\qquad\qquad
+$
+\begin{nd}
+	\hypo [~] {1} {\lnot \mathcal{Q} \limplies \lnot \mathcal{P}}  
+	\open
+	\hypo [~] {2} {\mathcal{P}}  
+	\open
+	\hypo [~] {3} {\lnot \mathcal{Q}}  
+	\have [~] {4} {\lnot \mathcal{P}}  \by{\text{Car $\lnot \mathcal{Q} \limplies \lnot \mathcal{P}$}}{}	
+	\have [~] {5} {\lantitauto} \by{\text{Contradiction car on a $\mathcal{P}$ et $\lnot \mathcal{P}$}}{}
+	\close
+	\have [~] {6} {\mathcal{Q}}  \by{\text{Car on a prouvé que supposer $\lnot \mathcal{Q}$ entraîne contradiction}}{}
+	\close
+	\have [\lturn] {7} {\mathcal{P} \limplies \mathcal{Q}} \by{\text{Car chaque fois qu'on a $\mathcal{P}$ on a aussi $\mathcal{Q}$}}{}
+\end{nd}
+$
+
+
+
+%--------------------------------------------------------------------
+\subsection{Résumé}
+\index{regles d'inference@règles d'inférence}
+
+
+Voici les principales règles d'inférence utilisées dans ce chapitre avec en gras les règles de base de la logique classique.
+
+\begin{center}
+	\setlength{\tabcolsep}{20pt}
+	\renewcommand{\arraystretch}{1.4}
+	\begin{tabular}{|c|c|}
+		\hline
+		\textbf{Nom} & \textbf{Règle} \\
+		\hline
+		\textbf{Réutilisation} 
+		& $\mathcal{P} \quad \lturn \quad \mathcal{P}$ \\ \hline
+		
+		\textbf{Élimination de $\land$} 
+		& $\begin{array}{l}
+			\mathcal{P}\land\mathcal{Q} \quad \lturn \quad \mathcal{P} \\
+			\mathcal{P}\land\mathcal{Q} \quad \lturn \quad \mathcal{Q}
+		\end{array}$ \\ \hline
+		
+		\textbf{Introduction de $\land$} 
+		& $\mathcal{P},\ \mathcal{Q} \quad \lturn \quad \mathcal{P}\land\mathcal{Q}$ \\ \hline
+		
+		\textbf{Élimination de la double négation} 
+		& $\lnot\lnot\mathcal{P} \quad \lturn \quad \mathcal{P}$ \\ \hline
+		
+		\textbf{Introduction de $\lor$} 
+		& $\begin{array}{l}
+			\mathcal{P} \quad \lturn \quad \mathcal{P}\lor\mathcal{Q} \\
+			\mathcal{Q} \quad \lturn \quad \mathcal{P}\lor\mathcal{Q}
+		\end{array}$ \\ \hline
+		
+		\textbf{Élimination de $\lor$} 
+		& $\mathcal{P}\lor\mathcal{Q},\ 
+		\mathcal{P}\limplies\mathcal{R},\ 
+		\mathcal{Q}\limplies\mathcal{R} \quad \lturn \quad \mathcal{R}$ \\ \hline
+		
+		\textbf{Implication (modus ponens)} 
+		& $\mathcal{P},\ \mathcal{P}\limplies\mathcal{Q} \quad \lturn \quad \mathcal{Q}$ \\ \hline
+		
+		\textbf{Introduction de $\limplies$} 
+		& \text{Si } $\mathcal{P} \lturn \mathcal{Q}$ \text{ alors } $\lturn \mathcal{P}\limplies\mathcal{Q}$ \\ \hline
+		
+		\textbf{Explosion (ex falso)} 
+		& $\lantitauto \quad \lturn \quad \mathcal{P}$ \\ \hline
+		
+		\emph{Équivalence} 
+		& $\begin{array}{c}
+			\mathcal{P}\lequiv\mathcal{Q} \quad \lturn \quad \mathcal{P}\limplies\mathcal{Q} \\
+			\mathcal{P}\lequiv\mathcal{Q} \quad \lturn \quad \mathcal{Q}\limplies\mathcal{P} \\
+			\mathcal{P}\limplies\mathcal{Q},\ \mathcal{Q}\limplies\mathcal{P} \quad \lturn \quad \mathcal{P}\lequiv\mathcal{Q}
+		\end{array}$ \\ \hline
+		
+		\emph{Définition de la négation} 
+		& $\lnot\mathcal{P}$ \ est définie par \ $\mathcal{P}\limplies\lantitauto$ \\ \hline
+		
+		\emph{Introduction de la double négation}
+		& $\mathcal{P} \quad \lturn \quad \lnot\lnot\mathcal{P}$ \\ \hline
+		
+		\emph{Tiers exclu} 
+		& $\lturn \quad \mathcal{P}\lor\lnot\mathcal{P}$ \\ \hline
+		
+		\emph{Modus tollens} 
+		& $\mathcal{P}\limplies\mathcal{Q},\ \lnot\mathcal{Q} \quad \lturn \quad \lnot\mathcal{P}$ \\ \hline
+		
+		\emph{Lois de De Morgan} 
+		& $\begin{array}{c}
+			\lnot(\mathcal{P}\land\mathcal{Q}) \quad \lturn \quad \lnot\mathcal{P}\lor\lnot\mathcal{Q} \\
+			\ldots		
+		\end{array}$\\ \hline
+		
+		\emph{Raisonnement par l'absurde} 
+		& $\lnot\mathcal{P}\limplies\lantitauto \quad \lturn \quad \mathcal{P}$ \\ \hline
+		
+		\emph{Contraposée} 
+		& $\begin{array}{c}		
+			\mathcal{P}\limplies\mathcal{Q} \quad \lturn \quad \lnot\mathcal{Q}\limplies\lnot\mathcal{P} \\ 
+			\lnot\mathcal{Q}\limplies\lnot\mathcal{P} \quad \lturn \quad \mathcal{P}\limplies\mathcal{Q} \\ 		
+		\end{array}$\\\hline
+	\end{tabular}
+\end{center}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Un aperçu du théorème de complétude de Gödel}
+\index{theoreme completude@théorème de complétude}
+
+Le théorème d'\emph{incomplétude} de Gödel (1931) est le but ultime de ce livre. Ce théorème va bouleverser les fondements de la logique. Mais pour vraiment appréhender l'importance du théorème, il faut d'abord comprendre le théorème de \emph{complétude} (1929) qui, lui, est plutôt rassurant. L'énoncé est même banal car c'est exactement ce à quoi tout le monde s'attend.
+
+\begin{theoreme}[Théorème de complétude]
+	Pour la logique \og{}Vrai/Faux\fg{} :
+	\[
+	\mathcal{P} \ldoubleturn \mathcal{Q} \quad \text{ si et seulement si } \quad \mathcal{P} \lturn \mathcal{Q}.
+	\]
+\end{theoreme}
+
+Le point clé est que l'on se place ici dans le cadre de la logique propositionnelle, celle présentée dans le chapitre \og{}Logique vrai/faux\fg{}.
+C'est aussi vrai dans le cadre plus général de la logique du premier ordre (voir le chapitre \og{}Logique du premier ordre\fg{}). C'est d'ailleurs dans ce cadre qu'on prouvera ce théorème (voir le chapitre \og{}Théorème de complétude\fg{}).
+
+Détaillons chacune des implications de l'équivalence de l'énoncé.
+
+\bigskip
+
+Sens réciproque $\Leftarrow$. $\mathcal{P} \lturn \mathcal{Q}$ implique $\mathcal{P} \ldoubleturn \mathcal{Q}$.
+
+Cette implication s'appelle le \og{}théorème de validité\fg{} (\emph{Soundness Theorem}), c'est un énoncé de \og{}bon sens\fg{}. Si on dispose d'une preuve que $\mathcal{P}$ entraîne $\mathcal{Q}$ et que $\mathcal{P}$ est vrai alors $\mathcal{Q}$ est vrai. Autrement dit quand on a prouvé un théorème, et si les hypothèses sont vraies, alors la conclusion est vraie ! Noter une nouvelle fois, que dans la définition formelle de preuve, il n'y a pas de concept de vrai ou faux. Le théorème de validité signifie que les règles d'inférence choisies pour définir ce qu'est une preuve sont cohérentes et compatibles avec les règles de la logique propositionnelle.
+
+\bigskip
+
+Sens direct $\Rightarrow$. $\mathcal{P} \ldoubleturn \mathcal{Q}$ implique $\mathcal{P} \lturn \mathcal{Q}$.
+
+Ce sens correspond au \emph{théorème de complétude}.
+Cela signifie que, pour tout énoncé que l'on constate comme étant vrai, alors on peut trouver une preuve qui en fait un théorème.
+Ainsi, si on constate qu'à chaque fois que $\mathcal{P}$ est vrai alors $\mathcal{Q}$ est aussi vrai, alors il existe une preuve que $\mathcal{P}$ entraîne $\mathcal{Q}$.
+Ce résultat est valable dans le cadre de la logique propositionnelle (notre logique Vrai/Faux).
+
+Cela permet de faire de beaux rêves : en logique propositionnelle, tout ce qui est vrai est prouvable et réciproquement. Le cauchemar commencera plus tard dans ce livre\ldots
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Exercices}
+
+%--------------------------------------------------------------------
+\subsection*{Preuve par table de vérité}
+
+\begin{exercicecours}
+	Dire si les conséquences logiques suivantes sont valides ou pas. Justifier votre réponse.
+	\[
+	\begin{array}{rcl}
+		(\mathcal{P} \land \lnot \mathcal{Q}) \lor (\lnot \mathcal{P} \land \mathcal{Q}) 
+		&\quad \stackrel{?}{\ldoubleturn} \quad& 
+		\mathcal{P} \lor \mathcal{Q} \\
+		%
+		\mathcal{P} \limplies \mathcal{Q} , \  
+		\lnot \mathcal{P} 
+		&\quad \stackrel{?}{\ldoubleturn} \quad&  
+		\lnot \mathcal{Q} \\
+		%
+		\mathcal{P} \limplies \mathcal{Q} , \ 
+		\mathcal{R} \limplies \mathcal{Q}
+		&\quad \stackrel{?}{\ldoubleturn} \quad&  
+		\mathcal{P} \limplies \mathcal{R} \\
+		%
+		\mathcal{P} \limplies \lnot\mathcal{Q}
+		&\quad \stackrel{?}{\ldoubleturn} \quad&  
+		\mathcal{Q} \limplies \lnot \mathcal{P}  \\	
+		%
+		\mathcal{P} \limplies \mathcal{Q} , \ 
+		\mathcal{P} \lor \lnot \mathcal{Q}	
+		&\quad \stackrel{?}{\ldoubleturn} \quad&  
+		\mathcal{Q} \\	
+		%
+		\mathcal{P} \lor \lnot \mathcal{Q} , \ 								
+		\mathcal{P} \lor \lnot \mathcal{R} , \ 	
+		\mathcal{R} \lor \lnot \mathcal{Q}
+		&\quad \stackrel{?}{\ldoubleturn} \quad& 
+		\lnot\mathcal{P} \limplies \mathcal{Q} \land \mathcal{R} 	
+	\end{array}\]
+\end{exercicecours}
+
+
+%--------------------------------------------------------------------
+\subsection*{Preuve formelle}
+
+
+\begin{exercicecours}
+	Expliquer en français les théorèmes suivants :
+	\[
+	\begin{array}{rcl}
+		\mathcal{P} , \ 
+		\mathcal{Q}
+		&\quad \lturn \quad& 
+		\mathcal{P} \land \mathcal{Q} \\	
+		
+		\mathcal{P} \land (\mathcal{P} \limplies \mathcal{Q})
+		&\quad \lturn \quad& 
+		\mathcal{Q} \\			
+		
+		\mathcal{P} \limplies \mathcal{Q} , \ 
+		\mathcal{Q} \limplies \mathcal{R}
+		&\quad \lturn \quad& 
+		\mathcal{P} \limplies \mathcal{R} \\
+		
+		\lnot \mathcal{Q} \limplies \lnot \mathcal{P} 
+		&\quad \lturn \quad& 
+		\mathcal{P} \limplies \mathcal{Q} \\
+		
+		\ 
+		&\quad \lturn \quad& 
+		\mathcal{P} \lor \lnot\mathcal{P}	\\	
+		
+	\end{array}
+	\]	
+	
+\end{exercicecours}
+
+
+\begin{exercicecours}
+    On considère le théorème suivant :
+    \[
+    \mathcal{P} \lor \mathcal{Q}, \
+    \mathcal{P} \limplies \mathcal{R}, \
+    \mathcal{Q} \limplies \mathcal{S} \
+    \quad \lturn \quad 
+    \mathcal{R} \lor \mathcal{S}
+    \]
+    
+    Compléter les lignes manquantes de la preuve et commenter toutes les lignes.
+    
+    \medskip
+    \qquad\qquad
+    $
+    \begin{nd}
+        \hypo [~] {1} {\ldots}  \by{\text{Hypothèse 1}}{}
+        \hypo [~] {2} {\ldots}  \by{\text{\ldots}}{}
+        \hypo [~] {3} {\ldots}  \by{\text{\ldots}}{}                
+        \open
+        \hypo [~] {4} {\mathcal{P}}  \by{\text{Sous-hypothèse. Premier cas du $\tor$} }{}
+        \have [~] {5} {\ldots} \by{\text{On a utilisé l'implication \ldots}}{}
+        \have [~] {6} {\ldots} \by{\text{Sous-conclusion}}{}
+        \close
+        \open
+        \hypo [~] {7} {\mathcal{\ldots}}  \by{\text{Sous-hypothèse. \ldots} }{}
+        \have [~] {8} {\ldots} \by{\text{\ldots}}{}
+        \have [~] {9} {\ldots} \by{\text{\ldots}}{}
+        \close        
+        \have [\lturn] {10} {\ldots} \by{\text{Conclusion car \ldots}}{}
+    \end{nd}
+    $
+    
+\end{exercicecours}
+
+
+
+%--------------------------------------------------------------------
+\subsection*{Règles d'inférence}
+
+
+\begin{exercicecours}
+	Donner la preuve en déduction naturelle des théorèmes suivants :
+	\[
+	\begin{array}{rcl}
+		\mathcal{P} \limplies \mathcal{Q} , \ 
+		\mathcal{Q} \limplies \mathcal{R}
+		&\quad \lturn \quad& 
+		\mathcal{P} \limplies \mathcal{R} \\
+		%
+		\mathcal{P}
+		&\quad \lturn \quad& 
+		(\mathcal{P} \land \mathcal{Q}) \lor (\mathcal{P} \land \lnot \mathcal{Q}) \\	
+		%
+		(\mathcal{P} \limplies \mathcal{Q}) \limplies \mathcal{R}
+		&\quad \lturn \quad& 
+		\mathcal{P} \limplies (\mathcal{Q} \limplies \mathcal{R}) \\
+		%
+		\mathcal{P} \lequiv \mathcal{Q}
+		&\quad \lturn \quad& 
+		(\mathcal{P} \lor \mathcal{Q}) \limplies (\mathcal{P} \land \mathcal{Q}) \\
+		%
+		\lnot \mathcal{P} \lor \lnot \mathcal{Q}	
+		&\quad \lturn \quad& 
+		\lnot(\mathcal{P} \land \mathcal{Q})		
+	\end{array}
+	\]
+	
+\end{exercicecours}
+
+\begin{exercicecours}
+	Donner la preuve en déduction naturelle des théorèmes suivants :
+	\[
+	\begin{array}{rcl}
+		\lnot\mathcal{B} \limplies (\mathcal{A} \lor \mathcal{B})
+		&\quad \lturn \quad& 
+		\mathcal{A} \\
+		
+		\mathcal{C} \limplies (\mathcal{D} \limplies \mathcal{E})
+		&\quad \lturn \quad& 
+		(\mathcal{C} \land \mathcal{D}) \limplies \mathcal{E} \\
+		
+		\mathcal{F} \lequiv  \mathcal{G}, \ 
+		\mathcal{G} \lequiv  \mathcal{H}
+		&\quad \lturn \quad& 
+		\mathcal{F} \lequiv  \mathcal{H}
+		\\
+		
+		&\quad \lturn \quad& 
+		(\mathcal{I} \limplies \mathcal{J})
+		\lor 
+		(\mathcal{J} \limplies \mathcal{I}) \\
+		
+		\mathcal{K} \lor  \mathcal{L}, \
+		\mathcal{L} \lor  \mathcal{M}, \
+		\lnot \mathcal{L}	 
+		&\quad \lturn \quad& 
+		\mathcal{K} \land  \mathcal{M}
+		\\			
+		
+	\end{array}
+	\]	
+\end{exercicecours}
+
+
+\begin{exercicecours}
+	Le but de l'exercice est de montrer que la règle du tiers exclu \og{}$
+	\lturn \mathcal{P} \lor \lnot \mathcal{P}$\fg{} (sans hypothèses) se déduit des règles de base. On rappelle que $\lnot \mathcal{P}$ signifie par définition $\mathcal{P} \limplies \lantitauto$.
+	
+	\begin{enumerate}
+		
+		\item Vérifier que $\lnot\lnot \mathcal{Q}$ s'écrit $(\mathcal{Q} \limplies \lantitauto) \limplies \lantitauto$.
+		
+		\item Voici la preuve de :
+		\[ \lturn \quad 
+		\big( (\mathcal{P} \lor \lnot \mathcal{P}) \limplies \lantitauto \big) \limplies \lantitauto
+		\]
+			
+			\qquad\qquad
+		$
+		\begin{nd}
+			\hypo [~] {1} {\varnothing}  
+			\open
+			\hypo [~] {2} {(\mathcal{P} \lor \lnot \mathcal{P}) \limplies \lantitauto}
+				\open
+				\hypo [~] {3} {\mathcal{P}}
+				\have [~] {4} {\mathcal{P} \lor \lnot \mathcal{P}}
+				\have [~] {5} {\lantitauto}	
+				\close
+			\have [~] {6} {\mathcal{P} \limplies \lantitauto}
+			\have [~] {7} {\lnot \mathcal{P}}
+			\have [~] {8} {\mathcal{P} \lor \lnot \mathcal{P}}
+			\have [~] {9} {\lantitauto}
+			\close
+			\have [\lturn] {10} {\big( (\mathcal{P} \lor \lnot \mathcal{P}) \limplies \lantitauto \big) \limplies \lantitauto} 
+		\end{nd}
+		$
+	
+		
+		
+		Expliquer chaque ligne et vérifier que seules les règles de base sont utilisées.
+				
+		\item Conclure à l'aide d'une règle de base.
+	\end{enumerate}
+
+\end{exercicecours}
+
+\begin{exercicecours}
+	Le but est d'obtenir des règles dérivées à partir des règles de base.
+	\begin{enumerate}
+		\item Prouver la règle dérivée 
+		\[
+		\mathcal{P}
+		\quad \lturn \quad 
+		\lnot \lnot \mathcal{P}\]
+		 uniquement à l'aide des règles de base. On rappelle que $\lnot \mathcal{P}$ signifie $\mathcal{P} \limplies \lantitauto$.
+		
+		\item On s'autorise ici les règles de base et le principe du tiers exclu (qu'on a déduit des règles de base). On peut donc faire des raisonnement en distinguant les cas $\mathcal{P}$ et $\lnot \mathcal{P}$. Prouver la règle du raisonnement par l'absurde : 
+		\[ 
+		\lnot \mathcal{P} \limplies \lantitauto
+		\quad \lturn \quad 
+		\mathcal{P}
+		\]		
+		 
+		\item En déduire qu'on pourrait dériver cette forme de la contraposition, uniquement à l'aide des règles de base :
+		\[
+		\mathcal{P} \limplies \mathcal{Q}
+		\quad \lturn \quad 
+		\lnot \mathcal{Q} \limplies \lnot \mathcal{P}
+		\]
+	\end{enumerate}
+	
+	
+\end{exercicecours}
+
+
+
+
+
+%--------------------------------------------------------------------
+\subsection*{Un aperçu du théorème de complétude de Gödel}
+
+\begin{exercicecours}
+	Montrer qu'on a à la fois 
+	\[
+	\lnot (\mathcal{P} \lor \mathcal{Q}) 
+	\quad \ldoubleturn \quad 
+	(\lnot \mathcal{P}) \land (\lnot \mathcal{Q})
+	\]
+	et
+	\[
+	\lnot (\mathcal{P} \lor \mathcal{Q}) 
+	\quad \lturn \quad 
+	(\lnot \mathcal{P}) \land (\lnot \mathcal{Q})
+	\]	
+\end{exercicecours}
+
+
+\begin{exercicecours}
+	Montrer qu'on a à la fois 
+\[
+\lnot \mathcal{P} \lor \mathcal{Q}, 
+\ \lnot \mathcal{P} \limplies \mathcal{R}, 
+\ \mathcal{Q} \limplies \mathcal{R}
+\quad \ldoubleturn \quad 
+\mathcal{R}
+\]
+et
+\[
+\lnot \mathcal{P} \lor \mathcal{Q}, 
+\ \lnot \mathcal{P} \limplies \mathcal{R}, 
+\ \mathcal{Q} \limplies \mathcal{R}
+\quad \lturn \quad 
+\mathcal{R}
+\]		
+	
+\end{exercicecours}
+
+
+
+\end{document}

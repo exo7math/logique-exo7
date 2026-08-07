@@ -1,0 +1,677 @@
+\documentclass[11pt,class=report,crop=false]{standalone}
+\usepackage[screen]{../logic}
+
+
+\begin{document}
+
+
+%====================================================================
+\chapitre{Satisfaction}
+%====================================================================
+
+% \insertvideo{}{partie 1.1. Titre}
+
+
+\objectifs{Pour attribuer une valeur Vrai/Faux à une formule de la logique du premier ordre, il faut à la fois définir une structure mathématique et affecter une valeur aux variables. On pourra alors définir la conséquence logique.}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Vrai/faux}
+
+Dans la logique Vrai/Faux, on attribuait une valeur \ltrue/\lfalse{} à une formule en affectant à chaque variable une valeur \ltrue/\lfalse. Pour une formule dans un langage du premier ordre, c'est un peu plus compliqué. Il faut d'abord définir une structure, afin d'interpréter la formule dans ce cadre mathématique, et si il y a des variables libres, il faut en plus affecter une valeur mathématique à chacune d'elles.
+
+ 
+%--------------------------------------------------------------------
+\subsection{Pour tout \& Il existe}
+
+\index{quantificateurs@quantificateurs $\forall$, $\exists$}
+
+La grande nouveauté de la logique du premier ordre est bien sûr l'introduction des quantificateurs.
+On considère un langage $\mathcal{L}$ et un prédicat $P(x)$.
+On fixe une structure $\mathcal{S}$ de ce langage de domaine $E$.
+
+\mybox{
+\og{}$\forall x \ P(x)$\fg{} \ est vrai ssi pour tout $x \in E$, $P^{\mathcal{S}}(x)$ est vrai
+}
+
+\mybox{
+	\og{}$\exists x \ P(x)$\fg{} \ est vrai ssi il existe (au moins) un $x \in E$ tel que $P^{\mathcal{S}}(x)$ est vrai
+}
+
+
+Vous remarquez que l'on est obligé de définir ces notions par des phrases en français, c'est-à-dire par un méta-langage.
+L'autre point important est que cette évaluation Vrai/Faux n'a pas de sens au niveau du langage lui-même, mais se fait au niveau d'une structure. 
+On rappelle que $P^{\mathcal{S}}(x)$ est l'interprétation du prédicat $P(x)$ dans la structure $\mathcal{S}$.
+Bien sûr, le résultat peut dépendre du choix de la structure.
+
+\begin{exemple}
+	\sauteligne
+	\begin{itemize}
+		\item La formule 
+		\[\exists x \quad x^2 < x\]
+		est fausse si on considère une structure avec le domaine $E_1 = [1,+\infty[$,
+		mais vraie si le domaine est $\Rr$ (par exemple $(\frac12)^2 < \frac12$).
+		
+	
+		\item La formule 
+		\[\forall x \quad (\exists y \quad y^2 = x)\]
+		est vraie si on considère le domaine $E_1 = [1,+\infty[$,
+		mais fausse si le domaine est $\Rr$ (par exemple $-1$ n'est pas le carré d'un nombre réel).
+	\end{itemize}
+\end{exemple}
+
+
+Remarque : si on a une formule $\mathcal{P}$ dont la seule variable libre est $x$, alors on peut aussi décider si les phrases 
+\og{}$\forall x \ \mathcal{P}$\fg{}
+et \og{}$\exists x \ \mathcal{P}$\fg{} sont vraies ou fausses dans la structure.
+Comme d'habitude, on notera souvent, un peu abusivement, $\mathcal{P}(x)$ une formule $\mathcal{P}$ pour signifier qu'elle dépend de la variable $x$. 
+
+%--------------------------------------------------------------------
+\subsection{Vrai/Faux pour les formules fermées}
+
+On fixe un langage $\mathcal{L}$.
+On rappelle qu'une variable est \defi{libre}\index{variable!libre} dans une formule, si l'une de ses occurrences ne se trouve pas dans la portée d'un quantificateur portant sur cette variable. Une formule sans variable libre est une \defi{formule fermée}\index{formule!fermee@fermée}.
+
+\begin{definition}
+Soit $\mathcal{S}$ une structure et soit $\mathcal{Q}$ une formule fermée. Si l'interprétation de $\mathcal{Q}$ dans $\mathcal{S}$ est vraie, alors on dit que $\mathcal{Q}$ est \defi{satisfaite} dans $\mathcal{S}$ et on note :
+\mybox{
+	$\ldoubleturn_{\mathcal{S}} \mathcal{Q}$
+} 
+\end{definition}
+\index{200@$\ldoubleturn_{\mathcal{S}}$}
+
+On dit aussi que $\mathcal{S}$ est un \defi{modèle}\index{modele@modèle} pour $\mathcal{Q}$.
+On dit que $\mathcal{Q}$ est \defi{satisfaisable}\index{formule!satisfaction} s'il existe une structure $\mathcal{S}$ telle que $\ldoubleturn_{\mathcal{S}} \mathcal{Q}$.
+
+
+\begin{exemple}
+	On considère un langage adapté et la formule :
+	\[
+	\mathcal{Q} : \qquad \forall x \quad (x \times x = a) \limplies x = a
+	\]
+	Pour la structure $\mathcal{S}_1$ de domaine $E = \Rr$ avec $a^{\mathcal{S}_1} = 0$ alors la formule est vraie, ainsi on a bien $\ldoubleturn_{\mathcal{S}_1} \mathcal{Q}$.
+	
+	Par contre, pour la structure $\mathcal{S}_2$ de domaine $E = \Rr$, mais avec cette fois $a^{\mathcal{S}_2} = 1$, la formule est fausse (en effet, si $x^2=1$ alors $x=+1$ ou $x=-1$).
+\end{exemple}
+
+
+%--------------------------------------------------------------------
+\subsection{Affectation}
+
+Considérons un langage $\mathcal{L}$ et une structure $\mathcal{S}$ de domaine $E$.
+Si $x$ est une variable de $\mathcal{L}$ et $d$ un élément de l'ensemble $E$, alors $x \mapsto d$ désigne l'\defi{affectation}\index{affectation} de la valeur $d$ à chaque occurrence libre de $x$ dans les formules du langage.
+On note $\mathcal{Q}[x \mapsto d]$ la formule, interprétée dans $\mathcal{S}$, où les occurrences libres de $x$ sont remplacées par la valeur $d$.
+
+Par exemple, considérons la formule
+$\mathcal{Q}$ : \og{}$x^2 \ge 7$\fg{}
+pour une structure de domaine $\Rr$. Comme la variable $x$ est libre, cela n'a pas de sens de vouloir savoir si $\mathcal{Q}$ est vraie ou fausse.
+Par contre, après affectation, la formule $\mathcal{Q}[x \mapsto 3]$ devient \og{}$3^2 \ge 7$\fg{} et est donc vraie, alors que $\mathcal{Q}[x \mapsto 2]$ devient \og{}$2^2 \ge 7$\fg{} et est fausse.
+
+Plus généralement, une \defi{affectation} est une fonction $s : \text{Var} \to E$ qui à chaque variable $x_i$ du langage associe une valeur $d_i$ du domaine : $x_i \mapsto d_i$. On note $\mathcal{Q}[s]$ l'application d'une affectation $s$ à une formule $\mathcal{Q}$. Insistons sur le fait que seules les occurrences des variables libres sont affectées.
+
+
+
+%--------------------------------------------------------------------
+\subsection{Formules avec variables libres}
+
+\begin{definition}
+Soit $\mathcal{Q}$ une formule.
+On dit que $\mathcal{Q}$ est \defi{satisfaite}\index{formule!satisfaction} dans $\mathcal{S}$ pour l'affectation $s$ si l'interprétation $\mathcal{Q}[s]$ est vraie. On note alors $\ldoubleturn_{\mathcal{S}} \mathcal{Q}[s]$ ou aussi :
+\mybox{
+$\ldoubleturn_{\mathcal{S},s} \mathcal{Q}$	
+}
+\end{definition}
+
+
+Bien évidemment, l'affectation n'intervient que s'il y a des variables libres.
+L'opération d'affectation est le pendant de l'évaluation en logique Vrai/Faux (on remplaçait chaque variable propositionnelle par une valeur \ltrue/\lfalse) : ici c'est plus général car $x$ est remplacé par n'importe quelle valeur de l'ensemble $E$ (le domaine).
+
+\begin{exemple}
+Considérons un langage dans lequel on peut écrire la formule :
+\[
+\mathcal{Q} : \qquad \forall x \quad y \le x
+\]	
+La variable $y$ est une variable libre. On va considérer une structure $\mathcal{S}_1$ de domaine $\Nn$ et une structure $\mathcal{S}_2$ de domaine $\Rr$ (et l'inégalité usuelle).
+Cela n'a pas de sens de se demander si $\mathcal{Q}$ est vraie, ni dans $\mathcal{S}_1$, ni dans $\mathcal{S}_2$. 
+
+\begin{itemize}
+	\item Dans $\mathcal{S}_1$, considérons l'affectation $s : y \mapsto 0$. On a bien
+\[
+\mathcal{Q}[y \mapsto 0] : \qquad \forall x \in \Nn \quad 0 \le x
+\]		
+et donc l'énoncé $\mathcal{Q}[y \mapsto 0]$ est vrai, donc on a bien $\ldoubleturn_{\mathcal{S}_1,y\mapsto 0} \mathcal{Q}$.
+
+	\item Dans $\mathcal{S}_2$, l'affectation $s : y \mapsto 0$ conduit à :
+\[
+\mathcal{Q}[y \mapsto 0] : \qquad \forall x \in \Rr \quad 0 \le x
+\]	
+qui est bien sûr faux.
+	
+	\item L'affectation $y \mapsto 1$ conduit à des énoncés faux pour les deux structures.
+	
+	\item Enfin, soit $s$ l'affectation telle que $x \mapsto 5$ et $y \mapsto 1$.
+	Comme $x$ n'est pas une variable libre, $s$ n'affecte pas les $x$ de la formule qui devient : $\mathcal{Q}[s]$ : \og{}$\forall x \quad 1 \le x$\fg{}.
+\end{itemize}
+\end{exemple}
+
+%Terminons avec quelques évidences sémantiques :
+%\begin{itemize}
+%	\item $\ldoubleturn_{\mathcal{S},s} (\mathcal{Q}_1 \land \mathcal{Q}_2)$ si et seulement si 
+%	$\ldoubleturn_{\mathcal{S},s} \mathcal{Q}_1$ et $\ldoubleturn_{\mathcal{S},s} \mathcal{Q}_2$.
+%	
+%	\item $\ldoubleturn_{\mathcal{S},s} (\forall x \ \mathcal{Q})$ si et seulement si 
+%	pour tout $d \in E$, on a $\ldoubleturn_{\mathcal{S},x \mapsto d} \mathcal{Q}$.
+%\end{itemize}
+
+
+
+
+%--------------------------------------------------------------------
+\subsubsection{Validité}
+
+\begin{definition}
+Soit $\mathcal{Q}$ une formule d'un langage $\mathcal{L}$.
+On dit que $\mathcal{Q}$ est une \defi{validité}\index{formule!validite@validité} si quelle que soit la structure $\mathcal{S}$ et quelle que soit l'affectation $s$, l'interprétation de $\mathcal{Q}[s]$ dans $\mathcal{S}$ est vraie.
+On note alors :
+\mybox{
+$\ldoubleturn \mathcal{Q}$	
+}
+\end{definition}
+Cela signifie donc qu'on a $\ldoubleturn_{\mathcal{S},s} \mathcal{Q}$, quelles que soient $\mathcal{S}$ et $s$.
+
+Une validité est l'analogue d'une tautologie de la logique propositionnelle.
+Si on a $\ldoubleturn \lnot \mathcal{Q}$ cela signifie que $\mathcal{Q}$ est toujours fausse (quelles que soient $\mathcal{S}$ et $s$), une telle formule $\mathcal{Q}$ s'appelle une \defi{contradiction}\index{formule!contradiction} ou est dite \defi{insatisfaisable}.
+
+
+
+\begin{exemple}
+	\sauteligne
+	\begin{itemize}
+		\item \og$\forall x \ x=x$\fg{} est une validité.
+		
+		\item \og$x=x$\fg{} est aussi une validité.
+		
+		\item \og$\forall x \quad P(x) \land Q(x) \limplies P(x)$\fg{} est une validité (on n'a pas besoin de savoir comment les prédicats $P$ et $Q$ seront interprétés).
+		
+		\item \og$\exists x \ \exists y \ x \neq y$\fg{} n'est pas une validité. C'est très souvent vrai, mais pas si on choisit une structure dont le domaine n'a qu'un seul élément, par exemple $E = \{ 0 \}$ pour lequel il ne peut pas exister deux éléments distincts.
+		
+		\item \og$x < x$\fg{} n'est pas une validité (c'est faux sur $\Rr$ si on choisit pour \og$<$\fg{} l'inégalité stricte, mais c'est vrai si on choisit l'inégalité large).
+			
+		\item \og$\exists x \  P(x) \land \lnot P(x)$\fg{} est une contradiction. Même si on ne sait pas en quoi le prédicat $P$ va être interprété, on ne pourra jamais avoir en même temps $P(x)$ et son contraire. (Noter que le domaine d'une structure est non vide, c'est important ici).
+	\end{itemize}
+\end{exemple}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Conséquence logique}
+
+%--------------------------------------------------------------------
+\subsection{Définition}
+
+Nous généralisons la notion de satisfaction, sous la forme suivante : si les hypothèses $\mathcal{P}_1, \ldots, \mathcal{P}_l$ sont satisfaites, alors la conclusion $\mathcal{Q}$ est aussi satisfaite.
+
+\begin{definition}
+	On dit que $\mathcal{P}_1, \ldots, \mathcal{P}_l$ ont pour \defi{conséquence logique}\index{consequence logique@conséquence logique} $\mathcal{Q}$ si, pour toute structure $\mathcal{S}$ et toute affectation $s$ qui rendent $\mathcal{P}_1, \ldots, \mathcal{P}_l$ simultanément vraies, alors $\mathcal{Q}$ est aussi vraie.
+	
+On note alors :
+\mybox{
+$\mathcal{P}_1, \ldots, \mathcal{P}_l \quad \ldoubleturn \quad \mathcal{Q}$
+}
+\end{definition}
+
+
+De même, si $\Gamma$ est un ensemble de formules, on note $\Gamma \ \ldoubleturn \ \mathcal{Q}$.
+
+\medskip
+
+Voici un exemple important :
+\mybox{
+	$\forall x \ \ \mathcal{P}(x) \quad \ldoubleturn \quad \exists x \ \ \mathcal{P}(x)$
+}
+Si une formule est vraie pour tous les éléments, alors elle est vraie pour au moins un élément. Noter encore une fois qu'il est important d'avoir exigé que les domaines des structures soient toujours non vides.
+
+Il y a des conséquences logiques naturelles issues de la logique propositionnelle :
+\begin{itemize}
+	\item $\mathcal{P} \land \mathcal{Q} \quad \ldoubleturn \quad \mathcal{P}$
+	
+	\item $\mathcal{P}, \ \mathcal{Q} \quad \ldoubleturn \quad \mathcal{P} \land \mathcal{Q}$
+	
+	\item $\mathcal{P}, \ \mathcal{P} \limplies \mathcal{Q} \quad \ldoubleturn \quad \mathcal{Q}$
+	
+	\item si $\mathcal{P} \  \ldoubleturn \  \mathcal{Q}$ et si $\mathcal{Q} \  \ldoubleturn \  \mathcal{R}$, alors $\mathcal{P} \ \ldoubleturn \  \mathcal{R}$
+\end{itemize}
+
+
+%--------------------------------------------------------------------
+\subsection{Équivalence logique}
+
+\begin{definition}
+	Si $\mathcal{P} \  \ldoubleturn \ \mathcal{Q}$ et $\mathcal{Q} \ \ldoubleturn \ \mathcal{P}$, on dit que $\mathcal{P}$ et $\mathcal{Q}$ sont \defi{logiquement équivalentes}\index{equivalence logique@équivalence logique} et on note :
+	\mybox{
+		$\mathcal{P} \  \equiv \ \mathcal{Q}$
+	}
+\end{definition}
+
+Lorsque c'est le cas, cela signifie que $\mathcal{P}$ et $\mathcal{Q}$ sont satisfaites en même temps.
+Une autre façon de définir l'équivalence logique serait $\ldoubleturn (\mathcal{P} \lequiv \mathcal{Q})$.
+
+
+On retrouve bien sûr des équivalences, issues de la logique propositionnelle, par exemple :
+\begin{itemize}
+	\item $\lnot(\mathcal{P} \lor \mathcal{Q}) \  \equiv \  \lnot \mathcal{P} \land \lnot \mathcal{Q}$ \ (loi de De Morgan),
+	
+	\item $\mathcal{P} \limplies \mathcal{Q} \ \equiv \ \lnot \mathcal{P} \lor \mathcal{Q}$ \ (définition de l'implication),
+ 	
+	\item etc.
+\end{itemize}
+
+%--------------------------------------------------------------------
+\subsection{Équivalences avec quantificateurs}
+
+Intéressons-nous aux équivalences logiques faisant intervenir les quantificateurs.
+
+\textbf{Négation des quantificateurs.}
+
+\mybox{
+$\lnot\;\big( \forall x \ \mathcal{P}(x) \big) \quad \equiv \quad \exists x \ \lnot \mathcal{P}(x)$
+}
+
+\mybox{
+	$\lnot\;\big( \exists x \ \mathcal{P}(x) \big) \quad \equiv \quad \forall x \ \lnot\mathcal{P}(x)$
+}
+
+On retient, un peu sommairement, que la négation de \og{}pour tout\fg{} est \og{}il existe\fg{} et réciproquement.
+Ces équivalences entraînent que si on a une formule $\mathcal{Q}$ qui contient des quantificateurs, alors on peut toujours en trouver une formule équivalente qui ne contient que le quantificateur \og{}pour tout\fg{} (ou bien que uniquement le quantificateur \og{}il existe\fg{}). 
+
+\begin{exemple}
+	\begin{align*}
+							& \lnot\;\big( \forall x \quad P(x) \land Q(x) \big) \\
+		\quad \equiv \quad	& \exists x \quad \lnot( P(x) \land Q(x) ) \\
+		\quad \equiv \quad	& \exists x \quad (\lnot P(x)) \lor (\lnot Q(x)) \\
+	\end{align*} 
+	
+	\begin{align*}
+	& \lnot\;\big( \exists x \quad P(x) \limplies Q(x) \big) \\
+	\quad \equiv \quad	& \forall x \quad \lnot\;\big( P(x) \limplies Q(x) \big) \\
+	\quad \equiv \quad	& \forall x \quad \lnot\;\big( (\lnot P(x)) \lor Q(x) \big) \\	
+	\quad \equiv \quad	& \forall x \quad P(x) \land (\lnot Q(x)) \\
+\end{align*} 
+
+\end{exemple}
+
+\bigskip
+
+\textbf{Ordre des quantificateurs.}
+
+On peut intervertir deux \og{}pour tout\fg{} consécutifs, ou deux \og{}il existe\fg{} consécutifs :
+\mybox{
+	$\forall x \  \forall y \ \mathcal{P}(x,y) 
+	\quad \equiv \quad 
+	\forall y \  \forall x \ \mathcal{P}(x,y)$
+}
+\mybox{
+	$\exists x \ \exists y \ \mathcal{P}(x,y) 
+	\quad \equiv \quad 
+	\exists y \  \exists x \ \mathcal{P}(x,y)$
+}
+
+Par contre on ne peut en général pas intervertir un \og{}pour tout\fg{} et un \og{}il existe\fg{} :
+\mybox{
+	$\forall x \ \exists y \ \mathcal{P}(x,y)$
+	\ n'est pas équivalent à \ 
+	$\exists y \  \forall x \ \mathcal{P}(x,y)$
+}
+
+Par exemple :
+\[
+\forall x \in \Rr \ \ \exists y \in \Rr \qquad x+y=0 \qquad \text{est vrai,}
+\]
+alors que 
+\[
+\exists y \in \Rr \ \ \forall x \in \Rr \qquad x+y=0 \qquad \text{est faux.}
+\]
+On peut aussi se convaincre avec des exemples de la vie courante : \og{}tout étudiant a un numéro de téléphone\fg{}, mais ce n'est pas vrai que \og{}il existe un numéro de téléphone commun à tous les étudiants\fg{}.
+
+
+\bigskip
+
+\textbf{Autres équivalences utiles.}
+
+\begin{align*}
+\forall x \quad \big( \mathcal{P}(x) \land \mathcal{Q}(x) \big)
+&\quad \equiv \quad
+ \big(\forall x \quad \mathcal{P}(x) \big )\land \big(\forall x \quad \mathcal{Q}(x) \big) \\
+\exists x \quad \big( \mathcal{P}(x) \lor \mathcal{Q}(x) \big)
+&\quad \equiv \quad
+\big(\exists x \quad \mathcal{P}(x) \big )\lor \big(\exists x \quad \mathcal{Q}(x) \big) \\ 
+\forall x \quad \big( \mathcal{P}(x) \limplies \mathcal{Q} \big)
+&\quad \equiv \quad
+\big(\exists x \quad \mathcal{P}(x) \big )\limplies \mathcal{Q} 
+\qquad \text{si $x$ n'apparaît pas dans $\mathcal{Q}$}
+\end{align*}
+
+Enfin, on peut renommer une variable $x$ en une nouvelle variable $y$ (qui n'apparaît pas dans $\mathcal{P}(x)$) :
+\[
+\forall x \quad \mathcal{P}(x) 
+\quad \equiv \quad
+\forall y \quad \mathcal{P}[y/x] 
+\]
+
+%--------------------------------------------------------------------
+\subsection{Satisfaction des quantificateurs}
+
+\index{quantificateurs@quantificateurs $\forall$, $\exists$}
+
+Définissons de façon un peu plus formelle la satisfaction des quantificateurs :
+\mybox{
+	$\ldoubleturn_{\mathcal{S},s} \forall x \ \mathcal{P}(x)$ \qquad ssi \qquad pour tout $d \in E$, \ $\ldoubleturn_{\mathcal{S},s[x \mapsto d]} \ \mathcal{P}(x)$
+}
+La notation $s[x \mapsto d]$ est l'affectation qui envoie $x$ sur $d$ et coïncide avec $s$ pour toutes les autres variables.
+
+\mybox{
+	$\ldoubleturn_{\mathcal{S},s} \exists x \ \mathcal{P}(x)$ \qquad ssi \qquad il existe un $d \in E$ \ \text{ tel que } \ $\ldoubleturn_{\mathcal{S},s[x \mapsto d]} \ \mathcal{P}(x)$	
+}
+
+%--------------------------------------------------------------------
+\subsection{Affectation vs substitution}
+
+\index{affectation} 
+\index{substitution}
+
+Cette section est plus technique et peut être passée lors d'une première lecture.
+Ce qu'il faut retenir, c'est que l'affectation et la substitution sont deux opérations différentes mais qu'elles sont compatibles.
+
+Considérons un langage $\mathcal{L}$, une structure $\mathcal{S}$ de domaine $E$. Rappel :
+\begin{itemize}
+	\item la \textbf{substitution} $\mathcal{P}[t/x]$\index{500@$\mathcal{P}[t/x]$} remplace toute occurrence libre de $x$ par le terme $t$. On part d'une formule $\mathcal{P}$ du langage $\mathcal{L}$ et on obtient une formule $\mathcal{P}[t/x]$ toujours dans ce même langage. 
+	
+	\item l'\textbf{affectation} $\mathcal{P}[x \mapsto d]$\index{501@$\mathcal{P}[x \mapsto d]$} remplace toute occurrence libre de $x$ par la valeur $d \in E$. La formule $\mathcal{P}$ est toujours une formule du langage $\mathcal{L}$, mais $\mathcal{P}[x \mapsto d]$ est une formule interprétée dans la structure $\mathcal{S}$.
+\end{itemize}
+
+Une fois qu'on a bien compris la différence, il est rassurant de savoir que faire une combinaison substitution puis affectation est équivalent à la combinaison dans l'autre sens :
+\[
+\ldoubleturn_{\mathcal{S},s} \mathcal{P}[t/x]
+\qquad \text{ ssi } \qquad
+\ldoubleturn_{\mathcal{S},s[x\mapsto t^{\mathcal{S},s}]} \mathcal{P}
+\]
+
+
+\begin{exemple}
+Soit $\mathcal{L} = (0,1, \le, +)$ un langage.
+On note $2=1+1$, $3=2+1$. Considérons la formule :
+\[
+\mathcal{P}(x) : \qquad \forall y \quad x \le y + 3
+\]
+Soit le terme $t = x+1$.
+
+Considérons la structure $\mathcal{S}$ de domaine $E = \Nn$ naturellement associée à $\mathcal{L}$. 
+
+
+\begin{itemize}
+	\item La substitution $\mathcal{P}[t/x]$ donne la formule suivante, qui reste dans le langage $\mathcal{L}$ :
+	\[
+	\mathcal{P}[t/x] : \qquad \forall y \quad x+1 \le y + 3
+	\]
+	
+	\item On repart de $\mathcal{P}$. L'affectation $s : x \mapsto 1$ transforme une formule de $\mathcal{L}$ en une formule interprétée dans la structure :
+	\[
+	\mathcal{P}[x \mapsto 1] : \qquad \forall y \in \Nn  \quad 1 \le y + 3
+	\]	
+	
+	
+	\item Substitution puis affectation.
+	On part de $\mathcal{P}$, on applique la substitution de $x$ par $t$, pour obtenir $\mathcal{P}[t/x]$ comme ci-dessus, et ensuite on affecte $1$ à la variable $x$. On obtient alors :
+	\[
+	\mathcal{P}[t/x][x \mapsto 1] : \qquad \forall y \in \Nn \quad 2 \le y + 3
+	\]	
+	
+	\item Affectation d'abord.
+	On part du terme $t=x+1$ et dans ce terme on affecte la valeur $1$ à $x$. On obtient le terme $t^{\mathcal{S},s} = 2 \in E$. Maintenant dans $\mathcal{P}$, on remplace toute occurrence libre de $x$ par $t^{\mathcal{S},s}$. On obtient la même formule que précédemment :
+	\[
+	\mathcal{P}[x \mapsto 2] : \qquad \forall y \in \Nn \quad 2 \le y + 3
+	\]		
+	
+\end{itemize}
+
+\end{exemple}
+
+
+%--------------------------------------------------------------------
+\subsection{Récapitulatif des notions}
+
+
+\begin{center}
+	\renewcommand{\arraystretch}{1.4}
+	\begin{tabular}{p{4.5cm}p{4cm}p{6.5cm}}
+
+		\textbf{Notation} & \textbf{Terminologie} & \textbf{Description} \\ \hline
+		
+		$\ldoubleturn_{\mathcal{S}} \mathcal{Q}$ 
+		& Satisfaction (formule fermée). Modèle
+		& La formule fermée $\mathcal{Q}$ est vraie dans la structure $\mathcal{S}$. On dit que $\mathcal{S}$ est un modèle de $\mathcal{Q}$. \\ \hline
+		
+		$\ldoubleturn_{\mathcal{S},s} \mathcal{Q}$ 
+		& Satisfaction avec affectation 
+		& La formule $\mathcal{Q}$ est vraie dans $\mathcal{S}$ pour l'affectation $s$. \\ \hline
+		
+		
+		& Formule satisfaisable 
+		& Formule vraie dans au moins une structure (et une affectation si nécessaire). \\ \hline
+		
+		$\ldoubleturn \mathcal{Q}$ 
+		& Validité 
+		& Formule $\mathcal{Q}$ vraie dans toute structure et pour toute affectation. \\ \hline
+		
+		$\ldoubleturn \lnot \mathcal{Q}$ 
+		& Contradiction 
+		& Formule $\mathcal{Q}$ toujours fausse, pour toute structure et toute affectation. \\ \hline
+		
+		$\mathcal{P}_1,\ldots,\mathcal{P}_l \ \ldoubleturn \ \mathcal{Q}$ 
+		& Conséquence logique 
+		& Toute structure et affectation satisfaisant simultanément les $\mathcal{P}_i$ satisfait aussi $\mathcal{Q}$. \\ \hline
+		
+		$\mathcal{P} \equiv \mathcal{Q}$ 
+		& Équivalence logique 
+		& $\mathcal{P} \ldoubleturn \mathcal{Q}$ et $\mathcal{Q} \ldoubleturn \mathcal{P}$.
+		Pour toute structure $\mathcal{S}$ et toute affectation $s$, 
+		$\mathcal{P}$ et $\mathcal{Q}$ ont la même valeur de vérité.  \\ 
+		
+	\end{tabular}
+\end{center}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Exercices}
+
+\subsection*{Vrai/faux}
+
+\begin{exercicecours}
+Pour chacune des formules fermées suivantes, dire si elles sont vraies ou fausses lorsque l'on les interprète dans les différentes structures, c'est-à-dire a-t-on $\ldoubleturn_{\mathcal{S}} \mathcal{Q}$ ?
+On considère $\mathcal{L} = (a, f(x,y))$ et les formules :
+\begin{align*}
+	&\mathcal{Q}_1 : \qquad \forall x \  \exists y \quad f(x,y) = a \\
+	&\mathcal{Q}_2 : \qquad \forall x \  \forall y \quad f(x,y) = a \limplies (x=a) \lor (y=a) \\	
+	&\mathcal{Q}_3 : \qquad \forall x \quad (x \neq a) \limplies (\exists y \quad f(x,y) \neq a) \\
+\end{align*}
+Voici les structures :
+\begin{align*}
+	&\mathcal{S}_{i} : \quad \Nn, \ a=0, \ f(x,y)= x+y \\
+	&\mathcal{S}_{ii} : \quad \Nn, \ a=0, \ f(x,y)= xy \\
+	&\mathcal{S}_{iii} : \quad \Nn, \ a=1, \ f(x,y)= xy \\		
+\end{align*}
+\end{exercicecours}
+
+
+\begin{exercicecours}
+On considère le langage $\mathcal{L} = (<, f(x))$ et la structure $\mathcal{S}$ de domaine $\Rr$ avec $f(x) = e^x$.
+Pour les formules suivantes et les affectations données, dire si l'interprétation est vraie ou fausse, c'est-à-dire a-t-on $\ldoubleturn_{\mathcal{S},s} \mathcal{Q}$ ?
+\begin{enumerate}
+	\item $\mathcal{Q}_1 : \qquad \forall x \quad y < f(x) \qquad\qquad s_1 : y \mapsto 0$; \ puis \ $s_2 : y \mapsto e$
+	
+	\item $\mathcal{Q}_2 : \qquad \exists x \quad x < f(y) \qquad\qquad s_1 : y \mapsto 0$; \ puis \ $s_2 : y \mapsto e$
+	
+	\item $\mathcal{Q}_3 : \qquad \lnot\big( f(x) < f(y) \big) \qquad\qquad s : x \mapsto 0, y \mapsto e$
+\end{enumerate}	
+\end{exercicecours}
+
+
+\begin{exercicecours}
+On considère le langage $\mathcal{L} = (0,1,<,+,\times)$ et la structure $\mathcal{S}$ de domaine $\Rr$ naturellement associée.	
+Pour chacune des formules suivantes, trouver toutes les affectations $s$ des variables libres, qui rendent la formule $\mathcal{Q}$ vraie dans la structure :
+\begin{enumerate}
+	\item $\mathcal{Q}_1 : \qquad \forall x \quad (x \neq 0) \limplies x \times y \neq 0$
+	
+	\item $\mathcal{Q}_2 : \qquad \exists x \quad x \times x = y$
+	
+	\item $\mathcal{Q}_3 : \qquad \exists y \quad x < y \times y $
+\end{enumerate}
+
+Pour chacune des formules suivantes, représenter dans le plan $\Rr^2$ l'ensemble des valeurs qui, affectées à $(x,y)$, rendent la formule $\mathcal{Q}$ vraie :
+\begin{enumerate}
+	\setcounter{enumi}{3}
+	\item $\mathcal{Q}_4 : \qquad  x \times x  < y$
+	
+	\item $\mathcal{Q}_5 : \qquad \big( \exists x \quad x+y = 0\big) \lor  \big( \forall y \quad x \times y = 0\big)$
+	
+	\item $\mathcal{Q}_6 : \qquad (x \times x = y \times y) \limplies (x \neq y)$
+\end{enumerate}
+\end{exercicecours}
+
+
+\begin{exercicecours}
+Les formules suivantes sont-elles des validités (vraies quels que soient $\mathcal{S}$ et $s$), des contradictions (fausses quels que soient $\mathcal{S}$ et $s$), ou ni l'une ni l'autre (et dans ce cas justifier votre réponse) ?
+\begin{enumerate}
+	\item $(\forall x \ P(x)) \limplies (\exists x \ P(x))$
+
+	\item $(\exists x \ P(x)) \limplies (\forall x \ P(x)) $
+	
+	\item $\forall x \ \exists y \quad (x=y) \land (x \neq y)$
+	
+	\item $ \forall x \quad Q(x,y) \limplies Q(y,x)$
+				
+	\item $x =y $
+	
+	\item $\exists y \quad (x=y) \lor (x \neq y)$
+\end{enumerate}
+\end{exercicecours}
+
+
+
+\subsection*{Conséquence logique}
+
+
+\begin{exercicecours}
+Dire si les formules $\mathcal{Q}$ suivantes sont des conséquences logiques de $\mathcal{P}_1$,\ldots,$\mathcal{P}_l$, c'est-à-dire a-t-on $\mathcal{P}_1,\ldots,\mathcal{P}_l \quad \ldoubleturn \quad \mathcal{Q}$ ?
+\begin{enumerate}
+	\item $\mathcal{P} : \ \forall x \quad x < y,
+	\qquad \mathcal{Q} : \  \exists x \quad x  < y$
+	
+	\item $\mathcal{P} : \ \lnot (x = y), 
+	\qquad\mathcal{Q} : \  x  < y$
+	
+	\item $\mathcal{P}_1 : \ \forall x \quad P(x),
+	\quad \mathcal{P}_2 : \ \exists y \quad Q(y),
+	\qquad\mathcal{Q} : \  \exists x \quad P(x) \land Q(x)
+	$
+	
+	\item $\mathcal{P}_1 : \ \exists x \quad P(x),
+	\quad \mathcal{P}_2 : \ \exists x \quad Q(x),
+	\qquad\mathcal{Q} : \  \exists x \quad P(x) \land Q(x)$	
+	
+\end{enumerate}
+\end{exercicecours}
+
+
+\begin{exercicecours}
+Écrire une phrase en français qui explique ou justifie chaque propriété suivante :
+\begin{enumerate}
+	\item $\mathcal{P} \ \ldoubleturn \ \mathcal{P}$
+	
+	\item $\mathcal{P} \ \ldoubleturn \ \mathcal{Q} \text{ ssi } \ldoubleturn (\mathcal{P} \limplies \mathcal{Q})$
+	
+	\item $ \text{ si } \mathcal{P} \ \ldoubleturn \ \mathcal{Q} \text{ alors }
+	\mathcal{P}, \mathcal{R} \ \ldoubleturn \ \mathcal{Q}$
+	
+	\item $\text{ si } \mathcal{P} \ \ldoubleturn \ \mathcal{Q} 
+	\text{ et } \mathcal{Q} \ \ldoubleturn \ \mathcal{R} 
+	\text{ alors }
+	\mathcal{P} \ \ldoubleturn \ \mathcal{R}$
+\end{enumerate}	
+\end{exercicecours}
+
+
+\begin{exercicecours}
+Pour chacune des formules suivantes (données dans une interprétation naturelle), écrire la négation de la phrase et dire si la phrase originale est vraie ou fausse.
+\begin{enumerate}
+	\item $\exists x \in \Rr \quad x^2=2$
+	
+	\item $\forall x \in \Nn \quad x > 2$
+	
+	\item $\exists x \in {}]0,+\infty[{} \quad \forall y \in {}]0,+\infty[{} \quad x+y=1$
+	
+	\item $\forall z \in \Cc \quad z \neq 0 \limplies z^2 \neq 0$
+	
+	\item $\forall x \in \Rr \quad \forall y \in \Rr \quad xy = 0 \limplies (x=0) \lor (y=0)$
+	
+	\item $\forall x \in \Rr \quad x > 1 \limplies \big( \exists y \in \Rr \quad (y>1) \land (x>y)\big)$
+\end{enumerate}
+
+\end{exercicecours}
+
+
+\begin{exercicecours}
+Pour chaque paire de formules $\mathcal{P}$, $\mathcal{Q}$ dire si on a la conséquence logique $\mathcal{P} \ \ldoubleturn \ \mathcal{Q}$, ou $\mathcal{Q} \ \ldoubleturn \ \mathcal{P}$ ou l'équivalence logique $\mathcal{P} \ \equiv \ \mathcal{Q}$ ou rien du tout.
+\begin{enumerate}
+	\item $\mathcal{A} \lor \mathcal{B}$ avec $\mathcal{B} \lor \mathcal{A}$
+	
+	\item $\lnot(\mathcal{A} \lor \mathcal{B})$ avec $(\lnot \mathcal{A}) \lor (\lnot\mathcal{B})$
+	
+	\item $\exists x \ \lnot\mathcal{A}$ avec $\forall x \ \mathcal{A}$
+	
+	\item $\forall x \ \mathcal{A} \limplies \mathcal{B}$ avec $\exists x \ \mathcal{B} \land (\lnot \mathcal{A})$
+	
+	\item $\forall x \ \mathcal{A}$ avec $\mathcal{A}$
+	
+	\item $\exists x \ \mathcal{A}$ avec $\mathcal{A}$
+\end{enumerate}
+\end{exercicecours}
+
+
+\begin{exercicecours}
+Montrer qu'on n'a \textbf{pas} les équivalences logiques :
+\begin{enumerate}
+	\item $\exists x \ \mathcal{P} \land \mathcal{Q}$
+	avec $(\exists x \ \mathcal{P}) \land (\exists x \ \mathcal{Q})$
+	
+	\item $\forall x \ \mathcal{P} \lor \mathcal{Q}$
+	avec $(\forall x \ \mathcal{P}) \land (\forall x \ \mathcal{Q})$
+	
+	\item $\forall x \ \exists y \ \mathcal{P}$
+	avec $\exists y \ \forall x \ \mathcal{P}$
+	
+	\item $\forall x \ (\mathcal{P} \limplies \mathcal{Q})$
+	avec $(\exists x \ \mathcal{P}) \limplies \mathcal{Q}$	
+	
+\end{enumerate}
+\end{exercicecours}
+
+
+\begin{exercicecours}
+Soit $\mathcal{L}$ un langage. Un \emph{axiome} est une formule fermée  $\mathcal{A}$ qu'on exige vraie pour les structures considérées, c'est-à-dire qu'on ne considère que les structures $\mathcal{S}$ telles qu'on ait $\ldoubleturn_{\mathcal{S}} \mathcal{A}$.
+\begin{enumerate}
+	\item Que peut-on dire d'une structure $\mathcal{S}$ qui vérifie l'axiome
+	\[
+	\mathcal{A} : \qquad \forall x \ \forall y \quad x=y 
+	\]
+	
+	
+	\item Même question avec :
+	\[
+	\mathcal{A} : \qquad \exists x \ \exists y \quad \big(x\neq y\big) \land \big(\forall z \quad (z=x) \lor (z=y) \big) 
+	\]	
+\end{enumerate}
+\end{exercicecours}
+
+\end{document}

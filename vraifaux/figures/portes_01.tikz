@@ -1,0 +1,23 @@
+
+\begin{tikzpicture}
+
+\begin{scope}
+  \node[draw] (A) at (0,0){\tconnector{not}};
+ \node (in) at (-2,0) {\lzero};
+ \node (out) at (2,0) {\lone};
+
+  \draw(A.west) -- (in);
+  \draw[->,>=latex](A.east) -- (out);
+\end{scope}
+
+\begin{scope}[xshift=6cm]
+  \node[draw] (A) at (0,0){\tconnector{not}};
+ \node (in) at (-2,0) {\lone};
+ \node (out) at (2,0) {\lzero};
+
+  \draw(A.west) -- (in);
+  \draw[->,>=latex](A.east) -- (out);
+\end{scope}
+
+
+\end{tikzpicture}

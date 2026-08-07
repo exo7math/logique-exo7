@@ -1,0 +1,20 @@
+﻿\begin{tikzpicture}[scale=1]
+
+% Potence verticale
+\draw[very thick] (0,0) -- (0,6);
+
+% Barre horizontale
+\draw[very thick] (0,4.5) -- (3,4.5);
+
+\def\eps{0.1}
+
+% Texte
+\draw[line width=5pt, color=green!70!black] (4,4.5+\eps) -- (4,6-\eps) node[midway, right, black] {Hypothèses};
+
+\draw[line width=5pt, color=blue!70] (4,1+\eps) -- (4,4.5-\eps) node[midway, right, black] {Raisonnement};
+
+\draw[line width=5pt, color=red!50] (4,0+\eps) -- (4,1-\eps) node[midway, right, black] {Conclusion};
+
+\node at (-0.5,0.2) {$\vdash$};
+
+\end{tikzpicture}

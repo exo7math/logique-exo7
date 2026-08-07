@@ -1,0 +1,118 @@
+%\documentclass[11pt]{report}
+\documentclass[10pt,twoside,openright]{report}
+
+%\usepackage[screen]{mathgame}
+\usepackage[print]{logic}
+
+
+\begin{document}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Titre + préface + sommaire
+\renewcommand{\contentsname}{Sommaire}
+
+% Préface
+\pagenumbering{roman}
+\import{divers/}{preface_livre_logic.tex}
+\debutchapitres
+\pagenumbering{arabic}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\clearemptydoublepage
+
+%======================================
+% Partie 1 - Logique vrai/faux
+%======================================
+
+\part{Logique vrai/faux}
+
+% 1 - Logique vrai/faux
+\import{vraifaux/}{vraifaux.tex}
+
+% 2 - Preuves
+\import{preuves/}{preuves.tex}
+
+% 3 - Connecteurs
+\import{connecteurs/}{connecteurs.tex}
+
+% 4 - Théorème de compacité
+\import{compacite/}{compacite.tex}
+
+
+%======================================
+% Partie 2 - Logique du premier ordre
+%======================================
+\clearemptydoublepage
+\part{Logique du premier ordre}
+
+% 5 - Logique du premier ordre
+\import{premierordre/}{premierordre.tex}
+
+% 6 - Variables et structures
+\import{variables/}{variables.tex}
+	
+% 7 - Satisfaction
+\import{satisfaction/}{satisfaction.tex}
+
+% 8 - Preuves
+\import{preuvesbis/}{preuvesbis.tex}
+
+% 9 - Théorème de validité
+\import{validite/}{validite.tex}
+
+% 10 - Théorème de complétude
+\import{completude/}{completude.tex}
+
+% 11 - Preuve du théorème de complétude
+\import{completudebis/}{completudebis.tex}	
+
+
+%======================================
+% Partie 3 - L'incomplétude de Gödel
+%======================================
+\clearemptydoublepage
+\part{L'incomplétude de Gödel}
+
+% 12 - Un aperçu de l'incomplétude de Gödel
+\import{incompletudeintro/}{incompletudeintro.tex}
+
+% 13 - Arithmétique de Peano
+\import{peano/}{peano.tex}
+
+% 14 - Codage de Gödel
+\import{codagegodel/}{codagegodel.tex}
+
+% 15 - Fonctions récursives primitives
+\import{recursives/}{recursives.tex}
+
+% 16 - Fonctions représentables
+\import{representables/}{representables.tex}
+
+% 17 - Diagonalisation
+\import{diagonalisation/}{diagonalisation.tex}
+
+% 18 - Preuve du théorème d'incomplétude
+\import{incompletudepreuve/}{incompletudepreuve.tex}
+
+% 19 - Le second théorème d'incomplétude
+\import{incompletudesecond/}{incompletudesecond.tex}
+
+	
+%======================================
+% Annexes
+%======================================
+\clearemptydoublepage
+
+\import{annexe/}{annexe.tex}
+
+\import{divers/}{postface_livre_logic.tex}
+%\newpage
+
+\vfill
+
+\mycenterline{Version 0.1 -- Août 2026}
+
+\end{document}
+

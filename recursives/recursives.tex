@@ -1,0 +1,692 @@
+\documentclass[11pt,class=report,crop=false]{standalone}
+\usepackage[screen]{../logic}
+
+
+
+
+\begin{document}
+
+%====================================================================
+\chapitre{Fonctions récursives primitives} 
+%====================================================================
+
+\objectifs{Nous définissons et étudions les fonctions qui expriment les calculs \og{}faciles\fg{} de l'arithmétique.} 
+
+Dans ce chapitre, notre point de vue est \emph{sémantique}, c'est-à-dire qu'on va étudier des objets de la \og{}réalité\fg{} : les entiers, les nombres premiers, l'addition, \dots
+
+Dans le chapitre suivant, nous ferons le lien avec le langage $\mathcal{L}_0$ de l'arithmétique de Peano, qui sera le point de vue \emph{syntaxique} où tout s'exprime par des suites de symboles. Le lien entre les deux sera le théorème de représentabilité : tout ce qui est vrai pour les fonctions récursives primitives peut être prouvé dans le langage de l'arithmétique de Peano.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Les fonctions récursives primitives} 
+
+Les fonctions récursives primitives sont les fonctions qui sont \og{}faciles à calculer\fg{} au sens du chapitre précédent, c'est-à-dire qu'on peut en calculer les valeurs à l'aide d'un algorithme n'utilisant que des boucles \og{}pour\fg{}.
+
+Ce sont des fonctions $f : \Nn^p \to \Nn$. Elles sont définies à partir de trois fonctions de base et deux opérations élémentaires. Cependant, cet ensemble contient toutes les fonctions et opérations usuelles sur les entiers : addition, multiplication, puissance, \dots
+
+
+%--------------------------------------------------------------------
+\subsection{Définition} 
+
+On note $\mathcal{F}_p = \{f : \Nn^p \to \Nn \}$ et $\mathcal{F} = \bigcup_{p \ge 1} \mathcal{F}_p$.
+On rappelle que $\Nn^p = \Nn \times \dots \times \Nn$. On notera souvent le $p$-uplet $(x_1, \dots, x_p) \in \Nn^p$ par $\mathbf{x}$. Les éléments de $\mathcal{F}$ sont donc des fonctions de $p$ variables (où $p$ peut varier d'une fonction à l'autre).
+
+La définition des fonctions récursives repose sur trois fonctions de base et deux opérations.
+
+\textbf{Fonctions de base}
+
+\begin{itemize}
+    \item $Z$ : la fonction nulle
+    \begin{align*}
+        Z : \Nn &\longrightarrow \Nn \\
+        x &\longmapsto 0
+    \end{align*}
+    
+    \item $S$ : la fonction successeur
+    \begin{align*}
+        S : \Nn &\longrightarrow \Nn \\
+        x &\longmapsto x+1
+    \end{align*}
+    
+    \item $P_i^p$ : les projections (pour $1 \le i \le p$).
+    \begin{align*}
+        P_i^p : \Nn^p &\longrightarrow \Nn \\
+        (x_1, \dots, x_p) &\longmapsto x_i
+    \end{align*}
+\end{itemize}
+
+\textbf{Opération de composition}
+
+\begin{itemize}
+    \item Données : $f_1, \dots, f_q : \Nn^p \to \Nn$ et $g : \Nn^q \to \Nn$.
+    \item Composition : la fonction $g(f_1, \dots, f_q) : \Nn^p \to \Nn$ définie par
+    \mybox{
+        $\mathbf{x} \mapsto g(f_1(\mathbf{x}), \dots, f_q(\mathbf{x}))$
+    }
+\end{itemize}
+
+\textbf{Opération de récurrence}
+
+\begin{itemize}
+    \item Données :
+    \begin{itemize}
+        \item $g : \Nn^p \to \Nn$ \quad (initialisation)
+        \item $h : \Nn^{p+2} \to \Nn$ \quad (étape de récurrence)
+    \end{itemize}
+    \item Nouvelle fonction $f : \Nn^{p+1} \to \Nn$ définie par :
+    \mybox{
+    $
+    f(\mathbf{x}, 0) = g(\mathbf{x}) \quad \text{et} \quad f(\mathbf{x}, y+1) = h(\mathbf{x}, y, f(\mathbf{x}, y))
+    $
+    }
+\end{itemize}
+
+Il faut y voir une récurrence comme pour toute suite définie par une initialisation $u_0$ et une relation $u_{n+1} = h(n, u_n)$. La récurrence se fait sur la dernière variable (ici $y$).
+
+\begin{definition}
+    L'ensemble $PR$ des \defi{fonctions récursives primitives}\index{fonction!recursive primitive@récursive primitive} est le plus petit ensemble de $\mathcal{F}$ qui contient $Z, S, P_i^p$ (pour tout $p \ge 1$, $1 \le i \le p$) et qui est stable pour les opérations de composition et de récurrence.
+\end{definition}
+
+Que signifie \og{}être stable\fg{} ? Par exemple, pour la composition, si $f_1, \dots, f_q \in PR$ et $g \in PR$, alors la composée $g(f_1, \dots, f_q)$ est encore dans $PR$. Idem pour l'opération de récurrence.
+
+
+Note. Le terme \og{}récursive primitive\fg{} est mal choisi, mais c'est la terminologie usuelle. Un nom plus évocateur serait celui de fonction \og{}facilement calculable\fg{}, mais ce terme est utilisé dans d'autres situations. 
+
+%--------------------------------------------------------------------
+\subsection{Premiers exemples} 
+
+\textbf{(a) Fonctions constantes $\Nn \to \Nn$}
+
+Les fonctions constantes $f : \Nn \to \Nn$ sont récursives primitives. On le sait pour la fonction nulle $Z$. Pour la constante $1$, on calcule $S(Z(x)) = S(0) = 1$, donc $f = S \circ Z$ est récursive primitive comme composée de deux fonctions de base.
+Plus généralement, $x \mapsto k$ est dans $PR$ (par $k$ compositions de $S$ appliquées à $Z$).
+
+\medskip
+
+\textbf{(b) Fonctions constantes $\Nn^2 \to \Nn$}
+
+Soit $k \in \Nn$ un entier fixé. On définit :
+\begin{itemize}
+    \item initialisation : $g : \Nn \to \Nn$, la fonction constante égale à $k$, qui est dans $PR$.
+    \item étape de récurrence : $h : \Nn^3 \to \Nn$ définie par $h(x,y,z) = z$. C'est la projection $P_3^3$, donc elle est récursive primitive.
+\end{itemize}
+L'opération de récurrence construit la fonction $f : \Nn^2 \to \Nn$ appartenant à $PR$ telle que $f(x,0) = k$ et $f(x,y+1) = f(x,y)$. Par récurrence sur $y$, $f(x,y) = k$ pour tout $y$.
+Donc $f : \Nn^2 \to \Nn, (x,y) \mapsto k$ est récursive primitive.
+
+\medskip
+
+On prouverait, par récurrence sur $p$, que toute fonction constante $f : \Nn^p \to \Nn$ est récursive primitive.
+
+\medskip
+
+\textbf{(c) Opérations arithmétiques élémentaires}
+
+\begin{proposition}
+Les fonctions suivantes sont récursives primitives :
+\begin{itemize}
+    \item l'addition : $\Nn^2 \to \Nn, (x,y) \mapsto x+y$
+    \item la multiplication : $\Nn^2 \to \Nn, (x,y) \mapsto x \times y$
+    \item l'exponentiation : $\Nn^2 \to \Nn, (x,y) \mapsto x^y$
+\end{itemize}
+\end{proposition}
+
+\begin{proof}
+    ~
+\begin{itemize}
+    \item L'addition vérifie la relation de récurrence : $x+(y+1)=(x+y)+1$.
+Ainsi on pose l'initialisation $g : \Nn \to \Nn$ définie par $g(x)=x$ (en fait $g(x)=P_1^1(x)=x$ est donc récursive primitive). Ensuite on pose $h : \Nn^3 \to \Nn$ définie par $h(x,y,z)=S(z)$ (en fait $h = S \circ P_3^3$, donc $h$ est récursive primitive).
+Par l'opération de récurrence on obtient $f : \Nn^2 \to \Nn$ récursive primitive.
+
+Vérifions que $f(x,y)=x+y$. On fixe $x$ et on fait une récurrence sur $y$.
+\begin{itemize}
+    \item Pour $y=0$, $f(x,0)=g(x)=x=x+0$.
+    \item Supposons $f(x,y)=x+y$. Alors :
+    \[ f(x,y+1) = h(x,y,f(x,y)) = S(f(x,y)) = f(x,y)+1 = (x+y)+1 = x+(y+1) \]
+\end{itemize}
+
+On a prouvé par récurrence sur $y$ que pour tout $x,y$, $f(x,y)=x+y$. On savait que $f$ était récursive primitive, donc l'addition l'est aussi.
+
+    \item Pour la multiplication, on utilise la relation $x \times (y+1) = x \times y + x$. Ce sera à faire dans les exercices.
+
+    \item L'exponentiation est aussi à faire dans les exercices.
+\end{itemize}
+
+\end{proof}
+
+\medskip
+
+\textbf{(d) La soustraction entière}
+
+\begin{proposition}
+    \sauteligne
+\begin{itemize}
+    \item La fonction prédécesseur $\Prec : \Nn \to \Nn$, 
+\[ \Prec(x) = \begin{cases} 
+    x-1 & \text{si } x \ge 1 \\ 
+    0 & \text{si } x=0 
+\end{cases} \]
+est récursive primitive.
+    
+    \item La \defi{soustraction entière}\index{soustraction entiere@soustraction entière} $\Nn^2 \to \Nn$, $(x,y) \mapsto x \monus y$ est aussi récursive primitive.
+    \mybox{$ 
+    x \monus y = \begin{cases} 
+    x-y & \text{si } x \ge y \\ 
+    0 & \text{sinon} 
+\end{cases}$}
+
+\end{itemize}
+\end{proposition}
+
+\begin{proof}~
+\begin{itemize}
+    \item La fonction $\Prec : \Nn \to \Nn$ vérifie la relation de récurrence suivante : $\Prec(0)=0$, et pour $y \ge 0$, $\Prec(y+1)=y$.
+    Cela en fait intuitivement une fonction récursive primitive.
+Mais techniquement c'est un peu plus compliqué car l'opération de récurrence fournit une fonction $f : \Nn^{p+1} \to \Nn$.
+On procède ainsi :
+\begin{itemize}
+    \item $g(x) = Z(x) = 0$ est dans $PR$.
+    \item $h(x,y,z) = P_2^3(x,y,z) = y$ est aussi dans $PR$.
+\end{itemize}
+Donc $f : \Nn^2 \to \Nn$ définie par $f(x,0)=0$ et qui vérifie $f(x,y+1) = h(x,y,f(x,y)) = y$ est dans $PR$. Ainsi $f(x,y)$ est récursive primitive.
+
+Note : $f(x,y)$ est une fonction de deux variables où la variable $x$ ne sert à rien. On s'en débarrasse par la composition suivante :
+$\Prec : \Nn \to \Nn$, définie par $\Prec(y) = f(P_1^1(y), P_1^1(y)) = f(y,y)$ qui est donc bien récursive primitive.
+
+    \item La soustraction entière vérifie la relation de récurrence : $x \monus 0 = x$ et $x \monus (y+1) = \Prec(x \monus y)$.
+On pose $g(x) = P_1^1(x) = x$ et $h(x,y,z) = \Prec(P_3^3(x,y,z)) = \Prec(z)$. 
+Puisque $g$ et $h$ sont récursives primitives, par l'opération de récurrence, on obtient une fonction $f : \Nn^2 \to \Nn$ récursive primitive qui vérifie $f(x,y) = x \monus y$.
+\end{itemize}
+    
+\end{proof}
+
+
+%--------------------------------------------------------------------
+\subsection{Remarques} 
+
+\begin{itemize}
+    \item \textbf{Autre définition de $PR$.} On peut aussi définir l'ensemble des fonctions récursives primitives \og{}par le bas\fg{}.
+\[ PR_0 = \{Z, S\} \cup \{P_i^p\}_{p \ge 1, 1 \le i \le p} \]
+\begin{equation*}
+\begin{split}
+PR_{n+1} = PR_n &\cup \{ \text{fonctions obtenues par opération de composition à partir de } PR_n \} \\
+&\cup \{ \text{fonctions obtenues par opération de récurrence à partir de } PR_n \}
+\end{split}
+\end{equation*}
+Et alors $PR = \bigcup_{n \ge 0} PR_n$.
+
+    \item \textbf{Variables.} On peut permuter les variables comme on veut. 
+Par exemple, si $f : \Nn^2 \to \Nn$, $(x,y) \mapsto f(x,y)$ est récursive primitive, alors $(x,y) \mapsto f(y,x)$ est aussi récursive primitive. 
+En effet, $f(y,x) = f(P_2^2(x,y), P_1^2(x,y))$. 
+Ainsi, on utilise souvent les variables $x, y, z$ directement et dans l'ordre que l'on veut.
+
+    \item \textbf{Fonctions $f : \Nn^0 \to \Nn$.}
+Les éléments de $\Nn^p$ sont des $p$-uplets $(x_1, \dots, x_p)$. 
+Pour $p=0$, $\Nn^0$ est constitué d'un seul $0$-uplet noté $()$. Ainsi $\Nn^0 = \{()\}$ et une fonction $f : \Nn^0 \to \Nn$ n'a qu'une seule valeur (car il y a un seul élément dans son ensemble de départ), c'est donc une fonction constante.
+
+Pour l'instant nous avions exclu ce cas $p=0$. 
+Mais cela peut être utile de l'autoriser et d'ajouter par convention que les fonctions $f : \Nn^0 \to \Nn$ sont récursives primitives (elles sont considérées comme des constantes). 
+
+Cette convention permet d'utiliser l'opération de récurrence avec $p=0$. 
+Cela simplifie la preuve que la fonction $\Prec$ est récursive primitive (en effet, dans la preuve, la variable $x$ était inutile).
+On renvoie aux exercices pour montrer que $n!$ est récursive primitive avec cette méthode.
+\end{itemize}
+
+
+%--------------------------------------------------------------------
+\subsection{Algorithmes} 
+
+Faisons le lien avec le chapitre précédent. Si $f : \Nn^p \to \Nn$ est une fonction récursive primitive, alors quel que soit $\mathbf{x} \in \Nn^p$, on peut calculer $f(\mathbf{x})$ par un algorithme n'utilisant que des boucles \og{}pour\fg{} (avec un nombre d'itérations bien contrôlé).
+
+Si on veut démontrer que les fonctions de $PR$ vérifient une certaine propriété, il suffit de la vérifier pour les trois fonctions de base et de montrer que cette propriété est conservée par application des opérations de composition et de récurrence. 
+
+
+Il est clair que $Z(n)=0$, $S(x)=x+1$ et $P_i^p(\mathbf{x}) = x_i$ sont calculables facilement.
+Si $f$ est la composée $g(f_1, \dots, f_q)$ et qu'il existe des algorithmes faciles pour $f_1, \dots, f_q$ et $g$, alors on calcule $y_1 = f_1(\mathbf{x}), \dots, y_q = f_q(\mathbf{x})$ par ces algorithmes, puis $g(y_1, \dots, y_q)$ qui donne ainsi $f(\mathbf{x})$ par une suite finie d'algorithmes faciles.
+
+Si $f$ est obtenue par opération de récurrence : $f(\mathbf{x},0)=g(\mathbf{x})$ est supposé se calculer par un algorithme facile, ce qui permet de calculer $f(\mathbf{x},1) = h(\mathbf{x},0,f(\mathbf{x},0))$ où $h$ se calcule par un algorithme facile. De proche en proche, on calcule $f(\mathbf{x},2)$, $f(\mathbf{x},3)$,\ldots{} jusqu'à la valeur voulue.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Ensembles et prédicats}
+
+%--------------------------------------------------------------------
+\subsection{Ensembles}
+
+\begin{definition}
+Soit $A \subset \Nn^p$. La \defi{fonction caractéristique}\index{fonction!caracteristique@caractéristique} $\chi_A : \Nn^p \to \Nn$ est définie par :
+\[ \chi_A(\mathbf{x}) = \begin{cases} 1 & \text{si } \mathbf{x} \in A \\ 0 & \text{sinon} \end{cases} \]
+\end{definition}
+
+On la note aussi parfois $\mathbb{1}_A$.
+
+\begin{definition}
+Un ensemble $A \subset \Nn^p$ est un \defi{ensemble récursif primitif} si sa fonction caractéristique $\chi_A$ est une fonction récursive primitive.
+\end{definition}
+
+Par exemple, l'ensemble $A \subset \Nn$ des entiers pairs est un ensemble récursif primitif. 
+En effet, on peut définir sa fonction caractéristique par la relation de récurrence suivante :
+\[ \chi_A(0) = 1 \quad \text{et} \quad \chi_A(n+1) = 1 \monus \chi_A(n) \]
+Ceci fait de $\chi_A$ une fonction récursive primitive.
+
+\begin{proposition}
+Si $A$ et $B$ sont des ensembles récursifs primitifs de $\Nn^p$, alors les ensembles $A \cup B$, $A \cap B$ et $\Nn^p \setminus A$ sont aussi des ensembles récursifs primitifs.
+\end{proposition}
+
+
+Pour la preuve, on a besoin de la \defi{fonction signe}\index{fonction!signe} $\operatorname{sgn} : \Nn \to \Nn$ définie par :
+\[ \operatorname{sgn}(n) = \begin{cases} 0 & \text{si } n = 0 \\ 1 & \text{si } n > 0 \end{cases} \]
+Elle est récursive primitive car elle s'écrit aussi $\operatorname{sgn}(n) = 1 \monus (1 \monus n)$.
+
+\begin{proof}
+Les fonctions caractéristiques de ces ensembles s'expriment à l'aide des fonctions récursives primitives $\chi_A$ et $\chi_B$ :
+\begin{itemize}
+    \item $\chi_{A \cap B} = \chi_A \times \chi_B$
+    \item $\chi_{A \cup B} = \operatorname{sgn}(\chi_A + \chi_B)$
+    \item $\chi_{\Nn^p \setminus A} = 1 \monus \chi_A$
+\end{itemize}
+\end{proof}
+
+\begin{proposition}
+Si $f$ est une fonction récursive primitive et $A = \{ \mathbf{x} \in \Nn^p \mid f(\mathbf{x}) = 0 \}$, alors $A$ est un ensemble récursif primitif.
+\end{proposition}
+
+\begin{proof}
+On a $\chi_A(\mathbf{x}) = 1 \monus f(\mathbf{x})$.
+\end{proof}
+
+\begin{proposition}[Définition par cas]
+\label{prop:disjonction}
+Soient $g, h : \Nn^p \to \Nn$ des fonctions récursives primitives et $A \subset \Nn^p$ un ensemble récursif primitif. 
+La fonction $f : \Nn^p \to \Nn$ définie par :
+\[ f(\mathbf{x}) = \begin{cases} 
+    g(\mathbf{x}) & \text{si } \mathbf{x} \in A \\ 
+    h(\mathbf{x}) & \text{sinon} 
+\end{cases} \]
+est une fonction récursive primitive.
+\end{proposition}
+
+\begin{proof}
+On peut écrire $f(\mathbf{x}) = g(\mathbf{x}) \times \chi_A(\mathbf{x}) + h(\mathbf{x}) \times \chi_{\Nn^p \setminus A}(\mathbf{x})$. Elle s'exprime comme somme et produits de fonctions récursives primitives, donc l'est également.
+\end{proof}
+
+
+%--------------------------------------------------------------------
+\subsection{Prédicats}
+
+\begin{definition}
+Un prédicat $P : \Nn^p \to \{V, F\}$ à $p$ places est un \defi{prédicat récursif primitif} si l'ensemble
+\[ A = \{ \mathbf{x} \in \Nn^p \mid P(\mathbf{x}) \text{ est vrai} \} \]
+est un ensemble récursif primitif.
+
+Autrement dit, cela signifie que la fonction caractéristique :
+\[ \chi_P(\mathbf{x}) = \begin{cases} 
+    1 & \text{si } P(\mathbf{x}) \text{ est vrai} \\ 
+    0 & \text{sinon} 
+\end{cases} \]
+est une fonction récursive primitive.
+\end{definition}
+
+\begin{proposition}
+Si $P$ et $Q$ sont des prédicats à $p$ places récursifs primitifs, alors les prédicats $\lnot P$, $P \land Q$, $P \lor Q$, $P \limplies Q$, $P \lequiv Q$ le sont aussi.
+\end{proposition}
+
+\begin{proof}
+Notons $A$ et $B$ les ensembles récursifs primitifs associés respectivement à $P$ et $Q$.
+\begin{itemize}
+    \item L'ensemble $\Nn^p \setminus A$ est un ensemble récursif primitif, donc $\lnot P$ est un prédicat récursif primitif. (Autre démonstration : $\chi_{\lnot P}(\mathbf{x}) = 1 \monus \chi_P(\mathbf{x})$.)
+
+    \item Le prédicat $P \land Q$ a pour ensemble associé $A \cap B$ qui est bien un ensemble récursif primitif (ou bien $\chi_{P \land Q}(\mathbf{x}) = \chi_P(\mathbf{x}) \times \chi_Q(\mathbf{x})$).
+
+    \item Le prédicat $P \lor Q$ a pour ensemble associé $A \cup B$ (ou bien $\chi_{P \lor Q}(\mathbf{x}) = \operatorname{sgn}(\chi_P(\mathbf{x}) + \chi_Q(\mathbf{x}))$).
+
+    \item Pour les connecteurs $\limplies$ et $\lequiv$, ils peuvent s'exprimer à l'aide des connecteurs précédents.
+\end{itemize}
+\end{proof}
+
+\begin{proposition}
+Les prédicats \og{}$x > y$\fg{} et \og{}$x \ge y$\fg{} sont récursifs primitifs.
+\end{proposition}
+
+\begin{proof}
+Leurs fonctions caractéristiques s'écrivent :
+\begin{itemize}
+    \item $\chi_{>}(x,y) = \operatorname{sgn}(x \monus y)$
+    \item $\chi_{\ge}(x,y) = \operatorname{sgn}((x+1) \monus y)$
+\end{itemize}
+\end{proof}
+
+
+%--------------------------------------------------------------------
+\subsection{Schémas bornés}
+
+Rechercher des éléments définis par un minimum, ou par les quantificateurs $\forall$ ou $\exists$, conserve le caractère récursif primitif à condition qu'ils soient bornés. Ce sera fondamental pour les applications à l'arithmétique que l'on verra juste après.
+
+\medskip
+
+\textbf{Schéma du minimum borné}
+\index{schema borne@schéma borné}
+
+Soit $P(\mathbf{x}, t)$ un prédicat. Fixons $\mathbf{x}$ et $y$.
+On peut considérer :
+\[ \min \{ t \le y \mid P(\mathbf{x}, t) \text{ est vrai} \}. \]
+Si l'ensemble $\{ t \le y \mid P(\mathbf{x}, t) \text{ est vrai} \}$ est vide, on pose par convention $\min = y+1$.
+
+
+Si $A$ est un ensemble, on définit de même :
+\[ \min \{ t \le y \mid (\mathbf{x}, t) \in A \} \]
+
+\begin{proposition}
+Si $P$ est un prédicat récursif primitif, alors la fonction $f(\mathbf{x},y)$ définie par :
+\[ f(\mathbf{x},y) = \min \{ t \le y \mid P(\mathbf{x},t) \text{ est vrai} \} \]
+est une fonction récursive primitive.
+
+Il en est de même pour un ensemble $A$ récursif primitif.
+\end{proposition}
+
+\begin{exemple}
+Considérons la fonction racine carrée entière $\Nn \to \Nn$, qui à $y$ associe $\lfloor \sqrt{y} \rfloor$ (par exemple $\lfloor \sqrt{10} \rfloor = 3$). En fait, $\lfloor \sqrt{y} \rfloor$ est le plus petit entier dont le carré de son successeur dépasse $y$, c'est-à-dire :
+\[ \lfloor \sqrt{y} \rfloor = \min \{ t \le y \mid (t+1)^2 > y \} \]
+C'est donc une fonction récursive primitive.
+\end{exemple}
+
+\begin{proof}
+Intuitivement, pour $\mathbf{x}$ fixé et $y$ fixé, il y a un nombre fini de valeurs $t \le y$ à tester, c'est donc facile à calculer au sens algorithmique.
+Fixons $\mathbf{x}$ et trouvons la formule de récurrence.
+
+\begin{itemize}
+    \item Initialisation : ($y=0$).
+    Si $P(\mathbf{x}, 0)$ est vrai, on pose $g(\mathbf{x})=0$, sinon $g(\mathbf{x})=1$ (par la convention $\min = y+1$).
+    
+    \item Formule de récurrence.
+    On cherche $f(\mathbf{x}, y+1) = \min \{ t \le y+1 \mid P(\mathbf{x}, t) \}$.
+    On trouve une formule par disjonction de cas (voir la Proposition \ref{prop:disjonction}) :
+    \[ f(\mathbf{x}, y+1) = \begin{cases} 
+        f(\mathbf{x},y) & \text{si } f(\mathbf{x},y) \le y \\ 
+        y+1 & \text{si } f(\mathbf{x},y) = y+1 \text{ et } P(\mathbf{x}, y+1) \text{ est vrai} \\ 
+        y+2 & \text{si } f(\mathbf{x},y) = y+1 \text{ et } P(\mathbf{x}, y+1) \text{ est faux} 
+    \end{cases} \]
+\end{itemize}
+\end{proof}
+
+\medskip
+
+\textbf{Quantification bornée}
+\index{quantification bornee@quantification bornée}
+
+\begin{proposition}
+Soit $A \subset \Nn^{p+1}$ un ensemble récursif primitif.
+Alors les ensembles :
+\begin{itemize}
+    \item $B = \big\{ (\mathbf{x},y) \mid \forall t \le y, (\mathbf{x},t) \in A \big\}$
+    \item $C = \big\{ (\mathbf{x},y) \mid \exists t \le y, (\mathbf{x},t) \in A \big\}$
+\end{itemize}
+sont aussi des ensembles récursifs primitifs.
+\end{proposition}
+
+\begin{proof}
+Notons $A_t = \{ (\mathbf{x},t) \in A \}$.
+Alors $\chi_B = \chi_{A_0} \times \chi_{A_1} \times \dots \times \chi_{A_y} = \prod_{t=0}^{y} \chi_{A_t}$
+et $\chi_C = \operatorname{sgn} \left( \sum_{t=0}^{y} \chi_{A_t} \right)$.
+La somme et le produit bornés se définissent facilement par l'opération de récurrence.
+\end{proof}
+
+Cela fonctionne aussi sous la forme de prédicat.
+Par exemple, \og{}être un carré parfait\fg{} est un prédicat récursif primitif.
+On rappelle que $y$ est un carré parfait s'il existe $t$ tel que $y = t^2$
+($0, 1, 4, 9, 16, 25, \dots$ sont des carrés parfaits).
+Ce prédicat se définit par la quantification bornée :
+\[\exists t \le y, \ y = t^2.\]
+
+
+%--------------------------------------------------------------------
+\subsection{Arithmétique}
+
+\begin{proposition}
+Les fonctions suivantes sont récursives primitives :
+\begin{itemize}
+    \item $q(x,y)$ le quotient de la division euclidienne de $x$ par $y$
+    (avec la convention $q(x,0)=x+1$).
+    \item $\pi(n)$ qui calcule le $n$-ième nombre premier.
+    \item $\operatorname{exposant}(n,i)$ qui calcule l'exposant de $\pi(i)$
+    dans la décomposition de $n$ en facteurs premiers.
+\end{itemize}
+\end{proposition}
+
+\begin{proposition}
+L'ensemble $\mathcal{P}$ des nombres premiers est un ensemble récursif primitif.
+\end{proposition}
+
+Nous allons prouver ces deux propositions ensemble.
+
+\begin{proof}
+    ~
+\begin{itemize}
+    \item $q(x,y) = \min \{ q \le x \mid (q+1) \times y > x \}$ est donc récursive primitive.
+    
+    \item Le reste $r(x,y) = x \monus (q(x,y) \times y)$ l'est aussi.
+
+    \item Le prédicat $\text{est\_divisible}(x,y)$ (qui vaut vrai si $y$ divise $x$) s'obtient par $r(x,y) = 0$. C'est donc un prédicat récursif primitif.
+    
+    \item Être un nombre premier, c'est être un nombre strictement plus grand que $1$ et ne pas avoir d'autres diviseurs que $1$ et lui-même.
+    Ainsi $\mathcal{P}$ est un ensemble récursif primitif :
+    \[
+    \mathcal{P} = \big\{ x \mid x > 1\big\}
+    \cap 
+    \big\{ x \mid \forall y \le x \quad \big( y=1 \lor y=x \lor \lnot \text{est\_divisible}(x,y) \big) \big\}
+    \]
+    De façon équivalente, le prédicat $\text{est\_premier}(n)$ est récursif primitif.
+
+    \item La fonction $\pi(n)$ qui renvoie le $n$-ième nombre premier (noté $\pi_n$, avec $\pi_1=2$) vérifie la relation de récurrence suivante, qui en fait une fonction récursive primitive :
+    \[
+    \pi(n+1) = \min \big\{ t \le \pi(n)! + 1 \mid t > \pi(n) \land \text{est\_premier}(t) \big\}
+    \]
+    On rappelle qu'il existe toujours un nombre premier entre $\pi_n$ et $\pi_n ! + 1$  (ou même entre $m$ et $2m$).
+    
+    \item L'exposant de $\pi_i$ dans la décomposition de $n$ en facteurs premiers est défini par :
+    \[
+    \text{exposant}(n,i) = \min \big\{ k \le n \mid \lnot \text{est\_divisible}(n, \pi_i^{k+1}) \big\} 
+    \]
+    C'est donc bien une fonction récursive primitive.
+\end{itemize}
+\end{proof}
+
+\bigskip
+
+Terminons par un contre-exemple célèbre.
+
+\begin{exemple}
+La fonction d'Ackermann $A : \Nn^2 \to \Nn$ n'est pas récursive primitive.
+Elle est définie ainsi :
+\begin{itemize}
+    \item $A(0, n) = n+1$
+    \item $A(m+1, 0) = A(m, 1)$
+    \item $A(m+1, n+1) = A(m, A(m+1, n))$
+\end{itemize}
+
+Pour $m$ fixé, la fonction $A_m : \Nn \to \Nn, n \mapsto A(m,n)$ est récursive primitive. Mais la fonction $A : \Nn^2 \to \Nn$ ne l'est pas à cause de la récurrence imbriquée qui la fait croître plus vite que n'importe quelle fonction récursive primitive.
+\end{exemple}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Application au codage de Gödel}
+
+\index{codage de Godel@codage de Gödel}
+
+Nous allons justifier, dans le monde des entiers, que toutes les opérations que l'on souhaite faire sur les nombres de Gödel se font par des fonctions récursives primitives, c'est-à-dire comme on l'avait présenté avant, que les calculs se font par des algorithmes avec des boucles \og{}pour\fg{}.
+
+%--------------------------------------------------------------------
+\subsection{Longueur, exposant, concaténation, substitution}
+
+On considère un nombre de Gödel $n = \pi_1^{c_1} \times \dots \times \pi_l^{c_l}$ (avec les $c_i \ge 1$). 
+
+\begin{itemize}
+    \item On veut d'abord pouvoir retrouver $l$ à partir de $n$ de façon récursive primitive : 
+\[ \operatorname{longueur}(n) = \min \{ i \le n \mid \pi_{i+1} \text{ ne divise pas } n \} \]
+
+    \item On a déjà étudié la fonction $\operatorname{exposant}(n,i)$ qui renvoie l'exposant $c_i$. On sait ainsi décoder un nombre de Gödel par une fonction récursive primitive.
+
+    \item On a vu au chapitre précédent la formule de la concaténation.
+    Si $n = \prod_{i=1}^l \pi_i^{\alpha_i}$ et $m = \prod_{j=1}^{l'} \pi_j^{\beta_j}$ 
+alors :
+\[
+    n * m = n \times \prod_{j=1}^{l'} \pi_{j+l}^{\beta_j}
+\]
+Ce sont des produits finis, donc c'est une opération récursive primitive.
+
+    \item Considérons la fonction $\operatorname{substitution}(p, v, n)$ : pour une formule $\mathcal{P}$ (donnée par son nombre de Gödel $p$), de variable libre $x$ (donnée par son code $v$), elle renvoie le code de Gödel de $\mathcal{P}(n)$ (c'est-à-dire $\mathcal{P}(n/x)$).
+    
+    \item On commence par extraire chaque code $c_i$ de $\mathcal{P}$, on compare ce code à celui de la variable $x$, si c'est le même on remplace ce symbole par le terme $n$ en utilisant la concaténation.
+    C'est donc une succession de fonctions récursives primitives, donc la substitution est une fonction récursive primitive.
+\end{itemize}
+
+
+%--------------------------------------------------------------------
+\subsection{Variables, termes, formules}
+
+ Décider si un entier $n$ représente une variable, un terme, ou une formule valide sont des prédicats récursifs primitifs. On renvoie au chapitre précédent sans s'étendre davantage.
+\begin{itemize}
+    \item $\operatorname{est\_variable}(n)$
+    \item $\operatorname{est\_terme}(n)$
+    \item $\operatorname{est\_formule}(n)$
+\end{itemize}
+
+
+%--------------------------------------------------------------------
+\subsection{Axiomes de Peano}
+
+On nous donne un entier $n$ (un nombre de Gödel) et on doit décider si la formule qu'il encode est un des axiomes de Peano.
+Prenons l'exemple du premier axiome de Peano \og{}$\forall x \ S(x) \neq 0$\fg{} 
+que l'on écrirait dans $\mathcal{L}_0$ par \og{}$\forall x \lnot S x = 0$ \fg{}, on note $n_1$ son nombre de Gödel.
+
+Pour savoir si $n$ code la formule de cet axiome, il suffit de tester si $n=n_1$. On fait cela pour les sept axiomes.
+
+La difficulté vient des axiomes de récurrence :
+\[
+\mathcal{R}ec_{\mathcal{P}(x),y} : \quad \mathcal{P}(0) \ \land \ \big[\forall y \quad \mathcal{P}(y) \limplies \mathcal{P}(S(y))\big] \quad \limplies \quad \forall x \ \ \mathcal{P}(x) 
+\]
+
+Il s'agit d'un schéma d'axiomes, il y a un axiome pour chaque formule $\mathcal{P}(x)$.
+Il y a donc à priori une infinité de formules et de variables à tester.
+Mais heureusement, pour un nombre de Gödel $n$ donné, si $x$ est une variable présente dans la formule de $n$, alors son code $v$ est nécessairement inférieur à $n$. De même, si $\mathcal{P}$ est une sous-formule de la formule $n$, alors son code $p$ vérifie aussi $p \le n$.
+
+On peut ainsi construire un prédicat récursif primitif sous la forme :
+
+\begin{equation*}
+\begin{split}
+\text{est\_axiome\_recurrence}(n) = 
+\exists \mathcal{P} \text{ de code } p \le n \quad 
+\exists x \text{ de code } v \le n \quad
+\exists  y \text{ de code } w \le n \quad \\
+\text{ tel que } \text{est\_formule}(\mathcal{P}) \text{ \tand{} } \text{est\_variable}(x) \text{ \tand{} } \text{est\_variable}(y) \\
+\text{ \tand{   } } n \text{ code la formule } \mathcal{R}ec_{\mathcal{P}(x),y}
+\end{split}
+\end{equation*}
+
+Ainsi on sait détecter tous les axiomes de Peano de façon récursive primitive.
+
+%--------------------------------------------------------------------
+\subsection{Preuves à la Hilbert}
+
+\index{preuve!systeme de Hilbert@système de Hilbert}
+
+Dans les deux premières parties de ce livre, nous avons présenté les preuves avec leurs règles d'inférence dans leur écriture en déduction naturelle.
+Comme son nom l'indique, les preuves en déduction naturelle ont une écriture proche de l'écriture d'une preuve mathématique. 
+Cependant il y a des hypothèses et des sous-hypothèses, et cette présentation n'est pas adaptée à un traitement algorithmique.
+
+Nous allons voir l'écriture dans le système de Hilbert qui est plus adapté au codage de Gödel.
+
+\begin{itemize}
+    \item Tout d'abord on se passe d'hypothèses. Si on devait prouver $\mathcal{P} \lturn \mathcal{Q}$, on prouverait $\lturn (\mathcal{P} \limplies \mathcal{Q})$.
+    
+    \item Il n'y a qu'une seule règle d'inférence pour la logique propositionnelle :
+    \[ \mathcal{P}, \mathcal{P} \limplies \mathcal{Q} \quad \lturn \quad \mathcal{Q} \qquad \text{(\emph{modus ponens})} \]
+
+    \item Par contre on a l'apparition d'axiomes qui sont des formules supposées toujours vraies (quel que soit ce que l'on souhaite démontrer).
+
+    \item Pour la logique propositionnelle il y a trois axiomes (il existe des variantes, ici la variante de Lukasiewicz) :
+\begin{enumerate}
+    \item $\mathcal{P} \limplies (\mathcal{Q} \limplies \mathcal{P})$ \quad (ajout d'hypothèse)
+    \item $(\mathcal{P} \limplies (\mathcal{Q} \limplies \mathcal{R})) \limplies ((\mathcal{P} \limplies \mathcal{Q}) \limplies (\mathcal{P} \limplies \mathcal{R}))$ \quad (distribution de l'implication)
+    \item $(\neg \mathcal{Q} \limplies \neg \mathcal{P}) \limplies (\mathcal{P} \limplies \mathcal{Q})$ \quad (contraposée)
+\end{enumerate}
+
+    \item Ainsi pour vérifier si une suite $\mathcal{P}_1, \dots, \mathcal{P}_l$ de formules est bien l'écriture d'une preuve de $\mathcal{Q}$, il suffit que pour tout $i$ :
+\begin{itemize}
+    \item soit $\mathcal{P}_i$ est un des axiomes,
+    \item soit $\mathcal{P}_i$ est obtenu par \emph{modus ponens} à partir des lignes précédentes, c'est-à-dire qu'il existe $j, k < i$ tels que $\mathcal{P}_k$ soit $\mathcal{P}_j \limplies \mathcal{P}_i$,
+\end{itemize}
+et enfin on vérifie que $\mathcal{P}_l = \mathcal{Q}$.
+
+    \item Pour la logique du premier ordre, on ajoute les axiomes suivants :
+    \begin{itemize}
+        \item $(\forall x \ \mathcal{P}(x)) \limplies \mathcal{P}(t)$
+        \item $\big[ \forall x \ (\mathcal{P} \limplies \mathcal{Q}(x)) \big]\limplies \big[ (\mathcal{P} \limplies \forall x \ \mathcal{Q}(x)) \big]$ \ \ si $\mathcal{P}$ ne contient pas de variable libre $x$.
+        \item $x=x$
+        \item $x=y \limplies (\mathcal{P}(x) \limplies \mathcal{P}(y))$
+    \end{itemize}
+
+    \item Et on ajoute une seconde règle d'inférence, qui est une variante de la règle d'introduction de $\forall$ :
+    \[
+    \text{ si } \quad \lturn \mathcal{P} \quad \text{ alors } \quad \lturn \forall x \ \mathcal{P}
+    \]
+\end{itemize}
+
+
+%--------------------------------------------------------------------
+\subsection{Être une preuve}
+
+Ainsi on comprend que vérifier si un super-nombre de Gödel $N$ est une preuve de $n$ se fait facilement à l'aide du système de Hilbert. 
+On rappelle qu'on n'a pas d'hypothèses (pour prouver $\Gamma \lturn \mathcal{Q}$, on prouve $\lturn (\Gamma \limplies \mathcal{Q})$), que les règles d'inférence sont très simples (\emph{modus ponens} et introduction de $\forall$) et qu'une preuve est juste une suite linéaire de formules.
+
+On construit ainsi un prédicat $\text{est\_preuve}(N, n)$ récursif primitif qui vérifie si la suite de formules $\mathcal{P}_i$ codée par le super-nombre de Gödel $N$ est bien une preuve valide de la formule codée par le nombre de Gödel $n$.
+
+
+La construction de ce prédicat se fait ainsi (pour la logique propositionnelle) :
+\begin{itemize}
+    \item extraire de $N$ les expressions $\mathcal{P}_i$, $i=1,\ldots,l$ et de $n$ l'expression $\mathcal{Q}$,
+    \item vérifier que ces expressions sont des formules valides,
+    \item pour chaque $i=1,\ldots,l$ :
+    \begin{itemize}
+        \item vérifier si $\mathcal{P}_i$ est un axiome,
+        \item ou si $\mathcal{P}_i$ se déduit par \emph{modus ponens} des lignes précédentes (c'est-à-dire qu'il existe $j, k < i$ tels que $\mathcal{P}_k$ soit $\mathcal{P}_j \limplies \mathcal{P}_i$).
+    \end{itemize}
+    \item vérifier si la dernière formule $\mathcal{P}_l$ est bien $\mathcal{Q}$.
+\end{itemize}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\section*{Exercices}
+
+\excludecomment{exercicecours} 
+%\emph{Exercices : à faire}
+
+\begin{exercicecours}
+    Montrer que la fonction factorielle $n \mapsto n!$ est récursive primitive.
+    Deux méthodes (a) en autorisant $p=0$, et (b) sans autoriser $p=0$.
+\end{exercicecours}
+
+\begin{exercicecours}
+    Montrer que la fonction $\text{max}(x,y)$ est récursive primitive.
+\end{exercicecours}
+
+\begin{exercicecours}
+   Montrer que $\max(x,y)$ (par définition par cas) et $\min(x,y)$ (par $x + (y \monus x)$ ou $y \monus (y \monus x)$) sont des fonctions récursives primitives.
+
+Faire aussi $f(x) > g(x)$.
+\end{exercicecours}
+
+\begin{exercicecours}
+Fonction d'Ackermann.
+Calculer les premières valeurs pour se rendre compte de la croissance :
+\begin{itemize}
+    \item $m=0$ : Successeur ($n+1$)
+    \item $m=1$ : Addition ($n+2$)
+    \item $m=2$ : Multiplication ($2n+3$)
+    \item $m=3$ : Exponentiation ($2^{n+3}-3$)
+    \item $m=4$ : Tour d'exponentielles (tétration)
+\end{itemize}
+\end{exercicecours}  
+
+\includecomment{exercicecours} 
+
+\end{document}

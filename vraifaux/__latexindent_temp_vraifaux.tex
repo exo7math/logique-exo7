@@ -1,0 +1,1000 @@
+\documentclass[11pt,class=report,crop=false]{standalone}
+\usepackage[screen]{../logic}
+
+
+\begin{document}
+
+
+%====================================================================
+\chapitre{Logique vrai/faux}
+%====================================================================
+
+% \insertvideo{}{partie 1.1. Titre}
+
+
+\objectifs{La logique \og{}Vrai/Faux\fg{}, aussi appelée logique propositionnelle, s'attache à étudier quelles valeurs, parmi \og{}Vrai\fg{} ou \og{}Faux\fg{}, peut prendre une formule définie à partir des connecteurs logiques \tand, \tor, \tnot\ldots}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Vrai/faux, connecteurs}
+
+%--------------------------------------------------------------------
+\subsection{Vrai/faux}
+
+Nous définissons deux valeurs \ltrue{} (Vrai) et \lfalse{} (Faux), appelées \defi{valeurs booléennes} ou \defi{valeurs de vérité}.
+On utilisera aussi la notation \lzero{} (Faux) et \lone{} (Vrai).
+La notation anglo-saxonne est \ltruetrue{} (\emph{True}) et \lfalsefalse{} (\emph{False}).
+
+
+Une \defi{variable propositionnelle} est une variable qui peut prendre soit la valeur \ltrue{} (Vrai), soit la valeur \lfalse{} (Faux).
+
+Par exemple, si $P$ : \og{}$2+2 = 4$\fg{}, alors $P$ est vraie ; en revanche, $Q$ : \og{}$2^2 < 3$\fg{} est fausse.
+
+
+%--------------------------------------------------------------------
+\subsection{$\lnot$ (\tnot), $\land$ (\tand), $\lor$ (\tor)}
+
+À partir d'une ou plusieurs variables propositionnelles et de \defi{connecteurs}, on forme de nouvelles formules.
+Soient $P$ et $Q$ deux variables propositionnelles.
+
+\begin{itemize}
+	\item \defi{Négation} $\lnot P$. \quad $\lnot P$ est vraie si et seulement si $P$ est fausse.
+    
+	\item \defi{Conjonction} $P \land Q$. \quad  $P \land Q$ est vraie si et seulement si $P$ et $Q$ sont vraies.
+    
+	\item \defi{Disjonction} $P \lor Q$. \quad $P \lor Q$ est vraie si et seulement si $P$ est vraie ou $Q$ est vraie.
+\end{itemize}
+
+Reprenons $P$ : \og{}$2+2 = 4$\fg{} et $Q$ : \og{}$2^2 < 3$\fg{}.
+Alors : 
+\begin{itemize}
+	\item $\lnot P$ est fausse (car $P$ est vraie),
+	\item $\lnot Q$ est vraie (car $Q$ est fausse),	
+	\item $P \land Q$ est fausse (car $Q$ n'est pas vraie),
+	\item $P \lor Q$ est vraie (car $P$ est vraie).
+\end{itemize}
+
+Évidemment, il y a un problème de logique dans nos définitions, car par exemple nous avons défini le connecteur \og{}$\land$ \fg{} (\tand) à l'aide du mot français \og{}et\fg{}. Pour remédier à ce problème, on définit l'action de chacun de ces connecteurs par sa \defi{table de vérité} :
+
+\[
+\begin{array}{c | c}
+P		& \lnot P \\
+\hline
+&	\\[-2ex]
+\ltrue 	& \lfalse \\
+\lfalse & \ltrue \\
+\end{array}
+\qquad\qquad\qquad
+\begin{array}{c c | c}
+	P		& Q 		& P \land Q \\
+	\hline
+	&&	\\[-2ex]
+	\ltrue 	& \ltrue 	& \ltrue \\
+	\ltrue 	& \lfalse 	& \lfalse \\
+	\lfalse & \ltrue 	& \lfalse \\	
+	\lfalse & \lfalse 	& \lfalse \\		
+\end{array}
+\qquad\qquad\qquad
+\begin{array}{c c | c}
+	P		& Q 		& P \lor Q \\
+	\hline
+	&&	\\[-2ex]
+	\ltrue 	& \ltrue 	& \ltrue \\
+	\ltrue 	& \lfalse 	& \ltrue \\
+	\lfalse & \ltrue 	& \ltrue \\	
+	\lfalse & \lfalse 	& \lfalse \\		
+\end{array}
+\]
+
+
+Bien sûr, à partir de ces connecteurs on peut composer des formules plus compliquées :
+\[
+\lnot(P \lor Q)\quad , \quad 
+P \land (\lnot P)\quad , \quad 
+P \land (Q \lor R)\quad , \quad 
+(P \land Q) \lor R\quad , \ \ldots
+\]
+Les parenthèses sont importantes.
+
+
+%--------------------------------------------------------------------
+\subsection{$\limplies$ (implication)}
+
+L'\defi{implication} $P \limplies Q$ est définie par :
+\mybox{
+$P \limplies Q = \lnot P \lor Q$
+}
+ Comme le connecteur $\lnot$ est prioritaire sur les autres, on écrit simplement : $\lnot P \lor Q$.
+
+On lit \og{}si $P$ alors $Q$\fg{} ou bien \og{}$P$ implique $Q$\fg{}.
+Sa table de vérité est :
+\[
+\begin{array}{c c | c}
+	P		& Q 		& P \limplies Q \\
+	\hline
+	&&	\\[-2ex]
+	\ltrue 	& \ltrue 	& \ltrue \\
+	\ltrue 	& \lfalse 	& \lfalse \\
+	\lfalse & \ltrue 	& \ltrue \\	
+	\lfalse & \lfalse 	& \ltrue \\		
+\end{array}
+\]
+
+L'usage mathématique classique est de noter ce connecteur $P \implies Q$. Mais au fil du temps son usage a été dévoyé pour signifier \og{}donc\fg{}, ce qu'il n'est pas ! On y reviendra dans la Section \ref{sec:connecteursbis}.
+
+Ainsi \og{}$P \limplies Q$\fg{} signifie \og{}si $P$ est vraie alors $Q$ est vraie\fg{}.
+Voici quelques exemples :
+\begin{itemize}	
+	\item \og{}il pleut\fg{} $\limplies$ \og{}le sol est mouillé\fg{} est une implication vraie. Dans ce livre, on évitera les exemples en français pour limiter les formulations ambiguës et les discussions interminables du genre \og{}pourquoi le sol de ma cuisine serait mouillé s'il pleut dehors\fg{}.
+		
+	\item \og{}2+2=4\fg{} $\limplies$ \og{}$3 \times 3 = 7$\fg{} est une implication fausse.
+	
+	\item Soit $n$ un entier. \og{}$n$ pair\fg{} $\limplies$ \og{}$n^2$ pair\fg{} est vraie.	
+\end{itemize}
+
+\bigskip
+
+Passons aux aspects surprenants de l'implication.
+\begin{itemize}	
+	\item \og{}2+2=4\fg{} $\limplies$ \og{}un entier est pair ou impair\fg{} est une implication vraie (car si $P$ et $Q$ sont vraies alors $P \limplies Q$ est vraie), même s'il n'y a aucun lien de causalité entre $P$ et $Q$.
+	
+	\item \og{}$3 \times 3 = 7$\fg{} $\limplies$ \og{}$2+2=4$\fg{} 
+	et \og{}$3 \times 3 = 7$\fg{} $\limplies$ \og{}$2+2=4$\fg{}
+	sont aussi des implications vraies.
+	En effet, dès que $P$ est fausse, alors $P \limplies Q$ est vraie. C'est bien sûr clair par la définition de l'implication via $\lnot P \lor Q$. Il faut accepter cette conséquence de la définition. Nous y reviendrons aussi dans la Section \ref{sec:connecteursbis}.
+\end{itemize}
+
+
+%--------------------------------------------------------------------
+\subsection{$\lequiv$ (équivalence)}
+
+L'\defi{équivalence} $P \lequiv Q$ est définie par la double implication $P \limplies Q$ et $Q \limplies P$ :
+\mybox{
+	$P \lequiv Q =  (P \limplies Q) \land (Q \limplies P)$
+}
+On dit \og{}$P$ équivaut à $Q$\fg{} ou bien \og{}$P$ si et seulement si $Q$\fg{}.
+
+Autrement dit, $P \lequiv Q$ est vraie lorsque $P$ et $Q$ sont vraies en même temps ou fausses en même temps.
+
+\[
+\begin{array}{c c | c}
+	P		& Q 		& P \lequiv Q \\
+	\hline
+	&&	\\[-2ex]
+	\ltrue 	& \ltrue 	& \ltrue \\
+	\ltrue 	& \lfalse 	& \lfalse \\
+	\lfalse & \ltrue 	& \lfalse \\	
+	\lfalse & \lfalse 	& \ltrue \\		
+\end{array}
+\]
+
+Voici des exemples d'équivalences vraies :
+\begin{itemize}
+	\item $\lnot \lnot P \lequiv P$ : la négation d'une négation revient à la proposition initiale.
+	
+	\item $P \limplies Q \lequiv \lnot P \lor Q$ : par définition de l'implication.
+\end{itemize}
+
+En revanche, l'équivalence suivante est \emph{fausse} :
+\[
+P \land Q \lequiv P \lor Q
+\]
+Plus précisément, cette équivalence n'est pas vraie pour toutes les valeurs attribuées à $P$ et $Q$.
+En effet, l'implication $P \land Q \limplies P \lor Q$ est toujours vraie, mais l'implication $P \lor Q \limplies P \land Q$ est fausse lorsque $P$ est vraie et $Q$ est fausse par exemple.
+
+
+%--------------------------------------------------------------------
+\subsection{Résumé}
+
+Il y a deux valeurs booléennes \ltrue/\lfalse{} (Vrai/Faux, ou \ltruetrue/\lfalsefalse{} \emph{True}/\emph{False}, ou \lone/\lzero).
+Nous avons défini les cinq connecteurs logiques de base.
+
+\begin{center}
+\begin{tabular}{c | c | c}
+	symbole		& nom 		& définition \\
+	\hline
+	&&	\\[-2ex]
+	$\lnot$ 	& \tnot			& $\lnot P$ est vrai ssi $P$ est faux \\
+	$\land$ 	& \tand			& $P \land Q$ est vrai ssi $P$ et $Q$ sont vrais \\	
+	$\lor$ 		& \tor			& $P \lor Q$ est vrai ssi $P$ ou $Q$ est vrai \\	
+	$\limplies$ 	& implication	& $\lnot P \lor Q$ \\	
+	$\lequiv$ 	& équivalence	& $(P \limplies Q) \land (Q \limplies P)$ \\				
+\end{tabular}
+\end{center}
+
+Le connecteur $\lnot$ est un connecteur \defi{unaire}, car il s'applique à un seul paramètre (comme une fonction d'une variable) alors que les autres sont des connecteurs \defi{binaires} (par exemple on pourrait écrire $P \land Q$ sous la forme $\land(P,Q)$ comme une fonction de deux variables).
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Formules}
+
+%--------------------------------------------------------------------
+\subsection{Objectifs}
+
+Nous disposons de \defi{variables propositionnelles} $P$, $Q$, $R$\ldots{} chacune pouvant prendre la valeur Vrai ou Faux. À l'aide des connecteurs, on compose une \emph{formule} $\mathcal{P}$, par exemple :
+\[
+\mathcal{P} :  \quad P \land \big( Q \lor (\lnot R) \big)
+\]
+
+Voici les questions qu'on se pose.
+Si on remplace $P$, $Q$, $R$\ldots{} par des valeurs \ltrue/\lfalse, est-ce que la formule $\mathcal{P}$ est vraie ou fausse ? On peut même être plus précis : 
+\begin{itemize}
+	\item Est-ce qu'il existe un choix de valeurs \ltrue/\lfalse{} qui rende l'évaluation de $\mathcal{P}$ vraie ?
+	\item Pour tous les choix possibles de valeurs \ltrue/\lfalse, l'évaluation de $\mathcal{P}$ est-elle vraie ?
+\end{itemize}
+
+
+Par exemple, pour la proposition $\mathcal{P}$ : $P \land \big( Q \lor (\lnot R) \big)$, si on attribue la valeur \ltrue{} à $P$, \lfalse{} à $Q$ et \lfalse{} à $R$, alors $\mathcal{P}$ s'évalue en $\ltrue \land ( \lfalse \lor (\lnot \lfalse))$ qui vaut \ltrue.
+En revanche, si on remplace $(P,Q,R)$ par $(\ltrue,\lfalse,\ltrue)$, alors $\mathcal{P}$ s'évalue en \lfalse.
+
+Bien sûr, on pourrait se poser les mêmes questions pour savoir quand $\mathcal{P}$ s'évalue en faux, mais cela revient à décider quand la formule $\lnot \mathcal{P}$ s'évalue en vrai.
+
+Si on dispose de deux formules $\mathcal{P}$ et $\mathcal{Q}$, alors on peut composer des formules plus complexes $\mathcal{P} \land \mathcal{Q}$, $\mathcal{P} \lor \mathcal{Q}$, etc.
+
+Lorsque l'on dispose de deux formules $\mathcal{P}$ et $\mathcal{Q}$, l'objectif le plus important sera de comprendre le lien entre $\mathcal{P}$ et $\mathcal{Q}$. Par exemple, est-ce que $\mathcal{P} \limplies \mathcal{Q}$ est vraie ? Est-ce que $\mathcal{P} \lequiv \mathcal{Q}$ est vraie ?
+
+
+%--------------------------------------------------------------------
+\subsection{Définition d'une formule}
+
+On considère un \defi{alphabet} formé par :
+\begin{itemize}
+	\item un ensemble $\text{Var} = \{P, Q, R,\ldots\}$ de variables propositionnelles,
+	
+	\item un ensemble $\text{Conn} = \{ \lnot, \land, \lor, \limplies, \lequiv \}$ de connecteurs logiques,
+	
+	\item de symboles de parenthèses $($ et $)$\,.
+\end{itemize}
+
+Une \defi{formule} est un mot fini, formé à partir des caractères de cet alphabet ; ce mot doit être correctement parenthésé et cohérent avec l'usage des connecteurs.
+
+\begin{definition}
+Plus précisément, l'ensemble $\text{Form}$ de toutes les \defi{formules} est le plus petit ensemble de mots, contenant les variables propositionnelles, tel que :
+\begin{itemize}
+	\item si $\mathcal{P}$ est une formule, alors $\lnot \mathcal{P}$ aussi,
+	\item si $\mathcal{P}$ et $\mathcal{Q}$ sont des formules, alors 
+	$(\mathcal{P} \land \mathcal{Q})$, 
+	$(\mathcal{P} \lor \mathcal{Q})$, 
+	$(\mathcal{P} \limplies \mathcal{Q})$, 
+	$(\mathcal{P} \lequiv \mathcal{Q})$ sont aussi des formules.
+\end{itemize}
+\end{definition}
+
+Remarque : on notera $P, Q, R\ldots$ (caractère droit) pour les variables propositionnelles et 
+$\mathcal{P}, \mathcal{Q}, \mathcal{R}\ldots$ (caractère calligraphique) pour les formules.
+
+Voici des exemples de formules :
+\[
+P \quad, \quad 
+\lnot P \quad, \quad 
+(Q \limplies P) \quad, \quad 
+((Q \limplies P) \lequiv Q) \quad, \quad 
+(\lnot R \limplies (P \lor Q))
+\]
+
+Par abus de notation :
+\begin{itemize}
+	\item On se permettra d'enlever les parenthèses quand elles sont totalement à l'extérieur, par exemple on écrira $Q \limplies P$  au lieu de $(Q \limplies P)$ ou lorsqu'il n'y a pas d’ambiguïté, par exemple $P \lor Q \lor R$.
+	
+	\item À l'inverse, on rajoutera parfois des parenthèses superflues. Par exemple, on pourra écrire $(\lnot P) \land Q$ au lieu de $\lnot P \land Q$ afin d'éviter la confusion avec $\lnot (P \land Q)$.
+\end{itemize}
+
+%--------------------------------------------------------------------
+\subsection{Table de vérité, évaluation}
+
+Pour une formule $\mathcal{P}$ qui dépend de deux variables propositionnelles $P$ et $Q$, on peut déterminer quand la formule prend la valeur vraie ou fausse selon les valeurs attribuées à $P$ et $Q$. Cela se résume sous la forme d'une \defi{table de vérité} de la formule $\mathcal{P}$ :
+
+\[
+\begin{array}{c c | c}
+	P		& Q 		& \mathcal{P} \\
+	\hline
+	&&	\\[-2ex]
+	\ltrue 	& \ltrue 	& \ltrue/\lfalse\ ? \\
+	\ltrue 	& \lfalse 	& \ltrue/\lfalse\ ? \\
+	\lfalse & \ltrue 	& \ltrue/\lfalse\ ? \\	
+	\lfalse & \lfalse 	& \ltrue/\lfalse\ ? \\		
+\end{array}
+\]
+
+Plus généralement, si la formule $\mathcal{P}$ dépend des variables $P_1, P_2,\ldots,P_n$,
+une \defi{distribution de valeurs} est un choix \ltrue/\lfalse{} pour la variable $P_1$, un choix \ltrue/\lfalse{} pour la variable $P_2$,\ldots{}
+On obtient alors une \defi{évaluation} \ltrue/\lfalse{} pour la formule $\mathcal{P}$.
+
+Dans la pratique on dresse la table de vérité de la formule $\mathcal{P}$.
+
+\begin{exemple}
+Soit :
+\[
+\mathcal{P} : \qquad (P \land Q) \lor (\lnot P)
+\]
+On dresse la table de vérité de $\mathcal{P}$ à l'aide des tables intermédiaires de $P \land Q$ et $\lnot P$.
+
+\[
+\begin{array}{c c | c | c | c}
+	P		& Q 		& P \land Q 	& \lnot P 	&  \mathcal{P} \\
+	\hline
+	&&&&	\\[-2ex]
+	\ltrue 	& \ltrue 	& \ltrue		& \lfalse 	& \ltrue \\
+	\ltrue 	& \lfalse 	& \lfalse		& \lfalse	& \lfalse \\
+	\lfalse & \ltrue 	& \lfalse		& \ltrue	& \ltrue \\	
+	\lfalse & \lfalse 	& \lfalse 		& \ltrue	& \ltrue \\		
+\end{array}
+\]
+
+\end{exemple}
+
+Dans les chapitres \og{}Quels connecteurs sont utiles ?\fg{} et \og{}Théorème de compacité\fg{}, on présentera une distribution de valeurs comme une fonction $v : \{ \ltrue, \lfalse \}^n \to \{ \ltrue, \lfalse \}$ qui s'étend sur l'ensemble des formules afin d'obtenir une évaluation $v(\mathcal{P})$.
+
+
+%--------------------------------------------------------------------
+\subsection{Équivalence logique}
+
+\begin{definition}
+	Deux formules $\mathcal{P}$ et $\mathcal{Q}$ sont \defi{logiquement équivalentes} si elles ont la même table de vérité. On note alors :
+	\[ \mathcal{P} \equiv \mathcal{Q} \]
+\end{definition}
+Cela signifie que les formules $\mathcal{P}$ et $\mathcal{Q}$ s'évaluent à Vrai en même temps et à Faux en même temps, quel que soit le choix des valeurs de vérité.
+
+Il existe un lien direct avec le connecteur d'équivalence $\lequiv$. En effet, $\mathcal{P} \equiv \mathcal{Q}$ signifie que $(\mathcal{P} \lequiv \mathcal{Q})$ est une tautologie (c'est-à-dire toujours évaluée à Vrai), voir la Section \ref{sec:formulesbis}.
+
+\begin{exemple}
+	\sauteligne
+	\begin{enumerate}
+		\item $\lnot \lnot P \equiv P$ (double négation)
+		\item $\lnot (P \lor Q) \equiv (\lnot P) \land (\lnot Q)$ (loi de De Morgan)
+		\item $(P \land Q) \limplies R \equiv \big( \lnot (P \land Q)\big) \lor R \equiv \big( (\lnot P) \lor (\lnot Q) \big) \lor R$
+	\end{enumerate}
+\end{exemple}
+
+
+%--------------------------------------------------------------------
+\subsection{Équivalences logiques usuelles}
+
+
+\[
+\begin{array}{l l l}
+	\text{idempotence} 
+	& \mathcal{P}\land\mathcal{P} \equiv \mathcal{P}
+	& \mathcal{P}\lor\mathcal{P} \equiv \mathcal{P}
+	\\[0.6ex]
+	
+	\text{commutativité}
+	& \mathcal{P}\land\mathcal{Q} \equiv \mathcal{Q}\land\mathcal{P}
+	& \mathcal{P}\lor\mathcal{Q} \equiv \mathcal{Q}\lor\mathcal{P}
+	\\[0.6ex]
+	
+	\text{associativité}
+	& (\mathcal{P}\land\mathcal{Q})\land\mathcal{R} \equiv \mathcal{P}\land(\mathcal{Q}\land\mathcal{R})
+	& (\mathcal{P}\lor\mathcal{Q})\lor\mathcal{R} \equiv \mathcal{P}\lor(\mathcal{Q}\lor\mathcal{R})
+	\\[0.6ex]
+	
+	\text{distributivité}
+	& \mathcal{P}\land(\mathcal{Q}\lor\mathcal{R}) \equiv (\mathcal{P}\land\mathcal{Q}) \lor (\mathcal{P}\land\mathcal{R})
+	& \mathcal{P}\lor(\mathcal{Q}\land\mathcal{R}) \equiv (\mathcal{P}\lor\mathcal{Q}) \land (\mathcal{P}\lor\mathcal{R})
+	\\[0.6ex]
+	
+	\text{absorption}
+	& \mathcal{P}\land(\mathcal{P}\lor\mathcal{Q}) \equiv \mathcal{P}
+	& \mathcal{P}\lor(\mathcal{P}\land\mathcal{Q}) \equiv \mathcal{P}
+	\\[0.6ex]
+	
+	\text{lois de Morgan}
+	& \lnot(\mathcal{P}\land\mathcal{Q}) \equiv \lnot\mathcal{P}\lor\lnot\mathcal{Q}
+	& \lnot(\mathcal{P}\lor\mathcal{Q}) \equiv \lnot\mathcal{P}\land\lnot\mathcal{Q}
+	\\[0.6ex]
+	
+	\text{contraposée}
+	& \mathcal{P}\limplies\mathcal{Q} \equiv \lnot\mathcal{Q}\limplies\lnot\mathcal{P}
+	& \\
+\end{array}
+\]
+
+\medskip
+
+Ce sont les plus classiques. Il en existe beaucoup d'autres !
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Connecteurs (suite)}
+\label{sec:connecteursbis}
+
+Nous apportons des précisions et des commentaires sur nos connecteurs favoris.
+
+%--------------------------------------------------------------------
+\subsection{Vrai/Faux, négation}
+
+Il y a exactement deux valeurs booléennes $\{\ltrue, \lfalse\}$ (ou $\{\lzero, \lone\}$), ni plus, ni moins ! Ce qui fait que si une variable $P$ ou une formule $\mathcal{P}$ n'est pas évaluée à Faux, c'est qu'elle est vraie. Et réciproquement. Il n'y a donc pas de réponse \og{}peut-être\fg{}.
+Cela a les conséquences suivantes :
+\begin{itemize}
+	\item \defi{Principe du tiers exclu} :
+\mybox{$\mathcal{P} \lor \lnot \mathcal{P} \quad \text{ est toujours Vrai }$}
+
+L'expression \og{}tiers exclu\fg{} signifie qu'il n'y a pas d'autre choix que \ltrue/\lfalse.
+
+	\item Principe de non-contradiction :
+\[ \mathcal{P} \land \lnot \mathcal{P} \quad \text{ est toujours Faux } \]
+
+	\item Loi de la double négation :
+\[ \lnot\lnot \mathcal{P} \equiv \mathcal{P}\]
+	
+\end{itemize}
+
+On verra un peu plus tard dans la Section \ref{sec:formulesbis} une nouvelle écriture de ce qui est vrai/faux :
+\[ \top \quad : \text{ formule qui s'évalue toujours à Vrai }\]
+Ce symbole désigne une formule qui s'évalue toujours à \ltrue{} (\ltruetrue{} en anglais, d'où le symbole). Il se lit \og{}toujours Vrai\fg{} ou \og{}tautologie\fg{} ou \emph{top}.
+
+Sa contrepartie est le symbole renversé :
+\[ \bot \quad : \text{ formule qui s'évalue toujours à Faux }\]
+
+Ainsi on peut écrire :
+\[ \mathcal{P} \lor \lnot \mathcal{P} \equiv \top \qquad \mathcal{P} \land \lnot \mathcal{P} \equiv \bot\]
+
+
+Quelle est la différence entre $\ltrue$ et $\top$ ?
+$\ltrue$ est une valeur, alors que $\top$ est une formule qui s'évalue toujours à $\ltrue$.
+Si on identifie plutôt les valeurs booléennes à $\lzero/\lone$, alors $\lone$ est une constante, tandis que $\top$ est la fonction constante égale à $\lone$.
+
+%--------------------------------------------------------------------
+\subsection{$\land$ (\tand), $\lor$ (\tor)}
+
+Dans notre liste d'équivalences logiques, nous avions :
+\[ \mathcal{P} \land \mathcal{Q} \equiv \mathcal{Q} \land \mathcal{P}\qquad \mathcal{P} \lor \mathcal{Q} \equiv \mathcal{Q} \lor \mathcal{P} \qquad\qquad \text{commutativité} \]
+et aussi :
+\[ (\mathcal{P} \land \mathcal{Q}) \land \mathcal{R} \equiv \mathcal{P} \land (\mathcal{Q} \land \mathcal{R}) 
+\qquad 
+(\mathcal{P} \lor \mathcal{Q}) \lor \mathcal{R} \equiv \mathcal{P} \lor (\mathcal{Q} \lor \mathcal{R}) 
+\qquad\qquad \text{associativité} \]
+Par conséquent, on s'autorise à écrire $\mathcal{P} \land \mathcal{Q} \land \mathcal{R}$ et $\mathcal{P} \lor \mathcal{Q} \lor \mathcal{R}$, sans parenthèses.
+Enfin :
+\[ \mathcal{P} \land (\mathcal{Q} \lor \mathcal{R}) \equiv (\mathcal{P} \land \mathcal{Q}) \lor (\mathcal{P} \land \mathcal{R}) \qquad \mathcal{P} \lor (\mathcal{Q} \land \mathcal{R}) \equiv (\mathcal{P} \lor \mathcal{Q}) \land (\mathcal{P} \lor \mathcal{R}) \qquad\qquad \text{distributivité} \]
+
+\medskip
+
+Le connecteur $\land$ (\tand) est analogue à la multiplication $\times$, tandis que $\lor$ (\tor) est analogue à l'addition $+$ :
+$a \times b = b \times a$ (commutativité), $(a \times b) \times c = a \times (b \times c)$ (associativité), $a \times (b+c) = a \times b + a \times c$ (distributivité).
+
+Les lois de De Morgan se résument par l'incantation \og{}la négation d'un \tand{} est un \tor\fg{} et \og{}la négation d'un \tor{} est un \tand\fg{} :
+\[ \lnot(\mathcal{P} \land \mathcal{Q}) \equiv \lnot\mathcal{P} \lor \lnot\mathcal{Q}
+\qquad\qquad \lnot(\mathcal{P} \lor \mathcal{Q}) \equiv \lnot\mathcal{P} \land \lnot\mathcal{Q}
+ \]
+
+%--------------------------------------------------------------------
+\subsection{$\limplies$ (implication)}
+
+Par définition :
+\[
+\mathcal{P} \limplies \mathcal{Q} \equiv \lnot \mathcal{P} \lor \mathcal{Q}
+\]
+et sa table de vérité est :
+\[
+\begin{array}{c c | c}
+	\mathcal{P}		& \mathcal{Q} 		& \mathcal{P} \limplies \mathcal{Q} \\
+	\hline
+	&&	\\[-2ex]
+	\ltrue 	& \ltrue 	& \ltrue \\
+	\ltrue 	& \lfalse 	& \lfalse \\
+	\lfalse & \ltrue 	& \ltrue \\	
+	\lfalse & \lfalse 	& \ltrue \\		
+\end{array}
+\]
+
+Il y a plusieurs points à intégrer concernant les implications.
+
+\medskip
+
+\textbf{Pas de causalité.} 
+
+Il faut bien comprendre que $P \limplies Q$ (ici avec des variables propositionnelles) ne signale pas un lien de causalité mais plutôt une constatation : est-ce que si $P$ est vraie alors $Q$ est aussi vraie ?
+
+
+Voici un exemple qui devrait faire hurler tous vos profs de maths.
+\begin{exemple}
+ Soit $n$ un entier :
+\[
+n \text { impair} \limplies n \text{ premier}
+\]
+Tous vos profs vous diront que cette implication est fausse, mais ce n'est pas vrai !
+La confusion vient du fait qu'on a l'habitude de comprendre cette phrase par \og{}tout nombre impair est aussi un nombre premier\fg{}, ce qui est bien sûr faux.
+Mais ici $n$ est fixé et sa valeur n'était pas précisée et donc l'implication peut être vraie ou fausse selon la valeur de $n$.
+
+\begin{itemize}
+	\item si $n=3$, alors \og{}$n \text { impair} \limplies n \text{ premier}$\fg{} est vraie, car $P$ : \og{}$3$ impair\fg{} et $Q$ : \og{}$3$ premier\fg{} sont vraies.
+	
+	\item si $n=15$, alors \og{}$n \text { impair} \limplies n \text{ premier}$\fg{} est fausse, car $P$ : \og{}$15$ impair\fg{} est vraie alors que $Q$ : \og{}$15$ premier\fg{} est fausse.
+	
+	\item si $n=4$, alors \og{}$n \text { impair} \limplies n \text{ premier}$\fg{} est vraie ! En effet $P$ : \og{}$4$ impair\fg{} est fausse et donc $P \limplies Q$ est vraie. 
+\end{itemize}
+
+
+\end{exemple}
+
+
+\medskip
+
+\textbf{Lorsque $P$ est faux alors $P \limplies Q$ est vrai !}
+
+C'est bien sûr clair d'après la définition $(\lnot P) \lor Q$.
+Essayons de justifier pourquoi c'est naturel. 
+Posons-nous la question : \og{}quand est-ce qu'on veut que $P$ implique $Q$ soit faux ?\fg{}. La réponse est : \og{}si $P$ est vrai et $Q$ est faux\fg{} (c'est comme avoir trouvé un contre-exemple). Dans tous les autres cas $P \limplies Q$ est vrai, donc y compris lorsque $P$ est faux.
+
+Cela se retrouve dans le langage courant :
+\mycenterline{
+	\og{}Si tu as raison, alors moi je suis le pape.\fg
+}
+Sous-entendu, \og{}Tu as tort.\fg{}
+Dans le même genre :
+\mycenterline{
+	\og{}Je le ferai quand les poules auront des dents.\fg
+}
+Sous-entendu, \og{}Je ne le ferai pas.\fg{} C'est l'implication \og{}poules avec dents $\limplies$ action\fg{} qui est toujours vraie avec ou sans action.
+
+
+\medskip
+
+\textbf{Démonstrations.}
+
+De $P \limplies Q$, on ne peut pas déduire que $Q$ est vrai. Ce que l'on verra dans la suite s'appelle le \emph{modus ponens} et est la base de nos raisonnements :
+\mycenterline{
+	Si $P$ est vrai et si $P\limplies Q$ est vrai, alors $Q$ est vrai.
+}
+
+C'est l'erreur que l'on fait à force d'habitude quand on écrit $P \implies Q$ : on suppose implicitement que $P$ est vrai et on en déduit que $Q$ est vrai.
+
+Enfin $\mathcal{P} \limplies \mathcal{Q} \limplies \mathcal{R}$ ne dénote pas une chaîne de conséquences, mais c'est par définition la formule :
+\[ \mathcal{P} \limplies (\mathcal{Q} \limplies \mathcal{R}) \]
+
+
+
+%--------------------------------------------------------------------
+\subsection{$\lequiv$ (équivalence)}
+
+Pour qu'une équivalence soit vraie, il faut que $\mathcal{P}$ et $\mathcal{Q}$ soient vraies en même temps, et fausses en même temps.
+Par définition :
+\[ \mathcal{P} \lequiv \mathcal{Q} \equiv (\mathcal{P} \limplies \mathcal{Q}) \land (\mathcal{Q} \limplies \mathcal{P}) \]
+
+On peut formuler les mêmes avertissements que pour l'implication : quand on écrit $\mathcal{P} \lequiv \mathcal{Q}$ cela ne signifie pas que $\mathcal{P}$ et $\mathcal{Q}$ sont toujours évaluées à vrai, mais juste qu'elles s'évaluent à vrai en même temps.
+ 
+
+%--------------------------------------------------------------------
+\subsection{D'autres connecteurs}
+
+Un \defi{connecteur à $n$ places} est une fonction $f : \{\ltrue, \lfalse\}^n \to \{\ltrue, \lfalse\}$, ou, si vous préférez, une fonction $f : \{\lzero, \lone\}^n \to \{\lzero, \lone\}$.
+
+\begin{itemize}
+	\item $n=1$. $\lnot$ est un connecteur unaire (c'est une fonction à une variable). On peut aussi avoir besoin de l'identité $\mathrm{id}$ qui envoie $\ltrue$ sur $\ltrue$ et $\lfalse$ sur $\lfalse$.
+	
+	\item $n=2$. $\land$ est un connecteur binaire (comme une fonction de deux variables). Sauf qu'on écrit $P \land Q$ au lieu de $\land(P, Q)$.
+	
+	\item $n=2$. Le \defi{ou exclusif} $\oplus$/\tconnector{xor} est un autre connecteur binaire :
+	\mycenterline{$P \oplus Q$ est vrai si exactement l'une des variables est vraie.}
+	
+	\item $n=2$. Le connecteur $\uparrow$/\tconnector{nand}, appelé aussi symbole de Sheffer est défini comme la négation du \tand :
+	\[ P \uparrow Q = \lnot (P \land Q) \]
+	On listera tous les connecteurs binaires dans le chapitre \og{}Quels connecteurs sont utiles ?\fg.
+	
+	\item Pour $n$ quelconque, on peut définir un connecteur à $n$ places, en donnant la table de vérité en fonction des valeurs affectées aux variables $P_1,P_2,\ldots, P_n$. Cette table a $2^n$ lignes.
+	On verra, toujours dans le chapitre \og{}Quels connecteurs sont utiles ?\fg{}, pourquoi on n'a pas vraiment besoin de ces connecteurs.
+\end{itemize}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Formules (suite)}
+\label{sec:formulesbis}
+
+%--------------------------------------------------------------------
+\subsection{Formules satisfaisables}
+
+Soient $P_1, P_2,\ldots, P_n$ des variables propositionnelles.
+Une distribution de valeurs $v$ associe à chaque variable $P_i$ une valeur de vérité $v(P_i)$ qui est \ltrue{} ou \lfalse{} (ou une valeur \lzero/\lone).
+On peut alors associer une valeur \ltrue/\lfalse, notée $v(\mathcal{P})$, à n'importe quelle formule $\mathcal{P}$.
+
+\begin{exemple}
+On considère trois variables $P, Q, R$ et la formule :
+\[ \mathcal{P} : \quad (P \land \lnot Q) \lor (Q \land R) \]
+Considérons la distribution de valeurs $(\ltrue, \lfalse, \lfalse)$ (c'est-à-dire $v(P) = \ltrue$, $v(Q)=\lfalse$, $v(R)=\lfalse$), alors, lorsque l'on substitue ces valeurs dans $\mathcal{P}$, on obtient :
+\[ v(\mathcal{P}) \ = \  (\ltrue \land \lnot \lfalse) \lor (\lfalse \land \lfalse) \]
+et donc $v(\mathcal{P}) = \ltrue$.
+Par contre, pour la distribution $(\ltrue,\ltrue,\lfalse)$ alors $\mathcal{P}$ s'évalue à \lfalse.
+\end{exemple}
+
+\begin{definition}
+	\sauteligne
+	\begin{itemize}
+		\item Une formule $\mathcal{P}$ est \defi{satisfaite} pour la distribution de valeurs $v$ si $\mathcal{P}$ s'évalue à Vrai pour cette distribution. 
+		
+		\item Une formule $\mathcal{P}$ est \defi{satisfaisable}, s'il existe une distribution de valeurs pour laquelle $\mathcal{P}$ s'évalue à Vrai.
+
+	\end{itemize}	
+\end{definition}
+
+
+La formule $\mathcal{P} :  (P \land \lnot Q) \lor (Q \land R)$ de l'exemple précédent est satisfaisable, car on avait trouvé une distribution de valeurs qui rend $\mathcal{P}$ vraie. 
+
+
+%--------------------------------------------------------------------
+\subsection{Tautologie}
+
+\begin{definition}
+	\sauteligne
+	\begin{itemize}
+		\item Une \defi{tautologie} est une formule $\mathcal{P}$ qui s'évalue toujours à Vrai, quelle que soit la distribution des valeurs de vérité.
+		
+		\item Une \defi{contradiction} est une formule $\mathcal{P}$ qui s'évalue toujours à Faux, quelle que soit la distribution des valeurs de vérité.
+	\end{itemize}
+\end{definition}
+
+Notation :
+\mybox{$
+\text{tautologie} : \ \top \qquad\qquad \quad 
+\text{contradiction} : \  \bot
+$}
+
+Quelques remarques : 
+\begin{itemize}
+	\item Ainsi une tautologie est une formule toujours vraie (plus précisément qui s'évalue toujours à la valeur Vrai). 
+	Le terme vient du grec \emph{tautos} (le même) et \emph{logos} (parole) : c'est toujours la même valeur (Vrai).
+	\item Une contradiction est une formule toujours fausse. 
+	\item Cependant, la plupart des formules ne sont ni des tautologies, ni des contradictions : elles s'évaluent à des valeurs vraies et fausses selon le choix de la distribution de valeurs. 
+	\item Une formule $\mathcal{P}$ est une contradiction si et seulement si $\lnot\mathcal{P}$ est une tautologie. C'est pourquoi on s'intéressera essentiellement aux tautologies.
+\end{itemize}
+
+\begin{exemple}
+	\sauteligne
+	\begin{enumerate}
+		\item $P \lor \lnot P$ est une tautologie (si $P$ est Vrai, $P \lor \lnot P$ est Vrai ; si $P$ est Faux, $P \lor \lnot P$ est aussi Vrai).
+		
+		\item $P \land \lnot P$ est une contradiction (c'est une formule toujours fausse, quelle que soit la valeur attribuée à $P$).
+		
+		\item $(P \lor Q \lor R) \lor (\lnot P \lor \lnot Q \lor \lnot R)$ est une tautologie.
+		
+		\item $(P \land Q) \limplies Q$ est une tautologie.
+		
+		\item $\lnot(P \land Q) \lequiv (\lnot P) \lor (\lnot Q)$ est une tautologie.
+		
+		\item $\big( (P \limplies Q) \land (Q \limplies R) \big) \limplies (P \limplies R)$ est une tautologie.
+	\end{enumerate}
+\end{exemple}	
+
+Voici des exemples d'utilisation des symboles $\top/\bot$ :
+\[
+\mathcal{P} \land \top \equiv \mathcal{P} \qquad
+\mathcal{P} \lor \top \equiv \top \qquad
+\mathcal{P} \land \bot \equiv \bot \qquad
+\mathcal{P} \lor \bot \equiv \mathcal{P}
+\]
+
+
+Nous pouvons maintenant préciser le lien entre l'équivalence logique ($\equiv$) et l'équivalence ($\lequiv$) :
+\[
+\mathcal{P} \equiv \mathcal{Q} \quad \text{ ssi } \quad
+\mathcal{P} \lequiv \mathcal{Q} \text{ est une tautologie}
+\]
+Si c'est le cas, c'est-à-dire si $\mathcal{P} \equiv \mathcal{Q}$ (ou bien si $\mathcal{P} \lequiv \mathcal{Q}$ est toujours vraie), alors $\mathcal{P}$ et $\mathcal{Q}$ s'évaluent à vrai en même temps et à faux en même temps, quelle que soit l'évaluation.
+
+\medskip
+Dans les sections suivantes, nous allons découvrir trois autres visions des formules et de leurs évaluations.
+
+%--------------------------------------------------------------------
+\subsection{Portes logiques et circuits}
+
+Pour se rapprocher de ce qui se passe au cœur d'un ordinateur on peut considérer les connecteurs comme des portes logiques. Ici les valeurs de vérité sont $\{\lzero, \lone\}$.
+
+
+\textbf{Porte \tnot/\tconnector{not}.}
+
+Elle a une seule entrée et change \lzero{} en \lone, et \lone{} en \lzero.
+\myfigure{1}{
+	\tikzinput{portes_01}
+}
+
+\textbf{Porte \tand/\tconnector{and}.}
+
+\myfigure{0.8}{
+	\tikzinput{portes_02}
+}
+
+On résume l'action de la porte \tconnector{and} par le tableau suivant :
+
+\begin{center}
+	\begin{minipage}{0.45\textwidth}
+		\[			
+			\begin{array}{cc|c}
+				\hline
+				P & Q & \text{Sortie} \\ \hline
+				&&	\\[-2ex]
+				\lzero & \lzero & \lzero \\
+				\lzero & \lone & \lzero \\
+				\lone & \lzero & \lzero \\
+				\lone & \lone & \lone \\ 
+			\end{array}
+	\]
+	\end{minipage}
+	\begin{minipage}{0.45\textwidth}
+		\myfigure{1}{
+			\tikzinput{portes_02b}
+		}
+	\end{minipage}
+\end{center}
+
+\textbf{Porte \tor/\tconnector{or}.}
+
+\myfigure{0.8}{
+	\tikzinput{portes_03}
+}
+
+
+\textbf{Porte \tconnector{nand}.}
+	
+Elle peut se réaliser comme la porte \tconnector{not}(\tconnector{and}), c'est-à-dire la porte \tconnector{and} suivie de la porte \tconnector{not}.
+\myfigure{1}{
+	\tikzinput{portes_05a}
+}
+Mais nous préférons la voir comme une porte à part entière. 
+
+\myfigure{1}{
+	\tikzinput{portes_05b}
+}
+
+
+\begin{exemple}
+Un \emph{multiplexeur} est un circuit qui aiguille un signal entre deux entrées $P$ et $Q$ à l'aide d'un sélecteur $I$.
+Si $I$ vaut $\lone$ alors la sortie du circuit est la valeur de $P$.
+Si $I$ vaut $\lzero$ alors la sortie est la valeur de $Q$.
+Cela peut aussi être vu comme un test rudimentaire : \og{}Si $I=\lone$ faire ceci, sinon faire cela.\fg{}
+
+\myfigure{1}{
+	\tikzinput{portes_10}
+}
+\end{exemple}
+
+%--------------------------------------------------------------------
+\subsection{Arbres}
+
+On peut aussi représenter les connecteurs par des \defi{arbres} :
+
+\myfigure{1}{
+	\tikzinput{arbres_01}
+}
+
+
+\begin{exemple}
+Considérons la formule :
+\[	\big( P \land (Q \lor \lnot R) \big) \limplies (\lnot P \land R) \]
+L'arbre correspondant est :
+\myfigure{1}{
+	\tikzinput{arbres_02}
+}	
+\end{exemple}
+
+L'intérêt est que la structure d'arbre est adaptée au traitement algorithmique.
+Un parcours préfixe en profondeur considère la racine, puis explore le sous-arbre de gauche, puis le sous-arbre de droite.
+
+\medskip
+
+On peut aussi adopter la \defi{notation polonaise}, c'est-à-dire écrire $\land P Q$ (comme une fonction de deux variables $\land(P,Q)$) au lieu de $P \land Q$.
+En notation polonaise, la formule de l'exemple précédent s'écrit :
+\[
+\limplies \land P \lor Q \lnot R \land \lnot P R 
+\]
+C'est une expression particulièrement adaptée au traitement par ordinateur, car elle ne nécessite pas de parenthèses.
+Pour un humain, c'est plus lisible de l'écrire ainsi :
+\[
+\limplies \Big( \land \big(P\big) \big(\lor (Q) (\lnot R)\big) \Big)  \Big(\land (\lnot P) (R)\Big) 
+\]
+
+
+%--------------------------------------------------------------------
+\subsection{Formules algébriques}
+
+On note $\Bb = \{ \lzero, \lone \}$ les valeurs booléennes. 
+Dans cette section, on fait les calculs modulo $2$, c'est-à-dire qu'on écrit $\lone+\lone = \lzero$ (en toute rigueur on devrait écrire $\lone + \lone \equiv \lzero \pmod 2$).
+Noter que modulo $2$, on a $+\lone = - \lone$.
+
+On note $x,y \in \{ \lzero, \lone \}$.
+Voici les expressions algébriques qui transposent l'action des connecteurs :
+\[
+\begin{array}{l}
+\lnot x = \lone + x \\
+x \land y = x \times y \\
+x \lor y = x + y - xy \qquad \text{ ou inclusif}\\
+x \oplus y = x + y \qquad \text{ ou exclusif }	
+\end{array}
+\]
+Cela se justifie facilement, par exemple, si $x=\lzero$, alors $\lone+x=\lone$, et si $x=\lone$ alors $\lone+x=\lone+\lone=\lzero$. Donc $\lone+x$ correspond bien à $\lnot x$. 
+
+De même $x \times y$ ne peut valoir $\lone$ que si $x=\lone$ et $y=\lone$.
+
+\begin{exemple}
+	Ces expressions algébriques peuvent fournir des preuves. 
+	Par exemple la double négation se justifie par :
+	\[
+	\lnot \lnot x = \lnot(\lone + x) = \lone + (\lone +x) = \lone+\lone+x = x
+	\]
+	Voici une preuve de la loi de De Morgan sur la négation d'un \tand, $\lnot( x \land y ) = (\lnot x) \lor (\lnot y)$ :
+	\[ (\lnot x) \lor (\lnot y)
+	= (\lone+x) \lor (\lone +y) 
+	= (\lone+x) + (\lone +y) - (\lone+x)(\lone +y)
+	= x +y - \lone -x -y -xy
+	= \lone + xy
+	= \lnot(xy)
+	\]
+	On a utilisé $-\lone=+\lone$, donc $-xy=xy$.
+\end{exemple}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Exercices}
+
+\subsection*{Vrai/faux, connecteurs}
+
+\begin{exercicecours}
+	Soit $P$ : \og{}$2 \times 2 = 5$\fg{} et $Q$ : \og{}$4+4 > 7$\fg{}.
+	Dire si les propositions suivantes sont vraies ou fausses :
+	$\lnot P$, $\lnot Q$, $P \land Q$, $P \lor Q$, $P \limplies Q$, $Q \limplies P$, $P \lequiv Q$.
+\end{exercicecours}
+
+\begin{exercicecours}
+	On suppose $P$ vraie. Pour quelles valeurs de $Q$ les propositions suivantes sont-elles vraies : $P \land Q$, $P \lor Q$, $P \limplies Q$, $Q \limplies P$, $P \lequiv Q$ ? Même question si cette fois on suppose $P$ fausse.
+\end{exercicecours}
+
+
+\subsection*{Formules}
+
+\begin{exercicecours}
+Parmi les mots suivants lesquels sont des formules (au sens strict de la définition) :
+\[\lnot \lnot P\qquad (\lnot P \lor Q \land R) \qquad (P \limplies (Q  \land (R \land S))) \qquad (P, Q \limplies R) \qquad ( (P \land \lnot Q \limplies) (Q \lor R))
+\]	
+\end{exercicecours}
+
+\begin{exercicecours}
+	Dresser la table de vérité pour $\lnot(P \lor Q)$ et celle pour $(\lnot P) \land (\lnot Q)$. En déduire la loi de De Morgan pour $\lor$. 
+\end{exercicecours}
+
+\begin{exercicecours}
+	Prouver les formules d'associativité et de distributivité suivantes :
+	\[ P \lor (Q \lor R) \equiv (P \lor Q) \lor R \qquad \qquad
+	P \land (Q \lor R) \equiv (P \land Q) \lor (P \land R) \] 
+\end{exercicecours}
+
+\begin{exercicecours}
+	Montrer les équivalences logiques suivantes :
+	\[
+	P \limplies Q \land R \equiv (P \limplies Q) \land (P \limplies R) \qquad
+	P \lor Q \limplies R \equiv (P \limplies R) \land (Q \limplies R) \qquad
+	P \lequiv Q \equiv (P \lor Q) \limplies (P \land Q)
+	\]
+	Traduiser ces équivalences par une phrase en français.
+\end{exercicecours}
+
+
+\subsection*{Connecteurs (suite)}
+
+\begin{exercicecours}
+	Montrer que les formules suivantes sont des tautologies (elles sont toujours vraies, quelles que soient les valeurs de $P$ et $Q$) :
+	\[
+	P \lor (P \limplies Q) \qquad
+	(P \land Q) \limplies P \qquad
+	(P \limplies Q) \lor (P \limplies \lnot Q) \qquad
+	(P \limplies Q) \lor (\lnot P \limplies Q)
+	\]
+\end{exercicecours}
+
+\begin{exercicecours}
+	Pour chacune des formules suivantes, trouver une formule d'expression la plus simple possible qui lui est logiquement équivalente :
+	\[ Q \lor (P \land Q) \qquad
+	P \land (P \lor Q) \qquad
+	P \land (\lnot P \lor Q) \qquad
+	(P \lor Q) \limplies (P \land Q)
+	\]
+\end{exercicecours}
+
+\begin{exercicecours}
+	Soit $x \in \Rr$, $P$ : \og{}$x \ge 2$\fg{} et $Q$ : \og{}$x^2 \ge 4$\fg{}.
+	Trouver toutes les valeurs $x \in \Rr$, telles que $P \limplies Q$ soit vraie. Même question avec $Q \limplies P$, puis $P \lequiv Q$.
+\end{exercicecours}
+
+\begin{exercicecours}
+	~
+	\begin{enumerate}
+	\item Déterminer la table de vérité de $P \limplies (Q \limplies R)$, puis celle de $(P \limplies Q) \limplies R$. Conclusion ?
+	
+	\item Montrer que $P \lequiv (Q \lequiv R) \equiv (P \lequiv Q) \lequiv R$.
+	
+	\item Montrer que $P \limplies (Q \limplies R) \equiv (P \land Q) \limplies R \equiv Q \limplies (P \limplies R)$.
+	\end{enumerate}
+\end{exercicecours}
+
+\begin{exercicecours}
+	On rappelle que $P \oplus Q$ désigne le \og{}ou exclusif\fg{} (c'est vrai lorsque $P$ est vrai, ou $Q$ est vrai, mais pas les deux).
+	\begin{enumerate}
+	\item Calculer la table de vérité de $P \oplus Q$.
+	
+	\item Montrer que $P \oplus Q$ revient à \og{}$P \neq Q$\fg{}, c'est-à-dire qu'on a $P \oplus Q \equiv (P \land \lnot Q) \lor (\lnot P \land Q)$. Quel est le lien entre $\oplus$ et $\lequiv$ ?
+	
+	\item Montrer que $\oplus$ est commutative et associative.
+	
+	\item Exprimer $P \land (Q \oplus R)$ uniquement avec les connecteurs $\land$, $\lor$ et $\lnot$. Idem avec $P \oplus (Q \land R)$.
+	\end{enumerate}
+\end{exercicecours}
+
+\begin{exercicecours}
+	Soit $P_1,P_2,\ldots,P_n$, avec $n \ge 1$.
+	Quand est-ce que $P_1 \oplus P_2 \oplus \cdots \oplus P_n$ est vraie ?
+\end{exercicecours}
+
+
+\subsection*{Formules (suite)}
+
+\begin{exercicecours}
+	Les formules suivantes sont-elles satisfaisables ? Sont-elles des tautologies ?
+	\[
+	P \land Q \limplies P \qquad
+	(P \lor Q) \land (\lnot P \lor \lnot Q) \qquad
+	P \lor (Q  \land \lnot Q) \lequiv P \qquad
+	(P \limplies Q) \land (Q \limplies \lnot P)
+	\]
+	\[
+	\big( (P \limplies Q) \land (R \limplies S) \big) \limplies \big( (P \lor R) \limplies (Q \lor S) \big)
+	\]
+\end{exercicecours}
+
+\begin{exercicecours}
+	Montrer que les formules suivantes sont des tautologies :
+	\begin{enumerate}
+		
+		\item $P \land (P \limplies Q) \limplies Q$ (\emph{modus ponens})
+		
+		\item $(P \limplies Q) \land \lnot Q \limplies \lnot P$ (\emph{modus tollens})
+		
+		\item $(P \limplies Q) \lequiv (\lnot Q \limplies \lnot P)$ (contraposition)
+		
+		\item ($P \limplies Q) \lequiv \big( (P \land \lnot Q) \limplies \bot \big)$ (raisonnement par l’absurde)
+		
+		\item $\big((P \limplies Q) \land (Q \limplies R)\big) \limplies (P \limplies R)$ (syllogisme/transitivité de l’implication).
+		
+		\item $(P \land \top) \lequiv P$
+	\end{enumerate}
+\end{exercicecours}
+
+\begin{exercicecours}
+	~
+	\begin{enumerate}
+		\item Construire le circuit pour $P \land (Q \lor R)$ et celui pour $(P \land Q) \lor (P \land R)$. Vérifier qu'ils produisent les mêmes sorties.
+		
+		\item Montrer qu'en utilisant uniquement des portes \tconnector{nand}, on peut construire des circuits dont les sorties sont identiques à l'action de $\lnot$, $\land$, $\lor$.
+	\end{enumerate}
+\end{exercicecours}
+
+\begin{exercicecours}
+	Pour chacune des formules suivantes, construire l'arbre associé et donner l'expression selon la notation polonaise :
+	\[
+	\lnot P \land \big( Q \lor (P \land R)\big) \qquad\qquad
+	\big( (P \lor Q) \land \lnot R \big) \limplies \big( P \land (\lnot Q \land R) \big)
+	\]
+\end{exercicecours}
+
+\begin{exercicecours}
+	~
+	\begin{enumerate}
+		\item Justifier la formule algébrique $x \lor y = x+y-xy$.
+		
+		\item À l'aide des formules algébriques, montrer :
+		\[ x \land (y \land z) = (x \land y) \land z \qquad
+		x \lor (y \lor z) = (x \lor y) \lor z\qquad
+		x \land (y \lor z) = (x \land y) \lor (x \land z)
+		\]
+		
+		\item Calculer $x \land (y \oplus z)$ et $(x \land y) \oplus (x \land z)$. Conclusion ?
+		
+		\item Trouver une formule algébrique pour $x \limplies y$. Idem pour $x \lequiv y$.
+		
+		\item À l'aide des formules algébriques, montrer $x \limplies y = \lnot y \limplies \lnot x$.
+	\end{enumerate}	
+\end{exercicecours}
+
+
+\end{document}

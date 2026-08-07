@@ -1,0 +1,315 @@
+\documentclass[11pt,class=report,crop=false]{standalone}
+\usepackage[screen]{../logic}
+
+
+\begin{document}
+
+%====================================================================
+\chapitre[Un aperçu de l'incomplétude de Gödel]{Un aperçu de\\ l'incomplétude de Gödel} 
+%====================================================================
+
+
+% \insertvideo{}{partie 1.1. Titre}
+
+\objectifs{Avant de se lancer dans la construction des outils nécessaires à l'énoncé précis des théorèmes de Gödel et à leur preuve, on donne un aperçu d'ensemble des théorèmes d'incomplétude et du long chemin pour y parvenir.}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Énoncés des théorèmes}
+
+%--------------------------------------------------------------------
+\subsection{Énoncé pour l'arithmétique des entiers}
+
+Voici une version encore informelle du premier théorème d'incomplétude.
+
+\begin{theoreme}
+Dans la théorie des entiers naturels, il existe des formules vraies mais non démontrables.
+\end{theoreme}
+\index{theoreme incompletude@théorème d'incomplétude}
+
+On note $\mathcal{PA}$ la théorie de l'arithmétique des entiers. C'est une liste de formules, appelées \emph{axiomes de Peano} (par exemple \og{}$x+0=x$\fg{} et \og{}$x \times 0 = 0$\fg{}). Ils sont construits de sorte que les entiers $\Nn$ satisfont naturellement ces axiomes.
+
+Gödel ne parlait en fait pas de vérité dans son énoncé afin d'éviter les discussions du type paradoxe du menteur qui affirme \og{}Je suis un menteur\fg{}. Il construit plutôt une formule $\mathcal{G}$ telle que ni $\mathcal{G}$, ni $\lnot\mathcal{G}$ n'est démontrable. On parle alors d'une théorie \emph{incomplète} (d'où le nom du théorème).
+    
+Maintenant, si on se place sur le modèle $\Nn$ des entiers naturels, qui satisfont les axiomes de Peano, alors soit $\mathcal{G}$ est vraie, soit $\lnot\mathcal{G}$ est vraie, et on a bien l'une des deux formules qui est vraie mais non démontrable.
+
+
+%--------------------------------------------------------------------
+\subsection{Théorème général}
+
+On pourrait penser que c'est la faute des axiomes de Peano qui sont mal choisis ou pas assez nombreux. Mais le théorème de Gödel est en fait plus général.
+
+\begin{theoreme}
+Toute théorie $\mathcal{T}$ cohérente, contenant $\mathcal{PA}$ et ayant des axiomes récursifs est incomplète.
+\end{theoreme}
+\index{theoreme incompletude@théorème d'incomplétude}
+
+Oublions un moment les hypothèses et revenons à l'arithmétique de Peano.
+Puisque cette théorie est incomplète, il existe une formule $\mathcal{P}_0$ non démontrable dans $\mathcal{PA}$. Notons $\mathcal{T}_0 = \mathcal{PA}$ et $\mathcal{T}_1 = \mathcal{T}_0 \cup \{\mathcal{P}_0\}$ la nouvelle théorie obtenue en ajoutant à $\mathcal{T}_0$ la formule indémontrable $\mathcal{P}_0$.
+
+On a maintenant $\mathcal{P}_0$ démontrable dans $\mathcal{T}_1$ : $\mathcal{T}_1 \lturn \mathcal{P}_0$, car $\mathcal{P}_0$ est l'une des formules de $\mathcal{T}_1$. Malheureusement la version générale du théorème d'incomplétude affirme que cette nouvelle théorie $\mathcal{T}_1$ est aussi incomplète : il existe une formule $\mathcal{P}_1$ telle que ni $\mathcal{P}_1$, ni $\lnot \mathcal{P}_1$ ne sont démontrables. On pourrait rajouter $\mathcal{P}_1$ (ou $\lnot\mathcal{P}_1$) afin de construire une théorie $\mathcal{T}_2$,\ldots{} mais on ne fait que repousser le problème à l'infini.
+
+Ainsi, on aura beau rajouter une à une des formules indémontrables comme axiomes, il existera toujours des formules indémontrables. C'est l'incomplétude !
+
+
+%--------------------------------------------------------------------
+\subsection{Notions en jeu}
+
+Revenons sur les définitions des termes des hypothèses et de la conclusion.
+
+\textbf{Complétude.}
+\begin{itemize}
+    \item Une théorie $\mathcal{T}$ est \defi{incomplète} s'il existe une formule fermée $\mathcal{Q}$ telle que :
+\[
+\mathcal{T} \quad \not\lturn \quad \mathcal{Q} \qquad \text{et} \qquad \mathcal{T} \quad \not\lturn \quad \lnot \mathcal{Q}
+\]
+
+    \item Si on se place dans un \defi{modèle} de $\mathcal{T}$, c'est-à-dire une structure où toutes les formules de $\mathcal{T}$ sont satisfaites, alors dans ce cas, un des énoncés $\mathcal{Q}$ ou $\lnot\mathcal{Q}$ est vrai mais pas démontrable.
+\end{itemize}
+
+
+\bigskip
+
+\textbf{Cohérence.}
+
+\begin{itemize}
+    \item Une théorie $\mathcal{T}$ est \defi{incohérente} s'il existe une formule fermée $\mathcal{Q}$ telle que :
+\[
+\mathcal{T} \quad \lturn\quad \mathcal{Q} \qquad \text{et} \qquad \mathcal{T} \quad \lturn \quad \lnot\mathcal{Q}
+\]
+
+Elle est dite \defi{cohérente} sinon.
+
+    \item Notez bien que la définition de \og{}incohérente\fg{} n'est pas la négation de \og{}incomplète\fg{} car la négation d'un \og{}et\fg{} est un \og{}ou\fg{}.
+
+    \item Ainsi, une théorie incohérente prouve $\mathcal{T} \lturn (\mathcal{Q} \land \lnot\mathcal{Q})$ donc $\mathcal{T} \lturn \lantitauto$.
+    Alors par la règle d'explosion, $\mathcal{T} \lturn \mathcal{Q}$ (quelle que soit la formule $\mathcal{Q}$) donc on a aussi $\mathcal{T} \lturn \lnot\mathcal{Q}$.
+
+    \item Une théorie incohérente n'a donc pas d'intérêt puisqu'elle ne peut pas avoir de modèle. En effet, si elle possédait un modèle, et comme $\mathcal{T} \lturn \mathcal{Q}$ et $\mathcal{T} \lturn \lnot\mathcal{Q}$, par le théorème de validité, alors $\mathcal{Q}$ et $\lnot\mathcal{Q}$ devraient être toutes les deux vraies, ce qui fournit une contradiction.
+
+    \item Autrement dit si $\mathcal{T}$ admet un modèle alors $\mathcal{T}$ est cohérente.
+\end{itemize}
+
+\bigskip
+
+\textbf{Contenir $\mathcal{PA}$.}
+
+\begin{itemize}
+    \item Une théorie est un ensemble de formules, appelées axiomes.
+
+    \item $\mathcal{PA}$ est une théorie spécifique dont les formules sont les axiomes de Peano qui modélisent les entiers naturels $\Nn$.
+
+    \item L'hypothèse \og{}$\mathcal{T}$ contient $\mathcal{PA}$\fg{} signifie que tous les axiomes de Peano doivent être des axiomes de $\mathcal{T}$.
+
+    \item On dit alors que $\mathcal{T}$ est \og{}suffisamment riche\fg{}, c'est-à-dire qu'on doit pouvoir travailler avec les entiers naturels. C'est une exigence relativement faible !
+\end{itemize}
+
+\bigskip
+
+\textbf{Axiomes récursifs}
+
+\begin{itemize}
+    \item L'hypothèse que $\mathcal{T}$ a des axiomes récursifs (le terme courant est \og{}récursivement axiomatisable\fg{}) est plus technique. Cela signifie que l'on doit pouvoir reconnaître les axiomes.
+
+    \item Plus précisément pour une formule donnée, on doit pouvoir décider par un calcul (ou un algorithme) si c'est un axiome de $\mathcal{T}$ ou pas.
+
+    \item Encore une fois, c'est une hypothèse raisonnable : pour décider quels théorèmes on peut prouver il faut pouvoir identifier les axiomes qui servent d'hypothèse !
+\end{itemize}
+
+
+%--------------------------------------------------------------------
+\subsection{Second théorème}
+
+\begin{theoreme}
+Une théorie ne peut prouver sa propre cohérence.
+\end{theoreme}
+\index{theoreme incompletude (second)@théorème d'incomplétude (second)}
+
+Cela signifie concrètement qu'on ne peut espérer vérifier les hypothèses du théorème d'incomplétude en restant dans la théorie $\mathcal{T}$, il faudrait se placer dans un cadre plus large.
+
+Par exemple, on considère généralement que $\mathcal{PA}$ est une théorie qui a un modèle. En réalité, on a accepté implicitement l'existence des entiers naturels $\Nn$. Pour avoir une construction rigoureuse de $\Nn$, il faut se placer dans un cadre plus large, par exemple la théorie $\mathcal{ZFC}$ (voir le chapitre \og{}Arithmétiques de Peano\fg{}).
+
+
+
+%====================================================================
+\section{Conséquences}
+
+%--------------------------------------------------------------------
+\subsection{Conséquences mathématiques}
+
+Autour de 1900, Hilbert souhaite définir un cadre rigoureux pour les fondations de la logique. Dans les années 1800, on a déjà formalisé beaucoup de notions mathématiques : les réels, les limites, la continuité,\ldots{} Il est temps d'aller plus loin et d'axiomatiser complètement les mathématiques.
+
+L'objectif est de faire abstraction du monde physique (la continuité c'est tracer le graphe sans lever le crayon) et de n'avoir à écrire que des formules logiques. Cependant, on se retrouve vite confronté à des problèmes, comme le paradoxe de Russell : il n'est pas facile de définir ce qu'est un ensemble.
+
+Le premier et le second théorèmes de Gödel font exploser le programme de Hilbert. Après Gödel, il n'y a plus aucune chance d'obtenir une axiomatisation parfaite : 
+\begin{itemize}
+    \item d'une part, si on se place dans une théorie (suffisamment riche et cohérente), il y aura des formules vraies mais non démontrables, 
+
+    \item en plus on ne peut même pas prouver que la théorie est cohérente afin de garantir qu'on ne puisse pas prouver une chose et son contraire.
+\end{itemize}
+C'est donc fatal pour le programme de Hilbert.
+
+
+\bigskip
+
+Malgré ce choc, les théorèmes de Gödel ont eu des conséquences positives profondes bien au-delà d'un résultat concernant un petit cercle de logiciens. 
+
+Tout d'abord, les outils développés par Gödel sont précurseurs de la théorie de l'informatique. Par exemple, l'arithmétisation de la syntaxe (coder toute formule par un nombre) est une idée naturelle dans le monde numérique dans lequel nous vivons aujourd'hui, mais ce n'était pas le cas en 1930.
+
+Plus généralement, Gödel s'intéresse à savoir ce qui est calculable, bien avant la notion d'algorithme et les travaux de Turing (1936) sur un ordinateur théorique, la machine de Turing, et l'indécidabilité.
+
+
+\bigskip
+
+
+\textbf{L'hypothèse du continu.} 
+
+Même si Gödel construit une formule $\mathcal{G}$ explicite qui n'est pas démontrable, cette formule a pour seul intérêt de prouver le théorème.
+
+L'\defi{hypothèse du continu}\index{hypothese du continu@hypothèse du continu} est un énoncé beaucoup plus concret qui est, lui aussi, un énoncé indécidable (ni $\mathcal{HC}$ ni $\lnot\mathcal{HC}$ ne sont démontrables dans $\mathcal{ZFC}$).
+
+Cela a été prouvé par Cohen (en 1963), résolvant ainsi le premier de la liste des 23 problèmes de Hilbert.
+
+Expliquons ce problème.
+\begin{itemize}
+    \item Les ensembles $\Nn$, $\Zz$, $\Qq$ sont dénombrables (en bijection avec $\Nn$), ils ont donc le même cardinal, même si ce sont des ensembles infinis.
+    On note ce cardinal $\aleph_0$ (\emph{aleph} est la première lettre de l'alphabet hébreu).
+
+    \item Les ensembles $\Rr$, $[0,1]$, $\Rr^2$, $\Cc$ sont indénombrables, on note $2^{\aleph_0}$ leur cardinal (voir plus loin pour l'explication de cette notation).
+    
+    \item L'hypothèse du continu affirme qu'il n'y a pas d'autre type d'infini entre $\aleph_0$ et $2^{\aleph_0}$.
+
+    \item Autrement dit, si on note $\aleph_1$ le premier type d'infini strictement plus grand que $\aleph_0$, alors on a $\aleph_1 = 2^{\aleph_0}$.
+    
+    \item Cohen prouve donc qu'on ne peut pas répondre à cette question, ce qui fait qu'on peut choisir d'accepter ou de refuser $\mathcal{HC}$ indépendamment du reste.
+\end{itemize}
+
+\bigskip
+
+Revenons sur cette notation $2^{\aleph_0}$ pour le cardinal de $\Rr$.
+
+Pour $E, F$ deux ensembles, on note parfois $F^E$ l'ensemble des fonctions de $f : E \to F$. Cela se justifie par le fait que si $E$ et $F$ sont finis, le nombre de telles fonctions est $\Card(F)^{\Card(E)}$.
+Par exemple, si $F=\{0,1\}$ et $\Card(E)=n$, alors le nombre de fonctions $f: E \to \{0,1\}$ est $2^n$.
+
+Expliquons comment les réels de $[0,1]$ peuvent être décrits par des fonctions de $\Nn \to \{0,1\}$.
+Pour $x \in [0,1]$, on calcule l'écriture binaire : $x = 0.100110101\ldots =  \sum_{n=1}^\infty a_n 2^{-n}$ où $a_n \in \{0,1\}$.
+C'est comme l'écriture décimale à virgule mais avec seulement les chiffres 0 et 1.
+Ainsi, à chaque écriture binaire, on peut associer une fonction $f: \Nn \to \{0,1\}$ définie par $f(n) = a_n$.
+Cette correspondance est (à peu près) bijective.
+
+Ainsi le cardinal de $[0,1]$ est celui de $\{0,1\}^\Nn$ qui est $2^{\aleph_0}$ (où $\aleph_0$ désigne le cardinal de $\Nn$).
+
+C'est aussi l'occasion de rappeler le théorème de Cantor : 
+$\Card (\mathcal{P}(E)) > \Card(E)$ quel que soit l'ensemble $E$.
+Il est facile de voir que $\mathcal{P}(\Nn)$ correspond à $\{0,1\}^\Nn$. En effet, $A \subset \Nn$ définit naturellement un réel $x=0.0110001\ldots$ où on a $1$ à la $n$-ème place exactement lorsque $n \in A$. Ainsi $[0,1]$ a le même cardinal que $\mathcal{P}(\Nn)$ : $2^{\aleph_0}$ et ce cardinal est strictement plus grand que $\aleph_0$.
+
+
+%--------------------------------------------------------------------
+\subsection{Conséquence philosophique}
+
+Les théorèmes d'incomplétude sont parmi les rares résultats mathématiques modernes connus par les non-mathématiciens pour leur influence sur certains courants de pensée.
+
+Ces théorèmes rendent indéniable la différence fondamentale entre ce qui est vrai et ce qui est démontrable. Cela renforce le point de vue des platoniciens : la vérité est une réalité absolue, indépendante du monde qui nous entoure.
+
+Les théorèmes de Gödel prouvent aussi que les mathématiques ne sont pas qu'un jeu d'écriture sur des symboles abstraits, en montrant que la syntaxe (ce que l'on peut démontrer) ne correspond pas forcément à toute la sémantique (ce qui est vrai). 
+
+Ils questionnent aussi la différence entre humain et machine. 
+Si l'on modélise une machine par une théorie (les axiomes correspondant à des instructions), la machine ne pourra pas sortir de son cadre pour prouver sa propre cohérence. Par exemple, pour la phrase $\mathcal{G}$ de Gödel, qui dit \og{}Je ne suis pas démontrable dans $\mathcal{PA}$\fg{}, il faut se placer dans un cadre plus large, par exemple $\mathcal{ZFC}$, pour pouvoir dire que cette phrase est vraie. Est-ce qu'une machine peut englober toute la complexité des raisonnements humains ?
+
+
+\subsection{Ce que ne sont pas les théorèmes d'incomplétude}
+
+\textbf{Complétude et incomplétude.}
+
+Les théorèmes de complétude et les théorèmes d'incomplétude sont des théorèmes vrais, prouvés par Gödel, et ne sont pas contradictoires.
+
+On rappelle la complétude, pour toute formule $\mathcal{Q}$ :
+$$\mathcal{T} \quad \ldoubleturn \quad  \mathcal{Q} \qquad \text{ ssi } \qquad \mathcal{T} \quad \lturn \quad \mathcal{Q}$$
+
+Plaçons-nous maintenant dans le cadre d'une théorie $\mathcal{T}=\mathcal{PA}$ (ou contenant $\mathcal{PA}$) ayant pour modèle $\Nn$.
+
+Le théorème d'incomplétude affirme qu'il existe une formule $\mathcal{Q}$ telle que :
+$$\mathcal{T} \quad \not\lturn \quad \mathcal{Q} \qquad \text{et} \qquad \mathcal{T} \quad \not\lturn \quad \lnot\mathcal{Q}$$
+
+Il concerne des théories spécifiques (modélisant $\Nn$), alors que la complétude vaut quelle que soit la structure $\mathcal{S}$.
+
+L'incomplétude alliée à la complétude prouve que $\mathcal{Q}$ ne peut être vraie pour toutes les structures (car sinon, par la complétude, $\mathcal{Q}$ serait démontrable).
+
+Il existe donc des structures $\mathcal{S}$, différentes de $\Nn$, dans lesquelles $\mathcal{Q}$ est fausse (donc on n'a pas $\mathcal{T} \ldoubleturn \mathcal{Q}$) même si $\mathcal{S}$ satisfait les axiomes de Peano. On parle de modèle non standard des entiers.
+
+\bigskip
+
+\textbf{Les mathématiques et la logique sont-elles incohérentes ?}
+
+Le second théorème dit qu'une théorie ne peut prouver sa propre cohérence. Cela signifie qu'en restant dans le cadre strict de cette théorie, on ne sera jamais sûr qu'on ne peut pas prouver à la fois une formule $\mathcal{Q}$ et sa négation $\lnot\mathcal{Q}$.
+
+Cependant, si on se place dans un cadre plus grand, on peut s'en sortir.
+Par exemple, on prouve la cohérence de l'arithmétique à partir de la théorie $\mathcal{ZFC}$. Apparaît alors un problème de régression infinie : on ne peut pas être sûr de la cohérence de $\mathcal{ZFC}$. Il faudrait se placer dans une théorie encore plus grande...
+
+Il n'y a donc pas de cadre logique unique et universel au fondement des mathématiques.
+Le consensus empirique des mathématiques modernes est d'utiliser le cadre $\mathcal{ZFC}$ dans lequel personne n'a trouvé d'incohérence.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Plan de travail}
+
+Prouver le premier théorème d'incomplétude est un gros travail, assez technique avec quelques idées lumineuses (par exemple la fonction $\beta$ qui encode une liste quelconque de nombres avec seulement deux entiers !). Même cent ans après, cela reste difficile à aborder. On ne peut être qu'admiratif qu'une seule personne ait fait tout cela.
+
+On présente un par un les prochains chapitres.
+
+
+%--------------------------------------------------------------------
+\subsection{Arithmétique de Peano}
+
+On y décrit les 7 axiomes de Peano et le schéma d'axiomes de la récurrence qui régissent le comportement des entiers naturels. On décrira aussi d'autres théories plus faibles (de Presburger, de Robinson) et une théorie plus forte, la théorie de Zermelo-Fraenkel éventuellement augmentée de l'axiome du choix $\mathcal{ZFC}$.
+
+
+%--------------------------------------------------------------------
+\subsection{Codage de Gödel}
+
+C'est la partie \og{}arithmétisation de la syntaxe\fg{} : il faut coder chaque formule, et même chaque preuve, par un seul entier. On pourra alors donner une preuve informelle, mais qui reste dans l'esprit du premier théorème de Gödel, par un argument de diagonalisation. On en profitera pour motiver cette méthode de diagonalisation via le paradoxe de Russell et l'argument diagonal de Cantor.
+
+
+%--------------------------------------------------------------------
+\subsection{Fonctions récursives primitives}
+
+Il s'agit d'un des chapitres techniques. Les fonctions récursives primitives sont les fonctions $f : \Nn^p \to \Nn$ \og{}facilement calculables\fg{}. Le but est de voir que les opérations sur les formules, par exemple vérifier qu'une suite de formules est bien une preuve, sont facilement calculables.
+
+On abordera la construction de preuves à la Hilbert, plus adaptée que les preuves en déduction naturelle pour un traitement algorithmique.
+
+
+%--------------------------------------------------------------------
+
+\subsection{Fonctions représentables}
+
+Encore un chapitre technique qui fait le passage entre l'univers mathématique des entiers et le langage $\mathcal{L}_0$ de l'arithmétique de Peano. 
+On prouvera que toute fonction récursive primitive peut être traduite par une formule de $\mathcal{L}_0$. 
+On obtient ainsi une formule qui décide si une preuve est valide ou non, ainsi qu'une formule exprimant si un énoncé est démontrable ou pas.
+C'est dans ce chapitre qu'on expliquera la fonction $\beta$ de Gödel.
+
+%--------------------------------------------------------------------
+
+\subsection{Diagonalisation}
+
+On y expliquera comment obtenir une formule $\mathcal{G}$ qui parle d'elle-même.
+
+On y parlera aussi du paradoxe du menteur et d'un théorème de Tarski qui dit qu'il n'existe pas de formule qui définisse les formules vraies (alors qu'on a vu qu'on sait détecter les formules démontrables).
+
+
+%--------------------------------------------------------------------
+\subsection{Preuve du théorème d'incomplétude}
+
+On énoncera et prouvera le premier théorème d'incomplétude d'abord dans le cadre de l'arithmétique de Peano, puis dans le cadre des théories plus larges. La preuve est basée sur le lemme de diagonalisation afin d'obtenir une phrase qui dit \og{}Je ne suis pas démontrable\fg{}.
+
+
+%--------------------------------------------------------------------
+\subsection{Le second théorème d'incomplétude}
+
+On terminera par l'énoncé du second théorème et on en donnera une preuve sans entrer dans les détails.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\section*{Exercices}
+
+
+\end{document}

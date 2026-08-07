@@ -1,0 +1,650 @@
+\documentclass[11pt,class=report,crop=false]{standalone}
+\usepackage[screen]{../logic}
+
+
+\begin{document}
+
+
+%====================================================================
+\chapitre{Logique du premier ordre}
+%====================================================================
+
+% \insertvideo{}{partie 1.1. Titre}
+
+
+\objectifs{On considère un langage avec des variables et les quantificateurs \og{}pour tout\fg{} et \og{}il existe\fg{}. On enrichit ce langage avec des prédicats et des fonctions.}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Motivation}
+
+
+%--------------------------------------------------------------------
+\subsection{Quantificateurs}
+
+\index{quantificateurs@quantificateurs $\forall$, $\exists$}
+\index{101@$\forall$}
+\index{102@$\exists$}
+
+La logique Vrai/Faux des chapitres précédents est au final assez limitée et ne permet pas d'exprimer les phrases naturelles d'un cours de mathématiques.
+Dans ce chapitre, on considère un langage plus puissant : la logique du premier ordre. Elle permet d'écrire les phrases suivantes :
+\begin{itemize}
+	\item \og{}$\forall n \in \Zz \quad  n^2 \ge 0$\fg{} : \og{}pour tout entier relatif, son carré est positif\fg{}.
+	
+	\item \og{}$\exists z \in \Cc \quad  z^2 = -1$\fg{} : \og{}il existe un nombre complexe dont le carré vaut $-1$\fg{}. 
+	
+	\item \og{}$\forall g \in G \ \ \exists g' \in G \quad  g \circ g' = e$\fg{} : \og{}tout élément de $G$ admet un inverse\fg{}, pour un groupe $(G,\circ)$ d'élément neutre $e$.
+\end{itemize}
+
+Avec ce langage, on peut définir des notions compliquées avec des nuances subtiles. Par exemple, soit $f : \Rr \to \Rr$ une fonction.
+\begin{itemize}
+	\item La continuité sur $\Rr$ se définit par :
+	\[
+	\forall x \in \Rr \quad  \forall \epsilon > 0 \quad \exists \delta > 0 \quad \forall y \in \Rr
+	\qquad  |x-y| < \delta \limplies |f(x)-f(y)| < \epsilon
+	\]
+	
+	\item Alors que la continuité uniforme se définit par :
+	\[
+	\forall \epsilon > 0 \quad \exists \delta > 0 \quad \forall x \in \Rr \quad \forall y \in \Rr
+	\qquad  |x-y| < \delta \limplies |f(x)-f(y)| < \epsilon
+	\]	
+
+\end{itemize}
+
+
+%--------------------------------------------------------------------
+\subsection{Nouveautés}
+
+La principale nouveauté, c'est bien sûr l'apparition des quantificateurs \og{}$\forall$\fg{} et \og{}$\exists$\fg{}. En une phrase \og{}$\forall n \in \Nn \ \ n^2 \ge 0$\fg{}, on exprime une infinité de vérités.
+Avec la logique Vrai/Faux on ne saurait pas prouver une telle affirmation, car on devrait considérer le cas $n=0$, puis $n=1$, etc., donc avec un nombre infini d'étapes. Ici on considère la phrase \og{}$\forall n \in \Nn \ \ n^2 \ge 0$\fg{} comme une seule affirmation à prouver.
+
+\medskip
+
+Le second intérêt de la logique du premier ordre est qu'elle s'applique à des situations variées.
+En logique propositionnelle, on considérait des formules et la satisfaction consistait à remplacer les variables par des valeurs \ltrue/\lfalse.
+Ici on souhaite toujours décider si une formule est vraie ou fausse, mais 
+les variables correspondent à des objets plus généraux. Par exemple considérons la formule :
+\[
+\big( \forall x \quad P(x)\big) \lor \big( \exists x \quad \lnot P(x)\big)
+\]
+Elle s'applique avec des $x$ dans un ensemble quelconque, mais aussi avec n'importe quel prédicat $P(x)$. En français, elle signifie \og{}une propriété est vraie pour tous les éléments, ou bien il existe un élément pour lequel elle n'est pas vraie\fg{}.
+Voici ce qui donne cette formule dans trois structures différentes :
+\begin{itemize}
+	\item $\big( \forall x \in \Rr \quad x^2 \neq 0\big) \lor \big( \exists x \in \Rr \quad x=0\big)$
+	
+	\item $\big( \forall n \in \Nn \quad n+1>n\big) \lor \big( \exists n \in \Nn \quad n+1 \le n\big)$
+	
+	\item $\big( \forall g \in G \quad g \circ g = e\big) \lor \big( \exists g \in G \quad \lnot (g\circ g = e) \big)$, dans un groupe $G$.
+\end{itemize}
+
+Les langages du premier ordre s'adaptent à une grande variété de structures (ensembles, groupes, corps, espaces vectoriels\ldots) et aux démonstrations qui vont avec.
+
+
+%--------------------------------------------------------------------
+\subsection{Limitations}
+
+La logique du premier ordre est puissante, cependant il y a certaines choses qu'il n'est pas possible d'exprimer avec ces langages. Le plus flagrant est qu'il n'est pas possible de trouver une formule pour décider si un ensemble est fini ou non (ce qui entraîne par exemple qu'on ne peut pas définir la notion de dimension d'un espace vectoriel). 
+Travailler en logique du premier ordre signifie que l'on considère des éléments dans un ensemble $E$, noté \og{}$x \in E$\fg{}, mais on ne peut pas travailler avec l'ensemble des parties $A \subset E$. 
+Ainsi, la phrase \og{}toute partie non vide admet un plus petit élément\fg{} (qui est la définition d'un ensemble \emph{bien ordonné}) est une phrase exprimée dans la \emph{logique du second ordre} car elle porte sur les sous-ensembles et pas sur les éléments.
+En conclusion, la logique du premier ordre décrit bien les propriétés locales des objets, mais moins bien les propriétés globales liées à l'infini.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Langage}
+
+Il faut comprendre un langage de la logique du premier ordre comme un cadre général commun qu'on spécialisera ensuite à chaque situation (les entiers, les réels, les groupes\ldots).
+
+%--------------------------------------------------------------------
+\subsection{Éléments de langage}
+
+Les formules de la logique du premier ordre sont construites à partir de langages composés des éléments suivants.
+
+\evidence{Symboles logiques}
+\begin{itemize}
+	\item \defi{variables}\index{variable} : $x$, $y$, $z$, $x_1,x_2,\ldots$
+	
+	\item parenthèses : \ $($ \ et \ $)$
+	
+	\item connecteurs\index{connecteur} : $\lnot$, $\land$, $\lor$, $\limplies$, $\lequiv$
+	
+	\item \defi{quantificateurs}\index{quantificateurs@quantificateurs $\forall$, $\exists$} : \ $\forall$ (pour tout), \ $\exists$ (il existe)
+\end{itemize}
+
+\evidence{Symboles non logiques}
+\begin{itemize}
+	\item \defi{constantes}\index{constante} : $a$, $b$, $c$, $c_1, c_2, \ldots$
+	
+	\item \defi{prédicats}\index{predicat@prédicat} : $P(x)$, $P(x,y)$,\ldots, $P(x_1,\ldots,x_n)$ ; dont l'égalité $x=y$
+	
+	\item \defi{fonctions} : $f(x)$, $f(x,y)$,\ldots, $f(x_1,\ldots,x_n)$
+\end{itemize}
+
+Nous revenons en détail ci-dessous sur les nouvelles notions.
+Dans un premier temps on va considérer des langages sans fonctions ; on les ajoutera à la fin de ce chapitre.
+
+%--------------------------------------------------------------------
+\subsection{Symboles logiques}
+
+Le langage est beaucoup plus riche que celui de la logique Vrai/Faux. 
+On retrouve bien sûr les connecteurs logiques (et les parenthèses) qui joueront ici le même rôle qu'en logique propositionnelle.
+Détaillons les nouveautés.
+
+\begin{itemize}
+	\item \textbf{Quantificateur universel $\forall$.}
+	C'est un A inversé, introduit par Gerhard Gentzen en 1935, comme initiale de \emph{all} ou \emph{alle}. 
+	Il se lit \og{}pour tout\fg{} ou \og{}quel que soit\fg{}.
+	
+	\item \textbf{Quantificateur existentiel $\exists$.}
+	C'est un E inversé, introduit par Giuseppe Peano à la fin du \textsc{xix}\ieme{} siècle. 
+	Il se lit \og{}il existe\fg{} ou \og{}il y a au moins un\fg{}.
+	
+	\item \textbf{Variables.}
+	Elles servent à parler des objets manipulés sans les nommer individuellement.
+	Ainsi \og{}$\forall x \ P(x)$\fg{} ou \og{}$\exists x \ P(x)$\fg{} va s'appliquer à tous les $x$ (ou à un $x$), mais il n'y a pas vraiment un objet nommé $x$. On parle de \defi{variable liée} (ou \emph{variable muette}). Ainsi \og{}$\forall y \ P(y)$\fg{} aurait la même signification.
+	
+	Note : pour les variables, on réserve les lettres de la fin de l'alphabet $x,y,z$, avec des indices si besoin.
+\end{itemize}
+
+
+%--------------------------------------------------------------------
+\subsection{Symboles non logiques}
+
+C'est aussi une nouveauté de la logique du premier ordre. On veut des constructions et des théories qui s'appliquent à de nombreuses situations. 
+Les constantes, les prédicats et les fonctions sont des éléments comme des coquilles vides, qu'il faudra préciser à chaque application.
+ 
+\begin{itemize}
+	\item \textbf{Constantes.}
+	Notées $a, b, c, c_1, c_2,\ldots$ ce sont des symboles du langage qui vont servir à distinguer certains éléments.
+	On peut par exemple définir un langage adapté à la notion de groupe avec une constante $c$, qui jouera le rôle de l'élément neutre
+	$e$, $0$, $1$,\ldots{} selon le groupe considéré.
+	Lors de la définition du langage, on décide du nom et du nombre des constantes.
+	
+	
+	\item \textbf{Prédicats.}
+	Un prédicat est un peu comme une super-proposition de la logique Vrai/Faux, cela renvoie une valeur \ltrue/\lfalse, mais en fonction de la valeur d'un ou plusieurs paramètres.
+	Leur symbole dans le langage sera souvent $P$, $Q$ ou $R$.
+	\begin{itemize}
+		\item Prédicat unaire $P$, noté $P(x)$ : \og{}est-ce que $x$ a la propriété $P$ ?\fg{} (cela peut être vrai ou faux selon la valeur affectée à $x$).
+		
+		Par exemple un tel prédicat pourra désigner \og{}$x^2 \ge x$\fg{} ou \og{}$x^2=1$\fg{} ou \og{}$x^5+x^3+1=0$\fg{} \ldots{}
+		Cela peut être vrai ou faux en fonction de $x$.
+		
+		
+		\item Prédicat binaire $P$, noté $P(x,y)$ : \og{}est-ce que $(x,y)$ a la propriété $P$ ?\fg{}, mais qui peut aussi être compris comme 
+		\og{}est-ce que $x$ est en relation $P$ avec $y$ ?\fg{}.
+		
+		Par exemple un prédicat binaire peut désigner \og{}$x < y$\fg{} ou \og{}$x^2+y^2 = 1$\fg{}\ldots{}
+		
+		\item L'\defi{égalité}\index{egalite@égalité} \og{}$x = y$\fg{} est un prédicat binaire spécial. Sauf mention contraire (et rare) on supposera toujours que l'égalité est présente dans le langage.
+		
+		\item Prédicat $n$-aire $P(x_1,\ldots,x_n)$ (on parle aussi de prédicat à $n$ places).
+	\end{itemize}
+	Encore une fois, ce qu'est concrètement chaque prédicat devra être précisé dans chaque structure.
+	Au niveau du langage c'est juste un symbole $P$, mais on se permettra de le noter $P(x)$ ou $P(x_1,\ldots,x_n)$	afin de clarifier le nombre de places.
+	
+	
+	\item \textbf{Fonctions.}
+	À la fin du chapitre on ajoutera des fonctions au langage.
+	Par exemple $f(x)$ (qui peut représenter $f(x)=2x+3$ ou $f(x) = 1/x$, \ldots), 
+	$f(x,y)$ (pour $f(x,y)=x+y$ ou $f(x,y) = x \times y$, \ldots).
+	Les fonctions ajoutent une certaine technicité à la définition de la notion de formule, donc pour l'instant nos langages n'auront pas de fonctions.
+\end{itemize}
+ 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Formules}
+
+%--------------------------------------------------------------------
+\subsection{Définitions}
+
+Comme le langage est riche, il y a un vocabulaire spécifique qu'il faut bien maîtriser.
+
+
+Soit $\mathcal{L}$ un langage sans fonctions.
+
+\begin{definition}
+On appelle \defi{terme}\index{terme} d'un langage les variables ou les constantes.	
+\end{definition}
+
+Remarque : on modifiera cette définition pour les langages avec fonctions (voir en fin de chapitre).
+
+\begin{definition}
+On appelle \defi{formule atomique}\index{formule!atomique} un mot de la forme $P(t_1,\ldots,t_n)$ où $P$ est un prédicat $n$-aire et $t_1, \ldots, t_n$ sont des termes.
+\end{definition}
+ 
+\begin{definition}
+L'ensemble des \defi{formules} $\text{Form}(\mathcal{L})$ du langage est construit selon les règles suivantes :
+\begin{itemize}
+	\item les formules atomiques sont des formules,
+	
+	\item si $\mathcal{P}$ et $\mathcal{Q}$ sont des formules alors
+	$\lnot \mathcal{P}$, 
+	$(\mathcal{P} \land \mathcal{Q})$,
+	$(\mathcal{P} \lor \mathcal{Q})$,
+	$(\mathcal{P} \limplies \mathcal{Q})$,
+	$(\mathcal{P} \lequiv \mathcal{Q})$ sont aussi des formules,
+	 
+	\item si $x$ est une variable et $\mathcal{P}$ est une formule alors 
+	\[\forall x \ \ \mathcal{P} 
+	\qquad \text{ et } \qquad
+	\exists x \ \ \mathcal{P} 
+	\]
+	sont aussi des formules,
+	
+	\item aucun autre mot n'est une formule.
+\end{itemize}
+\end{definition}
+
+%--------------------------------------------------------------------
+\subsection{Remarques}
+
+\begin{itemize}
+	\item L'écriture \og{}$\forall x \ \mathcal{P}$\fg{} est un mot du langage, et dans ce langage $x$ est une variable abstraite, pas un élément d'un ensemble. Lorsque l'on interprétera ultérieurement la formule, on définira un domaine $E$, par exemple $\Nn$, $\Rr$, $G$, \ldots{} et alors la formule deviendra \og{}$\forall x \in \Nn \ \ \mathcal{P}$\fg{} ou
+	 \og{}$\forall x \in \Rr \ \ \mathcal{P}$\fg{}, etc.
+	
+	\item Le cas intéressant est bien sûr celui où la formule $\mathcal{P}$ dépend effectivement de la variable $x$. On se permettra souvent de noter une formule $\mathcal{P}(x)$ pour montrer sa dépendance en la variable $x$. 
+	Ainsi on écrira plutôt \og{}$\forall x \ \ \mathcal{P}(x)$\fg{}
+	ou \og{}$\forall x \ \exists y \ \ \mathcal{P}(x,y)$\fg{}\ldots
+	
+	\item Comme d'habitude on s'autorisera à ajouter et supprimer des parenthèses pour clarifier les formules. Par exemple on écrira :
+	\og{}$(\forall x \ \mathcal{P}) \limplies (\exists y \ \mathcal{Q})$\fg{}
+	au lieu de la formule officielle \og{}$(\forall x \ \mathcal{P} \limplies \exists y \ \mathcal{Q})$\fg{}
+\end{itemize}
+
+La définition de formule donnée ci-dessus était la définition inductive (\og{}par le haut\fg{}) de $\text{Form}(\mathcal{L})$. On peut aussi en donner une définition récursive (\og{}par le bas\fg{}).
+
+On définit $\text{Form}(\mathcal{L}) = \bigcup_{n\ge0} \text{Form}_n(\mathcal{L})$, avec :
+\[
+\text{Form}_0(\mathcal{L}) \quad \text{est l'ensemble des formules atomiques}
+\]
+puis, pour $n \ge 0$:
+\begin{align*}
+	\text{Form}_{n+1}(\mathcal{L})
+	&= \text{Form}_n(\mathcal{L})\\
+	& \quad\quad \cup \big\{ \lnot \mathcal{P} \mid \mathcal{P} \in \text{Form}_n(\mathcal{L}) \big\}\\
+	& \quad\quad  \cup \big\{ (\mathcal{P} \land \mathcal{Q}) \mid \mathcal{P}, \mathcal{Q} \in \text{Form}_n(\mathcal{L}) \big\}\\
+	&\quad\quad \cup \cdots\\
+	&\quad\quad\quad \cup \big\{ \forall x_k \  \mathcal{P} \mid x_k \text{ variable}, \mathcal{P} \in \text{Form}_n(\mathcal{L}) \big\} \\
+	&\quad\quad\quad \cup \big\{ \exists x_k \ \mathcal{P} \mid x_k \text{ variable},\mathcal{P} \in \text{Form}_n(\mathcal{L}) \big\} \\	
+\end{align*}
+où l'union porte bien sûr aussi sur les connecteurs $\lor$, $\limplies$, $\lequiv$ et où on a noté $x_1, x_2, \ldots$ l'ensemble des variables de $\mathcal{L}$.
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Exemples}
+
+Prenons un peu d'avance sur le prochain chapitre avec des exemples de structures afin de mieux comprendre les notions précédentes.
+
+
+%--------------------------------------------------------------------
+\subsection{Avec des entiers}
+
+On souhaite modéliser les entiers naturels avec un zéro et une relation d'ordre.
+On définit un langage $\mathcal{L} = (c, P)$ avec une constante $c$ et un prédicat binaire $P$, noté aussi $P(x,y)$ (il y a aussi par défaut le prédicat d'égalité $x=y$).
+En toute rigueur on devrait aussi préciser le nom des variables, mais on utilisera la convention de nommage $x, y, \ldots$ partout.
+
+Voici une formule du langage :
+\[
+\forall x \ \ \exists y \quad P(x,y)
+\]
+
+Pour pouvoir utiliser ce langage, on précise un domaine, par exemple ici $E = \Nn$. Ensuite il faut définir tous les symboles non logiques :
+\begin{itemize}
+	\item la constante : $c=0$, 
+	
+	\item le prédicat : $P(x,y)$ : \og{}$x < y$\fg{}.
+\end{itemize}
+Les symboles logiques, eux, ne doivent pas être spécifiés : la variable $x$ reste une variable, le connecteur $\land$ reste le \tand, etc.
+On a ainsi défini une \defi{structure}\index{structure}, notée $\mathcal{S}$.
+Dans cette structure, la formule précédente s'interprète en :
+\[
+\forall x \in \Nn \ \ \exists y \in \Nn \quad x < y,
+\]
+c'est-à-dire \og{}pour tout entier, il existe un entier encore plus grand\fg{}.
+
+Pour le même langage $\mathcal{L}$, on peut faire d'autres choix de structure et la même formule s'interprète différemment.
+
+\medskip
+
+Voici quelques exemples pour illustrer le vocabulaire lié aux formules avec à chaque fois un mot du langage et son interprétation dans la structure.
+
+Commençons par les termes : il n'y a que la constante $c$ et les variables $x,y,\ldots$ Dans la structure on remplace $c$ par $0$.
+\begin{center}
+\begin{tabular}{c|c}
+	Terme dans $\mathcal{L}$ & Interprétation dans $\mathcal{S}$ \\
+	\hline
+	$c$ & $0$ \\
+	$x$ & $x$ 	
+\end{tabular}
+\end{center}
+
+
+Les formules atomiques sont formées par un prédicat. Ici, seul le prédicat $P$ est défini et est interprété par $x<y$ dans la structure. On a en plus toujours le prédicat d'égalité \og{}$x=y$\fg{}.
+\begin{center}
+\begin{tabular}{c|c}
+Formule atomique dans $\mathcal{L}$ & Interprétation dans $\mathcal{S}$ \\
+\hline
+$P(c,x)$ & $0 < x$ \\
+$P(c, c)$ & $0 < 0$ \\
+$P(x,y)$ & $x < y$ \\
+$P(y,x)$ & $y < x$ \\
+$x=c$ & $x=0$ \\
+\end{tabular}
+\end{center}
+
+Pour les formules, on autorise les connecteurs et les quantificateurs.
+Une formule \og{}$\forall x \ \ \mathcal{P}$\fg{} s'interprète dans la structure en \og{}$\forall x \in \Nn \ \ \mathcal{P}$\fg{}.
+\begin{center}
+\begin{tabular}{c|c}
+Formule dans $\mathcal{L}$ & Interprétation dans $\mathcal{S}$ \\
+\hline
+$\forall x \quad P(c,x)$ & $\forall x \in \Nn \quad 0 < x$ \\
+$\exists y  \quad x=y$  & $\exists y \in \Nn \quad x=y$ \\
+$\forall x \quad P(c,x) \lor (x=c)$ 
+& $\forall x \in \Nn \quad (0<x) \lor (x=0)$ \\
+$\forall x \ \forall y \quad P(x,y) \limplies (\exists z \quad P(x,z) \land P(z,y))$ & $\forall x \in \Nn \ \forall y \in \Nn \quad (x<y) \limplies (\exists z \in \Nn \quad (x<z) \land (z<y))$
+\end{tabular}
+\end{center}
+
+La dernière formule s'interprète avec les entiers sous la forme \og{}entre deux entiers distincts, on peut trouver un entier strictement compris entre les deux\fg{}. C'est clairement faux (par exemple, il n'y a aucun entier strictement compris entre $7$ et $8$). Ce serait vrai pour une autre structure où le domaine est l'ensemble des réels $\Rr$ (entre deux réels distincts, il existe même une infinité de réels).
+% Mais ce serait faux  si on considérait une autre structure de domaine $\Rr$ où $P(x,y)$ désignerait cette fois l'inégalité large $x \le y$. FAUX
+ 
+ 
+ 
+%--------------------------------------------------------------------
+\subsection{Avec des graphes}
+
+\index{graphe}
+
+On veut modéliser des graphes (comme par exemple sur le dessin ci-dessous).
+On définit un langage $\mathcal{L}$ avec le prédicat binaire $R$ (et aucune constante).
+
+Dans ce langage, les seuls termes sont les variables, $x$ et $y$ par exemple.
+Les formules atomiques sont $R(x,x)$, $R(x,y)$, $R(y,x)$, $R(y,y)$ et aussi $x=x$, $x=y$, $y=x$, $y=y$.
+Voici un exemple de formule :
+\[
+\forall x \ \  \exists y \quad R(x,y)
+\]
+
+Nous avons notre langage. Comment modéliser un graphe ?
+Voici le graphe orienté que l'on souhaite modéliser :
+
+
+\myfigure{0.8}{\tikzinput{fig_premierordre_01}}
+
+
+Il y a trois sommets, on va donc définir une structure dont le domaine est l'ensemble des trois éléments $E = \{r, s, t\}$.
+Dans la structure, c'est le prédicat qui décrit les arêtes :
+on interprète le prédicat $R$ en disant que $R(x,y)$ est vrai s'il existe une arête allant de $x$ vers $y$ (on dit que $x$ est en relation avec $y$).
+Ainsi pour notre exemple, on définit le prédicat dans la structure par :
+\[
+R(r,s) = \ltrue, \quad R(s,t) = \lfalse,\quad R(t,s) = \ltrue, \ldots
+\]
+
+La formule précédente du langage $\mathcal{L}$ s'interprète dans cette structure comme :
+\[
+\forall x \in \{r,s,t\} \quad \exists y \in \{r,s,t\} \quad R(x,y)
+\]
+Autrement dit, \og{}pour tout sommet $x$, il existe un sommet $y$ pour lequel on a une arête de $x$ vers $y$\fg{}, en d'autres termes \og{}de tout sommet part au moins une arête\fg{}, ce qui est vrai pour le graphe considéré.
+
+Voici des phrases du langage. À vous de déterminer ce qu'elles signifient pour les graphes et si, pour l'exemple de graphe ci-dessus, elles sont vraies ou fausses.
+\begin{itemize}
+	\item $\forall x \ \forall y \quad R(x,y)$
+	
+	\item $\exists x \ \exists y \quad R(x,y)$
+	
+	\item $\exists x \ \forall y \quad R(x,y)$
+	
+	\item $\forall x \ \forall y \quad R(x,y) \lor R(y,x)$	
+	
+	\item $\exists x \ \exists y \quad R(x,y) \land R(y,x)$		
+\end{itemize}
+
+
+%--------------------------------------------------------------------
+\subsection{Il existe exactement un, il existe deux}
+
+\begin{itemize}
+	\item \og{}$\exists x \ P(x)$\fg{} demande l'existence d'au moins un $x$ pour lequel $P(x)$ est vérifié. Il peut y en avoir un ou plusieurs.
+	
+	\item Voici comment exprimer qu'il existe exactement un élément qui vérifie $P(x)$ :
+	\[
+	\big( \exists x \quad P(x) \big) \land 
+	\big( \forall x \ \forall y \quad (P(x) \land P(y) \limplies x=y) \big)
+	\]
+	On exige d'une part l'existence d'un élément, et d'autre part s'il en existe un autre, c'est le même.
+	On n'utilisera pas la notation \og{}$\exists !$\fg{}.
+	
+	
+	\item Voici comment exprimer qu'il existe au moins deux éléments :
+	\[
+	\exists x \ \exists y \quad (x \neq y) \land P(x) \land P(y)
+	\]
+	On note $\lnot (x=y)$ par $x \neq y$.
+\end{itemize}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Langage avec fonctions}
+
+%--------------------------------------------------------------------
+\subsection{Fonctions}
+
+Une \defi{fonction}\index{fonction} $f$ prend en entrée un ou plusieurs objets et renvoie en sortie un objet. Il ne faut pas confondre les fonctions avec les prédicats : les prédicats prennent aussi des objets en entrée mais renvoient une valeur \ltrue/\lfalse.
+
+Voici des exemples d'interprétation de fonctions :
+\begin{itemize}
+	\item $f(x) = x^2$, fonction à une variable (ici pour les réels),
+	
+	\item $f(x,y) = x \% y$, reste de la division euclidienne de $x$ par $y$ (ici pour les entiers).
+\end{itemize}
+Par contre $P(x)$ : \og{}$x=0$\fg{} et $Q(x,y)$ : \og{}$x<y$\fg{} sont des prédicats, pas des fonctions.
+
+Dorénavant, on s'autorise l'ajout de fonctions $n$-aires (ou à $n$ places) comme symboles non logiques du langage.
+Comme pour les prédicats, on notera souvent abusivement les fonctions par $f(x)$, $f(x,y)$, $f(x_1,\ldots,x_n)$, alors que le symbole du langage est bien seulement $f$.
+
+
+%--------------------------------------------------------------------
+\subsection{Formules}
+
+Avec l'introduction des fonctions, il faut adapter notre définition de la notion de formule.
+
+Soit $\mathcal{L}$ un langage (avec ou sans fonctions).
+\begin{definition}
+	On appelle \defi{terme}\index{terme} d'un langage :
+	\begin{itemize}
+		\item les variables et les constantes,
+		
+		\item et si $t_1,\ldots,t_n$ sont des termes et $f$ un symbole de fonction $n$-aire, alors $f(t_1,\ldots,t_n)$ est aussi un terme.
+	\end{itemize}
+\end{definition}
+Noter que la définition est récursive.
+
+La définition de \defi{formule atomique}\index{formule!atomique} est inchangée : c'est une expression de la forme 
+$P(t_1,\ldots,t_n)$ où $P$ est un prédicat $n$-aire et $t_1, \ldots,t_n$ sont des termes (avec notre nouvelle définition).
+
+La définition de \defi{formule}\index{formule} est inchangée, c'est la même construction à l'aide des formules atomiques, des connecteurs, des quantificateurs (sauf que bien sûr les termes et les formules atomiques peuvent maintenant contenir des fonctions).
+
+%--------------------------------------------------------------------
+\subsection{Exemples}
+
+Soit $\mathcal{L}$ le langage formé par :
+\begin{itemize}
+	\item des constantes $a, b$,
+	
+	\item un prédicat binaire $P$, noté (abusivement) $x < y$,
+	
+	\item une fonction unaire $f$, une fonction binaire $g$.
+\end{itemize}
+
+
+\begin{itemize}
+	\item Exemples de termes :
+	\[
+	a, \quad y, \quad f(x), \quad g(a,y), \quad g\big( f(x), b \big), \quad f\big( g(y,x) \big), \quad\ldots
+	\]
+	
+	
+	\item Exemples de formules atomiques :
+	\[
+	x < a, \quad f(x) < f(y), \quad g( a, f(b) ) < x, \quad\ldots
+	\]
+	
+	\item Exemples de formules :
+	\[
+	\lnot(x < y), 
+	\quad (f(x) < a) \land (f(y) < b), 
+	\quad \forall x \ f(x) < b,
+	\quad \exists x \ g(x,y) = a,
+	\]
+	\[
+	\forall x  \quad (f(x) < a) \limplies (\exists y \ g(x,y) < b)
+	\]	
+\end{itemize}
+
+
+Comme auparavant, on anticipe sur la notion de structure afin de rendre concrètes ces fonctions.
+On peut par exemple se placer sur l'ensemble des réels $\Rr$ et considérer l'interprétation suivante des symboles non logiques :
+\begin{itemize}
+	\item $a=0$, $b=1$, 
+	
+	\item $P(x,y)$ désigne l'inégalité stricte usuelle $x< y$,
+	
+	\item $f(x) = x^2$ et $g(x,y)=x+y$.
+\end{itemize}
+
+\begin{itemize}
+	\item Exemples de termes dans cette interprétation :
+	\[
+	x+1, \quad y^2, \quad x^2 + y,\quad (x+y)^2, \quad x + (y^2+1)^2,\quad \ldots
+	\]
+	
+	
+	\item Exemples de formules atomiques dans cette interprétation :
+	\[
+	x < 0, \quad x+y < x^2, \quad x^2+y^2 = 1, \quad\ldots
+	\]
+	
+	\item Exemples de formules dans cette interprétation :
+	\[
+	(x^2+y^2 < 1) \limplies ( (x < 1)\land (y < 1) ), 
+	\quad \forall x \ \  x^2 < x+y,
+	\quad (y < 1) \limplies (\exists x \ \  x^2 = y), \quad \ldots
+	\]	
+\end{itemize}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Exercices}
+
+\subsection*{Langage, Formules, Exemples}
+
+
+\begin{exercicecours}
+	On considère le langage $\mathcal{L}$ formé des constantes $a$ et $b$, d'un prédicat unaire $P$ et d'un prédicat binaire $Q$ (et en plus, les variables $x$, $y$, les connecteurs, les quantificateurs).
+	Dire si les mots suivants sont des termes, des formules atomiques, des formules ?
+	\[
+	\lnot a, \quad xy, \quad (x \land a), \quad P(a), \quad \lnot Q(x)
+	\]
+	\[
+	\forall x \ Q(x,y), \quad \exists y \ P(x), \quad \forall a \  \exists Q(a,b)
+	\]	
+	\[
+	\forall x \ \exists y \ P(x \limplies y), \quad
+	\exists x \ \big( (\forall y \ Q(x,y)) \lor (\forall y \ \lnot Q(x,y)) \big)
+	\]
+\end{exercicecours}
+
+
+\begin{exercicecours}
+On considère le langage $\mathcal{L}$ muni d'une constante $c$ et d'un prédicat binaire $P(x,y)$. Dire si les mots suivants sont des termes, des formules atomiques, des formules ?
+Si oui, donner l'interprétation dans la structure de domaine $\Nn$, avec $c=0$ et $P(x,y)$ défini par $x < y$.
+Faire ensuite l'interprétation dans la structure de domaine $\Rr$, avec $c=1$ et $P(x,y)$ défini par $x \le y$.
+\[
+P, \quad c^2, \quad P(c,c), \quad \lnot P(c,0), \quad P(x, P(y,c)), \quad
+P(x=c) \limplies x=c 
+\]
+\[
+P(x, c), \quad \exists x, \quad x > c \limplies \forall y \ P(y,c), \quad
+\forall y \ \big( P(x,c) \limplies y=x \big)
+\]
+\[
+\exists x \lor y \quad P(x,c) \lor P(y,c), \quad
+\forall x \quad \big((x=c) \lequiv (\exists y \ P(y,c))\big)
+\] 
+\end{exercicecours}
+
+
+\begin{exercicecours}
+On considère un langage avec un prédicat binaire $R(x,y)$.
+On considère la structure de domaine $E = \{r,s,t,u\}$ et on interprète $R(x,y)$ comme vrai s'il existe une arête (non orientée) entre les sommets $x$ et $y$ d'un graphe $G$ (par exemple comme ci-dessous). 
+
+\myfigure{0.8}{\tikzinput{fig_premierordre_02}}
+
+
+Traduire dans le langage $\mathcal{L}$ les phrases suivantes :
+\begin{enumerate}
+	\item Il existe un sommet relié à lui-même.
+	
+	\item Il existe un sommet relié à tous les autres.
+	
+	\item Tout sommet est relié à au moins un autre.
+	
+	\item Il existe un sommet relié à aucun autre.
+	
+	\item Tous les sommets ne sont pas reliés entre eux.
+	
+	\item Il existe un seul sommet relié à lui même.
+\end{enumerate}
+\end{exercicecours}
+
+
+\begin{exercicecours}
+On considère un langage $\mathcal{L}$ muni d'un prédicat $P(x)$ et de l'égalité $x=y$.
+Traduire par une formule de $\mathcal{L}$ les phrases suivantes :
+\begin{enumerate}
+	\item Aucun élément ne vérifie $P$.
+	
+	\item Il existe au plus un élément qui vérifie $P$.
+	
+	\item Il existe exactement deux éléments qui vérifient $P$.
+	
+	\item Il existe au moins trois éléments qui vérifient $P$.
+	
+	\item Tous les éléments sauf un vérifient $P$.
+\end{enumerate}	
+\end{exercicecours}
+
+
+
+\subsection*{Langage avec fonctions}
+
+
+\begin{exercicecours}
+On considère un langage $\mathcal{L}$ ayant les constantes $a$, $b$, un prédicat 
+$P(x)$ et deux fonctions $f(x)$ et $g(x,y)$.
+ Dire si les mots suivants sont des termes, des formules atomiques, des formules de $\mathcal{L}$ ?
+Si oui, donner l'interprétation dans la structure de domaine $\Rr$, avec $a=0$, $b=1$, $P(x)$ défini par $x \ge 0$, $f(x) = \cos(x)$, $g(x,y) = x \times y$.
+\[
+f(x), \quad g(a,b), \quad f(P(a)), \quad \lnot P(f(a)), \quad P(g(y,x)), \quad
+P(g(f(x),f(f(b))))
+\]
+\[
+P(x) \land P(y) \limplies g(x,y), \quad
+\exists x \ f(x) = b, \quad
+\forall y \ P(y) \lequiv P(f(y))
+\]
+\[
+\forall x \forall b \ P(g(x,b)) \limplies (P(x) \land P(b)),\quad
+\exists x \ \big( P(x) \lequiv (\forall y \ (P(y) \limplies P(g(x,y)))) \big)
+\] 
+
+\end{exercicecours}
+
+
+\end{document}

@@ -1,0 +1,602 @@
+\documentclass[11pt,class=report,crop=false]{standalone}
+\usepackage[screen]{../logic}
+
+
+\begin{document}
+
+
+%====================================================================
+\chapitre{Quels connecteurs sont utiles ?}
+%====================================================================
+
+
+% \insertvideo{}{partie 1.1. Titre}
+
+
+\objectifs{Les connecteurs $\lnot$ (\tnot), $\land$ (\tand), $\lor$ (\tor) suffisent pour construire toutes les formules de la logique vrai/faux.}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Évaluation des formules}
+
+%--------------------------------------------------------------------
+\subsection{Rappels}
+
+On rappelle qu'une \defi{formule} est un mot fini composé à partir :
+\begin{itemize}
+	\item d'un ensemble $\text{Var} = \{P_1, P_2,\ldots, P_n\}$ de variables propositionnelles, où $n\ge1$,
+	
+	\item de parenthèses $($ et $)$\,,
+		
+	\item et d'un ensemble $\text{Conn}$ de connecteurs logiques.
+\end{itemize}
+
+Jusqu'ici notre choix de connecteurs logiques était :
+\[
+\text{Conn} = \{ \lnot, \land, \lor, \limplies, \lequiv \}
+\]
+
+Ce choix est-il pertinent ? Est-ce qu'il est suffisant pour exprimer des phénomènes complexes ? Pour répondre  à ces questions, nous allons modéliser l'évaluation d'une formule comme l'évaluation d'une fonction n'ayant en entrées et en sortie que des valeurs $\lzero$/$\lone$.
+
+Ainsi dans ce chapitre, la valeurs booléennes sont $\Bb = \{ \lzero, \lone \}$ avec $\lone$ pour \ltrue{} (Vrai) et $\lzero${} (Faux).
+
+
+%--------------------------------------------------------------------
+\subsection{Fonctions abstraites de $\{\lzero,\lone\}^n \to \{\lzero,\lone\}$}
+
+Soit $n \ge 1$ un entier fixé.
+On appelle \defi{fonction abstraite}, une fonction :
+\[ 
+f : \{\lzero,\lone\}^n \to \{\lzero,\lone\}
+\]
+Soit $x = (\epsilon_1,\ldots,\epsilon_n) \in \{\lzero,\lone\}^n$. C'est un vecteur dont toutes les coordonnées sont $\lzero$ ou $\lone$. En plus $f(x)$ vaut $\lzero$ ou $\lone$.
+
+\begin{exemple}
+Soit $n=3$. Définissons une fonction $f : \{\lzero,\lone\}^3 \to \{\lzero,\lone\}$ par ses $2^n=8$ valeurs.
+\[
+\begin{array}{c|c}
+	x & f(x) \\
+	\hline
+	& \\[-2ex]
+	(\lzero,\lzero,\lzero) & \lzero \\
+	(\lzero,\lzero,\lone)  & \lzero \\
+	(\lzero,\lone,\lzero)  & \lone \\
+	(\lzero,\lone,\lone)   & \lone \\
+	(\lone,\lzero,\lzero)  & \lzero \\
+	(\lone,\lzero,\lone)   & \lone \\
+	(\lone,\lone,\lzero)   & \lzero \\
+	(\lone,\lone,\lone)    & \lone \\
+\end{array}
+\]
+\end{exemple}
+
+\textbf{Rappel.} Soient $E$ et $F$ deux ensembles finis. Alors le nombre total de fonctions différentes $f : E \to F$ est $(\Card F)^{\Card E}$.
+Ici $\Card E = \Card \{\lzero,\lone\}^n = 2^n$ et $\Card F = \Card \{\lzero,\lone\} = 2$. Ainsi le nombre total de fonctions abstraites $f : \{\lzero,\lone\}^n \to \{\lzero,\lone\}$ vaut $2^{(2^n)}$.
+ 
+ %--------------------------------------------------------------------
+ \subsection{Fonctions à partir d'une formule}
+
+Nous allons maintenant construire une fonction $f_{\mathcal{P}} : \{\lzero,\lone\}^n \to \{\lzero,\lone\}$ à partir d'une formule.
+
+Soit $\mathcal{P}$ une formule, exprimée à partir des $n$ variables propositionnelles $P_1,\ldots,P_n$.
+L'\defi{évaluation} de $\mathcal{P}$ en $x = (\epsilon_1,\ldots,\epsilon_n) \in \{\lzero,\lone\}^n$ consiste 
+à attribuer la valeur $\epsilon_1$ ($\lzero$ ou $\lone$) à $P_1$, la valeur $\epsilon_2$ à $P_2$,\ldots{} Le résultat de cette évaluation est une valeur $\lzero$ ou $\lone$.
+
+Note : Une construction rigoureuse de cette fonction d'évaluation sera proposée dans le chapitre \og{}Théorème de compacité\fg{}.
+
+L'évaluation de $\mathcal{P}$ correspond donc à une fonction :
+\[
+\begin{array}{rcl}
+	f_{\mathcal{P}} : \{\lzero,\lone\}^n & \longrightarrow & \{\lzero,\lone\} \\
+	x= (\epsilon_1,\ldots,\epsilon_n) & \longmapsto & f_{\mathcal{P}}(\epsilon_1,\ldots,\epsilon_n) 
+\end{array}
+\]
+
+C'est une autre façon de présenter la table de vérité de la formule $\mathcal{P}$.
+
+
+\begin{exemple}
+	Soit $\mathcal{P}$ la formule suivante :
+	\[
+	\mathcal{P} : \qquad (P_1 \lor P_2) \land (\lnot P_1 \lor P_3)
+	\]
+	On obtient une fonction $f_{\mathcal{P}} : \{\lzero,\lone\}^3 \to \{\lzero,\lone\}$ qu'on calcule valeur par valeur.
+	Par exemple en $x=(\lzero,\lone,\lzero)$ on attribue $(\lfalse,\ltrue,\lfalse)$ aux variables $(P_1,P_2,P_3)$ et alors la formule $\mathcal{P}$ s’évalue à $(\lfalse \lor \ltrue) \land (\lnot \lfalse \lor \lfalse)$ et vaut donc $\ltrue$. Ainsi $f(\lzero,\lone,\lzero) = \lone$.
+
+	\[
+	\begin{array}{c|c}
+		x & f_{\mathcal{P}}(x) \\
+		\hline
+		& \\[-2ex]
+		(\lzero,\lzero,\lzero) & \lzero \\
+		(\lzero,\lzero,\lone)  & \lzero \\
+		(\lzero,\lone,\lzero)  & \lone \\
+		(\lzero,\lone,\lone)   & \lone \\
+		(\lone,\lzero,\lzero)  & \lzero \\
+		(\lone,\lzero,\lone)   & \lone \\
+		(\lone,\lone,\lzero)   & \lzero \\
+		(\lone,\lone,\lone)    & \lone \\
+	\end{array}
+	\]
+	
+	Ici on remarque que notre fonction $f_\mathcal{P}$ est exactement la même que notre fonction abstraite $f$ définie dans l'exemple précédent.
+		
+\end{exemple}
+
+
+
+%--------------------------------------------------------------------
+\subsection{Réaliser toutes les fonctions ?}
+
+Dans l'exemple précédent on avait une formule $\mathcal{P}$  qui était en fait la même qu'une fonction abstraite définie auparavant.
+Mais est-ce toujours possible ?
+Pour une fonction abstraite $f: \{\lzero,\lone\}^n \to \{\lzero,\lone\}$ peut-on trouver une formule $\mathcal{P}$ telle que la fonction $f_{\mathcal{P}}$ soit exactement cette fonction $f$ ?
+	
+Si la réponse était négative, cela voudrait dire que nos connecteurs ne sont pas suffisants pour modéliser toutes les fonctions et il faudrait inventer de nouveaux connecteurs pour réaliser certaines fonctions.
+La question se pose d'autant plus que, lorsque $n$ est grand, le nombre de fonctions $f$ à réaliser est $2^{2^n}$, ce nombre étant vraiment très grand. 	
+
+%--------------------------------------------------------------------
+\subsection{Connecteurs unaires}
+
+En attendant d'aborder un résultat théorique général, commençons par étudier à la main le cas $n=1$ et $n=2$.
+
+Pour $n=1$, il y a $4 = 2^{2^1}$ fonctions $f : \{\lzero,\lone\} \to \{\lzero,\lone\}$.
+Voici les $4$ tables de vérité possibles 
+\[
+\begin{array}{c|c}
+	& \ltauto \\
+	\hline
+	& \\[-2ex]
+	\lzero & \lone \\
+	\lone  & \lone \\
+\end{array}
+\qquad\qquad
+\begin{array}{c|c}
+	& \lantitauto \\
+	\hline
+	& \\[-2ex]
+	\lzero & \lzero \\
+	\lone  & \lzero \\
+\end{array}
+\qquad\qquad
+\begin{array}{c|c}
+	& \mathrm{id} \\
+	\hline
+	& \\[-2ex]
+	\lzero & \lzero \\
+	\lone  & \lone \\
+\end{array}
+\qquad\qquad
+\begin{array}{c|c}
+	& \lnot \\
+	\hline
+	& \\[-2ex]
+	\lzero & \lone \\
+	\lone  & \lzero \\
+\end{array}
+\]
+
+
+Ces $4$ fonctions sont $\ltauto$ (toujours vrai), $\lantitauto$ (toujours faux), $\mathrm{id}$ (identité), $\lnot$ (négation).
+
+On résume le cas $n=1$ en une seule table.
+\[
+\begin{tabular}{c|c|c}
+	Symbole & Réalisation & Nom \\
+	\hline
+	& \\[-2ex]
+	$\ltauto$ 		& $P \lor \lnot P$ 	& tautologie/ toujours vrai \\
+	$\lantitauto$  	& $P \land \lnot P$ 	& contradiction/ toujours faux \\
+	$\mathrm{id}$ 		& $P$  		& identité \\
+	$\lnot$  	& $\lnot P$   		& négation \\	
+\end{tabular}
+\]
+La seconde colonne est une réalisation par une formule à l'aide des connecteurs $\lnot$, $\land$, $\lor$.
+
+
+
+%--------------------------------------------------------------------
+\subsection{Connecteurs binaires}
+
+Pour $n=2$, il y a $16 = 2^{2^2}$ fonctions $f : \{\lzero,\lone\}^2 \to \{\lzero,\lone\}$.
+On dresse ci-dessous la liste de toutes ces fonctions et leur réalisation par des formules.
+La seconde colonne propose une réalisation par une formule à l'aide des connecteurs $\lnot$, $\land$, $\lor$, $\limplies$, $\lequiv$.
+La dernière colonne indique les $4$ valeurs de la fonction prises lorsque $(P,Q)$ vaut successivement $(\lzero,\lzero)$, $(\lzero,\lone)$, $(\lone,\lzero)$, $(\lone,\lone)$.
+
+\[
+\begin{tabular}{c|c|c|c}
+	Symbole & Réalisation & Nom & Valeurs \\
+	\hline
+	& \\[-2ex]
+		
+	$\lantitauto$  & $ P \land \lnot P$ & toujours faux / contradiction & \lzero\lzero\lzero\lzero \\  % 0000
+	
+	$\land$ & $P \land Q$ & conjonction & \lzero\lzero\lzero\lone \\         % 0001
+	
+	      & $P \land \lnot Q$ & $P$ et (non $Q$) & \lzero\lzero\lone\lzero \\ % 0010
+	
+	     & $P$ & projection gauche & \lzero\lzero\lone\lone \\             % 0011
+	
+	      & $\lnot P \land Q$ & (non $P$) et $Q$ & \lzero\lone\lzero\lzero \\ % 0100
+	
+	     & $Q$ & projection droite & \lzero\lone\lzero\lone \\              % 0101
+	
+	$\oplus$ & $(P \lor Q) \land \lnot(P\land Q)$ & \tconnector{xor}/ou exclusif & \lzero\lone\lone\lzero \\ % 0110
+	
+	$\lor$ & $P \lor Q$ & disjonction & \lzero\lone\lone\lone \\           % 0111
+	
+	$\downarrow$ & $\lnot(P \lor Q)$ & \tconnector{nor} & \lone\lzero\lzero\lzero \\ % 1000
+	
+	$\lequiv$ & $P \lequiv Q$ & équivalence & \lone\lzero\lzero\lone \\ % 1001
+	
+	 & $\lnot Q$ & négation de $Q$ & \lone\lzero\lone\lzero \\          % 1010
+	
+	      & $Q \limplies P$ & $Q$ implique $P$ & \lone\lzero\lone\lone \\ % 1011
+	
+	 & $\lnot P$ & négation de $P$ & \lone\lone\lzero\lzero \\          % 1100
+	
+	$\limplies$      & $ P \limplies Q$ & $P$ implique $Q$ & \lone\lone\lzero\lone \\ % 1101
+	
+	$\uparrow$ & $\lnot(P \land Q)$ & \tconnector{nand}/Sheffer & \lone\lone\lone\lzero \\ % 1110
+	
+	$\ltauto$ & $P \lor \lnot P$ & toujours vrai / tautologie & \lone\lone\lone\lone \\ % 1111
+	
+\end{tabular}
+\]
+
+
+Par exemple le connecteur $\downarrow$/\tconnector{nor}, vérifie 
+$\lzero\downarrow\lzero=\lone$, 
+$\lzero\downarrow\lone=\lzero$, 
+$\lone\downarrow\lzero=\lzero$, 
+$\lone\downarrow\lone=\lzero$. Mais en fait $P \downarrow Q$ se réalise par la formule $\lnot(P \lor Q)$. Ainsi on n'a pas vraiment besoin d'utiliser un symbole spécial pour cette opération.
+
+Cependant il y a deux nouveaux connecteurs utiles en pratique : \tconnector{xor} et \tconnector{nand}.
+\begin{itemize}
+	\item Le \defi{ou exclusif}, noté $\oplus$/\tconnector{xor}, est vrai lorsque l'un des termes est vrai, mais pas les deux. Il correspond à l'addition $x+y$ modulo $2$.
+	
+	\item Le connecteur $\uparrow$/\tconnector{nand}, aussi appelé symbole de Sheffer, se réalise comme la négation du \tand{} : $P \uparrow Q = \lnot(P\land Q)$.
+\end{itemize}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Un système complet de connecteurs}
+
+%--------------------------------------------------------------------
+\subsection{Théorème}
+
+\begin{theoreme}
+	L'ensemble $\{ \lnot, \land \}$ des connecteurs \tnot{} et \tand{} forme un système complet de connecteurs.
+\end{theoreme}
+
+On verra la preuve dans la prochaine section. Cela signifie que, quel que soit $n \ge 1$ et quel que soit $f : \{\lzero,\lone\}^n \to \{\lzero,\lone\}$, alors il existe une formule $\mathcal{P}$ ne faisant intervenir les connecteurs $\lnot$ et $\land$, telle que la fonction $f_{\mathcal{P}}$ issue de $\mathcal{P}$ soit exactement cette fonction $f$.
+Autrement dit $f$ et $f_{\mathcal{P}}$ ont la même table de vérité.
+
+Ce qu'il est important de retenir, c'est qu'avec un nombre fini de connecteurs, on réalise toutes les fonctions booléenne imaginables, quel que soit $n$.
+
+Une autre façon de comprendre ce théorème est de dire que pour n'importe quelle formule (avec n'importe quels connecteurs), on peut trouver une formule logiquement équivalente qui ne contient que les connecteurs $\lnot$ et $\land$. On rappelle que deux formules $\mathcal{P}$ et $\mathcal{Q}$ sont logiquement équivalente (notée $\mathcal{P} \equiv \mathcal{Q}$) si elles ont la même table de vérité.
+
+%--------------------------------------------------------------------
+\textbf{Question pas si bête !}
+Si on n'a besoin que $\{\lnot, \land\}$ pour réaliser toutes nos fonctions, alors pourquoi ajoute-t-on les autres connecteurs $\lor$, $\limplies$, $\lequiv$ ?
+Tout simplement pour des raisons pratiques, afin de raccourcir l'écriture des formules et surtout pour faciliter la compréhension logique des formules.
+
+%--------------------------------------------------------------------
+\subsection{Exemples}
+
+\begin{enumerate}
+	\item Pour $n=1$ et $n=2$, nous avons déjà vu comment réaliser toutes les fonctions (quitte à utiliser aussi $\lor$, $\limplies$, $\lequiv$).
+	
+	\item Une même fonction peut être réalisée par des formules différentes.
+	Par exemple $P \land \lnot Q$, $\lnot Q \land P \land \lnot Q$, $(\lnot \lnot P) \land (\lnot Q)$ réalisent la même fonction.
+	C'est encore moins unique si on autorise tous les connecteurs $\{\lnot, \land, \lor, \limplies, \lequiv\}$, par exemple $P \limplies Q$, $\lnot P \lor Q$, $\lnot (P \land \lnot Q)$ sont des formules qui réalisent la même fonction.
+	
+	\item Soit $n=3$ et $f$ la fonction qui vaut $\lone$ en $(\lzero,\lzero,\lzero)$ et $(\lone,\lone,\lone)$ et qui vaut $\lzero$ partout ailleurs. Cette fonction est réalisée par la formule :
+	\[
+	\mathcal{P} : \qquad (\lnot P \land \lnot Q \land \lnot R) \lor (P \land Q \land R)
+	\]
+	Problème il y a un $\lor$ (\tor) dans la formule, alors qu'on voudrait utiliser seulement $\lnot$ et 
+	$\land$, on verra la solution dans le paragraphe suivant.
+\end{enumerate}
+
+
+%--------------------------------------------------------------------
+\subsection{Connecteurs usuels à partir de $\lnot$ et $\land$}
+
+Puisque les connecteurs $\lnot$ et $\land$ suffisent, ils doivent permettre de retrouver nos autres connecteurs favoris : $\lor$, $\limplies$, $\lequiv$.
+
+Effectivement :
+\[
+\begin{array}{rcl}
+	P \lor Q &\equiv& \lnot(\lnot P \land \lnot Q) \\
+	P \limplies Q &\equiv& \lnot P \lor Q \quad \equiv \quad \lnot (P \land \lnot Q) \\
+	P \lequiv Q &\equiv& (P \limplies Q) \land (Q \limplies P) \quad \equiv \quad
+	\big(\lnot (P \land \lnot Q)\big) \land \big(\lnot (Q \land \lnot P)\big)
+\end{array}
+\]
+On rappelle que la notation $\equiv$ signifie que les formules ont exactement les mêmes tables de vérité.
+Bien sûr, ces relations sont aussi valables pour des formules $\mathcal{P}$ et $\mathcal{Q}$ (à la place des variables $P$ et $Q$).
+
+Ainsi, toute formule exprimée à partir des connecteurs $\mathcal{C} = \{\lnot, \land, \lor, \limplies, \lequiv\}$, peut s'écrire en une formule logiquement équivalente ne contenant que les connecteurs $\mathcal{C}_0 = \{\lnot, \land\}$.
+
+
+
+%--------------------------------------------------------------------
+\subsection{Autres systèmes complets de connecteurs}
+
+L'ensemble $\mathcal{C}_1 = \{ \lnot, \limplies \}$ est aussi un système complet de connecteurs. La preuve est simple à partir du théorème, il suffit de montrer comment engendrer le connecteur $\land$ à partir de $\lnot$ et $\limplies$ :
+\[
+P \land Q \equiv \lnot (P \limplies \lnot Q)
+\]
+Ainsi, si on a une formule quelconque, le théorème nous permet d'obtenir une formule logiquement équivalente uniquement avec $\lnot$, $\land$. On peut alors remplacer chaque $\land$ via l'équivalence logique ci-dessus afin d'obtenir une formule ne contenant que des $\lnot$ et des $\limplies$.
+
+\bigskip
+
+Encore plus fort, un seul connecteur permet de les engendrer tous !
+$\mathcal{C}_2 = \{ \uparrow\}$ est un système complet. On rappelle que
+$\uparrow$/\tconnector{nand} est le connecteur correspondant à la négation du \tand{} :
+\[
+P \uparrow Q \equiv  \lnot(P \land Q)
+\]
+Supposons ce connecteur $\uparrow$ défini. On retrouve alors $\lnot$ et $\land$ :
+\[
+\lnot P \equiv P \uparrow P
+\qquad
+\qquad
+P \land Q \equiv \lnot(P \uparrow Q) \equiv (P \uparrow Q) \uparrow (P \uparrow Q)
+\]
+Comme $\uparrow$ permet de reconstruire à la fois $\lnot$ et $\land$, et que $\{ \lnot, \land \}$ est complet, il en résulte que $\{ \uparrow\}$ est un système complet.
+
+
+D'un point de vue informatique, cela signifie qu'un seul type de porte logique, la porte \tconnector{nand}, permet de modéliser n'importe quelle fonction booléenne.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Preuve}
+
+Cette section est consacrée à la preuve du théorème.
+On va prouver que $\mathcal{C} = \{\lnot, \land,\lor\}$ est un système complet de connecteurs.
+Mais comme on a vu que $\lor$ est engendré par $\{ \lnot, \land \}$ via $P \lor Q \equiv \lnot(\lnot P \land \lnot Q)$, alors on aura bien prouvé que $\mathcal{C}_0 = \{\lnot, \land\}$ est un système complet de connecteurs.
+
+
+Nous allons réaliser chaque fonction abstraite  $f : \{\lzero,\lone\}^n \to \{\lzero,\lone\}$ par une formule explicite, appelée \defi{forme normale disjonctive}.
+
+%--------------------------------------------------------------------
+\subsection{Étape 1}
+
+Nous commençons par réaliser des fonctions très simples.
+
+Soit $a = (\epsilon_1,\ldots,\epsilon_n) \in \{\lzero,\lone\}^n$ fixé.
+Soit $f : \{\lzero,\lone\}^n \to \{\lzero,\lone\}$ la fonction telle que $f(a) = \lone$ et
+$f(x) = \lzero$ si $x \neq a$.
+
+La formule $\mathcal{P}_a$ suivante réalise cette fonction :
+\[
+\mathcal{P}_a : \qquad
+\epsilon_1 P_1 \land \epsilon_2 P_2 \land \ldots \land \epsilon_n P_n
+\]
+Ici, $P_i$ désigne, la $i$-ème variable propositionnelle, autrement dit la $i$-ème coordonnée de $\{\lzero,\lone\}^n$.
+On rappelle que $\epsilon_i = \lzero$ ou $\epsilon_i=\lone$ et on définit : 
+\[
+\epsilon_i P_i = \left\{ 
+\begin{array}{ll}
+	P_i & \text{ si } \epsilon_i = \lone \\
+	\lnot P_i & \text{ si } \epsilon_i = \lzero \\	
+\end{array}	
+\right.
+\]
+
+On adoptera la notation suivante :
+\[
+\mathcal{P}_a : \qquad
+\bigwedge_{i=1}^n \epsilon_i P_i
+\]
+Cette notation est analogue à $\displaystyle \sum_{i=1}^n x_i$ pour $x_1+x_2+\cdots+x_n$ ou à $\displaystyle \prod_{i=1}^n x_i$ pour $x_1x_2\cdots x_n$.
+
+Par exemple, la formule $P \land \lnot Q \land \lnot R$ donne une fonction qui vaut $\lone$ en $(\lone,\lzero,\lzero)$ et vaut $\lzero$ partout ailleurs.
+
+
+On rappelle que $a = (\epsilon_1,\ldots,\epsilon_n)$.
+Prouvons que $\mathcal{P}_a$ réalise la fonction annoncée :
+\[
+\begin{array}{rcl}
+\mathcal{P}_a \text{ vrai } 
+	& \text{ ssi } & \epsilon_i P_i \text{ vrai, pour tout } i=1,\ldots,n \\
+	& \text{ ssi } & 
+	\left\{ 
+	\begin{array}{ll}
+	P_i \text{ vrai } & \text{ si } \epsilon_i = \lone \\
+	P_i \text{ faux } & \text{ si } \epsilon_i = \lzero \\	
+	\end{array}	
+	\right.
+	\quad \text{  pour tout } i=1,\ldots,n \\
+\end{array}
+\]
+Donc la fonction $f_{\mathcal{P}_a}$ associée vérifie $f_{\mathcal{P}_a}(x_1,\ldots,x_n)=\lone$ si et seulement si $x_i=\epsilon_i$, pour tout $i=1,\ldots,n$.
+Autrement dit $f_{\mathcal{P}_a}(x) = \lone$ si et seulement si $x=a$.
+
+%--------------------------------------------------------------------
+\subsection{Étape 2}
+
+Soit $a_1,a_2,\ldots,a_k \in \{\lzero,\lone\}^n$, une liste de $k$ éléments de $\{\lzero,\lone\}^n$ (avec $k\ge1$).
+
+Soit $\mathcal{P}_{a_1,\ldots,a_k}$ la formule suivante :
+\[
+\mathcal{P}_{a_1,\ldots,a_k} : \qquad
+\mathcal{P}_{a_1} \lor \mathcal{P}_{a_2} \lor \cdots \lor \mathcal{P}_{a_k}
+\]
+Autrement dit :
+\[
+\mathcal{P}_{a_1,\ldots,a_k} : \qquad
+\bigvee_{j=1}^k \mathcal{P}_{a_j}
+= \bigvee_{j=1}^k \ \bigwedge_{i=1}^n \epsilon_{i,j} P_i
+\]
+Où on a noté $a_j = (\epsilon_{1,j},\epsilon_{2,j},\ldots,\epsilon_{n,j})$.
+
+Notons $f_{a_1,\ldots,a_k}$ la fonction associée à cette formule $\mathcal{P}_{a_1,\ldots,a_k}$.
+Alors :
+\[
+f_{a_1,\ldots,a_k}(x) =\lone \quad \text{ ssi } \quad x \in \{ a_1,a_2,\ldots,a_k \}
+\]
+
+Exemple.
+Pour la formule $\mathcal{P}_a \lor \mathcal{P}_b$, la fonction associée $f_{a,b}$ vérifie $f(a)=\lone$, $f(b)=\lone$ et $f(x) = \lzero$ pour tous les autres $x$.
+
+Prouvons notre affirmation.
+\begin{itemize}
+	\item Si $x \in \{ a_1,a_2,\ldots,a_k \}$, alors l'un des $\mathcal{P}_{a_j}$ est vrai, donc $\mathcal{P}_{a_1,\ldots,a_k}$ est vrai. Ainsi $f_{a_1,\ldots,a_k}(x) = \lone$.
+	
+	\item Si $x \notin \{ a_1,a_2,\ldots,a_k \}$, alors tous les $\mathcal{P}_{a_1},\ldots,\mathcal{P}_{a_k}$ sont faux et donc $\mathcal{P}_{a_1,\ldots,a_k}$ est faux. Ainsi $f_{a_1,\ldots,a_k}(x) = \lzero$.
+\end{itemize}
+
+
+%--------------------------------------------------------------------
+\subsection{Étape 3}
+
+Soit $f : \{\lzero,\lone\}^n \to \{\lzero,\lone\}$ une fonction abstraite quelconque.
+\begin{itemize}
+	\item Si $f(x) =\lzero$, quel que soit $x \in  \{\lzero,\lone\}^n$ alors on pose
+	$\mathcal{P} = P_1 \land \lnot P_1$ (toujours faux) et alors $f_{\mathcal{P}} = f$.
+	
+	\item Sinon, on note $\{a_1,\ldots,a_k\}$ les éléments de  $\{\lzero,\lone\}^n$
+	où $f(x) = \lone$. Alors $f = f_{a_1,\ldots,a_k}$, d'après l'étape 2.
+\end{itemize}
+
+Cela termine la preuve.
+
+
+%--------------------------------------------------------------------
+\subsection{Remarques}
+
+
+\begin{itemize}
+	\item La décomposition 
+	\[
+	\mathcal{P} : \qquad \bigvee_{j=1}^k \ \bigwedge_{i=1}^n \epsilon_{i,j} P_i
+	\]
+	s'appelle la \defi{forme normale disjonctive}.
+	
+	Cette forme normale est intéressante car cette décomposition est unique à l'ordre près (on a bien sûr $P \lor Q  = Q \lor P$ et $P\land Q=Q \land P$).
+	
+	\item Une variante est la \defi{forme normale conjonctive} : 
+	\[
+	\mathcal{Q} : \qquad \bigwedge_{j=1}^k \ \bigvee_{i=1}^n \delta_{i,j} P_i
+	\]	
+	où $\delta_{i,j} \in \{\lzero,\lone\}$.
+	Dont l'écriture est aussi unique (à l'ordre près). 
+	
+\end{itemize}
+
+\begin{exemple}
+	Soit $\mathcal{P}$ la formule $P \lequiv Q$.
+	La forme normale disjonctive est :
+	\[
+	\mathcal{P} \equiv (P \land Q) \lor (\lnot P \land \lnot Q)
+	\]
+	La forme normale conjonctive est :
+	\[
+	\mathcal{P} \equiv (\lnot P \lor Q) \land (P \lor \lnot Q)
+	\]	
+\end{exemple}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Exercices}
+
+\subsection*{Évaluation des formules}
+
+\begin{exercicecours}
+	Trouver une formule pour $P \oplus Q$ (le ou exclusif) qui ne fait intervenir que les connecteurs $\lnot$, $\land$, $\lor$.
+	Trouver ensuite une formule ne faisant intervenir que $\lnot$ et $\lequiv$.
+\end{exercicecours}
+
+\begin{exercicecours}
+	~
+	\begin{enumerate}
+		\item Pour $n=3$. Combien y a-t-il de fonctions $f : \{\lzero,\lone\}^3 \to \{\lzero,\lone\}$ ?
+		
+		\item La fonction \og{}majorité\fg{} renvoie $\lone$, si au moins deux des variables $P,Q,R$ valent $\lone$. Trouver une formule pour cette fonction qui ne fait intervenir que les connecteurs $\lnot$, $\land$, $\lor$.
+		
+		\item Quand est-ce que $P \oplus Q \oplus R$ est vrai ?
+		Quel est le lien avec $P \lequiv (Q \lequiv R)$ ?
+		
+		\item La fonction \og{}exactement un\fg{} renvoie $\lone$ lorsque exactement une des variables $P$, $Q$, ou $R$ vaut $\lone$. Trouver une formule pour cette fonction qui ne fait intervenir que les connecteurs $\lnot$, $\land$, $\lor$.
+	\end{enumerate}
+	
+\end{exercicecours}
+
+\begin{exercicecours}
+	Soit $n \ge 2$. 
+	\begin{enumerate}
+		\item Trouver une formule qui renvoie vrai, sauf si toutes les variables $P_1$,\ldots,$P_n$ sont vraies.
+		
+		\item Quelle formule renvoie vrai lorsqu'au moins deux variables sont vraies.
+	\end{enumerate}	
+\end{exercicecours}
+
+
+\subsection*{Un système complet de connecteurs}
+
+\begin{exercicecours}
+	~
+	\begin{enumerate}
+		\item Montrer que $\mathcal{C} = \{ \lnot, \lequiv\}$ est un système complet de connecteurs.
+		
+		\item Montrer que $\mathcal{C} = \{ \lor, \lequiv,\lantitauto \}$ est un système complet de connecteurs. On rappelle que $\lantitauto$ est la formule toujours fausse.	
+		
+		\item Montrer que $\mathcal{C} = \{ \land, \lor\}$ n'est pas un système complet de connecteurs.
+		
+		\item Montrer que $\mathcal{C} = \{ \land, \oplus\}$ n'est pas un système complet de connecteurs ($\oplus$ désigne le ou exclusif).
+	\end{enumerate}	
+\end{exercicecours}
+
+\begin{exercicecours}
+	Montrer que $\{ \downarrow \}$ forme un système complet.
+	On rappelle que $P \downarrow Q \equiv \lnot (P \lor Q)$.
+	% Vérifier que $\{ \uparrow \}$ et $\{ \downarrow \}$ sont les seuls systèmes complets formés d'un seul connecteur binaire.
+\end{exercicecours}
+
+
+\subsection*{Preuve}
+
+\begin{exercicecours}
+	Soit $n=2$. On n'autorise que les connecteurs $\lnot,\land, \lor$.
+	\begin{enumerate}
+		\item Trouver une formule qui réalise la fonction $f : \{\lzero,\lone\}^2 \to \{\lzero,\lone\}$,
+		qui vaut $\lone$ en $(\lone,\lzero)$ et vaut $\lzero$ partout ailleurs.  
+		
+		\item Même question avec $g : \{\lzero,\lone\}^2 \to \{\lzero,\lone\}$, qui vaut $\lone$ en $(\lone,\lone)$ et $\lzero$ partout ailleurs.
+		
+		\item En déduire une formule pour $h : \{\lzero,\lone\}^2 \to \{\lzero,\lone\}$, qui vaut $\lone$ exactement en $(\lone,\lzero)$ et $(\lone,\lone)$. Simplifier cette formule.
+	\end{enumerate}
+\end{exercicecours}
+
+
+\begin{exercicecours}
+	Soit $n=2$.
+	\begin{enumerate}
+		\item Quelle fonction est associée à la formule $P \limplies Q$ ?
+		
+		\item Trouver la forme normale disjonctive associée.
+	\end{enumerate}
+\end{exercicecours}
+
+
+\begin{exercicecours}
+	Soit $n=3$. On n'autorise que les connecteurs $\lnot,\land, \lor$.
+	\begin{enumerate}
+		\item Trouver une formule qui réalise la fonction $f$ qui vaut $\lone$ uniquement en $(\lone,\lzero,\lone)$.
+		
+		\item Trouver une formule qui réalise la fonction $g$ qui vaut $\lzero$ uniquement en $(\lzero,\lone,\lone)$.
+		
+		\item Trouver une formule qui réalise la fonction $h$ qui vaut $\lone$ uniquement en 
+		$(\lone,\lzero,\lzero)$, $(\lzero,\lone,\lzero)$, $(\lzero,\lzero,\lone)$.
+		En déterminer une forme normale disjonctive et une forme normale conjonctive.
+	\end{enumerate}	
+\end{exercicecours}
+
+
+\end{document}

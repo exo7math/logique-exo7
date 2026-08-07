@@ -1,0 +1,989 @@
+\documentclass[11pt,class=report,crop=false]{standalone}
+\usepackage[screen]{../logic}
+
+
+\begin{document}
+
+
+%====================================================================
+\chapitre{Preuves}
+%====================================================================
+
+% \insertvideo{}{partie 1.1. Titre}
+
+
+\objectifs{Nous adaptons la construction des preuves aux quantificateurs de la logique du premier ordre.}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Preuves en logique du premier ordre}
+
+\index{preuve}
+
+%--------------------------------------------------------------------
+\subsection{Rappels}
+
+On rappelle qu'une preuve consiste à partir d'un ensemble de formules $\mathcal{P}_1$, \ldots, $\mathcal{P}_l$ jusqu'à arriver à une formule $\mathcal{Q}$ en un nombre fini d'étapes et en suivant des règles précises. Si on a obtenu une preuve, on note :
+\[
+\mathcal{P}_1, \ldots, \mathcal{P}_l \quad \lturn \quad \mathcal{Q}
+\]
+Pour la logique du premier ordre, on reprend d'abord toutes les règles d'inférence des preuves de la logique V/F.
+On renvoie au chapitre \og{}Preuves\fg{} de la première partie.
+On va ajouter de nouvelles règles liées aux quantificateurs.
+On rappelle qu'il n'y a encore aucun lien entre ce que l'on prouve et ce qui est vrai. 
+Ce lien sera donné dans les chapitres suivants. En particulier dans le prochain chapitre on montrera que tout ce qui est prouvé est vrai.
+
+
+Dans ce chapitre, on fixe un langage $\mathcal{L}$. Une preuve ne fait intervenir que ce langage. 
+Il n'y a pas de structures ou d'affectations à considérer.
+Ainsi les formules d'une preuve restent dans $\mathcal{L}$, ce qui est un aspect où la notion de preuve ($\lturn$)
+est plus facile que la notion de satisfaction ($\ldoubleturn$).
+ 
+
+%--------------------------------------------------------------------
+\subsection{Règles pour les quantificateurs}
+
+\index{regles d'inference@règles d'inférence}
+\index{quantificateurs@quantificateurs $\forall$, $\exists$}
+
+Nous présentons quatre nouvelles règles liées aux quantificateurs : il s'agit des règles d'introduction et d'élimination de $\forall$ et $\exists$.
+Une règle supplémentaire concerne l'égalité.
+Nous présentons chacune des règles succinctement avant d'y revenir en détails dans la section suivante.
+Il y a deux règles faciles et deux règles difficiles.
+La difficulté ne concerne pas la règle encadrée mais plutôt ses conditions d'application.
+
+Pour clarifier l'écriture des règles, lorsque qu'on a une formule $\mathcal{P}$  et qu'on s'intéresse
+à sa dépendance vis-à-vis de la variable $x$, alors on la note naturellement $\mathcal{P}(x)$. Attention, elle peut aussi dépendre d'autres variables.
+Pour une formule $\mathcal{P}(x)$, on notera $\mathcal{P}(t)$ au lieu de $\mathcal{P}[t/x]$, la substitution de la variable $x$ par le terme $t$.
+
+
+
+\bigskip
+
+\textbf{Règle I. Élimination de $\forall$.} 
+\mybox{$
+	\forall x \ \ \mathcal{P}(x)  \quad \lturn \quad  \mathcal{P}(c)
+	$}
+
+	\begin{itemize}
+	\item \emph{Conditions.} $c$ peut être une constante quelconque du langage, $c$ peut aussi être un \emph{terme clos}, c'est-à-dire un terme sans variable libre.
+	
+	\item \emph{Remarque.} Ainsi sous l'hypothèse $\forall x \ \ \mathcal{P}(x)$, on peut remplacer n'importe quelle occurrence libre de $x$ par $c$ et cela prouve  $\mathcal{P}(c)$ (qui est en fait $\mathcal{P}[c/x]$).
+	Ici cela ne pose de problème si la constante (ou le terme) $c$ est déjà apparu auparavant dans la preuve.
+	
+	\item \emph{Exemple.} Pour n'importe quelle constante $c$ :
+	\[
+	\forall x \ \ \exists y \ \ P(x) \land Q(x,y)  \quad \lturn \quad  \exists y \ \ P(c) \land Q(c,y)
+	\]
+	\end{itemize}
+
+\bigskip
+
+\textbf{Règle II. Introduction de $\forall$.} 
+\mybox{$
+	\mathcal{P}(c) \quad \lturn \quad  \forall x \ \ \mathcal{P}(x)
+	$}
+
+	\begin{itemize}
+	\item \emph{Conditions.} $c$ désigne une constante de $\mathcal{L}$, mais elle doit être \emph{arbitraire}, 
+	c'est-à-dire qu'elle ne doit apparaître dans aucune hypothèse en cours d'utilisation. 
+	
+	\item \emph{Remarque.} C'est une règle piégeuse car ici $c$ ne joue pas vraiment le rôle d'une constante mais plutôt d'une \emph{variable libre}.
+	Le mieux c'est d'utiliser un nom $c$ qui n'apparaît pas du tout dans les lignes précédentes de la preuve.
+	
+	\item \emph{Exemple.} Soit $c$ arbitraire : 
+	\[
+	c^2 \ge 0  \quad \lturn \quad  \forall x \ \ x^2 \ge 0
+	\]
+	En effet, si on a prouvé $c^2 \ge 0$ pour  un $c$ quelconque, alors pour tout $x$, $x^2 \ge 0$.
+	\end{itemize}
+
+\bigskip
+
+\textbf{Règle III. Introduction de $\exists$.} 
+\mybox{$
+	\mathcal{P}(c) \quad \lturn \quad  \exists x \ \ \mathcal{P}(x)
+	$}
+
+	\begin{itemize}
+	\item \emph{Conditions.} $c$ est une constante du langage ou bien un terme sans variable libre.
+	
+	\item \emph{Remarque.} $c$ est appelé un \emph{témoin} du quantificateur $\exists$. Ce symbole $c$ a pu apparaître auparavant dans la preuve.
+	
+	\item \emph{Exemple.} 
+	\[
+	c^2 \neq  c  \quad \lturn \quad  \exists x \ \ x^2 \neq x
+	\]
+	\end{itemize}
+	
+
+\bigskip
+	
+\textbf{Règle IV. Élimination de $\exists$.} 
+\mybox{$
+	\exists x \ \ \mathcal{P}(x), \ \big[\mathcal{P}(c) \lturn \mathcal{Q} \big]  \quad \lturn \quad  \mathcal{Q}
+	$}
+	
+	La notation entre crochets correspond à une sous-preuve.
+	C'est plus clair avec l'écriture sous forme d'un tableau :
+	
+\[
+	\begin{nd}
+		\hypo [~] {} {\exists x \ \ \mathcal{P}(x)}  \by{}{}
+		\open				
+		\hypo [~] {} {\mathcal{P}(c)} \by{\text{Sous-hypothèse}}{}
+		\have [~] {} {\ \vdots} \by{}{}
+		\have [~] {} {\mathcal{Q}} \by{}{}
+		\close 
+		\have [\lturn] {} {\mathcal{Q}} \by{}{}
+	\end{nd}
+\]
+	
+	
+	\medskip
+	
+	\begin{itemize}
+	\item \emph{Conditions.} $c$ doit être arbitraire : elle ne doit apparaître ni dans $\mathcal{Q}$, ni dans $\exists x \ \ \mathcal{P}(x)$, ni dans aucune hypothèse en cours d'utilisation.
+	On parle de \emph{constante fraîche} (ou abusivement de \emph{variable fraîche}).
+	
+	\item \emph{Remarque.} 
+	La condition n'est pas évidente au premier abord, mais le principe est naturel : si l'on sait qu'il existe un élément vérifiant $\mathcal{P}$, et que le fait de supposer $\mathcal{P}(c)$ pour un $c$ arbitraire conduit à $\mathcal{Q}$, alors la conclusion $\mathcal{Q}$ est prouvée.
+	
+	\item \emph{Exemple.} 
+	\[
+	\exists x \ \ f(x)=0, \ \forall x \ \ \big( f(x) = 0 \limplies g(x) = 1 \big) \quad \lturn \quad  \exists x \ \ g(x) = 1
+	\]
+	C'est une application presque directe de la règle IV, voir la section suivante pour les détails.
+\end{itemize}	
+
+
+\bigskip
+
+\textbf{Règle V. Égalité.} 
+\mybox{$
+	t = s, \ \  \mathcal{P}(t) \quad \lturn \quad  \mathcal{P}(s)
+	$}
+	
+	\begin{itemize}
+		\item \emph{Conditions.} $t$ et $s$ sont des termes du langage. Il faut bien sûr que les substitutions par $t$ ou $s$ soient légitimes (pas de capture).
+		
+		\item \emph{Remarque.} Il n'y a pas de piège avec l'égalité. Deux choses égales sont considérées comme identiques et donc interchangeables à volonté.
+		
+		\item \emph{Exemple.}
+		\[
+		a=x+1, \ a > 7 \quad \lturn \quad x+1 > 7 
+		\]
+	\end{itemize}
+	
+	
+	
+%--------------------------------------------------------------------
+\subsection{Exemples de preuves}
+
+\index{preuve!deduction naturelle@déduction naturelle}
+
+\begin{exemple}
+	
+	\[ 
+	\forall x \ \ \mathcal{P}(x)  \quad \lturn \quad  \exists x \ \ \mathcal{P}(x)
+	\]
+	
+	\medskip
+	\qquad\qquad
+	$
+	\begin{nd}
+		\hypo [~] {1} {\forall x \ \ \mathcal{P}(x)}  \by{\text{Hypothèse}}{}
+		\have [~] {2} {\mathcal{P}(c)} \by{\text{Élimination du $\forall$}}{}
+		\have [\lturn] {3} {\exists x \ \mathcal{P}(x)} \by{\text{Introduction du $\exists$}}{}
+	\end{nd}
+	$
+	
+	\medskip
+	
+	Les règles de preuve supposent implicitement que l'on travaille avec des ensembles non vides. 
+	C'est cohérent avec le domaine d'une structure qui doit être un ensemble non vide.
+\end{exemple}
+
+
+
+\begin{exemple}
+	Soit une formule $\mathcal{P}$ dans laquelle la variable $x$ n'apparaît pas.
+	
+	\[ 
+	\forall x \ \ \big( \mathcal{P} \limplies \mathcal{Q}(x) \big)  
+	\quad \lturn \quad  
+	\mathcal{P} \limplies \big( \forall x \ \ \mathcal{Q}(x) \big)
+	\]
+	
+	\medskip
+	\qquad\qquad
+	$
+	\begin{nd}
+		\hypo [1] {1} {\forall x \ \ \big( \mathcal{P} \limplies \mathcal{Q}(x) \big) }  \by{}{}
+		\open				
+			\hypo [2] {2} {\mathcal{P}} \by{\text{Sous-hypothèse}}{}
+			\have [3] {3} {\mathcal{P} \limplies \mathcal{Q}(c)} \by{\text{Élimination du $\forall$ de 1}}{}
+			\have [4] {4} {\mathcal{Q}(c)} \by{}{}
+			\have [5] {5} {\forall x \ \ \mathcal{Q}(x)} \by{\text{Introduction du $\forall$, $c$ n'apparait dans aucune hypothèse}}{}		
+		\close 
+		\have [\lturn] {} {\mathcal{P} \limplies \big( \forall x \ \ \mathcal{Q}(x) \big)} \by{}{}
+	\end{nd}
+	$
+	
+\end{exemple}
+
+
+
+\begin{exemple}
+
+	\[ 
+	\forall x \ \ \big( \mathcal{P}(x) \limplies \mathcal{Q}(x) \big), \ \   
+	\exists x \ \  \mathcal{P}(x)
+	\quad \lturn \quad  
+	\exists x \ \  \mathcal{Q}(x)
+	\]
+	
+	C'est assez naturel : si $\mathcal{P}(x)$ implique toujours $\mathcal{Q}(x)$ et que l'un des $\mathcal{P}(x)$ est vrai, alors l'un des $\mathcal{Q}(x)$ est vrai. C'est une variante du \emph{modus ponens} de la logique propositionnelle : $\mathcal{P}, \mathcal{P} \limplies \mathcal{Q} \ \  \lturn \ \ \mathcal{Q}$.
+	
+	\medskip
+	\qquad\qquad
+	$
+	\begin{nd}
+		\hypo [1] {1} {\forall x \ \ \big( \mathcal{P}(x) \limplies \mathcal{Q}(x) \big) }  \by{}{}
+		\hypo [2] {2} {\exists x \ \  \mathcal{P}(x)}  \by{}{}	
+		\open		
+			\hypo [3] {3} {\mathcal{P}(c)} \by{\text{Sous-hypothèse}}{}
+			\have [4] {4} {\mathcal{P}(c) \limplies \mathcal{Q}(c)} \by{\text{Élimination du $\forall$ de 1}}{}
+			\have [5] {5} {\mathcal{Q}(c)} \by{}{}
+			\have [6] {6} {\exists x \ \ \mathcal{Q}(x)} \by{\text{Introduction du $\exists$}}{}				
+		\close 
+		\have [\lturn] {} {\exists x \ \ \mathcal{Q}(x)} \by{\text{Élimination du $\exists$ de 2 par 3-6}}{}
+	\end{nd}
+	$
+	
+\end{exemple}
+
+
+
+\begin{exemple}
+	
+	\[ 
+	\exists x \ \ \forall y \ \ \mathcal{P}(x,y) 
+	\quad \lturn \quad  
+	\forall y \ \ \exists x \ \ \mathcal{P}(x,y) 	
+	\]
+	
+	On peut donc intervertir un $\exists \  \forall$ vers un $\forall \ \exists$ (mais pas dans l'autre sens).
+	
+	\medskip
+	\qquad\qquad
+	$
+	\begin{nd}
+		\hypo [1] {1} {\exists x \ \ \forall y \ \ \mathcal{P}(x,y)}  \by{}{}
+		\open		
+			\hypo [2] {2} {\forall y \ \ \mathcal{P}(a,y)} \by{\text{Avec $a$ arbitraire}}{}		
+			\have [3] {3} {\mathcal{P}(a,b)}{} \by{\text{Avec $b$ arbitraire}}{}
+			\have [4] {4} {\exists x \ \ \mathcal{P}(x,b)} \by{\text{Introduction du $\exists$}}{}			
+			\have [5] {5} {\forall y \ \ \big( \exists x \ \ \mathcal{P}(x,y) \big)} \by{\text{Introduction du $\forall$}}{}				
+		\close 
+		\have [\lturn] {} {\forall y \ \ \exists x \ \ \mathcal{P}(x,y)} \by{\text{Élimination du $\exists$ de 1 par 2-5}}{}
+	\end{nd}
+	$
+	
+\end{exemple}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Détails des règles}
+
+
+On reprend les règles une par une avec davantage d'explications et des exemples.
+
+%--------------------------------------------------------------------
+\subsection{Règle I. Élimination de $\forall$}
+
+
+\mybox{$
+	\forall x \ \ \mathcal{P}(x)  \quad \lturn \quad  \mathcal{P}(c)
+	$}
+
+\medskip
+
+\emph{Conditions.} 
+\begin{itemize}
+	\item Si $c$ est une constante du langage alors il n'y a pas de condition si la substitution de $x$ par $c$ est valide.
+	
+	\item Si $c$ est un terme, aucune de ses variables ne doit être liée (capturée) par un quantificateur de $\mathcal{P}$ lors de la substitution.
+\end{itemize}
+
+\emph{Autres formulations.}
+
+\[
+\forall x \ \ \mathcal{P}(x)  \quad \lturn \quad  \mathcal{P}[c/x]
+\]
+On trouve aussi parfois l'écriture un peu abusive : $\forall x \ \ \mathcal{P}(x)  \ \lturn \  \mathcal{P}(x)$.
+
+Et voici le schéma en déduction naturelle :
+\[
+\begin{nd}
+	\hypo [~] {} {\forall x \ \ \mathcal{P}(x)}
+	\have [\lturn] {} {\mathcal{P}(c)} 
+\end{nd}
+\]
+
+
+\medskip
+
+\emph{Exemples.} 
+\begin{itemize}
+
+	\item $\forall x \ P(x) \land Q(x,c) \ \ \lturn \ \  P(c) \land Q(c,c)$ est une preuve correcte. On a remplacé les occurrences de $x$ par une constante $c$, même si cette constante apparaissait déjà dans la formule.
+	
+	\item $\forall x \ P(x)  \ \ \lturn \ \ P( f(a,b) )$ est correct si $f$ est une fonction et $a, b$ deux constantes.
+	
+	\item $\forall x \ P(x)  \ \ \lturn \ \ P(y)$ est aussi correct, à condition que $y$ ne soit pas capturée par un quantificateur dans $\mathcal{P}$.
+\end{itemize}
+
+\medskip
+
+\emph{Contre-exemples.} 
+\begin{itemize}
+	
+	\item $\big( \forall x \ P(x) \big) \limplies Q(a,b)$ ne prouve pas  $P(c) \limplies Q(a,b)$,  car le \og{}pour tout\fg{} n'est pas le connecteur principal de la phrase. 
+	Par contre $ \forall x \ \big(P(x) \limplies Q(a,b) \big)$ prouverait bien $P(c) \limplies Q(a,b)$.
+	
+	\item $\forall x \ \exists y \ Q(x,y)$ ne prouve pas $\exists y \ Q(y,y)$.
+	En effet, dans la formule \og{}$\exists y \ Q(x,y)$\fg{}, la variable $x$ apparaît comme variable libre. La substitution de $x$ par $y$ est donc interdite car la variable $y$ injectée lors du remplacement serait capturée par le quantificateur $\exists y$ de la formule.
+\end{itemize}
+
+\medskip
+
+\emph{Remarques.} Comment parler d'une constante $c$, si le langage $\mathcal{L}$ n'a pas de constante à ce nom ou bien n'a pas de constante du tout ? On s'autorise à étendre le langage $\mathcal{L}$ en un langage $\mathcal{L}' = \mathcal{L} \cup \{ c \}$ où $c$ est un nouveau symbole de constante.
+
+
+%--------------------------------------------------------------------
+\subsection{Règle II. Introduction de $\forall$}
+
+\mybox{$
+	\mathcal{P}(c) \quad \lturn \quad  \forall x \ \ \mathcal{P}(x)
+	$}
+
+\medskip
+
+\emph{Conditions.} 
+Ce qui est délicat dans de son usage, c'est que $c$ doit être une constante arbitraire, c'est-à-dire une constante dont le symbole n'apparaît dans aucune hypothèse en cours d'utilisation.
+
+	
+
+\emph{Autres formulations.}
+	
+\[
+\mathcal{P}(x) \quad \lturn \quad  \forall x \ \ \mathcal{P}(x)
+\]
+\[
+\begin{nd}
+	\hypo [~] {} {\mathcal{P}(c)}
+	\have [\lturn] {} {\forall x \ \ \mathcal{P}(x)} 
+\end{nd}
+\]
+
+Soit $\Gamma$ un ensemble de formules et $c$ une constante qui n'apparaît pas dans les formules de $\Gamma$.
+\[
+\text{ Si } \ \Gamma \ \ \lturn \ \ \mathcal{P}(c)  \quad 
+\text{ alors } \quad \Gamma \ \ \lturn \ \ \forall x \ \ \mathcal{P}(x)
+\]
+
+\medskip	
+	
+\emph{Exemples.}
+
+\begin{itemize}
+	\item $c > 0 \ \ \lturn \ \ \forall x \ x > 0$, à condition qu'aucune hypothèse ne  porte sur $c$.
+	
+	\item $f(a,b) \neq 0  \ \ \lturn \ \ \forall x \ \forall y \ f(x,y) \neq 0$, à condition qu'aucune hypothèse ne porte ni sur $a$, ni sur $b$.
+\end{itemize}	
+
+
+\medskip
+
+\emph{Contre-exemples.}
+Beaucoup de choses sont interdites et il est facile de se tromper dans l'application de cette règle.
+
+\begin{itemize}
+	\item $c>0, \ P(c)$ ne prouve pas $\forall x \ P(x)$ car il y a la contrainte $c>0$ qui fait que $c$ n'est pas une constante arbitraire.
+	Par contre, à partir des hypothèses $c>0$ et $P(c)$, on pourrait prouver que 
+	$\forall x \ \big( x > 0 \limplies P(x) \big)$.
+	
+	\item Voici quasiment le même exemple avec l'écriture en déduction naturelle et un autre exemple :
+
+
+\medskip
+\qquad\qquad
+$
+\begin{nd}
+	\hypo [~] {} {c>0}  
+	\have [~] {} {P(c)} 	
+	\have [\lturn] {} {\xcancel{\forall x \ \ P(x)}} 
+\end{nd}
+$
+\qquad\qquad
+$
+\begin{nd}
+	\hypo [~] {} {\forall x \ \ Q(c,x)}  
+	\have [~] {} {Q(c,c)} 	\by{\text{Élimination de $\forall$ correcte}}{}
+	\have [\lturn] {} {\xcancel{\forall x \ \ Q(x,x)}} \by{\text{Introduction de $\forall$ non valide}}{}
+\end{nd}
+$	
+
+\medskip
+	
+	\item Il est interdit de ne remplacer que certaines occurrences de $c$. Par exemple, $c=c$ ne prouve pas $\forall x \ x = c$.
+\end{itemize}
+
+
+\medskip
+	
+\emph{Remarque.}	
+Le mieux est que le symbole $c$ utilisé dans la règle n'apparaisse pas du tout auparavant dans la preuve. Mais ce n'est pas toujours aussi simple.
+Voici un exemple valide :
+
+\medskip
+\qquad\qquad
+$
+\begin{nd}
+	\have [~] {} {\ \vdots} \by{\text{$c$ n'apparaît pas avant}}{}	
+	\open		
+		\hypo [~] {} {P(c)}  \by{\text{Sous-hypothèse, condition porte sur $c$}}{}
+		\have [~] {} {Q(c)} \by{\text{Conclusion dans ce cas}}{}	
+	\close 		
+	\have [~] {} {P(c) \limplies Q(c)} \by{\text{Il n'y a plus aucune hypothèse en cours d'utilisation contenant $c$}}{}
+	\have [\lturn] {} {\forall x \ \ \big( P(x) \limplies Q(x) \big)} \by{\text{Introduction de $\forall$}}{}
+\end{nd}
+$
+
+
+
+%--------------------------------------------------------------------
+\subsection{Règle III. Introduction de $\exists$}
+
+\mybox{$
+	\mathcal{P}(c) \quad \lturn \quad  \exists x \ \ \mathcal{P}(x)
+	$}
+
+\medskip
+	
+\emph{Conditions.} $c$ est une constante ou bien un terme sans variable libre.
+	
+\medskip
+	
+\emph{Autres formulations.}
+
+\[
+\mathcal{P}[c/x] \quad \lturn \quad  \exists x \ \ \mathcal{P}(x)
+\]	
+\[
+\begin{nd}
+	\hypo [~] {} {\mathcal{P}(c)}
+	\have [\lturn] {} {\exists x \ \ \mathcal{P}(x)}
+\end{nd}
+\]
+
+
+\medskip
+
+\emph{Exemples.}
+
+\begin{itemize}
+	\item $c^2 \neq  c \ \ \lturn \ \ \exists x \ x^2 \neq x$ (déjà vu).
+	
+	\item $c^2 \neq  c \ \ \lturn \ \ \exists x \ x^2 \neq c$ 
+	(remplacement partiel autorisé)
+	
+	\item $c^2 \neq  c \ \ \lturn \ \ \exists x \ c^2 \neq x$ (remplacement partiel)
+	
+	\item $a \times b = 12 \ \ \lturn \ \ \exists x \ \exists y \ x \times y  = 12$ (deux utilisations de la règle)
+\end{itemize}
+ 	
+\medskip
+ 
+\emph{Remarque.} Il n'y a pas de danger avec cette règle. Il faut cependant prendre soin d'introduire le \og{}il existe\fg{} en tête de la formule obtenue. Par exemple, ceci est correct :
+\[
+\forall x \ \ Q(x,b)  \quad \lturn \quad  \exists y \ \ \forall x \ \ Q(x,y)
+\]
+Mais la même prémisse ne prouverait pas $\forall x \ \ \exists y \ \ Q(x,y)$.
+
+\medskip 
+\emph{Domaine non vide.} En logique du premier ordre, on supposera toujours qu'on travaille avec un domaine non vide.
+
+
+%--------------------------------------------------------------------
+\subsection{Règle IV. Élimination de $\exists$}
+
+\mybox{$
+	\exists x \ \ \mathcal{P}(x), \ \big[\mathcal{P}(c) \lturn \mathcal{Q} \big]  \quad \lturn \quad  \mathcal{Q}
+	$}
+
+La notation entre crochets correspond à une sous-preuve.
+ 	
+\medskip
+
+
+\emph{Conditions.} $c$ doit être une \defi{constante fraîche}\index{constante fraiche@constante fraîche} : d'une part elle ne doit apparaître dans aucune hypothèse en cours d'utilisation, d'autre part elle ne doit pas apparaître dans la formule $\mathcal{Q}$ (ni bien sûr dans $\mathcal{P}(x)$). Le mieux est que la constante n'apparaisse ni avant dans la preuve, ni dans $\mathcal{Q}$.
+
+
+\emph{Autres formulations.}
+\[
+\exists x \ \ \mathcal{P}(x), \ \big[\mathcal{P}[c/x] \lturn \mathcal{Q} \big]  \quad \lturn \quad  \mathcal{Q}
+\]
+\[
+\exists x \ \ \mathcal{P}(x), \ \big[\mathcal{P}(x) \lturn \mathcal{Q} \big]  \quad \lturn \quad  \mathcal{Q}
+\]
+
+Soit $\Gamma$ un ensemble de formules, $c$ une constante du langage qui n'apparaît ni dans $\mathcal{Q}$, ni dans les formules de $\Gamma$ :
+\[
+\text{ Si } \quad \Gamma \ \ \lturn \ \exists x \ \ \mathcal{P}(x)
+\quad \text{ et } \quad \mathcal{P}(c) \ \ \lturn \ \ \mathcal{Q},  \quad 
+\text{ alors } \ \Gamma \ \ \lturn \ \ \mathcal{Q}
+\]
+
+Le plus parlant est l'écriture en déduction naturelle.
+\[
+\begin{nd}
+	\hypo [~] {} {\exists x \ \ \mathcal{P}(x)}  \by{}{}
+	\open				
+	\hypo [~] {} {\mathcal{P}(c)} \by{\text{Sous-hypothèse}}{}
+	\have [~] {} {\ \vdots} \by{}{}
+	\have [~] {} {\mathcal{Q}} \by{}{}
+	\close 
+	\have [\lturn] {} {\mathcal{Q}} \by{}{}
+\end{nd}
+\]
+
+	
+\medskip
+
+\emph{Exemple.} Voyons comment utiliser cette règle dans la pratique :
+\[
+\exists x \ \ f(x)=0, \ \forall x \ \ \big( f(x) = 0 \limplies g(x) = 1 \big) \quad \lturn \quad  \exists x \ \ g(x) = 1
+\]
+Ce n'est pas une application directe de la règle, mais presque :
+ 	
+\medskip
+\qquad\qquad
+$
+\begin{nd}
+	\hypo [~] {} {\exists x \ \ f(x) = 0}  \by{}{}
+	\hypo [~] {} {\forall x \ \ \big( f(x) = 0 \limplies g(x) = 1 \big)}  \by{}{}
+	\open				
+	\hypo [~] {} {f(c) = 0} \by{\text{Sous-hypothèse}}{}
+	\have [~] {} {f(c) = 0 \limplies g(c) = 1} \by{\text{Élimination de $\forall$}}{}	
+	\have [~] {} {g(c) = 1} \by{\text{Par l'implication}}{}
+	\have [~] {} {\exists x \ \ g(x) = 1} \by{\text{C'est la formule $\mathcal{Q}$ de la règle}}{}
+	\close 
+	\have [\lturn] {} {\exists x \ \ g(x) = 1} \by{\text{Élimination de $\exists$}}{}
+\end{nd}
+$
+ 	
+\medskip
+
+\emph{Remarque.}
+Si on enchaîne plusieurs \og{}il existe\fg{}, on doit prendre une nouvelle constante fraîche pour chacun. 
+Par exemple, si on a :
+\[
+\exists x  \ \ P(x), \ \  \exists y \ \ Q(y)\]
+alors dans une preuve on ne peut pas choisir $P(c)$ et $Q(c)$ avec le même $c$. On doit utiliser deux constantes fraîches $c$ et $d$ afin d'écrire $P(c)$ et $Q(d)$ dans les sous-hypothèses.
+
+
+%--------------------------------------------------------------------
+\subsection{Règle V. Égalité}
+
+\mybox{$
+	t = s, \ \mathcal{P}(t) \quad \lturn \quad  \mathcal{P}(s)
+	$}
+	
+ 	
+\medskip
+
+\emph{Conditions.} $t$ et $s$ sont des termes du langage. La substitution de $x$ par $t$ et $s$ doit être valide. Il n'y a pas d'autres conditions.
+
+	
+\emph{Autres formulations.}
+\[
+x = y, \ \mathcal{P}(x) \quad \lturn \quad  \mathcal{P}(y)
+\]
+\[
+\begin{nd}
+	\hypo [~] {} {t=s}
+	\hypo [~] {} {\mathcal{P}(t)}	
+	\have [\lturn] {} {\mathcal{P}(s)} 
+\end{nd}
+\]
+	
+\medskip
+
+\emph{Exemple.} $t=x+1, \ t^2 \neq 0 \ \ \lturn \ \ (x+1)^2 \neq 0$.
+ 	
+\medskip
+
+\emph{Remarque.} Cette règle peut être remplacée par les axiomes suivants pour le symbole égalité :
+\begin{itemize}
+	\item $\forall x \ \ x = x$
+	
+	\item $\forall x \ \ \forall y \ \ \big( (x = y) \limplies (\mathcal{P}(x) \lequiv \mathcal{P}(y)) \big)$
+\end{itemize}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Négation des quantificateurs et règles dérivées}
+
+%--------------------------------------------------------------------
+\subsection{Négation des quantificateurs}
+
+\index{quantificateurs@quantificateurs $\forall$, $\exists$}
+
+\textbf{Règle dérivée. Négation des quantificateurs.} 
+\mybox{$
+	\lnot \ \big( \forall x \ \ \mathcal{P}(x) \big)  
+	\quad \lturn \quad  
+	\exists x \ \ \big( \lnot \mathcal{P}(x) \big) 
+	$}
+\mybox{$
+	\lnot \ \big( \exists x \ \ \mathcal{P}(x) \big)  
+	\quad \lturn \quad  
+	\forall x \ \ \big( \lnot \mathcal{P}(x) \big) 
+	$}
+
+Nous ne sommes pas surpris : la négation d'un \og{}pour tout\fg{} est un \og{}il existe\fg{}, et réciproquement.
+
+Exemples :
+\begin{enumerate}
+	
+	\item $\lnot \ \big( \forall x \ \ f(x) = g(x) \big) \quad \lturn \quad  
+	\exists x \ \ \big( f(x) \neq g(x) \big)$
+	
+	\item $\lnot \ \big( \exists x \ \ P(x) \land Q(x) \big) \quad \lturn \quad  
+	\forall x \ \ \big( \lnot P(x) \big) \lor \big( \lnot Q(x) \big)$
+	
+	\item $\lnot \ \big( \forall x \ \ P(x) \limplies Q(x) \big) \quad \lturn \quad \exists x \ \ P(x) \land \big( \lnot Q(x) \big)$
+\end{enumerate}
+
+
+%--------------------------------------------------------------------
+\subsection{Autres règles dérivées}
+
+
+\textbf{Règle dérivée. Renommage.} 
+\mybox{$
+	\forall x \ \ \mathcal{P}(x) 
+	\quad \lturn \quad  
+	\forall y \ \ \mathcal{P}(y)  	
+	\qquad \text{ et }\qquad
+	\exists x \ \ \mathcal{P}(x) 
+	\quad \lturn \quad  
+	\exists y \ \ \mathcal{P}(y) 	
+	$}
+
+La variable $y$ ne doit pas apparaître comme variable libre dans la formule $\forall x \ \mathcal{P}(x)$ ni dans $\exists x \ \mathcal{P}(x)$.
+
+\bigskip
+
+\textbf{Règle dérivée. Interversion de deux $\forall$ ou deux $\exists$.}
+\mybox{$
+	\forall x \ \ \forall y \ \ \mathcal{P}(x,y)
+	\quad \lturn \quad  
+	\forall y \ \ \forall x \ \ \mathcal{P}(x,y)
+	$}
+\mybox{$
+	\exists x \ \ \exists y \ \ \mathcal{P}(x,y)
+	\quad \lturn \quad  
+	\exists y \ \ \exists x \ \ \mathcal{P}(x,y)
+	$}
+
+\bigskip
+
+\textbf{Règle dérivée. Interversion de $\exists \  \forall$ vers $\forall \ \exists$.}	
+\mybox{
+	$\exists x \ \ \forall y \ \ \mathcal{P}(x,y) 
+\quad \lturn \quad  
+\forall y \ \ \exists x \ \ \mathcal{P}(x,y)$	
+}
+On l'a prouvée dans un exemple précédent. 
+
+
+\bigskip
+
+\textbf{Règle dérivée. Commutation de $\forall$ et $\land$.}
+\mybox{$
+	\forall x \ \ \big( \mathcal{P}(x) \land \mathcal{Q}(x) \big)
+	\quad \lturn \quad  
+	\big( \forall x \ \ \mathcal{P}(x) \big) \land \big( \forall x \ \ \mathcal{Q}(x) \big)
+	$}
+\mybox{$
+	\big( \forall x \ \ \mathcal{P}(x) \big) \land \big( \forall x \ \ \mathcal{Q}(x) \big)
+	\quad \lturn \quad  
+	\forall x \ \ \big( \mathcal{P}(x) \land \mathcal{Q}(x) \big)	
+	$} 
+Ainsi on peut passer d'un sens à l'autre. Les formules sont interdérivables.
+
+\bigskip
+
+\textbf{Règle dérivée. Commutation de $\exists$ et $\lor$.}
+\mybox{$
+	\exists x \ \ \big( \mathcal{P}(x) \lor \mathcal{Q}(x) \big)
+	\quad \lturn \quad  
+	\big( \exists x \ \ \mathcal{P}(x) \big) \lor \big( \exists x \ \ \mathcal{Q}(x) \big)
+	$}
+\mybox{$
+	\big( \exists x \ \ \mathcal{P}(x) \big) \lor \big( \exists x \ \ \mathcal{Q}(x) \big)
+	\quad \lturn \quad  
+	\exists x \ \ \big( \mathcal{P}(x) \lor \mathcal{Q}(x) \big)	
+	$} 
+
+%--------------------------------------------------------------------
+\subsection{Preuve des règles dérivées}
+
+Voyons quelques preuves des règles dérivées.
+
+
+\begin{exemple}
+	Les règles de renommage sont naturelles. Les preuves sont de simples jeux d'écriture. 
+	
+	\[ 
+	\forall x \ \ \mathcal{P}(x)  \quad \lturn \quad  \forall y \ \ \mathcal{P}(y)
+	\]
+	
+	\medskip
+	\qquad\qquad
+	$
+	\begin{nd}
+		\hypo [~] {} {\forall x \ \ \mathcal{P}(x)}  \by{}{}
+		\have [~] {} {\mathcal{P}(c)} \by{\text{Élimination du $\forall$, $c$ arbitraire}}{}
+		\have [\lturn] {} {\forall y \ \mathcal{P}(y)} \by{\text{Introduction du $\forall$}}{}
+	\end{nd}
+	$
+	
+	
+	\bigskip	
+		
+	\[ 
+	\exists x \ \ \mathcal{P}(x)  \quad \lturn \quad  \exists y \ \ \mathcal{P}(y)
+	\]
+	\medskip
+	\qquad\qquad
+	$
+	\begin{nd}
+		\hypo [~] {} {\exists x \ \ \mathcal{P}(x)}  \by{}{}
+		\open				
+			\hypo [~] {} {\mathcal{P}(c)} \by{\text{$c$ constante}}{}
+			\have [~] {} {\exists y \ \ \mathcal{P}(y)} \by{\text{Introduction du $\exists$}}{}
+		\close 
+		\have [\lturn] {} {\exists y \ \ \mathcal{P}(y)} \by{\text{Élimination du $\exists$ initial}}{}
+	\end{nd}
+	$	
+
+\end{exemple}
+
+
+\begin{exemple}
+\[
+	\forall x \ \ \forall y \ \ \mathcal{P}(x,y)
+	\quad \lturn \quad  
+	\forall y \ \ \forall x \ \ \mathcal{P}(x,y)	
+\]
+
+	\medskip
+\qquad\qquad
+$
+\begin{nd}
+	\hypo [~] {} {\forall x \ \ \forall y \ \ \mathcal{P}(x,y)}  \by{}{}
+	\have [~] {} {\forall y \ \ \mathcal{P}(a,y)} \by{\text{Élimination du premier $\forall$, $a$ arbitraire}}{}
+	\have [~] {} {\mathcal{P}(a,b)} \by{\text{Élimination du second $\forall$, $b$ arbitraire}}{}
+	\have [~] {} {\forall x \ \ \mathcal{P}(x,b)} \by{\text{Introduction d'un $\forall$}}{}	
+	\have [\lturn] {} {\forall y \ \ \forall x \ \ \mathcal{P}(x,y)} \by{\text{Introduction d'un autre $\forall$}}{}
+\end{nd}
+$
+\end{exemple}
+
+
+\begin{exemple}
+	\[
+	\big( \forall x \ \ \mathcal{P}(x) \big) \land \big( \forall x \ \ \mathcal{Q}(x) \big)
+	\quad \lturn \quad  
+	\forall x \ \ \big( \mathcal{P}(x) \land \mathcal{Q}(x) \big)
+	\]
+	
+	\medskip	
+	
+	Voici la preuve, à vous d'expliciter les règles utilisées.
+	
+	\medskip
+	\qquad\qquad
+	$
+	\begin{nd}
+		\hypo [~] {} {\Big( \forall x \ \ \mathcal{P}(x) \Big) \land \Big( \forall x \ \ \mathcal{Q}(x) \Big)}  \by{}{}
+		\have [~] {} {\forall x \ \ \mathcal{P}(x)} \by{}{}
+		\have [~] {} {\mathcal{P}(c)} \by{}{}	
+		\have [~] {} {\forall x \ \ \mathcal{Q}(x)} \by{}{}
+		\have [~] {} {\mathcal{Q}(c)} \by{}{}	
+		\have [~] {} {\mathcal{P}(c) \land \mathcal{Q}(c)} \by{}{}				
+		\have [\lturn] {} {\forall x \ \ \big( \mathcal{P}(x) \land \mathcal{Q}(x) \big)} \by{}{}
+	\end{nd}
+	$
+	
+\end{exemple}
+
+\begin{exemple}
+	\[
+	\lnot \ \Big( \forall x \ \ \mathcal{P}(x) \Big)  
+	\quad \lturn \quad  
+	\exists x \ \ \Big( \lnot \mathcal{P}(x) \Big) 
+	\]
+
+\medskip
+\qquad\qquad
+$
+\begin{nd}
+	\hypo [1] {} {\lnot \ \Big( \forall x \ \ \mathcal{P}(x) \Big)}  \by{}{}
+	\open				
+		\hypo [2] {} {\lnot \ \Big( \exists x \ \ \lnot \mathcal{P}(x) \Big)}  \by{\text{Raisonnement par l'absurde}}{}
+		\open		
+			\hypo [3] {} {\lnot  \mathcal{P}(c)} \by{\text{Hypothèse, avec $c$ arbitraire}}{}		
+			\have [4] {} {\exists x \ \ \lnot \mathcal{P}(x)} \by{\text{Introduction de $\exists$}}{}
+			\have [5] {} {\lantitauto} \by{\text{Contradiction 2 avec 4}}{}
+		\close
+		\have [6] {} {\mathcal{P}(c)} \by{\text{Par 2-5}}{}		
+		\have [7] {} {\forall x \ \ \mathcal{P}(x)} \by{\text{Introduction de $\forall$}}{}
+		\have [8] {} {\lantitauto} \by{\text{Contradiction 1 avec 7}}{}
+	\close		
+	\have [\lturn] {} {\exists x \ \ \lnot \mathcal{P}(x)} \by{\text{Par contradiction de 2-8}}{}
+	\end{nd}
+	$
+	
+\end{exemple}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Exercices}
+
+\subsection*{Preuves en logique du premier ordre}
+
+\begin{exercicecours}
+Écrire les preuves des théorèmes suivants. $P, Q, R$ désignent des prédicats, $f, g$ des fonctions.
+\begin{enumerate}
+	
+	\item $\forall x \ P(x), \ \ P(a) \limplies Q(a) \ \ \lturn \ \ Q(a)$ 
+	
+	\item $\forall x \ P(x) \land Q(x) \ \ \lturn \ \ \exists x \ P(x)$
+	
+	\item $\forall x \ \forall y \ R(x,y) \ \ \lturn \ \ \forall x \ R(x,x)$
+	
+	\item $\exists x  \ f(x)=g(x) \ \ \lturn \ \ \exists x \ \exists y \ f(x)=g(y)$
+
+\end{enumerate}
+\end{exercicecours}
+
+
+\begin{exercicecours}
+	Écrire les preuves des théorèmes suivants. $P, Q, R$ désignent des prédicats, $f$ une fonction.
+	\begin{enumerate}
+		
+		\item $\lturn \forall x \ \ \forall y \ \ \big( f(x) \neq f(y) \  \limplies \ x \neq y \big)$
+		
+		\item $\forall x \ P(x), \ \forall y \ Q(y) \ \ \lturn \ \ \exists z \ P(z) \land Q(z)$
+		
+		\item $\forall x \ P(x) \limplies Q(x), \ \ \forall y \ Q(y) \limplies R(y)
+		\ \ \lturn \ \ \forall z \ P(z) \limplies R(z)$
+		
+		\item $\forall x \ \big( P(x) \limplies Q \big), \ \ \exists x  \ P(x) \ \ \lturn \ \ Q$, où $Q$ ne dépend pas de $x$.
+		
+	\end{enumerate}
+\end{exercicecours}
+
+
+\subsection*{Détails des règles}
+
+
+\begin{exercicecours}
+Expliquer l'erreur faite en appliquant la règle d'élimination de $\forall$.
+\begin{enumerate}
+	\item $\exists x \ \forall y \ Q(x,y)$ prouve directement $\exists x \ Q(x,x)$. Bonus : donner une preuve correcte.
+	
+	\item $\forall x \ \big( P(x) \limplies Q(c) \big)$ prouve $P(c)$.
+	
+	\item $\forall x \ \exists y \  Q(x,y)$ prouve $\exists y \  Q(y,y)$.
+\end{enumerate}
+\end{exercicecours}
+
+
+\begin{exercicecours}
+Expliquer l'erreur faite	en appliquant la règle d'introduction de $\forall$.
+\begin{enumerate}
+	\item $c=1, \ \ c > 0$ prouve $\forall x \ x> 0$. 
+	
+	\item $\exists x \ P(x)$ prouve $\forall x \ P(x)$. 
+	
+	\item $(x \neq 0) \limplies (x^2 \neq 0)$ prouve $\forall x \ x^2 \neq 0$. 
+	
+	\item $(x = 0) \lor (x \neq 0)$ prouve $\big( \forall x \ x = 0 \big) \lor \big( \forall x \ x \neq 0 \big)$. 		
+	
+	\item $f(c)=g(c)$ prouve $\forall x \ f(x)=g(c)$. 
+\end{enumerate}
+\end{exercicecours}
+
+
+\begin{exercicecours}
+Expliquer l'erreur faite	en appliquant la règle d'introduction de $\exists$.
+\begin{enumerate}
+	\item $\forall x \ P(x)$ prouve directement $\exists x \ P(x)$. 
+	
+	\item $P(a) \land Q(a)$ prouve $\exists x \ P(x) \land Q(y)$.
+	
+	\item $c=0, \ \ \exists x \ P(x)$ prouve $\exists x \ (x=0) \land P(x)$.
+	
+	\item $\forall x \ Q(y,y)$ prouve $\exists x \ \forall y \ Q(x,y)$.
+	
+	\item $\forall x \ Q(y,y)$ prouve $\forall y \ \exists x \ Q(x,y)$.		
+	
+\end{enumerate}
+\end{exercicecours}
+
+
+\begin{exercicecours}
+Expliquer l'erreur faite	en appliquant la règle d'élimination de $\exists$.
+\begin{enumerate}
+	\item $\exists x \ P(x), \ \ P(0) \limplies Q$ prouve $Q$. 
+	
+	\item $\exists x \ P(x)$ prouve $P(c)$. 
+	
+	\item $\exists x \ \big( P(x) \limplies Q \big), \ \ P(c)$ prouve $Q$.
+	
+	\item $\exists x \ P(x), \ \ \exists y \ Q(y)$ prouve $\exists z \ P(z) \land Q(z)$. 	 		
+\end{enumerate}
+\end{exercicecours}
+
+
+\subsection*{Négation des quantificateurs et règles dérivées}
+
+
+\begin{exercicecours}
+Écrire ce que prouvent les formules suivantes. 
+La formule prouvée ne doit plus contenir aucune négation à gauche d'un quantificateur.
+\begin{enumerate}
+	\item $\lnot \Big( \forall x \ f(x) = g(x) \Big)$
+	
+	\item $\lnot \Big( \exists x \ P(x) \lequiv Q(x) \Big)$
+	
+	\item $\lnot \big[ \forall x \ \big( P(x) \limplies \exists y \ Q(y) \big) \big]$
+\end{enumerate}
+\end{exercicecours}
+
+
+\begin{exercicecours}
+Prouver toutes les règles dérivées à l'aide des règles de base.	
+\end{exercicecours}
+
+\end{document}

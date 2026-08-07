@@ -1,0 +1,40 @@
+\begin{tikzpicture}[scale=1]
+
+%\usetikzlibrary{decorations.markings}
+
+\tikzset{
+  mid arrow/.style={
+    postaction={
+      decorate,
+      decoration={
+        markings,
+        mark=at position 0.5 with {\arrow{>}}
+      }
+    }
+  }
+}
+
+\coordinate (r) at (0,0);
+\coordinate (s) at (3,1);
+\coordinate (t) at (2,3);
+
+
+\node at (r) [circle,fill=black, scale=0.5] {};
+\node at (s) [circle,fill=black, scale=0.5] {};
+\node at (t) [circle,fill=black, scale=0.5] {};
+
+\node at (r) [below right]{$r$};
+\node at (s) [below right]{$s$};
+\node at (t) [right=5pt]{$t$};
+
+%\draw[very thick] (r) to[bend left] (s);
+\draw[mid arrow,  thick] (r) to[bend left] (s);
+\draw[mid arrow,  thick] (s) to[bend left] (r);
+\draw[mid arrow,  thick] (r) to[bend left] (t);
+\draw[mid arrow,  thick] (t) to[bend left] (s);
+
+
+\draw[mid arrow,  thick] (r)  .. controls +(250:2) and +(130:2) ..  (r);
+\draw[mid arrow,   thick] (t)  .. controls +(140:2) and +(40:2) ..  (t);
+
+\end{tikzpicture}

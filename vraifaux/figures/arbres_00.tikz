@@ -1,0 +1,26 @@
+﻿\begin{tikzpicture}[scale=1.2]
+\tikzstyle{line} = [draw,  thick]
+\path node(P1) {$3$ };
+
+% nodes
+
+\path (P1)+(1,0) node(P2) {$a$};
+\path (P1)+(0.5,1.5) node(P3){$\times$};
+\path (P3)+(2,0) node(P4) {$\times$};
+\path (P3)+(1,1.5) node(P5){$+$};
+\path (P1)+(2,0) node(P6) {$a$};
+\path (P6)+(1,0) node(P7) {$4$};
+
+% Draw edges between elements
+\path[line] (P1.north) -- node [below] {} (P3);
+\path[line] (P2.north) -- node [below] {} (P3);
+\path[line] (P3.north) -- node [below] {} (P5);
+\path[line] (P4.north) -- node [below] {} (P5);
+\path[line] (P6.north) -- node [below] {} (P4);
+\path[line] (P7.north) -- node [below] {} (P4);
+
+\begin{scope}[xshift=6cm]
+\end{scope}
+
+
+\end{tikzpicture}

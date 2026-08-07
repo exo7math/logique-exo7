@@ -1,0 +1,240 @@
+﻿\begin{tikzpicture}[line width=1.5pt, line cap=round, line join=round]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    % Unit length : cm only
+    \def\mylinewidth{0.3}  %
+    \def\trianglesep{2*\mylinewidth}  % separation between the two triangles
+
+  \def\R{1.5}  % letter exterior radius
+   \def\r{0.75}  % letter interior radius=
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Logo V/F -- part one
+\begin{scope}[yshift=20cm]
+
+\begin{scope}
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+   % Triangle gauche
+    \draw[rotate=-45, fill] 
+        (-0.5,-0.5) 
+        [rounded corners=10pt] -- (10,0) 
+        [rounded corners=10pt] -- (0,10) 
+        [rounded corners=30pt] -- cycle;
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    % Triangle droite 
+    \begin{scope}[shift={({10*sqrt(2)+\trianglesep},0)}]   
+        \draw[rotate=180-45, line width=5pt, fill=white] 
+        (-0.5,-0.5) 
+        [rounded corners=10pt] -- (10,0) 
+        [rounded corners=10pt] -- (0,10) 
+        [rounded corners=30pt] -- cycle;
+    \end{scope}
+    \end{scope}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% Letter V
+	\begin{scope}[scale=0.7,shift={(5.16,-4.5)}]
+    \def\h{1.8}
+    \draw[draw=white, fill=white]
+    (2.5,0) --(3.5,0) -- (6,9) --  (5,9) -- (3,\h) -- (1,9) -- (0,9) --  cycle;
+  \end{scope}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% Letter F
+	\begin{scope}[xscale=-1,scale=0.7,shift = {(-15.87,-4.5)}]
+    \draw[draw=white,fill=white] (0.5,4.1) rectangle (5.1,8.5);  % white left background
+    \draw[draw=black,fill=black]
+    (0,0) -- (1,0) -- (1,4-\r) 
+   arc (180:90:\r) -- (1+\r,4) -- (5,4) -- (5,5) -- (1+\r,5) 
+   arc (-90:-180:\r) -- (1,5+\r) -- (1,8-\r) 
+   arc (180:90:\r) -- (1+\r,8) -- (5,8) -- (5,9) 
+  -- (0+\R,9) arc(90:180:\R) -- (0,9-\R) -- cycle;
+  \end{scope}
+\end{scope}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Logo for all/exists -- part two
+\begin{scope}[xshift=20cm, yshift=20cm]
+
+\begin{scope}
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+   % Triangle gauche
+    \draw[rotate=-45, fill] 
+        (-0.5,-0.5) 
+        [rounded corners=10pt] -- (10,0) 
+        [rounded corners=10pt] -- (0,10) 
+        [rounded corners=30pt] -- cycle;
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    % Triangle droite 
+    \begin{scope}[shift={({10*sqrt(2)+\trianglesep},0)}]   
+        \draw[rotate=180-45, line width=5pt, fill=white] 
+        (-0.5,-0.5) 
+        [rounded corners=10pt] -- (10,0) 
+        [rounded corners=10pt] -- (0,10) 
+        [rounded corners=30pt] -- cycle;
+    \end{scope}
+    \end{scope}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% Symbol "for all"
+	\begin{scope}[scale=0.7,shift={(5.16,-4.5)}]
+    \def\h{1.8}
+    \draw[draw=white, fill=white]
+    (2.5,0) --(3.5,0) -- (6,9) --  (5,9) -- (3,\h) -- (1,9) -- (0,9) --  cycle;
+    \draw[draw=white, fill=white]
+    (1.5,4.5) rectangle ++(3,1);
+  \end{scope}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% Symbol "exists"
+	\begin{scope}[xscale=-1,scale=0.7,shift = {(-15.87,-4.5)}]
+    \draw[draw=white,fill=white] (0.5,0.1) rectangle (5.1,8.5);  % white left background
+
+	% Letter exists
+    \draw[draw=black,fill=black]
+    (0,\R) arc (180:270:\R) -- (\R,0) -- (5,0) -- (5,1) -- (1+\r,1) 
+	arc (-90:-180:\r) -- (1,1+\r) 
+   -- (1,4-\r) 
+   arc (180:90:\r) -- (1+\r,4) -- (5,4) -- (5,5) -- (1+\r,5) 
+   arc (-90:-180:\r) -- (1,5+\r) -- (1,8-\r) 
+   arc (180:90:\r) -- (1+\r,8) -- (5,8) -- (5,9) 
+  -- (0+\R,9) arc(90:180:\R) --  (0,9-\R) -- cycle;
+  \end{scope}
+
+\end{scope}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Logo for G/G reveres -- part three
+\begin{scope}[xshift=40cm, yshift=20cm]
+
+\begin{scope}
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+   % Triangle gauche
+    \draw[rotate=-45, fill] 
+        (-0.5,-0.5) 
+        [rounded corners=10pt] -- (10,0) 
+        [rounded corners=10pt] -- (0,10) 
+        [rounded corners=30pt] -- cycle;
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    % Triangle droite 
+    \begin{scope}[shift={({10*sqrt(2)+\trianglesep},0)}]   
+        \draw[rotate=180-45, line width=5pt, fill=white] 
+        (-0.5,-0.5) 
+        [rounded corners=10pt] -- (10,0) 
+        [rounded corners=10pt] -- (0,10) 
+        [rounded corners=30pt] -- cycle;
+    \end{scope}
+    \end{scope}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% Letter G
+	\begin{scope}[scale=0.7,shift={(4.16,-4.5)}]
+    \draw[draw=white, fill=white]
+    (0,\R) arc (180:270:\R) -- (\R,0) -- (6,0) -- (6,5) --
+    (3,5) -- (3,4) -- (5,4) -- (5,1) -- (1+\r,1) 
+	arc (-90:-180:\r) -- (1,1+\r) 
+    -- (1,8-\r) 
+   arc (180:90:\r) -- (1+\r,8) -- (6,8) -- (6,9) 
+  -- (0+\R,9) arc(90:180:\R) --  (0,9-\R) -- cycle;
+  \end{scope}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% Letter G reveresed
+	\begin{scope}[xscale=-1,yscale=-1,scale=0.7,shift = {(-16.87,-4.5)}]
+    \draw[draw=white,fill=white] (4.,4.1) rectangle (6.1,8.5);  % white left background
+
+    \draw[draw=black, fill=black]
+    (0,\R) arc (180:270:\R) -- (\R,0) -- (6,0) -- (6,5) --
+    (3,5) -- (3,4) -- (5,4) -- (5,1) -- (1+\r,1) 
+	arc (-90:-180:\r) -- (1,1+\r) 
+    -- (1,8-\r) 
+   arc (180:90:\r) -- (1+\r,8) -- (6,8) -- (6,9) 
+  -- (0+\R,9) arc(90:180:\R) --  (0,9-\R) -- cycle;
+  \end{scope}
+
+\end{scope}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+	% Letter E
+	\begin{scope}[xshift=0cm]
+    \draw[fill]
+    (0,\R) arc (180:270:\R) -- (\R,0) -- (5,0) -- (5,1) -- (1+\r,1) 
+	arc (-90:-180:\r) -- (1,1+\r) 
+   -- (1,4-\r) 
+   arc (180:90:\r) -- (1+\r,4) -- (5,4) -- (5,5) -- (1+\r,5) 
+   arc (-90:-180:\r) -- (1,5+\r) -- (1,8-\r) 
+   arc (180:90:\r) -- (1+\r,8) -- (5,8) -- (5,9) 
+  -- (0+\R,9) arc(90:180:\R) --  (0,9-\R) -- cycle;
+  \end{scope}
+
+
+	% Letter F
+	\begin{scope}[xshift=7cm]
+    \draw[fill]
+    (0,0) -- (1,0) -- (1,4-\r) 
+   arc (180:90:\r) -- (1+\r,4) -- (5,4) -- (5,5) -- (1+\r,5) 
+   arc (-90:-180:\r) -- (1,5+\r) -- (1,8-\r) 
+   arc (180:90:\r) -- (1+\r,8) -- (5,8) -- (5,9) 
+  -- (0+\R,9) arc(90:180:\R) -- (0,9-\R) -- cycle;
+  \end{scope}
+
+	% Letter G
+	\begin{scope}[xshift=14cm]
+    \draw[fill]
+    (0,\R) arc (180:270:\R) -- (\R,0) -- (6,0) -- (6,5) --
+    (3,5) -- (3,4) -- (5,4) -- (5,1) -- (1+\r,1) 
+	arc (-90:-180:\r) -- (1,1+\r) 
+    -- (1,8-\r) 
+   arc (180:90:\r) -- (1+\r,8) -- (6,8) -- (6,9) 
+  -- (0+\R,9) arc(90:180:\R) --  (0,9-\R) -- cycle;
+  \end{scope}
+
+	% Letter V
+	\begin{scope}[xshift=22cm]
+    \def\h{1.8}
+    \draw[fill]
+    (2.5,0) --(3.5,0) -- (6,9) --  (5,9) -- (3,\h) -- (1,9) -- (0,9) --  cycle;
+  \end{scope}
+
+	% Letter E
+	\begin{scope}[xshift=5cm, yshift=-10cm,xscale=-1,]
+    \draw[fill]
+    (0,\R) arc (180:270:\R) -- (\R,0) -- (5,0) -- (5,1) -- (1+\r,1) 
+	arc (-90:-180:\r) -- (1,1+\r) 
+   -- (1,4-\r) 
+   arc (180:90:\r) -- (1+\r,4) -- (5,4) -- (5,5) -- (1+\r,5) 
+   arc (-90:-180:\r) -- (1,5+\r) -- (1,8-\r) 
+   arc (180:90:\r) -- (1+\r,8) -- (5,8) -- (5,9) 
+  -- (0+\R,9) arc(90:180:\R) --  (0,9-\R) -- cycle;
+  \end{scope}
+
+
+	% Letter "for all"
+	\begin{scope}[xshift=7cm, yshift=-10cm]
+    \def\h{1.8}
+    \draw[fill]
+    (2.5,0) --(3.5,0) -- (6,9) --  (5,9) -- (3,\h) -- (1,9) -- (0,9) --  cycle;
+    \draw[fill]
+    (1.5,4.5) rectangle ++(3,1);
+  \end{scope}
+
+
+
+\end{tikzpicture}+

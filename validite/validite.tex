@@ -1,0 +1,456 @@
+\documentclass[11pt,class=report,crop=false]{standalone}
+\usepackage[screen]{../logic}
+
+
+\begin{document}
+
+
+%====================================================================
+\chapitre{Théorème de validité}
+%====================================================================
+
+% \insertvideo{}{partie 1.1. Titre}
+
+
+\objectifs{Nous faisons le lien entre \og{}preuve\fg{} et \og{}vérité\fg{} grâce au théorème de validité (\emph{Soundness Theorem}) qui affirme que toute formule prouvable est une formule vraie.}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Le théorème de validité}
+
+%--------------------------------------------------------------------
+\subsection{Énoncé}
+
+Soit $\mathcal{L}$ un langage fixé pour la logique du premier ordre.
+
+\begin{theoreme}[Théorème de validité (\emph{Soundness Theorem})]
+	\sauteligne
+\mybox{
+Si \quad 
+$\mathcal{P}_1, \ldots, \mathcal{P}_l \quad \lturn \quad \mathcal{Q}$
+\quad alors 
+\quad 
+$\mathcal{P}_1, \ldots, \mathcal{P}_l \quad \ldoubleturn \quad \mathcal{Q}$.
+}
+\end{theoreme}
+\index{theoreme@théorème!de validite@de validité}
+
+Et plus généralement, si $\Gamma$ est un ensemble de formules (éventuellement infini) :
+\mycenterline{
+Si \quad 
+$\Gamma \quad \lturn \quad \mathcal{Q}$
+\quad  alors 
+\quad 
+$\Gamma \quad \ldoubleturn \quad \mathcal{Q}$.
+}
+
+Il s'agit d'un théorème de bon sens : une formule prouvée est une formule vraie ! 
+C'est un résultat implicite dans la thèse de Gödel de 1930 où il se concentre sur la réciproque (le théorème de complétude).
+L'idée est que les règles d'inférence pour les preuves ont été bien choisies car chacune des règles respecte le caractère V/F de la logique du premier ordre.
+
+%--------------------------------------------------------------------
+\subsection{Rappels}
+
+Rappelons aussi que, 
+\[
+\mathcal{P}_1, \ldots, \mathcal{P}_l \quad \lturn \quad \mathcal{Q}
+\]
+signifie que l'on peut déduire $\mathcal{Q}$ des formules $\mathcal{P}_1, \ldots, \mathcal{P}_l$ par un nombre fini d'étapes, où chaque étape consiste à appliquer une règle d'inférence (parmi un choix fini bien délimité).
+
+
+
+Rappelons aussi que, 
+\[
+\mathcal{P}_1, \ldots, \mathcal{P}_l \quad \ldoubleturn \quad \mathcal{Q}
+\]
+signifie que, pour toute structure $\mathcal{S}$ et toute affectation $s$, si $\mathcal{P}_1, \ldots, \mathcal{P}_l$ sont vraies dans cette interprétation, alors $\mathcal{Q}$ est aussi vraie dans cette interprétation.
+
+Ainsi le théorème de validité affirme qu'une formule prouvable est vraie dans toute interprétation, donc indépendamment de la structure choisie.
+
+On peut le reformuler ainsi : si $\mathcal{P} \lturn \lantitauto$ alors $\mathcal{P}$ est insatisfaisable (c'est-à-dire que $\mathcal{P}$ est une contradiction),
+autrement dit quelles que soient $\mathcal{S}$ et $s$, l'interprétation de $\mathcal{P}$ est fausse.
+On rappelle que $\lantitauto$ désigne la formule toujours fausse.
+Voici la preuve de cette reformulation : supposons qu'il existe $\mathcal{S}$ et $s$ pour lesquelles $\mathcal{P}$ soit vraie.
+Comme dans n'importe quelle interprétation $\lantitauto$ est fausse, on obtient une contradiction avec $\mathcal{P} \ldoubleturn_{\mathcal{S},s} \lantitauto$. Ainsi $\mathcal{P}$ n'est pas satisfaisable.
+
+%--------------------------------------------------------------------
+\subsection{Applications}
+
+Expliquons l'utilité du théorème de validité.
+
+\begin{enumerate}
+	\item En un sens, $\mathcal{P} \lturn \mathcal{Q}$ est quelque chose de facile. En effet, il s'agit de construire une preuve. Même si trouver une preuve n'est pas toujours une tâche aisée, loin de là, cela reste un processus avec un nombre fini d'étapes et un nombre fini de règles possibles.
+	
+	\item Par contre, montrer qu'il n'existe pas de preuve que $\mathcal{P}$ entraîne $\mathcal{Q}$, c'est-à-dire $\mathcal{P} \not\lturn \mathcal{Q}$ est difficile.
+	Ce n'est pas parce qu'on n'a pas réussi à obtenir une preuve qu'il n'en existe pas.
+	
+	\item D'un autre côté, montrer que $\mathcal{P} \ldoubleturn \mathcal{Q}$ n'est pas évident, car pour cela il faut tester une infinité de structures et d'affectations imaginables.
+	
+	\item En revanche, obtenir $\mathcal{P} \not\ldoubleturn \mathcal{Q}$ est facile. Il s'agit de fournir un contre-exemple en explicitant une structure et une affectation telles que $\mathcal{P}$ soit vraie et $\mathcal{Q}$ soit fausse dans cette interprétation.
+\end{enumerate}
+
+
+Bilan : le théorème de validité peut aider pour les points difficiles, dans son sens direct ou sa contraposée :\\
+\mycenterline{
+Si \quad 
+$\mathcal{P} \quad \lturn \quad \mathcal{Q}$
+\quad  alors 
+\quad 
+$\mathcal{P} \quad \ldoubleturn \quad \mathcal{Q}$.
+}
+\mycenterline{
+	Si \quad 
+	$\mathcal{P} \quad \not\ldoubleturn \quad \mathcal{Q}$
+	\quad  alors 
+	\quad 
+	$\mathcal{P} \quad \not\lturn \quad \mathcal{Q}$.
+}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Preuves du théorème de validité}
+
+
+Nous allons prouver que chacune des règles d'inférence respecte la logique vrai/faux et la satisfaction des formules. 
+Comme une preuve est une succession finie de ces règles, on en déduira par récurrence le théorème de validité.
+
+
+%--------------------------------------------------------------------
+\subsection{Règles de la logique V/F}
+
+\index{regles d'inference@règles d'inférence}
+
+On renvoie au chapitre \og{}Preuves\fg{} de la première partie pour la liste complète de toutes ces règles.
+On se contente d'en donner quelques exemples.
+\begin{itemize}
+	\item On a la règle \og{}$\mathcal{P} \land \mathcal{Q} \ \ \lturn \ \ \mathcal{P}$\fg{}
+	et on a bien la satisfaction \og{}$\mathcal{P} \land \mathcal{Q} \ \ \ldoubleturn \ \ \mathcal{P}$\fg{}.
+	
+	\item On a la règle \og{}$\mathcal{P}, \ \mathcal{Q} \ \ \lturn \ \ \mathcal{P} \land \mathcal{Q}$\fg{}
+	et on a bien la satisfaction \og{}$\mathcal{P}, \ \mathcal{Q} \ \ \ldoubleturn \ \ \mathcal{P} \land \mathcal{Q}$\fg{}.
+	
+	\item On a la règle \og{}$\lnot \lnot \mathcal{P} \ \ \lturn \ \ \mathcal{P}$\fg{}
+	et on a bien la satisfaction \og{}$\lnot \lnot \mathcal{P} \ \ \ldoubleturn \ \ \mathcal{P}$\fg{}.
+	
+	\item On a la règle \og{}$\lantitauto \ \ \lturn \ \ \mathcal{P}$\fg{} 
+	et on a bien la satisfaction \og{}$\lantitauto \ \ \ldoubleturn \ \ \mathcal{P}$\fg{}.	
+	
+	\item On a la règle \og{}$\mathcal{P}, \ \mathcal{P} \limplies \mathcal{Q} \ \ \lturn \ \ \mathcal{Q}$\fg{}
+	et on a bien la satisfaction \og{}$\mathcal{P}, \ \mathcal{P} \limplies \mathcal{Q} \ \ \ldoubleturn \ \ \mathcal{Q}$\fg{}.	
+\end{itemize}
+
+\medskip
+Il n'y a aucune difficulté pour justifier ces relations de satisfaction  à l'aide de tables de vérité.
+Par exemple, pour prouver $\mathcal{P} \land \mathcal{Q} \ \ \ldoubleturn \ \ \mathcal{P}$, on fixe une structure $\mathcal{S}$ et une affectation $s$ et on dresse la table de vérité :
+\[
+\begin{array}{c c | c | c}
+	\mathcal{P}		& \mathcal{Q} 		& \mathcal{P} \land \mathcal{Q} 	&  \mathcal{P} \\
+	\hline
+	&&&	\\[-2ex]
+	\ltrue 	& \ltrue 	& \ltrue		& \ltrue \\
+	\ltrue 	& \lfalse 	& \lfalse		& - \\
+	\lfalse & \ltrue 	& \lfalse		& - \\	
+	\lfalse & \lfalse 	& \lfalse		& - \\		
+\end{array}
+\]
+On constate que chaque fois que $\mathcal{P} \land \mathcal{Q}$ est vraie, alors $\mathcal{P}$ est aussi vraie. Ainsi 
+\[
+\mathcal{P} \land \mathcal{Q} \ \ \ldoubleturn_{\mathcal{S},s} \ \ \mathcal{P}
+\] 
+et comme c'est vrai quelles que soient $\mathcal{S}$ et $s$ alors :
+\[
+\mathcal{P} \land \mathcal{Q} \ \ \ldoubleturn \ \ \mathcal{P}
+\]
+
+
+On peut faire de même pour le \emph{modus ponens} :
+\[
+\begin{array}{c c | c | c}
+	\mathcal{P}		& \mathcal{Q} 		& \mathcal{P} \limplies \mathcal{Q} 	&  \mathcal{Q} \\
+	\hline
+	&&&	\\[-2ex]
+	\ltrue 	& \ltrue 	& \ltrue		& \ltrue \\
+	\ltrue 	& \lfalse 	& \lfalse		& - \\
+	\lfalse & \ltrue 	& \ltrue		& - \\	
+	\lfalse & \lfalse 	& \ltrue		& - \\		
+\end{array}
+\]
+On constate que chaque fois que $\mathcal{P}$ est vraie et en même temps que $\mathcal{P} \limplies \mathcal{Q}$ est vraie, alors $\mathcal{Q}$ est aussi vraie.
+
+
+%--------------------------------------------------------------------
+\subsection{Règles des quantificateurs}
+
+Les règles avec les quantificateurs sont aussi compatibles avec la satisfaction.
+C'est encore dû au fait que les règles d'inférence ont été choisies avec bon sens.
+Par contre cette validité est un jeu d'écriture pas toujours simple à détailler. 
+En première lecture, vous pouvez passer cette étape et vous rendre directement à la fin de la preuve. Cependant, étudier les preuves aide à bien comprendre les conditions d'application des règles d'inférence.
+
+
+Rappelons les définitions et notions du chapitre \og{}Satisfaction\fg{}.
+\[
+\ldoubleturn_{\mathcal{S},s} \forall x \ \mathcal{P}(x) \text{\qquad ssi \qquad pour tout } d \in E,  \  \ldoubleturn_{\mathcal{S},s[x \mapsto d]} \ \mathcal{P}(x)
+\]
+
+La notation $s[x \mapsto d]$ est l'affectation qui envoie $x$ sur $d$ et coïncide avec $s$ pour toutes les autres variables.
+
+\[
+\ldoubleturn_{\mathcal{S},s} \exists x \ \mathcal{P}(x) \text{\qquad ssi \qquad il existe un } d \in E, \  \ldoubleturn_{\mathcal{S},s[x \mapsto d]} \ \mathcal{P}(x)
+\]
+
+Rappelons le lien entre affectation et substitution :
+\[
+\ldoubleturn_{\mathcal{S},s} \mathcal{P}[c/x]
+\qquad \text{ ssi } \qquad
+\ldoubleturn_{\mathcal{S},s[x\mapsto c^{\mathcal{S}}]} \mathcal{P}(x)
+\]
+
+\medskip
+
+Enfin, pour une formule $\mathcal{P}$, on la note $\mathcal{P}(x)$ pour insister sur sa dépendance vis-à-vis de la variable $x$, et on note :
+\[
+\mathcal{P}(c) = \mathcal{P}[c/x]
+\]
+Lorsque l'on note $\mathcal{P}(c)$, cela sous-entend que la substitution de $x$ par $c$ est valide.
+
+Nous commençons par les deux règles simples.
+
+\medskip
+
+\textbf{Règle I}. On a la règle  
+\[
+\forall x \ \ \mathcal{P}(x)  \quad \lturn \quad \mathcal{P}(c)
+\]
+pour $c$ une constante. Et on a bien la satisfaction :
+\[
+\forall x \ \ \mathcal{P}(x)  \quad \ldoubleturn \quad \mathcal{P}(c)
+\]
+
+
+\begin{proof}
+Considérons une structure $\mathcal{S}$ de domaine $E$ et une affectation $s$ telles que
+\og{}$\forall x \ \ \mathcal{P}(x)$\fg{} est une formule vraie. 
+Par définition, cela signifie que, quel que soit $d$ dans le domaine $E$, $\mathcal{P}(d)$ est vraie. Donc en particulier $\mathcal{P}(c)$ est satisfaite.
+
+Reprenons formellement la preuve.
+Soit $c$ une constante du langage et $c^{\mathcal{S}}$ son interprétation dans $E$.
+\begin{align*}
+				& \ldoubleturn_{\mathcal{S},s} \ \  \forall x \ \ \mathcal{P}(x)\\									
+\text{ donc } \quad  & \ldoubleturn_{\mathcal{S},s[x \mapsto d]} \ \mathcal{P}(x) \quad \text{ pour tout $d \in E$} \\
+\text{ en particulier }  \quad   & \ldoubleturn_{\mathcal{S},s[x \mapsto c^{\mathcal{S}}]} \ \mathcal{P}(x) \\
+\text{ donc }  \quad   & \ldoubleturn_{\mathcal{S},s} \mathcal{P}[c/x] \\
+\text{ d'où }  \quad   & \ldoubleturn_{\mathcal{S},s} \mathcal{P}(c)
+\end{align*} 	
+\end{proof}
+
+
+\medskip
+
+\textbf{Règle III}. On a la règle  
+\[
+\mathcal{P}(c)  \quad \lturn \quad \exists x \ \ \mathcal{P}(x)
+\]
+pour $c$ une constante, et on a bien la satisfaction :
+\[
+\mathcal{P}(c)  \quad \ldoubleturn \quad \exists x \ \ \mathcal{P}(x)
+\]
+
+
+\begin{proof}
+	Fixons $\mathcal{S}$ de domaine $E$ et $s$. Si $\mathcal{P}(c)$ est vraie, alors il existe bien un $d \in E$ (en l'occurrence $d = c^{\mathcal{S}}$) tel que $\mathcal{P}(d)$ soit vraie et donc \og{}$\exists x \ \ \mathcal{P}(x)$\fg{} est une formule vraie.
+	
+Reprenons formellement la preuve.
+Soit $c$ une constante du langage et $c^{\mathcal{S}}$ son interprétation dans $E$.
+\begin{align*}
+							& \ldoubleturn_{\mathcal{S},s} \mathcal{P}(c) \\
+	\text{ donc }  \quad   	& \ldoubleturn_{\mathcal{S},s} \mathcal{P}[c/x] \\
+	\text{ donc }  \quad    & \ldoubleturn_{\mathcal{S},s[x \mapsto c^{\mathcal{S}}]} \ \mathcal{P}(x) \\
+	\text{ d'où }  \quad   	& \ldoubleturn_{\mathcal{S},s} \ \  \exists x \ \ \mathcal{P}(x)\quad \text{ puisque la formule est vraie pour $d = c^{\mathcal{S}}$}
+\end{align*} 		
+	
+\end{proof}
+
+
+\medskip
+
+\textbf{Règle II}. On reformule cette règle de la façon suivante. Soit $\Gamma$ un ensemble de formules et $c$ une constante qui n'apparaît pas dans les formules de $\Gamma$. La règle II s'écrit :
+\[
+\text{ Si } \ \Gamma \ \ \lturn \ \ \mathcal{P}(c)  \quad 
+\text{ alors } \quad \Gamma \ \ \lturn \ \ \forall x \ \ \mathcal{P}(x)
+\]
+Et on a bien un énoncé correspondant en termes de satisfaction :
+\[
+\text{ Si } \ \Gamma \ \ \ldoubleturn \ \ \mathcal{P}(c)  \quad 
+\text{ alors } \quad \Gamma \ \ \ldoubleturn \ \ \forall x \ \ \mathcal{P}(x)
+\]
+
+\begin{proof}
+	Nous avons un langage $\mathcal{L}$ avec une constante $c$.
+	Supposons $\Gamma \ \ldoubleturn \ \mathcal{P}(c)$.
+	Fixons $\mathcal{S}$ une structure de domaine $E$ et $s$ une affectation telles que $\Gamma$ soit satisfait.
+	Intuitivement, il s'agit de montrer que, quel que soit $d \in E$, $\mathcal{P}(d)$ est satisfaite. Formellement, il faut prouver que, quel que soit $d \in E$, on a $\ldoubleturn_{\mathcal{S},s[x \mapsto d]} \ \ \mathcal{P}(x)$.
+	
+	
+	Pour l'instant nous avons une structure $\mathcal{S}$ de domaine $E$ ;
+	dans cette structure, la constante $c$ du langage s'interprète en une valeur $c^{\mathcal{S}} \in E$. Les hypothèses impliquent alors que $\mathcal{P}(c^\mathcal{S})$ est satisfaite. On a donc vérifié $\mathcal{P}(x)$ pour une valeur du domaine, mais on veut le prouver pour toutes les valeurs.
+	
+	Fixons $d \in E$ une valeur quelconque du domaine. On va considérer une autre structure $\mathcal{S}'$ de même domaine $E$. $\mathcal{S}'$ est égale à $\mathcal{S}$, la seule différence avec $\mathcal{S}$ est que dans cette structure l'interprétation de $c$ est notre valeur fixée $d$ : $c^{\mathcal{S}'} = d$. On ne change pas l'affectation $s$.
+	Comme les formules de $\Gamma$ ne dépendent pas de la constante $c$ et que $\Gamma$ est satisfait pour $\mathcal{S}$ et $s$ alors $\Gamma$ est aussi satisfait pour $\mathcal{S}'$ et $s$.
+
+	L'hypothèse $\Gamma \ \ \ldoubleturn \ \ \mathcal{P}(c)$ exprime la satisfaction pour n'importe quelle structure, donc en particulier, on a 
+	\[
+	  \ldoubleturn_{\mathcal{S}',s} \ \ \mathcal{P}(c)
+	\]
+	Mais comme $\Gamma$ est satisfait pour $\mathcal{S}'$ et $s$, alors on a :
+	\begin{align*}
+				  			& \ldoubleturn_{\mathcal{S}',s} \ \ \mathcal{P}(c) \\
+	\text{ donc } \quad		& \ldoubleturn_{\mathcal{S}',s} \ \ \mathcal{P}[c/x] \\
+	\text{ donc } \quad		& \ldoubleturn_{\mathcal{S}',s[x \mapsto c^{\mathcal{S}'}]} \ \ \mathcal{P}(x) \\
+	\text{ donc } \quad		& \ldoubleturn_{\mathcal{S}',s[x \mapsto d]} \ \ \mathcal{P}(x) \\
+	\text{ d'où } \quad		& \ldoubleturn_{\mathcal{S},s[x \mapsto d]} \ \ \mathcal{P}(x)		
+	\end{align*} 
+	Noter que dans la dernière ligne on est revenu à la structure $\mathcal{S}$, ce qui est possible car dans la formule $\mathcal{P}(x)$ la constante $c$ n'apparaît pas (en effet dès qu'on écrit $\mathcal{P}(c)$, il faut que la substitution de $x$ par $c$ soit possible, donc que $c$ n'apparaisse pas dans $\mathcal{P}(x)$). 
+	
+	Ainsi, pour n'importe quel $d \in E$, nous avons obtenu :
+	\[
+	\ldoubleturn_{\mathcal{S},s[x \mapsto d]} \ \ \mathcal{P}(x)
+	\]
+	Ce qui est exactement la définition de :
+	\[
+	\ldoubleturn_{\mathcal{S},s} \ \ \forall x \ \ \mathcal{P}(x)
+	\]
+\end{proof}
+
+
+\medskip
+
+\textbf{Règle IV}. On reformule cette règle de la façon suivante. $\mathcal{Q}$ désigne une formule, $\Gamma$ un ensemble de formules, $c$ une constante du langage qui n'apparaît ni dans $\mathcal{Q}$, ni dans les formules de $\Gamma$. La règle IV s'écrit :
+\[
+\text{ Si } \quad \Gamma \ \ \lturn \ \exists x \ \ \mathcal{P}(x)
+\quad \text{ et } \quad \mathcal{P}(c) \ \ \lturn \ \ \mathcal{Q}  \quad 
+\text{ alors } \ \Gamma \ \ \lturn \ \ \mathcal{Q}
+\]
+Et on a bien un énoncé correspondant en termes de satisfaction :
+\[
+\text{ Si } \quad \Gamma \ \ \ldoubleturn \ \ \exists x \ \ \mathcal{P}(x)
+\quad \text{ et } \quad \mathcal{P}(c) \ \ \ldoubleturn \ \ \mathcal{Q}  \quad 
+\text{ alors } \ \Gamma \ \ \ldoubleturn \ \ \mathcal{Q}
+\]
+
+\begin{proof}
+	Considérons d'abord une structure $\mathcal{S}$ de domaine $E$ et une affectation $s$ telles que $\Gamma$ soit satisfait.
+	Alors par hypothèse, \og{}$\exists x \ \ \mathcal{P}(x)$\fg{} est satisfaite, donc il existe $d \in E$ tel que $\mathcal{P}(x)$ soit satisfaite pour l'affectation $s[x \mapsto d]$.
+	
+	Changeons la structure $\mathcal{S}$ en une structure $\mathcal{S}'$, où seule l'interprétation de la constante $c$ est changée : dans $\mathcal{S}'$ on définit $c^{\mathcal{S}'} = d$.	
+	Comme $\mathcal{Q}$ et les formules de $\Gamma$ ne dépendent pas de $c$, alors leurs satisfactions dans $\mathcal{S}$ et dans $\mathcal{S}'$ sont équivalentes.	
+	Ainsi $\Gamma$ est satisfait dans $\mathcal{S}'$, mais en plus $\mathcal{P}(c)$ le sera aussi :
+	\begin{align*}
+						& \ldoubleturn_{\mathcal{S}',s} \ \ \exists x \ \ \mathcal{P}(x) \\	
+		\text{ donc } \quad & \ldoubleturn_{\mathcal{S}',s[x \mapsto d]} \ \ \mathcal{P}(x) \quad \text{ pour le même $d \in E$ que ci-dessus } \\ 
+		\text{ donc } \quad 	& \ldoubleturn_{\mathcal{S}',s[x \mapsto c^{\mathcal{S}'}]} \ \ \mathcal{P}(x) \quad \text{ car $c^{\mathcal{S}'} = d$} \\ 		
+		\text{ donc } 	\quad & \ldoubleturn_{\mathcal{S}',s} \ \ \mathcal{P}[c/x] \\	
+		\text{ donc }  \quad  & \ldoubleturn_{\mathcal{S}',s} \ \ \mathcal{P}(c) \\
+		\text{ donc }  \quad  & \ldoubleturn_{\mathcal{S}',s} \ \ \mathcal{Q} \quad \text{ d'après l'hypothèse } \mathcal{P}(c) \ldoubleturn \mathcal{Q}\\
+		\text{ d'où }  \quad  & \ldoubleturn_{\mathcal{S},s} \ \ \mathcal{Q} \quad \text{ car $c$ n'apparaît pas dans $\mathcal{Q}$ }\\		
+	\end{align*} 
+	
+\end{proof}
+
+%--------------------------------------------------------------------
+\subsection{Preuve du théorème}
+
+
+On note $\Gamma = \{ \mathcal{P}_1, \ldots, \mathcal{P}_l \}$ l'ensemble des formules jouant le rôle des hypothèses et $\mathcal{Q}$ la formule de conclusion. On suppose $\Gamma \ \lturn \ \mathcal{Q}$. Il s'agit de démontrer que $\Gamma \ \ldoubleturn \ \mathcal{Q}$.
+
+Le fait que $\Gamma \ \ \lturn \ \ \mathcal{Q}$ signifie qu'il existe une preuve de $\mathcal{Q}$ à partir des formules de $\Gamma$. Supposons que cette preuve soit écrite en déduction naturelle comme la figure ci-dessous. $\mathcal{P}_1, \ldots, \mathcal{P}_l$ sont les hypothèses.
+Chaque formule $\mathcal{P}_k$, avec $l+1 \le k \le q$, est une formule obtenue
+en appliquant une des règles d'inférence aux lignes précédentes $\mathcal{P}_1,\ldots,\mathcal{P}_{k-1}$. La dernière formule $\mathcal{P}_q$ obtenue est la formule $\mathcal{Q}$.
+
+
+\medskip
+\qquad\qquad
+$
+\begin{nd}
+	\hypo [~] {1} {\mathcal{P}_1}
+	\hypo [~] {2} {\vdots}  \by{\text{Hypothèses}}{}
+	\hypo [~] {3} {\mathcal{P}_l}
+	\have [~] {4} {\mathcal{P}_{l+1}} 
+	\have [~] {5} {\vdots} 
+	\have [~] {6} {\mathcal{P}_{k}} 	\by{\text{Étapes de la preuve}}{}
+	\have [~] {7} {\vdots}	
+	\have [~] {8} {\mathcal{P}_{q-1}} 
+	\have [\lturn] {9} {\mathcal{P}_q = \mathcal{Q}} \by{\text{Conclusion}}{}
+\end{nd}
+$
+
+\medskip
+
+Fixons une structure $\mathcal{S}$ et une affectation $s$ telles que $\Gamma$ soit satisfait. 
+Il s'agit de démontrer qu'alors $\mathcal{Q}$ est aussi satisfaite (pour $\mathcal{S}$ et $s$). Nous allons le prouver par récurrence, sur $k$ (pour $1 \le k \le q$) :
+\[
+\mathcal{H}_k : \quad\quad \text{ la formule } \mathcal{P}_k \text{ est satisfaite }
+\]
+
+\begin{itemize}
+	\item \emph{Initialisation.}
+	Pour $k=1,\ldots,l$, la formule $\mathcal{P}_k$ est une des formules de $\Gamma$, donc est satisfaite par hypothèse.
+	
+	\item \emph{Hérédité.}
+	Soit $k$ tel que $1 \le k < q$. Supposons $\mathcal{P}_1,\ldots,\mathcal{P}_k$ satisfaites (pour $\mathcal{S}$ et $s$) et justifions que $\mathcal{P}_{k+1}$ est encore satisfaite.
+	En effet, $\mathcal{P}_{k+1}$ est obtenue à partir des formules précédentes en suivant l'une des règles d'inférence des preuves. Nous avons déjà démontré que chacune de ces règles respecte la satisfaction des formules, donc $\mathcal{P}_{k+1}$ est satisfaite (pour $\mathcal{S}$ et $s$).
+	
+	\item \emph{Conclusion.} Par le principe de récurrence, la dernière formule $\mathcal{P}_q$, qui est en fait $\mathcal{Q}$, est satisfaite. 
+\end{itemize}
+
+Ainsi $\ldoubleturn_{\mathcal{S},s} \ \mathcal{Q}$ et comme $\mathcal{S}$ et $s$ sont quelconques, alors $\Gamma \ \ldoubleturn \ \mathcal{Q}$.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Exercices}
+
+\subsection*{Le théorème de validité}
+
+\begin{exercicecours}
+Soit $\Gamma$ un ensemble de formules tel que $\Gamma \lturn \lantitauto$.
+Montrer que $\Gamma$ est une contradiction, c'est-à-dire qu'il n'existe aucune structure $\mathcal{S}$ et aucune affectation $s$, telles que toutes les formules de $\Gamma$ soient satisfaites.
+\end{exercicecours}
+
+
+\begin{exercicecours}
+Démontrer l'improuvabilité des énoncés suivants :
+\begin{enumerate}
+	\item $\exists x \ P(x) \ \ \not\lturn \ \ \forall x \ P(x)$  
+	
+	\item $\forall x \ \exists y \ Q(x,y) \ \ \not\lturn \ \ \exists y \ \forall x \ Q(x,y)$
+	
+	\item $\exists x \ \big( P(x) \limplies Q(x) \big) \ \ \not\lturn \ \ \exists x \ \big( Q(x) \limplies P(x) \big)$
+	
+	\item $\forall x \ \big( P(x) \lor Q(x) \big)  \ \ \not\lturn \ \ \big(\forall x \ P(x)\big) \lor \big(\forall x \ Q(x)\big)$
+\end{enumerate}
+\end{exercicecours}
+
+
+\begin{exercicecours}
+Montrer les satisfactions suivantes :
+\begin{enumerate}
+	\item $\forall x \ \big( P(x) \limplies Q(x) \big), \ P(c) \ \ \ldoubleturn \ \ Q(c)$
+	
+	\item $\forall x \ \big( P(x) \limplies \lantitauto \big) \ \ \ldoubleturn \ \ \lnot\big( \exists x \ P(x) \big)$
+	
+	\item $\forall x \ \big( P(x) \lequiv Q(x) \big), \ \ \forall x \ \big( Q(x) \lequiv R(x) \big)  \ \ \ldoubleturn \ \ \forall x \ \big( P(x) \lequiv R(x) \big)$
+	
+	\item $\forall x \ \big( P(x) \land Q(x) \big) \ \ \ldoubleturn \ \ \forall x \  P(x)$
+\end{enumerate}	
+\end{exercicecours}
+
+
+\subsection*{Preuves du théorème de validité}
+
+\begin{exercicecours}
+	Vérifier que toutes les règles de base de la logique V/F sont compatibles avec la satisfaction.
+\end{exercicecours}
+
+
+\end{document}
