@@ -19,7 +19,7 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Preuve par table de vérité}
+\section{Conséquence logique}
 
 %--------------------------------------------------------------------
 \subsection{Hypothèses \& conclusion}
@@ -53,7 +53,7 @@ Autrement dit, si les hypothèses sont vérifiées, alors la conclusion est vrai
 (Si l'une des hypothèses $\mathcal{P}_i$ est fausse, alors on n'exige rien sur $\mathcal{Q}$ qui peut être vraie ou fausse.)
 
 %--------------------------------------------------------------------
-\subsection{Preuve par table de vérité}
+\subsection{Table de vérité}
 \index{table de verite@table de vérité}
 
 Obtenir une conséquence logique 
@@ -180,12 +180,12 @@ Lorsque $n$ croît, alors $2^n$ croît de façon exponentielle (car $2^n = e^{n\
 Mais surtout nous sommes encore dans le cadre assez limité de la logique Vrai/Faux. Cette technique de table de vérité ne sera plus possible lorsque l'on introduira les paramètres de la logique du premier ordre.
 Considérons le problème suivant où $n \in \Nn$ est un entier. Nous serons tous d'accord pour dire que l'on a la conséquence logique suivante :
 \[
-n >0 , \  n \text{ pair } \quad \ldoubleturn \quad n^2-1 \text{ entier naturel impair}
+n >0 , \  n \text{ pair } \quad \ldoubleturn \quad n^2-1 \text{ impair}
 \]
 Mais si on souhaite le justifier avec une table de vérité, celle-ci a une infinité de lignes dépendant du paramètre $n$, et cela ne peut pas être accepté comme une preuve.
 	\[
 \begin{array}{c | c c | c}
-	n		& n>0 		& n \text{ pair} & n^2-1 \text{ entier naturel impair} \\
+	n		& n>0 		& n \text{ pair} & n^2-1 \text{ impair} \\
 	\hline
 	&&&	\\[-2ex]
 	0 		& \lfalse 	& \ltrue 		& - \\
@@ -232,9 +232,9 @@ Plus précisément :
 	\begin{itemize}
 		\item soit l'une des hypothèses $\mathcal{P}_1, \ldots, \mathcal{P}_l$ de l'énoncé,
 		
-		\item soit une conséquence obtenue à partir des \emph{règles d'inférence} appliquées aux lignes précédentes $\mathcal{A}_1$,\ldots, $\mathcal{A}_{i-1}$,
+		\item soit une conséquence obtenue à partir des \emph{règles d'inférence} appliquées aux lignes précédentes $\mathcal{A}_1$,\ldots, $\mathcal{A}_{i-1}$.
 		
-		\item et $\mathcal{A}_N$ est la conclusion $\mathcal{Q}$.
+		\item Et $\mathcal{A}_N$ est la conclusion $\mathcal{Q}$.
 	\end{itemize}	
 \end{definition}
 
@@ -679,10 +679,9 @@ Comme on s'y attend, on prouve une équivalence par double implication et récip
 \textbf{Règles dérivées. Négation.}
 
 Tout d'abord, voici la définition de la négation à partir de l'implication et la formule toujours fausse $\lantitauto$.
-\[
+\mybox{$
 \lnot \mathcal{P} \ \text{ est défini par } \  \mathcal{P} \limplies \lantitauto
-\]
-
+$}
 
 On a donc, par définition les deux règles :
 \mybox{$\lnot \mathcal{P}
@@ -846,7 +845,8 @@ Ou encore :
 		\have [~] {4} {\mathcal{Q}} \by{\text{On obtient $\mathcal{Q}$ par l'hypothèse de départ}}{}
 		\have [~] {5} {\lantitauto} \by{\text{Contradiction car on a $\mathcal{Q}$ et $\lnot \mathcal{Q}$}}{}	
 		\close
-		\have [\lturn] {6} {\lnot \mathcal{P}} 
+		\have [~] {6} {\mathcal{P} \limplies \lantitauto}
+		\have [\lturn] {7} {\lnot \mathcal{P}} 
 	\end{nd}
 	$
 	
@@ -887,52 +887,101 @@ Ou encore :
 	
 \end{exemple}
 
+
+
 %--------------------------------------------------------------------
+
 \subsection{Absurde et contraposée}
 
-Dans la logique classique, on peut toujours remplacer un raisonnement par l'absurde par un raisonnement par contraposition.
+Dans la logique classique, pour démontrer une implication
+$\mathcal{P}\limplies\mathcal{Q}$, on peut remplacer un raisonnement
+par contraposition par un raisonnement par l'absurde, et réciproquement.
 
-\textbf{Absurde.} $\lnot \mathcal{P} \limplies \lantitauto \quad \lturn \quad \mathcal{P}$.
+Les deux raisonnements utilisent en fait essentiellement les mêmes étapes.
 
-\textbf{Contraposée.} $\lnot \mathcal{Q} \limplies \lnot \mathcal{P} \quad \lturn \quad \mathcal{P} \limplies \mathcal{Q}$
-\quad 
-(ou encore $\mathcal{P} \limplies \mathcal{Q} \quad \lturn \quad \lnot \mathcal{Q} \limplies \lnot \mathcal{P}$ par double négation).
+\medskip
 
+\textbf{De la contraposée vers l'absurde.}
 
-Contraposée vers absurde :
+Supposons que l'on sache démontrer la contraposée
+$\lnot\mathcal{Q}\limplies\lnot\mathcal{P}$.
+Une telle preuve est de la forme
+\[
+\lnot\mathcal{Q}
+\quad\longrightarrow\quad
+\boxed{\mathcal{C}}
+\quad\longrightarrow\quad
+\lnot\mathcal{P},
+\]
+où $\mathcal{C}$ désigne les étapes intermédiaires du raisonnement (preuve de gauche ci-dessous).
 
-	\qquad\qquad
+Pour obtenir une preuve par l'absurde de
+$\mathcal{P}\limplies\mathcal{Q}$, on suppose $\mathcal{P}$ puis
+$\lnot\mathcal{Q}$. On reprend exactement le même raisonnement
+$\mathcal C$, qui fournit $\lnot\mathcal{P}$, en contradiction avec
+$\mathcal{P}$ (preuve de droite ci-dessous).
+
+\qquad\qquad
 $
 \begin{nd}
-	\hypo [~] {1} {\lnot \mathcal{P} \limplies \lantitauto}  
-	\have [~] {2} {\lnot \lantitauto \limplies \lnot \lnot \mathcal{P}}  \by{\text{Par contraposition}}{}
-	\have [~] {3} {\ltauto \limplies \lnot \lnot \mathcal{P}} \by{\text{Car $\lnot \lantitauto = \ltauto$}}{}	
-	\have [~] {4} {\ltauto \limplies \mathcal{P}} \by{\text{Car $\lnot \lnot \mathcal{P}$ donne $\mathcal{P}$}}{}	
-	\have [~] {5} {\ltauto}  \by{\text{Or $\ltauto$ toujours vrai}}{}
-	\have [\lturn] {6} {\mathcal{P}} \by{\text{Car $\ltauto \limplies \mathcal{P}$}}{}
+	\hypo [~] {} {\lnot\mathcal{Q}}
+	\have [~] {} {\boxed{\mathcal C}} \by{\text{Étapes intermédiaires}}{}
+    \have [\lturn] {} {\lnot\mathcal{P}}
+\end{nd}
+$
+\qquad\qquad
+$
+\begin{nd}
+	\hypo [~] {} {\mathcal{P} \land \lnot\mathcal{Q}}
+	\have [~] {} {\boxed{\mathcal{C}}} \by{\text{Mêmes étapes}}{}
+	\have [~] {} {\mathcal{P} \land \lnot\mathcal{P}}
+	\have [\lturn] {} {\lantitauto}
 \end{nd}
 $
 
 \bigskip
 
-Absurde vers contraposée :
+\textbf{De l'absurde vers la contraposée.}
+
+Supposons maintenant que l'on dispose d'une preuve par l'absurde de
+$\mathcal{P}\limplies\mathcal{Q}$ (à gauche ci-dessous). Elle est de la forme :
+\[
+\mathcal{P},\ \lnot\mathcal{Q}
+\quad\longrightarrow\quad
+\boxed{\mathcal{C}'}
+\quad\longrightarrow\quad
+\lantitauto.
+\]
+
+Pour obtenir la contraposée, on suppose $\lnot\mathcal{Q}$ et on cherche
+à montrer $\lnot\mathcal{P}$. On suppose donc $\mathcal{P}$ et on reprend
+exactement le même raisonnement $\mathcal{C}'$, qui conduit à une
+contradiction (à droite ci-dessous).
 
 \qquad\qquad
 $
 \begin{nd}
-	\hypo [~] {1} {\lnot \mathcal{Q} \limplies \lnot \mathcal{P}}  
-	\open
-	\hypo [~] {2} {\mathcal{P}}  
-	\open
-	\hypo [~] {3} {\lnot \mathcal{Q}}  
-	\have [~] {4} {\lnot \mathcal{P}}  \by{\text{Car $\lnot \mathcal{Q} \limplies \lnot \mathcal{P}$}}{}	
-	\have [~] {5} {\lantitauto} \by{\text{Contradiction car on a $\mathcal{P}$ et $\lnot \mathcal{P}$}}{}
-	\close
-	\have [~] {6} {\mathcal{Q}}  \by{\text{Car on a prouvé que supposer $\lnot \mathcal{Q}$ entraîne contradiction}}{}
-	\close
-	\have [\lturn] {7} {\mathcal{P} \limplies \mathcal{Q}} \by{\text{Car chaque fois qu'on a $\mathcal{P}$ on a aussi $\mathcal{Q}$}}{}
+	\hypo [~] {1} {\mathcal{P} \land \lnot\mathcal{Q}}
+	\have [~] {} {\boxed{\mathcal{C}'}} \by{\text{Étapes intermédiaires}}{}
+	\have [\lturn] {} {\lantitauto}
 \end{nd}
 $
+\qquad\qquad
+$
+\begin{nd}
+	\hypo [~] {} {\lnot\mathcal{Q}}
+	\open
+	\hypo [~] {} {\mathcal{P}}
+	\have [~] {} {\boxed{\mathcal{C}'}} \by{\text{Mêmes étapes}}{}
+	\have [~] {} {\lantitauto}
+	\close
+    \have [\lturn] {} {\lnot\mathcal{P}}
+\end{nd}
+$
+
+\medskip
+
+Ainsi, une preuve par contraposition et une preuve par l'absurde ont le même cœur : seule l'organisation des hypothèses change.
 
 
 

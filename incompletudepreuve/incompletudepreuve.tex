@@ -48,16 +48,16 @@ Ainsi il existe des propositions vraies (dans le modèle standard $\Nn$) mais no
 
 \begin{itemize}
     
-    \item Une théorie $T$ est \defi{incohérente} s'il existe une formule $\mathcal{Q}$ telle que :
+    \item Une théorie $\mathcal{T}$ est \defi{noncohérente} s'il existe une formule $\mathcal{Q}$ telle que :
 \[
-T \lturn \mathcal{Q} \qquad \text{ et } \qquad T \lturn \lnot \mathcal{Q}.
+\mathcal{T} \lturn \mathcal{Q} \qquad \text{ et } \qquad \mathcal{T} \lturn \lnot \mathcal{Q}.
 \]
 Elle est dite \defi{cohérente} sinon.\index{theorie@théorie!coherente@cohérente}
 
-    \item De façon équivalente, $T$ est incohérente si $T \lturn \bot$ et alors $T$ prouve n'importe quelle formule (et sa négation), par la règle d'explosion.
-Une théorie incohérente n'a donc aucun intérêt.
+    \item De façon équivalente, $\mathcal{T}$ est non cohérente si $\mathcal{T} \lturn \bot$ et alors $\mathcal{T}$ prouve n'importe quelle formule (et sa négation), par la règle d'explosion.
+Une théorie non cohérente n'a donc aucun intérêt.
 
-    \item Si $T$ admet un modèle (c'est-à-dire $\ldoubleturn_\mathcal{S} T$ pour une certaine structure $\mathcal{S}$), alors $T$ est cohérente via le théorème de validité.
+    \item Si $\mathcal{T}$ admet un modèle (c'est-à-dire $\ldoubleturn_\mathcal{S} \mathcal{T}$ pour une certaine structure $\mathcal{S}$), alors $\mathcal{T}$ est cohérente via le théorème de validité.
 \end{itemize}
 
 \bigskip
@@ -65,14 +65,14 @@ Une théorie incohérente n'a donc aucun intérêt.
 \textbf{Rappels sur la complétude.}
 
 \begin{itemize}
-    \item Une théorie $T$ est \defi{incomplète} s'il existe une formule fermée $\mathcal{Q}$ telle que :
+    \item Une théorie $\mathcal{T}$ est \defi{incomplète} s'il existe une formule fermée $\mathcal{Q}$ telle que :
 \[
-T \not\lturn \mathcal{Q} \qquad \text{ et } \qquad T \not\lturn \lnot \mathcal{Q}.
+\mathcal{T} \not\lturn \mathcal{Q} \qquad \text{ et } \qquad \mathcal{T} \not\lturn \lnot \mathcal{Q}.
 \]
 
     \item Elle est dite \defi{complète}\index{theorie@théorie!complete@complète} sinon, c'est-à-dire que pour toute formule fermée $\mathcal{Q}$ on a :
 \[
-T \lturn \mathcal{Q} \qquad \text{ ou } \qquad T \lturn \lnot \mathcal{Q}.
+\mathcal{T} \lturn \mathcal{Q} \qquad \text{ ou } \qquad \mathcal{T} \lturn \lnot \mathcal{Q}.
 \]
 
 \end{itemize}
@@ -103,7 +103,7 @@ On va prouver le théorème de Gödel avec une hypothèse un peu plus forte : l'
 
 \begin{definition}
     \index{theorie@théorie!omega-coherente@$\omega$-cohérente}
-    Une théorie $\mathcal{T}$ est \defi{$\omega$-incohérente} s'il existe une formule $\mathcal{Q}(x)$ (ayant $x$ pour seule variable libre) telle que :
+    Une théorie $\mathcal{T}$ est \defi{$\omega$-non cohérente} s'il existe une formule $\mathcal{Q}(x)$ (ayant $x$ pour seule variable libre) telle que :
     \[
     \mathcal{T}\quad \lturn \quad \exists x \ \mathcal{Q}(x) 
     \]
@@ -128,10 +128,10 @@ On va prouver le théorème de Gödel avec une hypothèse un peu plus forte : l'
 Voici le lien avec la cohérence classique :
 \begin{itemize}
     \item $\mathcal{T}$ $\omega$-cohérente implique $\mathcal{T}$ cohérente.
-    \item $\mathcal{T}$ incohérente implique $\mathcal{T}$ $\omega$-incohérente.
+    \item $\mathcal{T}$ non cohérente implique $\mathcal{T}$ $\omega$-non cohérente.
 \end{itemize}
 
-Justification : si $\mathcal{T}$ est incohérente, alors $\mathcal{T}$ prouve n'importe quoi, donc prouve les formules de la définition de la $\omega$-incohérence. L'autre sens s'obtient par contraposition.
+Justification : si $\mathcal{T}$ est non cohérente, alors $\mathcal{T}$ prouve n'importe quoi, donc prouve les formules de la définition de la $\omega$-non cohérence. L'autre sens s'obtient par contraposition.
 
 Ces deux notions ne sont pas équivalentes, mais on verra un peu plus loin l'astuce de Rosser qui permet de remplacer l'hypothèse \og{}$\omega$-cohérente\fg{} de Gödel par l'hypothèse plus faible de \og{}cohérente\fg{}.
 
@@ -183,32 +183,30 @@ Voici l'énoncé que l'on va prouver :
     Si $\mathcal{PA}$ est $\omega$-cohérente, alors $\mathcal{PA}$ est incomplète.
 \end{theoreme}
 
-%--------------------------------------------------------------------
-\subsection{La formule à diagonaliser}
 
-On note $\mathcal{P}(x)$ la formule suivante :
-\[ \mathcal{P}(x) \ : \quad \lnot \mathcal{E}\text{st-démontrable}(x) \]
+\subsection{La formule de Gödel}
 
-C'est bien une formule de $\mathcal{L}_0$ d'après ce que l'on a dit précédemment.
+Rappelons que la formule $\mathcal{E}\text{st-preuve}(y,x)$
+représente dans $\mathcal{PA}$ le prédicat \og{}$y$ est le code d'une preuve de la formule de code $x$\fg{}. On définit alors :
+\[
+\mathcal{E}\text{st-démontrable}(x)
+\ : \quad
+\exists y \ \ \mathcal{E}\text{st-preuve}(y,x)
+\]
 
-On a donc :
-\[ \mathcal{E}\text{st-démontrable}(x) \ : \quad  \exists y \ \ \mathcal{E}\text{st-preuve}(y, x) \]
-donc
-\[ \lnot \mathcal{E}\text{st-démontrable}(x) \ : \quad \forall y \ \ \lnot\mathcal{E}\text{st-preuve}(y, x) \]
+Considérons la formule
+\[
+\mathcal{P}(x) \quad : \quad
+\lnot\mathcal{E}\text{st-démontrable}(x)
+\]
 
-Par le lemme de diagonalisation, il existe une formule fermée $\mathcal{G}$, dite \defi{formule de Gödel}, telle que :
+Par le lemme de diagonalisation, il existe une formule fermée $\mathcal{G}$, dite \defi{formule de Gödel}, telle que
 \[ \mathcal{PA} \quad \lturn \quad \big( \mathcal{G} \ \lequiv \  \mathcal{P}(\ulcorner \mathcal{G} \urcorner) \big) \]
-\index{formule!de Godel@de Gödel}
+\index{formule!de Godel@de Gödel}%
 (On note $\ulcorner \mathcal{G} \urcorner$ à la fois pour le nombre de Gödel de $\mathcal{G}$, mais aussi pour son numéral.)
 
-Ainsi le lemme de diagonalisation fournit dans $\mathcal{PA}$ l'équivalence :
-\[ \mathcal{G} \ \lequiv \ \lnot \exists y \ \ \mathcal{E}\text{st-preuve}(y, \ulcorner \mathcal{G} \urcorner) \]
-c'est-à-dire :
-\[ \lnot\mathcal{G} \ \lequiv \ \exists y \ \ \mathcal{E}\text{st-preuve}(y, \ulcorner \mathcal{G} \urcorner) \]
-Autrement dit :
-\[ \mathcal{G} \ \lequiv \ \lnot\mathcal{E}\text{st-démontrable}(\ulcorner \mathcal{G} \urcorner) \]
-
-Ainsi $\mathcal{G}$ signifie \og{}Je ne suis pas démontrable\fg{}.
+Ainsi, dans $\mathcal{PA}$, la formule $\mathcal{G}$ affirme qu'elle n'est pas démontrable. Autrement dit, elle exprime :
+\og{}Je ne suis pas démontrable.\fg{}
 
 On va maintenant montrer que cette formule $\mathcal{G}$ n'est pas démontrable, et que $\lnot \mathcal{G}$ ne l'est pas non plus.
 
@@ -226,7 +224,7 @@ On a donc $\text{est\_preuve}(N, \ulcorner \mathcal{G} \urcorner)$ (en tant que 
     \text{donc} \quad & \mathcal{PA} \quad \lturn \quad \lnot \mathcal{G} \quad \text{par l'équivalence de la diagonalisation.}
 \end{align*}
 
-Conclusion : si $\mathcal{PA} \lturn \mathcal{G}$ alors $\mathcal{PA} \lturn \lnot \mathcal{G}$, ce qui implique que $\mathcal{PA}$ est incohérente. Or on a supposé $\mathcal{PA}$ $\omega$-cohérente, donc cohérente (cette hypothèse simple suffit pour cette première étape). On obtient une contradiction.
+Conclusion : si $\mathcal{PA} \lturn \mathcal{G}$ alors $\mathcal{PA} \lturn \lnot \mathcal{G}$, ce qui implique que $\mathcal{PA}$ est non cohérente. Or on a supposé $\mathcal{PA}$ $\omega$-cohérente, donc cohérente (cette hypothèse simple suffit pour cette première étape). On obtient une contradiction.
 
 
 %--------------------------------------------------------------------
@@ -256,7 +254,7 @@ Cela signifie que pour $N=0,1,2,\dots$, on a
 \[
   \mathcal{PA} \quad \lturn \quad  \lnot\mathcal{Q}(\overline{N})
 \]
-Cela implique que $\mathcal{PA}$ est $\omega$-incohérente, en contradiction avec notre hypothèse.
+Cela implique que $\mathcal{PA}$ est $\omega$-non cohérente, en contradiction avec notre hypothèse.
 
 
 %--------------------------------------------------------------------
@@ -334,7 +332,7 @@ Terminons nos définitions :
 \begin{itemize}
     \item Un ensemble $A \subset \Nn$ est un \defi{ensemble récursif} (resp. récursif primitif) si sa fonction caractéristique $\chi_A : \Nn \to \Nn$ est une fonction récursive (resp. fonction récursive primitive). 
     
-    \item Une théorie $\mathcal{T}$ a des \defi{axiomes récursifs}\index{axiomes!recursifs@récursifs} (resp. récursifs primitifs) si $A = \{ \ulcorner P \urcorner \mid P \text{ est un axiome de } \mathcal{T} \}$, l'ensemble des nombres de Gödel des axiomes de $\mathcal{T}$, est un ensemble récursif (resp. récursif primitif).
+    \item Une théorie $\mathcal{T}$ a des \defi{axiomes récursifs}\index{axiomes!recursifs@récursifs} (resp. récursifs primitifs) si $A = \{ \ulcorner \mathcal{P} \urcorner \mid \mathcal{P} \text{ est un axiome de } \mathcal{T} \}$, l'ensemble des nombres de Gödel des axiomes de $\mathcal{T}$, est un ensemble récursif (resp. récursif primitif).
 \end{itemize}
 
 
@@ -347,7 +345,7 @@ Exiger que l'ensemble des axiomes d'une théorie soit récursif signifie juste q
 
 Comme on n'a pas donné la définition exacte d'une fonction récursive, on remplace cette hypothèse par l'hypothèse un peu plus forte : \og{}les axiomes de $\mathcal{T}$ sont récursifs primitifs\fg{}, ce qui fait que l'on sait calculer (facilement) si une formule donnée est un axiome ou pas.
 
-Cela permet donc de construire la fonction prédicat $\text{est\_preuve}(N, n)$ : $\Nn^2 \to \Nn$ récursive primitive, puis de la représenter par une formule de $\mathcal{L}_0$, $\mathcal{E}\text{st-preuve}(y, x)$.
+Cela permet donc de construire le prédicat $\text{est\_preuve}(N, n)$ : $\Nn^2 \to \{\ltrue,\lfalse\}$ récursif primitif, puis de le représenter par une formule de $\mathcal{L}_0$, $\mathcal{E}\text{st-preuve}(y, x)$.
 On remplace aussi l'hypothèse de cohérence par celle de $\omega$-cohérence.
 
 La démonstration est alors exactement la même que pour la théorie $\mathcal{PA}$ : on construit une formule $\mathcal{G}$ par diagonalisation et on prouve que ni $\mathcal{G}$, ni $\lnot\mathcal{G}$ ne sont démontrables.

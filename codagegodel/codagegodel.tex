@@ -65,9 +65,9 @@ $\lnot$ & $\land$ & $\lor$ & $\limplies$ & $\lequiv$ & $\forall$ & $\exists$ & $
 \end{center} 
 
 \begin{center}
-\begin{tabular}{cccccc}
-$x_1 / x$ & $x_2 / y$ & $x_3 / z$ & $x_4$ & $\cdots$ & $x_i$\\ 
-$2$ & $4$ & $6$ & $8$ & $\cdots$ & $2i$ 
+\begin{tabular}{ccccccc}
+$x_1 / x$ & $x_2 / y$ & $x_3 / z$ & $x_4$ & $\cdots$ & $x_i$ & $\cdots$\\ 
+$2$ & $4$ & $6$ & $8$ & $\cdots$ & $2i$ & $\cdots$
 \end{tabular}
 \end{center} 
 
@@ -437,7 +437,7 @@ n = \ulcorner \mathcal{P} \urcorner = 2^{\cdots} \cdot 3^{\cdots} \cdot 5^{\cdot
 \]
 
 On écrira souvent $\mathcal{Q}(n)$, au lieu de $\mathcal{Q}(\overline{n})$ car il ne peut pas y avoir de confusion. 
-Ainsi, lorsque l'on écrit \og{}\ci{est\_formule(n)}\fg{}, si l'on veut vraiment un algorithme dans le langage $\mathcal{L}_0$, $n$ doit être écrit sous la forme du numéral $\overline{n} = SS \dots S 0$. 
+Si l'on veut vraiment un algorithme dans le langage $\mathcal{L}_0$, $n$ doit être écrit sous la forme du numéral $\overline{n} = SS \dots S 0$. 
 
 
 %--------------------------------------------------------------------
@@ -465,7 +465,7 @@ alors :
 
 Considérons une formule $\mathcal{P}$ de variable libre $x$, que l'on note généralement $\mathcal{P}(x)$.
 Quand on écrit $\mathcal{P}(n)$ c'est en fait la substitution $\mathcal{P}[n/x]$.
-Il faut maintenant écrire cela dans le langage $\mathcal{L}_0$, c'est-à-dire qu'il nous faut une fonction \ci{substitution}($\ulcorner \mathcal{P} \urcorner$, $\ulcorner x \urcorner$, $n$) qui renvoie $\overline{\ulcorner \mathcal{P}(\overline{n}) \urcorner}$, le nombre de Gödel de la substitution.
+Il faut maintenant écrire cela en termes de nombres de Gödel, c'est-à-dire qu'il nous faut une fonction \ci{substitution}($\ulcorner \mathcal{P} \urcorner$, $\ulcorner x \urcorner$, $n$) $: \Nn^3 \to \Nn$, qui renvoie $\ulcorner \mathcal{P}(\overline{n}) \urcorner$, le nombre de Gödel de la substitution.
 
 \begin{exemple}
 \sauteligne
@@ -478,7 +478,7 @@ Il faut maintenant écrire cela dans le langage $\mathcal{L}_0$, c'est-à-dire q
 
     \item $\ulcorner \mathcal{P}(\overline{2}) \urcorner = 2^{\cdots} \cdot 3^{\cdots} \cdot 5^{\cdots} \cdot 7^{\cdots} \cdot 11^{\cdots} \cdot 13^{\cdots} \cdot 17^{\cdots}$ est le nombre de Gödel de la substitution.
     
-    \item Il ne reste plus qu'à transformer $\ulcorner \mathcal{P}(\overline{2}) \urcorner$ en son numéral $\overline{\ulcorner \mathcal{P}(\overline{2}) \urcorner}$.
+    %\item Il ne reste plus qu'à transformer $\ulcorner \mathcal{P}(\overline{2}) \urcorner$ en son numéral $\overline{\ulcorner \mathcal{P}(\overline{2}) \urcorner}$.
 \end{itemize}
 \end{exemple}
 
@@ -486,7 +486,7 @@ C'est un bon exercice, pas trop difficile, d'écrire l'algorithme de substitutio
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Preuve du théorème d'incomplétude par diagonalisation}
+\section{Preuve informelle du théorème d'incomplétude}
 
 %--------------------------------------------------------------------
 \subsection{Le paradoxe de Russell}
@@ -540,7 +540,7 @@ Pour l'instant, remarquons :
     
     \item Si cette formule $\mathcal{Q}$ possède une variable libre, par exemple $\mathcal{Q}(y)$, alors on peut effectuer la substitution $\mathcal{Q}[n/y]$, notée $\mathcal{Q}(n)$. 
     
-    \item Enfin, pour un $n$ donné on peut discuter si la formule fermée $\mathcal{Q}(n)$ est démontrable ou pas. 
+    \item Enfin, pour un $n$ donné on peut discuter si la formule fermée $\mathcal{Q}(n)$ est démontrable ou pas. C'est exactement ce que fait la formule $\mathcal{P}(n)$ : \og{}La formule $\mathcal{Q}(n)$ n'est pas démontrable.\fg{}
 \end{itemize}
 
 

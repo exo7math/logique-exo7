@@ -72,19 +72,19 @@ Revenons sur les définitions des termes des hypothèses et de la conclusion.
 \textbf{Cohérence.}
 
 \begin{itemize}
-    \item Une théorie $\mathcal{T}$ est \defi{incohérente} s'il existe une formule fermée $\mathcal{Q}$ telle que :
+    \item Une théorie $\mathcal{T}$ est \defi{non cohérente} s'il existe une formule fermée $\mathcal{Q}$ telle que :
 \[
 \mathcal{T} \quad \lturn\quad \mathcal{Q} \qquad \text{et} \qquad \mathcal{T} \quad \lturn \quad \lnot\mathcal{Q}
 \]
 
 Elle est dite \defi{cohérente} sinon.
 
-    \item Notez bien que la définition de \og{}incohérente\fg{} n'est pas la négation de \og{}incomplète\fg{} car la négation d'un \og{}et\fg{} est un \og{}ou\fg{}.
+    \item Notez bien que la définition de \og{}non cohérente\fg{} n'est pas la négation de \og{}incomplète\fg{} car la négation d'un \og{}et\fg{} est un \og{}ou\fg{}.
 
-    \item Ainsi, une théorie incohérente prouve $\mathcal{T} \lturn (\mathcal{Q} \land \lnot\mathcal{Q})$ donc $\mathcal{T} \lturn \lantitauto$.
+    \item Ainsi, une théorie non cohérente prouve $\mathcal{T} \lturn (\mathcal{Q} \land \lnot\mathcal{Q})$ donc $\mathcal{T} \lturn \lantitauto$.
     Alors par la règle d'explosion, $\mathcal{T} \lturn \mathcal{Q}$ (quelle que soit la formule $\mathcal{Q}$) donc on a aussi $\mathcal{T} \lturn \lnot\mathcal{Q}$.
 
-    \item Une théorie incohérente n'a donc pas d'intérêt puisqu'elle ne peut pas avoir de modèle. En effet, si elle possédait un modèle, et comme $\mathcal{T} \lturn \mathcal{Q}$ et $\mathcal{T} \lturn \lnot\mathcal{Q}$, par le théorème de validité, alors $\mathcal{Q}$ et $\lnot\mathcal{Q}$ devraient être toutes les deux vraies, ce qui fournit une contradiction.
+    \item Une théorie non cohérente n'a donc pas d'intérêt puisqu'elle ne peut pas avoir de modèle. En effet, si elle possédait un modèle, et comme $\mathcal{T} \lturn \mathcal{Q}$ et $\mathcal{T} \lturn \lnot\mathcal{Q}$, par le théorème de validité, alors $\mathcal{Q}$ et $\lnot\mathcal{Q}$ devraient être toutes les deux vraies, ce qui fournit une contradiction.
 
     \item Autrement dit si $\mathcal{T}$ admet un modèle alors $\mathcal{T}$ est cohérente.
 \end{itemize}
@@ -165,7 +165,7 @@ Plus généralement, Gödel s'intéresse à savoir ce qui est calculable, bien a
 
 Même si Gödel construit une formule $\mathcal{G}$ explicite qui n'est pas démontrable, cette formule a pour seul intérêt de prouver le théorème.
 
-L'\defi{hypothèse du continu}\index{hypothese du continu@hypothèse du continu} est un énoncé beaucoup plus concret qui est, lui aussi, un énoncé indécidable (ni $\mathcal{HC}$ ni $\lnot\mathcal{HC}$ ne sont démontrables dans $\mathcal{ZFC}$).
+L'\defi{hypothèse du continu}\index{hypothese du continu@hypothèse du continu} est un énoncé beaucoup plus concret qui est, lui aussi, un énoncé indécidable (ni $\mathcal{HC}$ ni $\lnot\mathcal{HC}$ ne sont démontrables dans $\mathcal{ZF}$).
 
 Cela a été prouvé par Cohen (en 1963), résolvant ainsi le premier de la liste des 23 problèmes de Hilbert.
 

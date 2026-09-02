@@ -72,7 +72,10 @@ Remarques :
 
     \item Encore une fois, cette définition fait le lien entre un entier $k \in \Nn$ et son numéral $\overline{k}$ dans $\mathcal{L}_0$.
 
-    \item Il faut comprendre la formule $\mathcal{P}$ comme le graphe de $f$. C'est une façon équivalente de définir la fonction.
+    \item Il faut comprendre la formule $\mathcal{P}$ comme le graphe de $f$.
+    Pour un graphe d'une fonction de $\Rr \to \Rr$ on a $y=f(x)$ ssi $(x,y)$ appartient au graphe de $f$.
+    Ici pour une fonction de $\Nn^p \to \Nn$, on a $y=f(\mathbf{x})$ ssi $\mathcal{P}(\mathbf{x},y)$.
+    C'est une façon équivalente de définir la fonction.
 \end{itemize}
 
 
@@ -234,7 +237,7 @@ Pour l'instant, on se concentre sur la preuve de la proposition ci-dessus.
 Comme on l'a déjà dit, on donnera la preuve dans un cadre minimaliste, mais
 il est intéressant de commenter la formule générale qui fait de $h$ une fonction représentable : 
 \[
-\mathcal{P}(\mathbf{x},y) \ : \ \exists w_1 \dots \exists w_q \quad \mathcal{P}_0(w_1, \dots, w_q, y) \land \mathcal{P}_1(\mathbf{x}, w_1) \land \cdots \land \mathcal{P}_q(\mathbf{x}, w_q)
+\mathcal{P}_h(\mathbf{x},y) \ : \ \exists w_1 \dots \exists w_q \quad \mathcal{P}_0(w_1, \dots, w_q, y) \land \mathcal{P}_1(\mathbf{x}, w_1) \land \cdots \land \mathcal{P}_q(\mathbf{x}, w_q)
 \]
 où $\mathcal{P}_0$ est la formule associée à la fonction représentable $g$ et $\mathcal{P}_i$ la formule de $f_i$ ($i=1,\dots,q$).
 Le rôle des variables $w_i$ est très intéressant : il s'agit de mémoriser le résultat intermédiaire du calcul $w_i = f_i(\mathbf{n})$, afin de pouvoir l'injecter dans $g$ pour calculer $h(\mathbf{n}) = g(w_1, \dots, w_q) = g(f_1(\mathbf{n}), \dots, f_q(\mathbf{n}))$.
@@ -247,7 +250,7 @@ Le rôle des variables $w_i$ est très intéressant : il s'agit de mémoriser le
     On veut montrer que la composition $h = g \circ f_1 : \Nn \to \Nn$ est représentable.
 
     On définit la formule :
-    \[ \mathcal{P}(x,y) \ : \quad \exists w \ \ \mathcal{P}_0(w, y) \land \mathcal{P}_1(x, w)  \]
+    \[ \mathcal{P}_h(x,y) \ : \quad \exists w \ \ \mathcal{P}_0(w, y) \land \mathcal{P}_1(x, w)  \]
     qui va représenter la fonction $h$.
     Pour $n \in \Nn$, posons $k = f_1(n)$ et $m = g(k) = g(f_1(n)) = h(n)$.
 
@@ -256,16 +259,16 @@ Le rôle des variables $w_i$ est très intéressant : il s'agit de mémoriser le
         \item \textbf{Exactitude.} 
         Par hypothèse, on a $\mathcal{PA} \lturn \mathcal{P}_0(k, m)$ et $\mathcal{PA} \lturn \mathcal{P}_1(n, k)$.
         Donc $\mathcal{PA} \lturn \exists w \ \big( \mathcal{P}_0(w, m) \land \mathcal{P}_1(n, w) \big)$ (il suffit de prendre $w = k$).
-        Donc $\mathcal{PA} \lturn \mathcal{P}(n, m)$.
+        Donc $\mathcal{PA} \lturn \mathcal{P}_h(n, m)$.
 
         \item \textbf{Unicité.} $\mathcal{PA}$ prouve par hypothèse les deux implications suivantes :
         \[ \forall w \ \ \big( \mathcal{P}_1(n, w) \limplies w = k \big) \]
         \[ \text{et} \quad \forall y \ \big( \mathcal{P}_0(k, y) \limplies y = m \big) \]
-        Ainsi, supposons qu'on ait $\mathcal{P}(n, y)$. Donc il existe $w$ tel que $\mathcal{P}_0(w, y)$ et $\mathcal{P}_1(n, w)$.
+        Ainsi, supposons qu'on ait $\mathcal{P}_h(n, y)$. Donc il existe $w$ tel que $\mathcal{P}_0(w, y)$ et $\mathcal{P}_1(n, w)$.
         Comme on a $\mathcal{P}_1(n, w)$, alors $w = k$.
         On a donc $\mathcal{P}_0(k, y)$, ce qui implique $y = m$.
         Ainsi on a bien vérifié la condition d'unicité :
-        $\mathcal{P}(n,y) \limplies y = m$.
+        $\mathcal{P}_h(n,y) \limplies y = m$.
     \end{itemize}
 \end{proof}
 

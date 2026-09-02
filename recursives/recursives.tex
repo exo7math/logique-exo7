@@ -535,7 +535,7 @@ Ce sont des produits finis, donc c'est une opération récursive primitive.
 
     \item Considérons la fonction $\operatorname{substitution}(p, v, n)$ : pour une formule $\mathcal{P}$ (donnée par son nombre de Gödel $p$), de variable libre $x$ (donnée par son code $v$), elle renvoie le code de Gödel de $\mathcal{P}(n)$ (c'est-à-dire $\mathcal{P}(n/x)$).
     
-    \item On commence par extraire chaque code $c_i$ de $\mathcal{P}$, on compare ce code à celui de la variable $x$, si c'est le même on remplace ce symbole par le terme $n$ en utilisant la concaténation.
+    On commence par extraire chaque code $c_i$ de $\mathcal{P}$, on compare ce code à celui de la variable $x$, si c'est le même on remplace ce symbole par le terme $n$ en utilisant la concaténation.
     C'est donc une succession de fonctions récursives primitives, donc la substitution est une fonction récursive primitive.
 \end{itemize}
 

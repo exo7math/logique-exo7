@@ -296,6 +296,236 @@ Pour une formule $\mathcal{P}(x)$, on notera $\mathcal{P}(t)$ au lieu de $\mathc
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Négation des quantificateurs et règles dérivées}
+
+%--------------------------------------------------------------------
+\subsection{Négation des quantificateurs}
+
+\index{quantificateurs@quantificateurs $\forall$, $\exists$}
+
+\textbf{Règle dérivée. Négation des quantificateurs.} 
+\mybox{$
+	\lnot \ \big( \forall x \ \ \mathcal{P}(x) \big)  
+	\quad \lturn \quad  
+	\exists x \ \ \big( \lnot \mathcal{P}(x) \big) 
+	$}
+\mybox{$
+	\lnot \ \big( \exists x \ \ \mathcal{P}(x) \big)  
+	\quad \lturn \quad  
+	\forall x \ \ \big( \lnot \mathcal{P}(x) \big) 
+	$}
+
+Nous ne sommes pas surpris : la négation d'un \og{}pour tout\fg{} est un \og{}il existe\fg{}, et réciproquement.
+
+Exemples :
+\begin{enumerate}
+	
+	\item $\lnot \ \big( \forall x \ \ f(x) = g(x) \big) \quad \lturn \quad  
+	\exists x \ \ \big( f(x) \neq g(x) \big)$
+	
+	\item $\lnot \ \big( \exists x \ \ P(x) \land Q(x) \big) \quad \lturn \quad  
+	\forall x \ \ \big( \lnot P(x) \big) \lor \big( \lnot Q(x) \big)$
+	
+	\item $\lnot \ \big( \forall x \ \ P(x) \limplies Q(x) \big) \quad \lturn \quad \exists x \ \ P(x) \land \big( \lnot Q(x) \big)$
+\end{enumerate}
+
+
+%--------------------------------------------------------------------
+\subsection{Autres règles dérivées}
+
+
+\textbf{Règle dérivée. Renommage.} 
+\mybox{$
+	\forall x \ \ \mathcal{P}(x) 
+	\quad \lturn \quad  
+	\forall y \ \ \mathcal{P}(y)  	
+	\qquad \text{ et }\qquad
+	\exists x \ \ \mathcal{P}(x) 
+	\quad \lturn \quad  
+	\exists y \ \ \mathcal{P}(y) 	
+	$}
+
+La variable $y$ ne doit pas apparaître comme variable libre dans la formule $\forall x \ \mathcal{P}(x)$ ni dans $\exists x \ \mathcal{P}(x)$.
+
+\bigskip
+
+\textbf{Règle dérivée. Interversion de deux $\forall$ ou deux $\exists$.}
+\mybox{$
+	\forall x \ \ \forall y \ \ \mathcal{P}(x,y)
+	\quad \lturn \quad  
+	\forall y \ \ \forall x \ \ \mathcal{P}(x,y)
+	$}
+\mybox{$
+	\exists x \ \ \exists y \ \ \mathcal{P}(x,y)
+	\quad \lturn \quad  
+	\exists y \ \ \exists x \ \ \mathcal{P}(x,y)
+	$}
+
+\bigskip
+
+\textbf{Règle dérivée. Interversion de $\exists \  \forall$ vers $\forall \ \exists$.}	
+\mybox{
+	$\exists x \ \ \forall y \ \ \mathcal{P}(x,y) 
+\quad \lturn \quad  
+\forall y \ \ \exists x \ \ \mathcal{P}(x,y)$	
+}
+On l'a prouvée dans un exemple précédent. 
+
+
+\bigskip
+
+\textbf{Règle dérivée. Commutation de $\forall$ et $\land$.}
+\mybox{$
+	\forall x \ \ \big( \mathcal{P}(x) \land \mathcal{Q}(x) \big)
+	\quad \lturn \quad  
+	\big( \forall x \ \ \mathcal{P}(x) \big) \land \big( \forall x \ \ \mathcal{Q}(x) \big)
+	$}
+\mybox{$
+	\big( \forall x \ \ \mathcal{P}(x) \big) \land \big( \forall x \ \ \mathcal{Q}(x) \big)
+	\quad \lturn \quad  
+	\forall x \ \ \big( \mathcal{P}(x) \land \mathcal{Q}(x) \big)	
+	$} 
+Ainsi on peut passer d'un sens à l'autre. Les formules sont interdérivables.
+
+\bigskip
+
+\textbf{Règle dérivée. Commutation de $\exists$ et $\lor$.}
+\mybox{$
+	\exists x \ \ \big( \mathcal{P}(x) \lor \mathcal{Q}(x) \big)
+	\quad \lturn \quad  
+	\big( \exists x \ \ \mathcal{P}(x) \big) \lor \big( \exists x \ \ \mathcal{Q}(x) \big)
+	$}
+\mybox{$
+	\big( \exists x \ \ \mathcal{P}(x) \big) \lor \big( \exists x \ \ \mathcal{Q}(x) \big)
+	\quad \lturn \quad  
+	\exists x \ \ \big( \mathcal{P}(x) \lor \mathcal{Q}(x) \big)	
+	$} 
+
+%--------------------------------------------------------------------
+\subsection{Preuve des règles dérivées}
+
+Voyons quelques preuves des règles dérivées.
+
+
+\begin{exemple}
+	Les règles de renommage sont naturelles. Les preuves sont de simples jeux d'écriture. 
+	
+	\[ 
+	\forall x \ \ \mathcal{P}(x)  \quad \lturn \quad  \forall y \ \ \mathcal{P}(y)
+	\]
+	
+	\medskip
+	\qquad\qquad
+	$
+	\begin{nd}
+		\hypo [~] {} {\forall x \ \ \mathcal{P}(x)}  \by{}{}
+		\have [~] {} {\mathcal{P}(c)} \by{\text{Élimination du $\forall$, $c$ arbitraire}}{}
+		\have [\lturn] {} {\forall y \ \mathcal{P}(y)} \by{\text{Introduction du $\forall$}}{}
+	\end{nd}
+	$
+	
+	
+	\bigskip	
+		
+	\[ 
+	\exists x \ \ \mathcal{P}(x)  \quad \lturn \quad  \exists y \ \ \mathcal{P}(y)
+	\]
+	\medskip
+	\qquad\qquad
+	$
+	\begin{nd}
+		\hypo [~] {} {\exists x \ \ \mathcal{P}(x)}  \by{}{}
+		\open				
+			\hypo [~] {} {\mathcal{P}(c)} \by{\text{$c$ constante}}{}
+			\have [~] {} {\exists y \ \ \mathcal{P}(y)} \by{\text{Introduction du $\exists$}}{}
+		\close 
+		\have [\lturn] {} {\exists y \ \ \mathcal{P}(y)} \by{\text{Élimination du $\exists$ initial}}{}
+	\end{nd}
+	$	
+
+\end{exemple}
+
+
+\begin{exemple}
+\[
+	\forall x \ \ \forall y \ \ \mathcal{P}(x,y)
+	\quad \lturn \quad  
+	\forall y \ \ \forall x \ \ \mathcal{P}(x,y)	
+\]
+
+	\medskip
+\qquad\qquad
+$
+\begin{nd}
+	\hypo [~] {} {\forall x \ \ \forall y \ \ \mathcal{P}(x,y)}  \by{}{}
+	\have [~] {} {\forall y \ \ \mathcal{P}(a,y)} \by{\text{Élimination du premier $\forall$, $a$ arbitraire}}{}
+	\have [~] {} {\mathcal{P}(a,b)} \by{\text{Élimination du second $\forall$, $b$ arbitraire}}{}
+	\have [~] {} {\forall x \ \ \mathcal{P}(x,b)} \by{\text{Introduction d'un $\forall$}}{}	
+	\have [\lturn] {} {\forall y \ \ \forall x \ \ \mathcal{P}(x,y)} \by{\text{Introduction d'un autre $\forall$}}{}
+\end{nd}
+$
+\end{exemple}
+
+
+\begin{exemple}
+	\[
+	\big( \forall x \ \ \mathcal{P}(x) \big) \land \big( \forall x \ \ \mathcal{Q}(x) \big)
+	\quad \lturn \quad  
+	\forall x \ \ \big( \mathcal{P}(x) \land \mathcal{Q}(x) \big)
+	\]
+	
+	\medskip	
+	
+	Voici la preuve, à vous d'expliciter les règles utilisées.
+	
+	\medskip
+	\qquad\qquad
+	$
+	\begin{nd}
+		\hypo [~] {} {\Big( \forall x \ \ \mathcal{P}(x) \Big) \land \Big( \forall x \ \ \mathcal{Q}(x) \Big)}  \by{}{}
+		\have [~] {} {\forall x \ \ \mathcal{P}(x)} \by{}{}
+		\have [~] {} {\mathcal{P}(c)} \by{}{}	
+		\have [~] {} {\forall x \ \ \mathcal{Q}(x)} \by{}{}
+		\have [~] {} {\mathcal{Q}(c)} \by{}{}	
+		\have [~] {} {\mathcal{P}(c) \land \mathcal{Q}(c)} \by{}{}				
+		\have [\lturn] {} {\forall x \ \ \big( \mathcal{P}(x) \land \mathcal{Q}(x) \big)} \by{}{}
+	\end{nd}
+	$
+	
+\end{exemple}
+
+\begin{exemple}
+	\[
+	\lnot \ \Big( \forall x \ \ \mathcal{P}(x) \Big)  
+	\quad \lturn \quad  
+	\exists x \ \ \Big( \lnot \mathcal{P}(x) \Big) 
+	\]
+
+\medskip
+\qquad\qquad
+$
+\begin{nd}
+	\hypo [1] {} {\lnot \ \Big( \forall x \ \ \mathcal{P}(x) \Big)}  \by{}{}
+	\open				
+		\hypo [2] {} {\lnot \ \Big( \exists x \ \ \lnot \mathcal{P}(x) \Big)}  \by{\text{Raisonnement par l'absurde}}{}
+		\open		
+			\hypo [3] {} {\lnot  \mathcal{P}(c)} \by{\text{Hypothèse, avec $c$ arbitraire}}{}		
+			\have [4] {} {\exists x \ \ \lnot \mathcal{P}(x)} \by{\text{Introduction de $\exists$}}{}
+			\have [5] {} {\lantitauto} \by{\text{Contradiction 2 avec 4}}{}
+		\close
+		\have [6] {} {\mathcal{P}(c)} \by{\text{Par 2-5}}{}		
+		\have [7] {} {\forall x \ \ \mathcal{P}(x)} \by{\text{Introduction de $\forall$}}{}
+		\have [8] {} {\lantitauto} \by{\text{Contradiction 1 avec 7}}{}
+	\close		
+	\have [\lturn] {} {\exists x \ \ \lnot \mathcal{P}(x)} \by{\text{Par contradiction de 2-8}}{}
+	\end{nd}
+	$
+	
+\end{exemple}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Détails des règles}
 
 
@@ -633,236 +863,6 @@ x = y, \ \mathcal{P}(x) \quad \lturn \quad  \mathcal{P}(y)
 	
 	\item $\forall x \ \ \forall y \ \ \big( (x = y) \limplies (\mathcal{P}(x) \lequiv \mathcal{P}(y)) \big)$
 \end{itemize}
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Négation des quantificateurs et règles dérivées}
-
-%--------------------------------------------------------------------
-\subsection{Négation des quantificateurs}
-
-\index{quantificateurs@quantificateurs $\forall$, $\exists$}
-
-\textbf{Règle dérivée. Négation des quantificateurs.} 
-\mybox{$
-	\lnot \ \big( \forall x \ \ \mathcal{P}(x) \big)  
-	\quad \lturn \quad  
-	\exists x \ \ \big( \lnot \mathcal{P}(x) \big) 
-	$}
-\mybox{$
-	\lnot \ \big( \exists x \ \ \mathcal{P}(x) \big)  
-	\quad \lturn \quad  
-	\forall x \ \ \big( \lnot \mathcal{P}(x) \big) 
-	$}
-
-Nous ne sommes pas surpris : la négation d'un \og{}pour tout\fg{} est un \og{}il existe\fg{}, et réciproquement.
-
-Exemples :
-\begin{enumerate}
-	
-	\item $\lnot \ \big( \forall x \ \ f(x) = g(x) \big) \quad \lturn \quad  
-	\exists x \ \ \big( f(x) \neq g(x) \big)$
-	
-	\item $\lnot \ \big( \exists x \ \ P(x) \land Q(x) \big) \quad \lturn \quad  
-	\forall x \ \ \big( \lnot P(x) \big) \lor \big( \lnot Q(x) \big)$
-	
-	\item $\lnot \ \big( \forall x \ \ P(x) \limplies Q(x) \big) \quad \lturn \quad \exists x \ \ P(x) \land \big( \lnot Q(x) \big)$
-\end{enumerate}
-
-
-%--------------------------------------------------------------------
-\subsection{Autres règles dérivées}
-
-
-\textbf{Règle dérivée. Renommage.} 
-\mybox{$
-	\forall x \ \ \mathcal{P}(x) 
-	\quad \lturn \quad  
-	\forall y \ \ \mathcal{P}(y)  	
-	\qquad \text{ et }\qquad
-	\exists x \ \ \mathcal{P}(x) 
-	\quad \lturn \quad  
-	\exists y \ \ \mathcal{P}(y) 	
-	$}
-
-La variable $y$ ne doit pas apparaître comme variable libre dans la formule $\forall x \ \mathcal{P}(x)$ ni dans $\exists x \ \mathcal{P}(x)$.
-
-\bigskip
-
-\textbf{Règle dérivée. Interversion de deux $\forall$ ou deux $\exists$.}
-\mybox{$
-	\forall x \ \ \forall y \ \ \mathcal{P}(x,y)
-	\quad \lturn \quad  
-	\forall y \ \ \forall x \ \ \mathcal{P}(x,y)
-	$}
-\mybox{$
-	\exists x \ \ \exists y \ \ \mathcal{P}(x,y)
-	\quad \lturn \quad  
-	\exists y \ \ \exists x \ \ \mathcal{P}(x,y)
-	$}
-
-\bigskip
-
-\textbf{Règle dérivée. Interversion de $\exists \  \forall$ vers $\forall \ \exists$.}	
-\mybox{
-	$\exists x \ \ \forall y \ \ \mathcal{P}(x,y) 
-\quad \lturn \quad  
-\forall y \ \ \exists x \ \ \mathcal{P}(x,y)$	
-}
-On l'a prouvée dans un exemple précédent. 
-
-
-\bigskip
-
-\textbf{Règle dérivée. Commutation de $\forall$ et $\land$.}
-\mybox{$
-	\forall x \ \ \big( \mathcal{P}(x) \land \mathcal{Q}(x) \big)
-	\quad \lturn \quad  
-	\big( \forall x \ \ \mathcal{P}(x) \big) \land \big( \forall x \ \ \mathcal{Q}(x) \big)
-	$}
-\mybox{$
-	\big( \forall x \ \ \mathcal{P}(x) \big) \land \big( \forall x \ \ \mathcal{Q}(x) \big)
-	\quad \lturn \quad  
-	\forall x \ \ \big( \mathcal{P}(x) \land \mathcal{Q}(x) \big)	
-	$} 
-Ainsi on peut passer d'un sens à l'autre. Les formules sont interdérivables.
-
-\bigskip
-
-\textbf{Règle dérivée. Commutation de $\exists$ et $\lor$.}
-\mybox{$
-	\exists x \ \ \big( \mathcal{P}(x) \lor \mathcal{Q}(x) \big)
-	\quad \lturn \quad  
-	\big( \exists x \ \ \mathcal{P}(x) \big) \lor \big( \exists x \ \ \mathcal{Q}(x) \big)
-	$}
-\mybox{$
-	\big( \exists x \ \ \mathcal{P}(x) \big) \lor \big( \exists x \ \ \mathcal{Q}(x) \big)
-	\quad \lturn \quad  
-	\exists x \ \ \big( \mathcal{P}(x) \lor \mathcal{Q}(x) \big)	
-	$} 
-
-%--------------------------------------------------------------------
-\subsection{Preuve des règles dérivées}
-
-Voyons quelques preuves des règles dérivées.
-
-
-\begin{exemple}
-	Les règles de renommage sont naturelles. Les preuves sont de simples jeux d'écriture. 
-	
-	\[ 
-	\forall x \ \ \mathcal{P}(x)  \quad \lturn \quad  \forall y \ \ \mathcal{P}(y)
-	\]
-	
-	\medskip
-	\qquad\qquad
-	$
-	\begin{nd}
-		\hypo [~] {} {\forall x \ \ \mathcal{P}(x)}  \by{}{}
-		\have [~] {} {\mathcal{P}(c)} \by{\text{Élimination du $\forall$, $c$ arbitraire}}{}
-		\have [\lturn] {} {\forall y \ \mathcal{P}(y)} \by{\text{Introduction du $\forall$}}{}
-	\end{nd}
-	$
-	
-	
-	\bigskip	
-		
-	\[ 
-	\exists x \ \ \mathcal{P}(x)  \quad \lturn \quad  \exists y \ \ \mathcal{P}(y)
-	\]
-	\medskip
-	\qquad\qquad
-	$
-	\begin{nd}
-		\hypo [~] {} {\exists x \ \ \mathcal{P}(x)}  \by{}{}
-		\open				
-			\hypo [~] {} {\mathcal{P}(c)} \by{\text{$c$ constante}}{}
-			\have [~] {} {\exists y \ \ \mathcal{P}(y)} \by{\text{Introduction du $\exists$}}{}
-		\close 
-		\have [\lturn] {} {\exists y \ \ \mathcal{P}(y)} \by{\text{Élimination du $\exists$ initial}}{}
-	\end{nd}
-	$	
-
-\end{exemple}
-
-
-\begin{exemple}
-\[
-	\forall x \ \ \forall y \ \ \mathcal{P}(x,y)
-	\quad \lturn \quad  
-	\forall y \ \ \forall x \ \ \mathcal{P}(x,y)	
-\]
-
-	\medskip
-\qquad\qquad
-$
-\begin{nd}
-	\hypo [~] {} {\forall x \ \ \forall y \ \ \mathcal{P}(x,y)}  \by{}{}
-	\have [~] {} {\forall y \ \ \mathcal{P}(a,y)} \by{\text{Élimination du premier $\forall$, $a$ arbitraire}}{}
-	\have [~] {} {\mathcal{P}(a,b)} \by{\text{Élimination du second $\forall$, $b$ arbitraire}}{}
-	\have [~] {} {\forall x \ \ \mathcal{P}(x,b)} \by{\text{Introduction d'un $\forall$}}{}	
-	\have [\lturn] {} {\forall y \ \ \forall x \ \ \mathcal{P}(x,y)} \by{\text{Introduction d'un autre $\forall$}}{}
-\end{nd}
-$
-\end{exemple}
-
-
-\begin{exemple}
-	\[
-	\big( \forall x \ \ \mathcal{P}(x) \big) \land \big( \forall x \ \ \mathcal{Q}(x) \big)
-	\quad \lturn \quad  
-	\forall x \ \ \big( \mathcal{P}(x) \land \mathcal{Q}(x) \big)
-	\]
-	
-	\medskip	
-	
-	Voici la preuve, à vous d'expliciter les règles utilisées.
-	
-	\medskip
-	\qquad\qquad
-	$
-	\begin{nd}
-		\hypo [~] {} {\Big( \forall x \ \ \mathcal{P}(x) \Big) \land \Big( \forall x \ \ \mathcal{Q}(x) \Big)}  \by{}{}
-		\have [~] {} {\forall x \ \ \mathcal{P}(x)} \by{}{}
-		\have [~] {} {\mathcal{P}(c)} \by{}{}	
-		\have [~] {} {\forall x \ \ \mathcal{Q}(x)} \by{}{}
-		\have [~] {} {\mathcal{Q}(c)} \by{}{}	
-		\have [~] {} {\mathcal{P}(c) \land \mathcal{Q}(c)} \by{}{}				
-		\have [\lturn] {} {\forall x \ \ \big( \mathcal{P}(x) \land \mathcal{Q}(x) \big)} \by{}{}
-	\end{nd}
-	$
-	
-\end{exemple}
-
-\begin{exemple}
-	\[
-	\lnot \ \Big( \forall x \ \ \mathcal{P}(x) \Big)  
-	\quad \lturn \quad  
-	\exists x \ \ \Big( \lnot \mathcal{P}(x) \Big) 
-	\]
-
-\medskip
-\qquad\qquad
-$
-\begin{nd}
-	\hypo [1] {} {\lnot \ \Big( \forall x \ \ \mathcal{P}(x) \Big)}  \by{}{}
-	\open				
-		\hypo [2] {} {\lnot \ \Big( \exists x \ \ \lnot \mathcal{P}(x) \Big)}  \by{\text{Raisonnement par l'absurde}}{}
-		\open		
-			\hypo [3] {} {\lnot  \mathcal{P}(c)} \by{\text{Hypothèse, avec $c$ arbitraire}}{}		
-			\have [4] {} {\exists x \ \ \lnot \mathcal{P}(x)} \by{\text{Introduction de $\exists$}}{}
-			\have [5] {} {\lantitauto} \by{\text{Contradiction 2 avec 4}}{}
-		\close
-		\have [6] {} {\mathcal{P}(c)} \by{\text{Par 2-5}}{}		
-		\have [7] {} {\forall x \ \ \mathcal{P}(x)} \by{\text{Introduction de $\forall$}}{}
-		\have [8] {} {\lantitauto} \by{\text{Contradiction 1 avec 7}}{}
-	\close		
-	\have [\lturn] {} {\exists x \ \ \lnot \mathcal{P}(x)} \by{\text{Par contradiction de 2-8}}{}
-	\end{nd}
-	$
-	
-\end{exemple}
 
 
 
