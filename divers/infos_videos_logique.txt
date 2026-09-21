@@ -1,0 +1,413 @@
+
+Logique
+Logique mathématique - Exo7
+
+ARNAUD BODIN
+
+
+Tags youtube
+Logique, Mathématiques, Exo7
+
+  (chaîne logique) https://www.youtube.com/channel/UCTTcuDqqT7AA4xPUux1BJrA
+  (chaîne logique) https://www.youtube.com/@Logique-Exo7
+  (chaîne exo7) https://www.youtube.com/@Exo7Math
+
+
+#---------------------------
+Teaser
+
+Cours de logique (teaser)
+https://youtu.be/tQhOyR0GbMQ (chaine Logique)
+... (chaine Exo7)
+
+Cours de logique mathématique
+
+Retrouvez le livre sur https://exo7.emath.fr
+
+Page https://exo7math.github.io/logique-exo7/
+
+Sources https://github.com/exo7math/logique-exo7
+
+Vidéos "Logique" 
+  (chaîne Logique) https://www.youtube.com/channel/UCTTcuDqqT7AA4xPUux1BJrA
+  (chaîne Logique) https://www.youtube.com/@Logique-Exo7
+
+Livre pdf : https://exo7.emath.fr
+
+
+Il existe des énoncés mathématiques vrais, mais qu'on ne peut pas démontrer.
+
+C'est l'énoncé du célèbre théorème d'incomplétude de Gödel, publié en 1931.
+
+Mais pour comprendre vraiment ce résultat, il faut repartir des bases :
+qu'est-ce qu'une proposition vraie ?
+qu'est-ce qu'une preuve ?
+que signifient exactement « pour tout » et « il existe » ?
+et surtout : quelle différence y a-t-il entre vérité et démonstration ?
+
+Je vous propose un parcours progressif et complet, avec un livre et plus de 60 vidéos, pour découvrir ces questions pas à pas.
+
+On commence par la logique vrai/faux, puis la logique du premier ordre, avant d'arriver progressivement au théorème d'incomplétude de Gödel.
+
+Comprendre la logique, c’est mieux comprendre les preuves et les raisonnements, c'est donc mieux comprendre les mathématiques!
+
+#---------------------------
+Plan de travail
+
+Cours de logique : plan de travail
+https://youtu.be/z-AD8DoUOlA (chaine Logique)
+... (chaine Exo7)
+
+Cours de logique mathématique
+
+Retrouvez le livre sur https://exo7.emath.fr
+
+Page https://exo7math.github.io/logique-exo7/
+
+Sources https://github.com/exo7math/logique-exo7
+
+Vidéos "Logique" 
+  (chaîne Logique) https://www.youtube.com/channel/UCTTcuDqqT7AA4xPUux1BJrA
+  (chaîne Logique) https://www.youtube.com/@Logique-Exo7
+
+Livre pdf : https://exo7.emath.fr
+
+Le livre et les vidéos sont organisés en trois grandes parties, correspondant à trois niveaux de difficulté.
+
+L’objectif est de partir des outils les plus élémentaires de la logique, puis de construire progressivement tout ce qui est nécessaire afin d'arriver, pour ceux qui le souhaitent, jusqu'au théorème d’incomplétude de Gödel.
+
+La première partie est consacrée à la logique vrai/faux, aussi appelée logique propositionnelle.
+
+On y étudie les connecteurs logiques que l’on rencontre constamment en mathématiques : « non », « et », « ou », « si… alors… », « si et seulement si ».
+
+On apprend à utiliser les tables de vérité, à reconnaître des tautologies, à manipuler les équivalences logiques, puis à formaliser les règles qui permettent de construire une démonstration.
+
+Ce premier niveau est déjà utile en lui-même : il permet de mieux comprendre et de mieux organiser de nombreux raisonnements élémentaires en mathématiques.
+
+La deuxième partie est consacrée à la logique du premier ordre.
+
+On introduit cette fois les quantificateurs « pour tout » et « il existe », ainsi que les variables, les fonctions et les prédicats.
+
+On peut alors formaliser des énoncés beaucoup plus proches de ceux que l’on rencontre dans les mathématiques usuelles.
+
+On étudie les formules, les variables libres et liées, les structures mathématiques, ainsi que les règles de démonstration avec les quantificateurs.
+
+Cette partie conduit au théorème de complétude de Gödel, qui établit un lien fondamental entre conséquence logique et démonstration formelle.
+
+Ce deuxième niveau forme ainsi un véritable cours de logique mathématique, particulièrement utile pour comprendre avec précision le langage et les raisonnements utilisés dans les démonstrations.
+
+La troisième partie est consacrée au théorème d’incomplétude.
+
+On y découvre l’arithmétique de Peano, le codage de Gödel, les fonctions récursives, la représentabilité et le lemme de diagonalisation, avant d’arriver aux deux théorèmes d’incomplétude.
+
+Cette partie est plus exigeante et s’adresse à ceux qui souhaitent aller plus loin.
+
+Mais il n’est pas nécessaire d’atteindre le niveau 3 pour profiter du parcours : le niveau 1 constitue déjà une introduction utile à la logique des démonstrations, et le niveau 2 permet d’acquérir les bases solides de la logique utilisée en mathématiques.
+
+Le livre peut être utilisé en parallèle des vidéos : il permet de retrouver les définitions, les exemples, les démonstrations et des exercices, tandis que les vidéos accompagnent progressivement chaque notion.
+
+
+
+
+#########################################
+#########################################
+Partie I - Logique vrai/faux
+
+#########################################
+Chapitre 1. Logique vrai/faux
+
+
+#-----
+[Logique] 1.1. Vrai/faux, connecteurs
+https://youtu.be/L-mGmWA-WYs
+
+Cours de logique
+
+Chapitre 1. Logique vrai/faux
+Partie 1. Vrai/faux, connecteurs
+
+Vrai et Faux
+Connecteurs : ¬ (NON), ∧ (ET), ∨ (OU)
+
+Retrouvez le livre sur https://exo7.emath.fr
+
+
+#-----
+[Logique] 1.2. Implication, équivalence
+https://youtu.be/qafTaYAxMzY
+
+Cours de logique
+
+Chapitre 1. Logique vrai/faux
+Partie 2. Implication, équivalence
+
+Connecteurs : implication, équivalence. Résumé.
+
+Retrouvez le livre sur https://exo7.emath.fr
+
+
+#-----
+[Logique] 1.3. Formules
+https://youtu.be/E-yJb-rsDNU
+
+Cours de logique
+
+Chapitre 1. Logique vrai/faux
+Partie 3. Formules 
+
+Formules, alphabet, définition par le haut, équivalence logique.
+
+Retrouvez le livre sur https://exo7.emath.fr
+
+
+#-----
+[Logique] 1.4. Connecteurs (suite)
+https://youtu.be/zHiASKr1ZRc
+
+Cours de logique
+
+Chapitre 1. Logique vrai/faux
+Partie 4. Connecteurs (suite)
+
+Commentaires et propriétés des connecteurs. Principe du tiers exclu, commutativité, loi de De Morgan, exemples d'implications. 
+
+Retrouvez le livre sur https://exo7.emath.fr
+
+
+#-----
+[Logique] 1.5. Formules (suite)
+https://youtu.be/MmhAWv6vqHA
+
+Cours de logique
+
+Chapitre 1. Logique vrai/faux
+Partie 5. Formules (suite)
+
+Distribution de valeurs. Satisfaction. Formule satisfaisable. Tautologie. Contradiction.
+
+Retrouvez le livre sur https://exo7.emath.fr
+
+
+#-----
+[Logique] 1.6. Formules (fin)
+https://youtu.be/aaCychyZFoo
+
+Cours de logique
+
+Chapitre 1. Logique vrai/faux
+Partie 6. Formules (fin)
+
+Portes et circuits logiques. Arbres de calcul, notation polonaise. Formules algébriques. 
+
+Retrouvez le livre sur https://exo7.emath.fr
+
+
+
+
+#########################################
+Chapitre 2. Preuves
+
+#-----
+[Logique] 2.1. Conséquence logique
+https://youtu.be/-2Yh26FbUHw
+
+Cours de logique
+
+Chapitre 2. Preuves
+Partie 1. Conséquence logique
+
+Hypothèses, conclusion. Conséquence logique. Exemples. Limitations. 
+
+Retrouvez le livre sur https://exo7.emath.fr
+
+
+#-----
+[Logique] 2.2. Preuve formelle
+https://youtu.be/R_nQgOmhtb0
+
+Cours de logique
+
+Chapitre 2. Preuves
+Partie 2. Preuve formelle
+
+Qu’est-ce qu’une preuve ? Preuve formelle ⊢. Qu'est ce qu'un théorème ? Un premier exemple.
+
+Retrouvez le livre sur https://exo7.emath.fr
+
+
+
+#-----
+[Logique] 2.3. Règles d’inférence
+https://youtu.be/a0gu4xZGxAo
+
+Cours de logique
+
+Chapitre 2. Preuves
+Partie 3. Règles d’inférence
+
+Les 6 règles de base : réutilisation ; conjonction ; double négation ; disjonction ; implication (modus ponens) ; explosion (ex falso).
+
+Retrouvez le livre sur https://exo7.emath.fr
+
+
+
+#-----
+[Logique] 2.4. Exemples de preuves
+https://youtu.be/JcJpNNkcvkY
+
+Cours de logique
+
+Chapitre 2. Preuves
+Partie 4. Exemples de preuves
+
+Quatre exemples détaillés de preuves.
+
+Retrouvez le livre sur https://exo7.emath.fr
+
+
+
+#-----
+[Logique] 2.5. Règles dérivées
+https://youtu.be/bwSkXJzia80
+
+Cours de logique
+
+Chapitre 2. Preuves
+Partie 5. Règles dérivées
+
+Équivalence. Négation ; tiers exclu. Conjonction/disjonction ; loi de De Morgan. Implication ; modus tollens. Exemples.
+
+Retrouvez le livre sur https://exo7.emath.fr
+
+
+#-----
+[Logique] 2.6. Absurde et contraposée
+https://youtu.be/SQ5zxR-6mvM
+
+Cours de logique
+
+Chapitre 2. Preuves
+Partie 6. Absurde et contraposée
+
+Règles dérivées : absurde et contraposée. Déduction à partir des règles de base. Passage de l'absurde à la contraposée et inversement.
+
+Retrouvez le livre sur https://exo7.emath.fr
+
+
+
+#-----
+[Logique] 2.7. Résumé des règles d'inférence & Aperçu du théorème de complétude de Gödel
+https://youtu.be/aqLYMJruPj0
+
+Cours de logique
+
+Chapitre 2. Preuves
+Partie 7. Résumé des règles d'inférence  & Aperçu du théorème de complétude de Gödel
+
+Résumé des règles de base et des règles dérivées. Différentes logiques : logique classique, logique intuitionniste, logique minimaliste. Théorème de complétude de Gödel pour la logique vrai/faux.
+
+Retrouvez le livre sur https://exo7.emath.fr
+
+
+#########################################
+Chapitre 3. Quels connecteurs sont utiles ?
+
+
+#-----
+[Logique] 3.1. Évaluation des formules
+https://youtu.be/dKWabwM0YC4
+
+Cours de logique
+
+Chapitre 3. Quels connecteurs sont utiles ?
+Partie 1. Évaluation des formules
+
+Rappels. Fonctions abstraites de {0, 1}^n → {0, 1}. Fonctions à partir d’une formule. Réaliser toutes les fonctions ? Connecteurs unaires. Connecteurs binaires.
+
+Retrouvez le livre sur https://exo7.emath.fr
+
+
+#-----
+[Logique] 3.2. Un système complet de connecteurs
+https://youtu.be/70ZUOIc-vyw
+
+Cours de logique
+
+Chapitre 3. Quels connecteurs sont utiles ?
+Partie 2. Un système complet de connecteurs
+
+Théorème. Exemples. Connecteurs usuels à partir de ¬ et ∧. Autres systèmes complets de connecteurs.
+
+Retrouvez le livre sur https://exo7.emath.fr
+
+
+
+#-----
+[Logique] 3.3. Quels connecteurs sont utiles ? Preuve du théorème
+https://youtu.be/b0DcCQW3wQ4
+
+Cours de logique
+
+Chapitre 3. Quels connecteurs sont utiles ?
+Partie 3. Preuve du théorème
+
+Preuve en trois étapes du théorème sur le système complet de connecteurs.
+
+Retrouvez le livre sur https://exo7.emath.fr
+
+
+#########################################
+Chapitre 4. Théorème de compacité
+
+
+#-----
+[Logique] 4.1. Formules, formules satisfaisables, conséquence logique
+https://youtu.be/ZiANgTlgwVs
+
+Cours de logique
+
+Chapitre 4. Théorème de compacité
+Partie 1. Formules, formules satisfaisables, conséquence logique
+
+Formules : définition par le haut. Formules : définition par le bas. Évaluation d’une formule. Satisfaisabilité. Conséquence logique.
+
+Retrouvez le livre sur https://exo7.emath.fr
+
+
+#-----
+[Logique] 4.2. Théorème de compacité
+https://youtu.be/EsMXgAckqKQ
+
+Cours de logique
+
+Chapitre 4. Théorème de compacité
+Partie 2. Théorème de compacité
+
+Énoncé. Corollaires. Preuve des corollaires.
+
+Retrouvez le livre sur https://exo7.emath.fr
+
+
+#-----
+[Logique] 4.3. Preuve du théorème de compacité
+https://youtu.be/E7XsfAMafkI
+
+Cours de logique
+
+Chapitre 4. Théorème de compacité
+Partie 3. Preuve
+
+La preuve du théorème de compacité.
+
+Retrouvez le livre sur https://exo7.emath.fr
+
+
+#########################################
+#########################################
+Partie II - Logique du premier ordre
+
+
+
+#########################################
+#########################################
+Partie III - L'incomplétude de Gödel

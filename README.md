@@ -5,7 +5,7 @@ Livre & vidéos
 ==============
 
 * Vous pouvez télécharger le livre sur ce site : [Livre 'Logique' (pdf)](livre-logic.pdf).
-* Des vidéos seront prochainement disponibles !
+* La chaîne YouTube [MathLogiqueGame](https://www.youtube.com/@Logique-Exo7) propose des vidéos pour accompagner ce livre.
 
 
 Chapitres
