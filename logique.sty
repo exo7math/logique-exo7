@@ -20,7 +20,7 @@
 %  \newcommand*{\mainfolder}{}
 %\fi
 % --------------------------------------------------------------------
-\ProvidesPackage{\mainfolder logic}
+\ProvidesPackage{\mainfolder logique}
 % --------------------------------------------------------------------
 \def\@minimal{Utiliser une présentation minimale (par defaut)}
 \def\@screen{Utiliser une présentation en couleurs avec des liens}
@@ -39,13 +39,13 @@
 % ===================================================================
 % Chargement du style spécifique selon le choix :  minimal, screen, print
 \ifx\@usestyle\@minimal
-  \usepackage{\mainfolder logic-minimal}
+  \usepackage{\mainfolder logique-minimal}
 \fi
 \ifx\@usestyle\@screen
-  \usepackage{\mainfolder logic-screen}
+  \usepackage{\mainfolder logique-screen}
 \fi
 \ifx\@usestyle\@print
-  \usepackage{\mainfolder logic-print}
+  \usepackage{\mainfolder logique-print}
 \fi
 %\ifx\@usestyle\@test
 %  \usepackage{\mainfolder exo7book-test}

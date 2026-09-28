@@ -402,12 +402,257 @@ La preuve du théorème de compacité.
 Retrouvez le livre sur https://exo7.emath.fr
 
 
+
+
 #########################################
 #########################################
 Partie II - Logique du premier ordre
+
+#########################################
+Chapitre 5. Logique du premier ordre
+
+
+#-----
+[Logique] 5.1. Logique du premier ordre - Motivation
+https://youtu.be/lh5Nt78jSFQ
+
+Cours de logique
+
+Chapitre 5. Logique du premier ordre
+Partie 1. Motivation
+
+Exemples avec "pour tout", "il existe". Limitations.
+
+Retrouvez le livre sur https://exo7.emath.fr
+
+
+#-----
+[Logique] 5.2. Langage de la logique du premier ordre
+https://youtu.be/6BH6EQ81UOg
+
+Cours de logique
+
+Chapitre 5. Logique du premier ordre
+Partie 2. Langage
+
+Éléments de langage. Symboles logiques. Symboles non logiques.
+
+Retrouvez le livre sur https://exo7.emath.fr
+
+
+#-----
+[Logique] 5.3. Formules de la logique du premier ordre
+https://youtu.be/9tcPcf94jGo
+
+Cours de logique
+
+Chapitre 5. Logique du premier ordre
+Partie 3. Formules
+
+Définitions : terme, formule atomique, formule. Remarques. Définition par le bas.
+
+Retrouvez le livre sur https://exo7.emath.fr
+
+
+#-----
+[Logique] 5.4. Logique du premier ordre : exemples
+https://youtu.be/aXiVD5CGRR0
+
+Cours de logique
+
+Chapitre 5. Logique du premier ordre
+Partie 4. Exemples
+
+Exemple avec des entiers. Exemple avec des graphes.
+Il existe au moins un ... Il existe un unique ... Il existe au moins deux ...
+
+Retrouvez le livre sur https://exo7.emath.fr
+
+#-----
+[Logique] 5.5. Langage du premier ordre avec fonctions
+https://youtu.be/YeAOOIM5odU
+
+Cours de logique
+
+Chapitre 5. Logique du premier ordre
+Partie 5. Langage avec fonctions
+
+Fonctions. Formules. Exemples.
+
+Retrouvez le livre sur https://exo7.emath.fr
+
+
+
+#########################################
+Chapitre 6. Variables et structures
+
+
+#-----
+[Logique] 6.1. Variables libres, variables liées
+https://youtu.be/6i28v4C44tU
+
+Cours de logique
+
+Chapitre 6. Variables et structures
+Partie 1. Variables libres, variables liées
+
+Portée. Variable liée. Variable libre. Formule fermée. Substitution.
+
+Retrouvez le livre sur https://exo7.emath.fr
+
+
+#-----
+[Logique] 6.2. Structures en logique du premier ordre
+https://youtu.be/f_m7OFGiISU
+
+Cours de logique
+
+Chapitre 6. Variables et structures
+Partie 2. Structures
+
+Structure: domaine, interprétation. EXemples. Commentaires.
+
+Retrouvez le livre sur https://exo7.emath.fr
+
+
+#########################################
+Chapitre 7. Satisfaction
+
+
+#-----
+[Logique] 7.1. Satisfaction
+
+Cours de logique
+
+Chapitre 7. Satisfaction
+Partie 1. 
+
+
+Retrouvez le livre sur https://exo7.emath.fr
+
+
+#-----
+[Logique] 7.2. Satisfaction
+
+Cours de logique
+
+Chapitre 7. Satisfaction
+Partie 2. 
+
+
+Retrouvez le livre sur https://exo7.emath.fr
+
+
+#########################################
+Chapitre 8. Preuves en logique du premier ordre
+
+
+#-----
+[Logique] 8.1.  
+
+Cours de logique
+
+Chapitre 8. Preuves en logique du premier ordre
+Partie 1. 
+
+
+Retrouvez le livre sur https://exo7.emath.fr
+
+
+#-----
+[Logique] 8.1.  
+
+Cours de logique
+
+Chapitre 8. Preuves en logique du premier ordre
+Partie 1. 
+
+
+Retrouvez le livre sur https://exo7.emath.fr
+
+
+#-----
+[Logique] 8.1.  
+
+Cours de logique
+
+Chapitre 8. Preuves en logique du premier ordre
+Partie 1. 
+
+
+Retrouvez le livre sur https://exo7.emath.fr
+
+
+#########################################
+Chapitre 9. 
+
+
+#-----
+[Logique] 9.1. 
+
+Cours de logique
+
+Chapitre 9. 
+Partie 1. 
+
+
+Retrouvez le livre sur https://exo7.emath.fr
+
+
+
+#########################################
+Chapitre 10. 
+
+
+#-----
+[Logique] 10.1. 
+
+Cours de logique
+
+Chapitre 10. 
+Partie 1. 
+
+
+Retrouvez le livre sur https://exo7.emath.fr
+
+
+
+#########################################
+Chapitre 11. 
+
+
+#-----
+[Logique] 11.1. 
+
+Cours de logique
+
+Chapitre 11. 
+Partie 1. 
+
+
+Retrouvez le livre sur https://exo7.emath.fr
+
+
 
 
 
 #########################################
 #########################################
 Partie III - L'incomplétude de Gödel
+
+
+
+#########################################
+Chapitre 12. 
+
+
+#-----
+[Logique] 12.1. 
+
+Cours de logique
+
+Chapitre 12. 
+Partie 1. 
+
+
+Retrouvez le livre sur https://exo7.emath.fr

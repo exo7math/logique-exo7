@@ -42,7 +42,7 @@
 
 %\draw[very thick] (r) to[bend left] (s);
 \draw[thick] (r) to[bend left] (s);
-\%draw[thick] (r) to[bend right] (t);
+%\draw[thick] (r) to[bend right] (t);
 \draw[thick] (s) to[bend right] (t);
 
 \node at (1.5,-1.2) {\textbf{Graphe $G_2$}};
