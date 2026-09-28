@@ -314,7 +314,7 @@ Pour cela, on aura besoin d'un théorème bien connu d'arithmétique.
 \subsection{Théorème des restes chinois}
 
 \begin{theoreme}[Théorème des restes chinois]
-    Soient $a_1, \dots, a_l$ des entiers premiers entre eux deux à deux.
+    Soient $a_1, \dots, a_l$ des entiers strictement positifs premiers entre eux deux à deux.
     Soient $n_1, \dots, n_l$ des entiers quelconques.
     Il existe $x \in \Nn$ tel que pour tout $i = 1, \dots, l$, on ait :
     \[ x \equiv n_i \pmod{a_i} \]
@@ -488,7 +488,7 @@ On sait qu'il existe $a,b$ qui encodent la suite et vérifient $\beta(a,b,i) = z
 \[ \mathcal{B}(a,b,i,z_i) \land \mathcal{B}(a,b,i+1,z_{i+1}) \land \mathcal{P}_h(n,i,z_i,z_{i+1}) \]
 Ceci pour $i = 0, \dots, l-1$, donc $\mathcal{PA} \lturn \text{Trans}(a,b,n,l)$.
 
-    \item Enfin $z_l = h(n,l-1,z_{l-1})$ donc $z_l = \beta(a,b,l) = f(n,l) = m$ et ainsi on a $\mathcal{B}(a,b,l,m)$.
+    \item Enfin $z_l = \beta(a,b,l) = f(n,l) = m$ et ainsi on a $\mathcal{B}(a,b,l,m)$.
 \end{itemize}
 
 %--------------------------------------------------------------------

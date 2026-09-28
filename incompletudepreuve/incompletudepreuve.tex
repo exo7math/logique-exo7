@@ -283,8 +283,9 @@ Rosser (1936) remplace l'hypothèse d'$\omega$-cohérence de Gödel en la simple
 
 Formellement la phrase $\mathcal{P}(x)$ à laquelle il applique le lemme de diagonalisation est :
 \[
-\mathcal{P}(x) : \qquad  \forall y \ \ \mathcal{E}\text{st-preuve}(y, x) \ \limplies \  \exists z \le y \ \mathcal{E}\text{st-preuve}(z, \text{neg}(x))
+\mathcal{P}(x) : \qquad  \forall y \ \ \big( \mathcal{E}\text{st-preuve}(y, x) \ \limplies \  \exists z \le y \ \mathcal{E}\text{st-preuve}(z, \text{neg}(x)) \big)
 \]
+Ce qui se lit : \og{}Si je suis démontrable, alors il existe une preuve de ma négation dont le code est inférieur ou égal au code de ma preuve.\fg{}
 Si $x = \ulcorner \mathcal{Q} \urcorner$, on a noté $\text{neg}(x) = \ulcorner \lnot \mathcal{Q} \urcorner$.
 
 Remarquer la quantification bornée \og{}$\exists z \le y$\fg{}, qui évite d'avoir à introduire la $\omega$-cohérence et d'énumérer $N=0,1,2,\dots$ jusqu'à l'infini.
