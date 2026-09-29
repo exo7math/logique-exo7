@@ -475,31 +475,31 @@ Enfin, on pose $\mathcal{L}' = \bigcup_{n \ge 0} \mathcal{L}_n$ et $\mathcal{T}'
 \textbf{Affirmation.} $\mathcal{T}'$ est cohérente.
 
 \begin{proof}
-	On va montrer que chaque $\mathcal{T}_n$ est cohérente. Cela prouvera que $\mathcal{T}'$ est cohérente. En effet si on avait $\mathcal{T}' \lturn \lantitauto$, alors une preuve de ceci ne fait intervenir qu'un nombre fini de formules de $\mathcal{T}'$, qui sont donc toutes incluses dans un $\mathcal{T}_n$ pour un $n$ assez grand. Pour ce $n$, on a $\mathcal{T}_n \lturn \lantitauto$ ce qui contredit $\mathcal{T}_n$ cohérente.
-	
-	La preuve que les $\mathcal{T}_n$ sont cohérentes se fait par récurrence, sur le même principe que l'étape fondamentale expliquée pour une seule formule au début de cette section.
-	
-	\medskip
-	
-	Montrons par récurrence que $\mathcal{T}_n$ (pour $n \ge 0$) est cohérente.
-	Pour $n=0$, $\mathcal{T}_0 = \mathcal{T}$, alors $\mathcal{T}_0$ est cohérente par hypothèse.
-	
-	Supposons $\mathcal{T}_n$ cohérente et par l'absurde que $\mathcal{T}_{n+1}$ ne l'est pas :
-	\begin{align*}
-		& \mathcal{T}_n \cup \bigcup_{i=1}^k \{\exists x\ \mathcal{P}_i(x) \limplies \mathcal{P}_i(c_{\mathcal{P}_i})\} \lturn \lantitauto \qquad \text{(avec un nombre fini de $\mathcal{P}_i$ impliquées dans la preuve)} \\
-		\text{donc } \quad & \mathcal{T}_n \cup  \big\{\bigwedge_{i=1}^k \big(\exists x\ \mathcal{P}_i(x) \limplies \mathcal{P}_i(c_{\mathcal{P}_i})\big)\big\} \lturn \lantitauto \\
-		\text{donc } \quad & \mathcal{T}_n \lturn \lnot \bigwedge_{i=1}^k \big(\exists x\ \mathcal{P}_i(x) \limplies \mathcal{P}_i(c_{\mathcal{P}_i})\big) \\
-		\text{donc } \quad & \mathcal{T}_n \lturn \bigvee_{i=1}^k \lnot \big(\exists x\ \mathcal{P}_i(x) \limplies \mathcal{P}_i(c_{\mathcal{P}_i})\big) \\
-		\text{donc } \quad & \mathcal{T}_n \lturn \lnot \big(\exists x\ \mathcal{P}_j(x) \limplies \mathcal{P}_j(c_{\mathcal{P}_j})\big) \qquad \text{pour un certain } j \text{ (par le Lemme \ref{lem:compbis})} \\
-		\text{donc } \quad & \mathcal{T}_n \lturn \exists x\ \mathcal{P}_j(x) \ \text{ et } \ \mathcal{T}_n \lturn \lnot \mathcal{P}_j(c_{\mathcal{P}_j}) \\
-		\text{donc } \quad & \mathcal{T}_n \lturn \exists x\ \mathcal{P}_j(x) \ \text{ et } \ \mathcal{T}_n \lturn \forall x\ \lnot \mathcal{P}_j(x) \qquad \text{par la règle d'introduction de $\forall$} \\
-		\text{donc } \quad & \mathcal{T}_n \lturn \exists x\ \mathcal{P}_j(x) \ \text{ et } \ \mathcal{T}_n \lturn \lnot \big(\exists x\ \mathcal{P}_j(x)\big)
-	\end{align*}
-	Donc $\mathcal{T}_n$ est non cohérente. C'est contradictoire avec l'hypothèse de récurrence.
-	Conclusion : $\mathcal{T}_{n+1}$ est cohérente.
-	
-	Noter encore une fois l'introduction de $\forall$, afin de passer de \og{}$\lnot \mathcal{P}_j(c_{\mathcal{P}_j})$\fg{} à \og{}$\forall x \ \lnot \mathcal{P}_j(x)$\fg{} qui est légitime car la constante $c_{\mathcal{P}_j}$ n'apparaît pas dans $\mathcal{T}_n$.
+    On va montrer que chaque $\mathcal{T}_n$ est cohérente. Cela prouvera que $\mathcal{T}'$ est cohérente. En effet si on avait $\mathcal{T}' \lturn \lantitauto$, alors une preuve de ceci ne fait intervenir qu'un nombre fini de formules de $\mathcal{T}'$, qui sont donc toutes incluses dans un $\mathcal{T}_n$ pour un $n$ assez grand. Pour ce $n$, on a $\mathcal{T}_n \lturn \lantitauto$ ce qui contredit $\mathcal{T}_n$ cohérente.
+    
+    Montrons par récurrence que $\mathcal{T}_n$ (pour $n \ge 0$) est cohérente.
+    Pour $n=0$, $\mathcal{T}_0 = \mathcal{T}$, alors $\mathcal{T}_0$ est cohérente par hypothèse.
+    
+    Supposons $\mathcal{T}_n$ cohérente et par l'absurde que $\mathcal{T}_{n+1}$ ne l'est pas.
+    Une preuve de $\mathcal{T}_{n+1} \lturn \lantitauto$ ne fait intervenir qu'un nombre fini de formules. Il existe donc un nombre fini de formules $\mathcal{P}_1, \ldots, \mathcal{P}_k$ de $\mathcal{L}_n$ telles que, si l'on note $\mathcal{H}_i$ l'axiome de Henkin \og{}$\exists x\ \mathcal{P}_i(x) \limplies \mathcal{P}_i(c_{\mathcal{P}_i})$\fg{}, on ait :
+    \[
+        \mathcal{T}_n \cup \{\mathcal{H}_1, \ldots, \mathcal{H}_k\} \lturn \lantitauto
+    \]
+    Notons $\mathcal{S}_m = \mathcal{T}_n \cup \{\mathcal{H}_1, \ldots, \mathcal{H}_m\}$ pour $0 \le m \le k$.
+    Montrons par une récurrence finie sur $m$ que $\mathcal{S}_m$ est cohérente.
+    \begin{itemize}
+        \item Pour $m=0$, $\mathcal{S}_0 = \mathcal{T}_n$ est cohérente par hypothèse de récurrence.
+        \item Supposons $\mathcal{S}_{m-1}$ cohérente. L'axiome $\mathcal{H}_m$ est $\exists x\ \mathcal{P}_m(x) \limplies \mathcal{P}_m(c_{\mathcal{P}_m})$.
+        Par définition, $c_{\mathcal{P}_m}$ est un nouveau symbole de constante qui n'appartient pas à $\mathcal{L}_n$. De plus, comme les formules $\mathcal{P}_i$ sont deux à deux distinctes, la constante $c_{\mathcal{P}_m}$ est différente des constantes $c_{\mathcal{P}_1}, \ldots, c_{\mathcal{P}_{m-1}}$.
+        Ainsi, la constante $c_{\mathcal{P}_m}$ n'apparaît nulle part dans la théorie $\mathcal{S}_{m-1}$.
+        D'après l'affirmation fondamentale démontrée au début de la section, l'ajout de $\mathcal{H}_m$ à la théorie cohérente $\mathcal{S}_{m-1}$ donne une théorie cohérente.
+        Donc $\mathcal{S}_m = \mathcal{S}_{m-1} \cup \{\mathcal{H}_m\}$ est cohérente.
+    \end{itemize}
+    Par conséquent, $\mathcal{S}_k = \mathcal{T}_n \cup \{\mathcal{H}_1, \ldots, \mathcal{H}_k\}$ est cohérente.
+    C'est une contradiction avec le fait que $\mathcal{S}_k \lturn \lantitauto$.
+    Conclusion : $\mathcal{T}_{n+1}$ est bien cohérente.
 \end{proof}
+
 
 %--------------------------------------------------------------------
 \subsection{Preuve complète du théorème}
