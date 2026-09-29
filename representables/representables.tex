@@ -495,7 +495,7 @@ Ceci pour $i = 0, \dots, l-1$, donc $\mathcal{PA} \lturn \text{Trans}(a,b,n,l)$.
 \subsection{Unicité}
 
 Il s'agit de démontrer que :
-\[ \mathcal{PA} \quad \lturn \quad \forall z \ \ \mathcal{P}_f(n,l,z) \to z = m \]
+\[ \mathcal{PA} \quad \lturn \quad \forall z \ \ \mathcal{P}_f(n,l,z) \limplies z = m \]
 c'est-à-dire $z = z_l$.
 
 Par récurrence sur $l$ :
@@ -506,16 +506,13 @@ Par récurrence sur $l$ :
     (car la condition \og{}$\forall i < 0$\fg{} est vide, donc le prédicat $\text{Trans}$ est vrai).
     Donc $z_0 = \beta(a,b,0) = z$, d'où $z = m$ comme voulu.
     
-    \item Hérédité. Fixons $i$ avec $0 \le i < l$ et supposons :
-    \[ \forall z \quad \mathcal{P}_f(n,i,z) \to z = z_i \]
-    Soit $z$ quelconque. Supposons $\mathcal{P}_f(n,i+1,z)$ vraie. 
-    Dans la formule $\mathcal{P}_f(n,i+1,z)$ est incluse la sous-formule $\mathcal{P}_f(n,i,v)$ donc par hypothèse de récurrence $v=z_i$. 
-    Mais on a en plus :
-    \[
-    \mathcal{B}(a,b,i,u) \land \mathcal{B}(a,b,i+1,v) \land \mathcal{P}_h(n,i,u,v) \land \mathcal{B}(a,b,i+1,z)
-    \]
-    ce qui prouve dans l'ordre : $u = \beta(a,b,i) = z_i$, $v = \beta(a,b,i+1)$, $v = h(n,i,u) = h(n,i,z_i) = z_{i+1}$ et $z = \beta(a,b,i+1)$.
-    On en déduit donc que $z = z_{i+1}$.
+    \item \textbf{Hérédité.} Fixons $i$ tel que $0 \le i < l$ et supposons l'unicité vraie au rang $i$ :
+    \[ \forall u \quad \mathcal{P}_f(n,i,u) \limplies u = z_i \]
+    Soit $z$ tel que $\mathcal{P}_f(n,i+1,z)$ est vraie. Il existe des témoins $a,b$ vérifiant $\text{Init}(a,b,n)$, $\text{Trans}(a,b,n,i+1)$ et $\mathcal{B}(a,b,i+1,z)$. 
+    La restriction de $\text{Trans}(a,b,n,i+1)$ aux rangs $k < i$ montre que ces mêmes témoins $a,b$ et la valeur $u = \beta(a,b,i)$ satisfont $\mathcal{P}_f(n,i,u)$. L'hypothèse de récurrence donne alors $u = z_i$.
+
+    La transition au rang $i$ fournit $v = \beta(a,b,i+1)$ tel que $\mathcal{P}_h(n,i,u,v)$. Par représentabilité de $h$, on a $v = h(n,i,u) = h(n,i,z_i) = z_{i+1}$.
+    Enfin, comme $\mathcal{B}(a,b,i+1,z)$ impose $z = \beta(a,b,i+1) = v$, on en déduit $z = z_{i+1}$.
 
     \item Par le principe de récurrence (dans $\mathcal{PA}$), l'assertion est vraie pour tous les $i \le l$, donc l'unicité est démontrée.
 \end{itemize}
