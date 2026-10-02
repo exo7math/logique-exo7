@@ -520,25 +520,30 @@ Chapitre 7. Satisfaction
 
 
 #-----
-[Logique] 7.1. Satisfaction
+[Logique] 7.1. Satisfaction en logique du premier ordre
+https://youtu.be/sfUGyvNJCc0
 
 Cours de logique
 
 Chapitre 7. Satisfaction
-Partie 1. 
+Partie 1. Vrai/Faux
 
+Pour tout & Il existe. Vrai/Faux pour les formules fermées. Affectation. Formules avec variables libres.
 
 Retrouvez le livre sur https://exo7.emath.fr
 
 
 #-----
-[Logique] 7.2. Satisfaction
+[Logique] 7.2. Conséquence logique en logique du premier ordre
+https://youtu.be/7EvsTPl21QQ
 
 Cours de logique
 
 Chapitre 7. Satisfaction
-Partie 2. 
+Partie 2. Conséquence logique
 
+Conséquence logique. Équivalence logique. Équivalences avec quantificateurs.
+Récapitulatif des notions.
 
 Retrouvez le livre sur https://exo7.emath.fr
 
