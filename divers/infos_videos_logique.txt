@@ -553,91 +553,214 @@ Chapitre 8. Preuves en logique du premier ordre
 
 
 #-----
-[Logique] 8.1.  
+[Logique] 8.1. Preuves en logique du premier ordre 
+https://youtu.be/9r1qokg2j7k
 
 Cours de logique
 
 Chapitre 8. Preuves en logique du premier ordre
-Partie 1. 
+Partie 1. Preuves
 
+Rappels. Règles pour les quantificateurs. Exemples.
 
 Retrouvez le livre sur https://exo7.emath.fr
 
 
 #-----
-[Logique] 8.1.  
+[Logique] 8.2. Négation des quantificateurs et règles dérivées
+https://youtu.be/V0uch-o7x-0
 
 Cours de logique
 
 Chapitre 8. Preuves en logique du premier ordre
-Partie 1. 
+Partie 2. Négation des quantificateurs et règles dérivées
 
+Négation des quantificateurs. Autres règles dérivées. Preuve des règles dérivées.
 
 Retrouvez le livre sur https://exo7.emath.fr
 
 
 #-----
-[Logique] 8.1.  
+[Logique] 8.3. Détails des règles de preuve pour les quantificateurs
+https://youtu.be/LIs2tGruEq0
 
 Cours de logique
 
 Chapitre 8. Preuves en logique du premier ordre
-Partie 1. 
+Partie 3. Détails des règles
 
+Règle I. Élimination de ∀.
+Règle II. Introduction de ∀.
+Règle III. Introduction de ∃.
+Règle IV. Élimination de ∃.
 
 Retrouvez le livre sur https://exo7.emath.fr
 
 
 #########################################
-Chapitre 9. 
+Chapitre 9. Théorème de validité
 
 
 #-----
-[Logique] 9.1. 
+[Logique] 9.1. Théorème de validité
+https://youtu.be/LSD04O-sR1A
 
 Cours de logique
 
-Chapitre 9. 
-Partie 1. 
+Chapitre 9. Théorème de validité
+Partie 1. Le théorème de validité
 
+Énoncé. Rappels. Applications.
+
+Retrouvez le livre sur https://exo7.emath.fr
+
+#-----
+[Logique] 9.2. Preuve du théorème de validité
+https://youtu.be/C1Gd28wG1I4
+
+Cours de logique
+
+Chapitre 9. Théorème de validité
+Partie 2. Preuve du théorème de validité
+
+Règles de la logique V/F. Règles des quantificateurs. Preuve du théorème.
+
+Retrouvez le livre sur https://exo7.emath.fr
+
+#########################################
+Chapitre 10. Théorème de complétude
+
+
+#-----
+[Logique] 10.1. Théorème de complétude
+https://youtu.be/Pk4b-S6zkFc
+
+Cours de logique
+
+Chapitre 10. Théorème de complétude
+Partie 1. Le théorème de complétude
+
+Énoncé. Équivalence. Et l’incomplétude ?
+
+Retrouvez le livre sur https://exo7.emath.fr
+
+
+#-----
+[Logique] 10.2. Théorème de complétude : Applications aux théories
+https://youtu.be/66mXlD37CKU
+
+Cours de logique
+
+Chapitre 10. Théorème de complétude
+Partie 2. Applications aux théories
+
+Théorie cohérente, modèle. Lemme de déduction naturelle. Différentes formulations du théorème de complétude. Démonstration du théorème B à partir du théorème A.
+
+Retrouvez le livre sur https://exo7.emath.fr
+
+
+#-----
+[Logique] 10.3. Théorème de complétude : Application à la finitude
+https://youtu.be/QuqTw5KNIEw
+
+Cours de logique
+
+Chapitre 10. Théorème de complétude
+Partie 3. Application à la finitude
+
+Théorème de finitude. Théorème de compacité.
+
+Retrouvez le livre sur https://exo7.emath.fr
+
+
+#-----
+[Logique] 10.4. Théorème de clôture
+https://youtu.be/GSl-T6K7lL0
+
+Cours de logique
+
+Chapitre 10. Théorème de complétude
+Partie 4. Théorème de clôture
+
+Énoncé. Clôture. Démonstration du théorème C à partir du théorème A.
 
 Retrouvez le livre sur https://exo7.emath.fr
 
 
 
 #########################################
-Chapitre 10. 
+Chapitre 11. Preuve du théorème de complétude
 
 
 #-----
-[Logique] 10.1. 
+[Logique] 11.1. Rappel : Le théorème de complétude
+https://youtu.be/X3RYYtT8E9w
 
 Cours de logique
 
-Chapitre 10. 
-Partie 1. 
+Chapitre 11. Preuve du théorème de complétude
+Partie 1. Le théorème de complétude
+
+Énoncé. À prouver : « Si T est cohérente, alors T admet un modèle. » Rappel du vocabulaire.
+
+Retrouvez le livre sur https://exo7.emath.fr
+
+
+#-----
+[Logique] 11.2. Théorie complète
+https://youtu.be/owBcLwwVQZM
+
+Cours de logique
+
+Chapitre 11. Preuve du théorème de complétude
+Partie 2. Théorie complète
+
+Définition. Satisfaction. Un lemme.
+
+Retrouvez le livre sur https://exo7.emath.fr
+
+
+#-----
+[Logique] 11.3. Modèle à partir d’une théorie complète
+https://youtu.be/kQum1Kr9SiA
+
+Cours de logique
+
+Chapitre 11. Preuve du théorème de complétude
+Partie 3. Construction d’un modèle à partir d’une théorie complète
+
+Hypothèses renforcées. Construction du modèle. Satisfaction.
+
+Retrouvez le livre sur https://exo7.emath.fr
+
+
+#-----
+[Logique] 11.4. Construction d’une théorie complète
+https://youtu.be/XwlgM48G5KU
+
+Cours de logique
+
+Chapitre 11. Preuve du théorème de complétude
+Partie 4. Construction d’une théorie complète
+
+Construction. Démonstration.
 
 
 Retrouvez le livre sur https://exo7.emath.fr
 
 
-
-#########################################
-Chapitre 11. 
-
-
 #-----
-[Logique] 11.1. 
+[Logique] 11.5. Construction des témoins de Henkin
+https://youtu.be/-4LF24_tb8c
 
 Cours de logique
 
-Chapitre 11. 
-Partie 1. 
+Chapitre 11. Preuve du théorème de complétude
+Partie 5. Construction des témoins de Henkin
 
+Extension du langage et de la théorie. Construction. Preuve complète du théorème de complétude.
 
 Retrouvez le livre sur https://exo7.emath.fr
-
-
 
 
 
