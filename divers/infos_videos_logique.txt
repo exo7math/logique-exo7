@@ -771,16 +771,216 @@ Partie III - L'incomplétude de Gödel
 
 
 #########################################
-Chapitre 12. 
+Chapitre 12. Un aperçu de l’incomplétude de Gödel
 
 
 #-----
-[Logique] 12.1. 
+[Logique] 12.1. Énoncés des théorèmes d'incomplétude de Gödel
+https://youtu.be/xbO3VyYmsSM
 
 Cours de logique
 
-Chapitre 12. 
+Chapitre 12. Un aperçu de l’incomplétude de Gödel
+Partie 1. Énoncés des théorèmes
+
+Énoncé pour l’arithmétique des entiers.
+Théorème général. Notions en jeu. Second théorème.
+
+Retrouvez le livre sur https://exo7.emath.fr
+
+
+#-----
+[Logique] 12.2. Conséquences de l’incomplétude de Gödel
+https://youtu.be/3MgjQirxjts
+
+Cours de logique
+
+Chapitre 12. Un aperçu de l’incomplétude de Gödel
+Partie 2. Conséquences
+
+Conséquences mathématiques. L'hypothèse du continu. Conséquence philosophique.
+Ce que ne sont pas les théorèmes d’incomplétude.
+
+Retrouvez le livre sur https://exo7.emath.fr
+
+
+#-----
+[Logique] 12.3. Plan de travail pour prouver l’incomplétude de Gödel
+https://youtu.be/fIWwEXt2aFc
+
+Cours de logique
+
+Chapitre 12. Un aperçu de l’incomplétude de Gödel
+Partie 3. Plan de travail
+
+Arithmétique de Peano. Codage de Gödel. Fonctions récursives primitives. Fonctions représentables. Diagonalisation. Preuve du théorème d’incomplétude. Le second théorème d’incomplétude.
+
+Retrouvez le livre sur https://exo7.emath.fr
+
+
+#########################################
+Chapitre 13. Arithmétique de Peano
+
+
+#-----
+[Logique] 13.1. Axiomes de Peano
+https://youtu.be/3SfeOF0hl1M
+
+Cours de logique
+
+Chapitre 13. Arithmétique de Peano
+Partie 1. Axiomes de Peano
+
+Les entiers naturels. Arithmétique élémentaire. Axiomes de la récurrence.
+Modèles de PA.
+
+Retrouvez le livre sur https://exo7.emath.fr
+
+
+
+#-----
+[Logique] 13.2. Propriétés de l’arithmétique de Peano
+https://youtu.be/dl4r6U8FvvU
+
+Cours de logique
+
+Chapitre 13. Arithmétique de Peano
+Partie 2. Propriétés de l’arithmétique de Peano
+
+Avec les axiomes de base : 2 + 2 = 4.
+Avec la récurrence. Ensembles définissables. 
+Autres arithmétiques : Presburger, Robinson, axiomatique ZF et ZFC.
+
+Retrouvez le livre sur https://exo7.emath.fr
+
+
+
+#########################################
+Chapitre 14. Codage de Gödel
+
+
+#-----
+[Logique] 14.1. Codage de Gödel : Symboles, formules, preuves
+https://youtu.be/GPe3IooZNLI
+
+Cours de logique
+
+Chapitre 14. Codage de Gödel
+Partie 1. Codage des symboles, formules, preuves
+
+Motivation. Coder les symboles. Coder une formule. Décoder.Coder les preuves.
+
+Retrouvez le livre sur https://exo7.emath.fr
+
+
+#-----
+[Logique] 14.2. Codage de Gödel : Opérations sur les formules
+https://youtu.be/tpLWptZ3GcE
+
+Cours de logique
+
+Chapitre 14. Codage de Gödel
+Partie 2. Opérations sur les formules
+
+Formules. Preuve. Valeur entière vs numéral. Concaténation. Substitution.
+
+Retrouvez le livre sur https://exo7.emath.fr
+
+
+#-----
+[Logique] 14.3. Preuve informelle du théorème d’incomplétude
+https://youtu.be/oc_m9025jf4
+
+Cours de logique
+
+Chapitre 14. Codage de Gödel
+Partie 3. Preuve informelle du théorème d’incomplétude
+
+Le paradoxe de Russel. Diagonalisation. Formule de Gödel.
+
+Retrouvez le livre sur https://exo7.emath.fr
+
+
+#########################################
+Chapitre 15. 
+
+
+#-----
+[Logique] 15.1. 
+
+Cours de logique
+
+Chapitre 15. 
 Partie 1. 
+
+
+Retrouvez le livre sur https://exo7.emath.fr
+
+
+
+#########################################
+Chapitre 16. 
+
+
+#-----
+[Logique] 16.1. 
+
+Cours de logique
+
+Chapitre 16. 
+Partie 1. 
+
+
+Retrouvez le livre sur https://exo7.emath.fr
+
+
+
+#########################################
+Chapitre 17. 
+
+
+#-----
+[Logique] 17.1. 
+
+Cours de logique
+
+Chapitre 17. 
+Partie 1. 
+
+
+Retrouvez le livre sur https://exo7.emath.fr
+
+
+
+
+
+#########################################
+Chapitre 18. 
+
+
+#-----
+[Logique] 18.1. 
+
+Cours de logique
+
+Chapitre 18. 
+Partie 1. 
+
+
+Retrouvez le livre sur https://exo7.emath.fr
+
+
+
+#########################################
+Chapitre 19. 
+
+
+#-----
+[Logique] 19. 
+
+Cours de logique
+
+Chapitre 19. 
 
 
 Retrouvez le livre sur https://exo7.emath.fr
