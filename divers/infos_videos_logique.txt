@@ -902,17 +902,65 @@ Retrouvez le livre sur https://exo7.emath.fr
 
 
 #########################################
-Chapitre 15. 
+Chapitre 15. Fonctions récursives primitives
 
 
 #-----
-[Logique] 15.1. 
+[Logique] 15.1. Fonctions récursives primitives - Définition
+https://youtu.be/CbPXd03way0
 
 Cours de logique
 
-Chapitre 15. 
-Partie 1. 
+Chapitre 15. Fonctions récursives primitives
+Partie 1. Définition
 
+Définition. Exemples. Opération de composition.
+Opération de récurrence. 
+
+Retrouvez le livre sur https://exo7.emath.fr
+
+
+#-----
+[Logique] 15.2. Fonctions récursives primitives - Premiers exemples
+https://youtu.be/6eY7W42dMqY
+
+Cours de logique
+
+Chapitre 15. Fonctions récursives primitives
+Partie 2. Premiers exemples
+
+Fonctions constantes. Opérations arithmétiques élémentaires.
+Soustraction entière. Algorithmes.
+
+Retrouvez le livre sur https://exo7.emath.fr
+
+
+#-----
+[Logique] 15.3. Fonctions récursives primitives - Ensembles et prédicats
+https://youtu.be/HUg_JlsRnX4
+
+Cours de logique
+
+Chapitre 15. Fonctions récursives primitives
+Partie 3. Ensembles et prédicats
+
+Ensemble récursif primitif. Prédicat récursif primitif. Schéma borné.
+Racine carrée entière. Fonctions arithmétiques classiques. La fonction d'Ackermann.
+
+Retrouvez le livre sur https://exo7.emath.fr
+
+
+#-----
+[Logique] 15.4. Fonctions récursives primitives - Application au codage de Gödel
+https://youtu.be/jrbI-TVVnpk
+
+Cours de logique
+
+Chapitre 15. Fonctions récursives primitives
+Partie 4. Application au codage de Gödel
+
+Longueur, exposant, concaténation, substitution. Variables, termes, formules.
+Axiomes de Peano. Preuves à la Hilbert. Être une preuve.
 
 Retrouvez le livre sur https://exo7.emath.fr
 
